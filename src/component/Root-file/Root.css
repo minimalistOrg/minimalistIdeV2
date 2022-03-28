@@ -1,0 +1,57 @@
+:root {
+  --base-03: #002b36;
+  --base-02: #073642;
+  --base-00: #657b83;
+  --base-2: #eee8d5;
+  --base-3: #fdf6e3;
+  --base-1: #93a1a1;
+  --blue: #268bd2;
+  --cyan: #2aa198;
+  --green: #859900;
+  --magenta: #d33682;
+  --violet: #6c71c4;
+  --yellow: #b58900;
+  --editor-background: var(--base-3);
+  --editor-color: var(--base-02);
+  --code-block-background: var(--base-3);
+  --code-block-box-shadow: var(--base-1);
+  --code-block-header: var(--base-03);
+  --code-block-header-background: var(--base-2);
+  --code-block-body: var(--base-00);
+  --keyword-color: var(--green);
+  --function-call-color: var(--blue);
+  --std-library-color: var(--cyan);
+  --assignment-name: var(--violet);
+  --assignment-equal-sign: var(--base-1);
+  --constant-color-value: var(--magenta);
+  --constant-color-boolean: var(--yellow);
+  --constant-color-number: var(--magenta);
+  --constant-color-string: var(--cyan);
+  --same-line-spacing: 0.25em;
+  --nested-spacing: 1em;
+}
+
+body {
+  background-color: var(--editor-background);
+  color: var(--editor-color);
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+body,
+html {
+  margin: 0px;
+  padding: 0px;
+}
+
+button {
+    background-color: inherit;
+    cursor: pointer;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    margin: 0px;
+    outline: none;
+    padding: 0px;
+}
