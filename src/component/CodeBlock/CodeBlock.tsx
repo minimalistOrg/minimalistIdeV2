@@ -1,4 +1,6 @@
+import {useEffect,useRef} from "react"
 import "./CodeBlock.css";
+import Resize from "./CodeBlock__Resize"
 
 interface CodeBlockEntry {
   title: string;
@@ -7,8 +9,17 @@ interface CodeBlockEntry {
 }
 
 function CodeBlock(props: CodeBlockEntry) {
+//Genera una instacia de Resize para cada burbuja
+  const Bubble= useRef(null)
+
+  useEffect(()=>{
+    const IDBubble= Bubble.current
+    Resize(IDBubble);
+    // console.log(IDBubble)
+  },[])
+  
   return (
-    <div className="CodeBlock">
+    <div className="CodeBlock" ref={Bubble}>
       <div className="CodeBlock__header">
         <div className="CodeBlock__title">
           {props.title}
