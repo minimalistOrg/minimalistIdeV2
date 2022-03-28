@@ -6,7 +6,6 @@ function Root() {
     <section>
       <CodeBlock title="gameLoop" argument="a">
         {`
-
         let turn = 0 let board = [ [ 0 , 0 , 0 ] , [ 0 , 0 , 0 ] , [ 0 , 0 , 0 ]
         ] let gameEnded? = false
         `}
