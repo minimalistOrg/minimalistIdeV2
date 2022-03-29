@@ -11,10 +11,12 @@ interface CodeBlockEntry {
 function CodeBlock(props: CodeBlockEntry) {
 //Genera una instacia de Resize para cada burbuja
   const Bubble= useRef(null)
+  const CodeTxt= useRef(null)
 
   useEffect(()=>{
     const IDBubble= Bubble.current
-    Resize(IDBubble);
+    const IDCode= CodeTxt
+    Resize(IDBubble,IDCode);
     // console.log(IDBubble)
   },[])
   
@@ -28,7 +30,7 @@ function CodeBlock(props: CodeBlockEntry) {
         <button className="CodeBlock__menu">...</button>
       </div>
       <div className="CodeBlock__body">
-        <code>{props.children.toString()}</code>
+        <code ref={CodeTxt}>{props.children.toString()}</code>
       </div>
     </div>
   );

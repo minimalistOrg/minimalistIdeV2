@@ -1,15 +1,19 @@
 import interact from "interactjs";
 
-export default function Resize(id: any) {
+export default function Resize(id: any, idCode: any) {
+  let limitHeight = 0;
   // console.log(id)
   interact(id).resizable({
-    edges: { top: true, left: true, bottom: true, right: true },
+    edges: { top: false, left: false, bottom: true, right: true },
     listeners: {
       move: function (event: any) {
         let { x, y } = event.target.dataset;
 
         x = (parseFloat(x) || 0) + event.deltaRect.left;
         y = (parseFloat(y) || 0) + event.deltaRect.top;
+
+        limitHeight = limit(idCode, id).min();
+        id.style = `min-height: ${limitHeight}px`;
 
         Object.assign(event.target.style, {
           width: `${event.rect.width}px`,
@@ -21,17 +25,31 @@ export default function Resize(id: any) {
       },
     },
     modifiers: [
-      // keep the edges inside the parent
-      interact.modifiers.restrictEdges({
-        outer: "parent",
-      }),
-
       // minimum size
       interact.modifiers.restrictSize({
-        min: { width: 162, height: 86 },
+        min: { width: 250, height: 0 },
       }),
     ],
-
     inertia: true,
   });
+}
+
+function limit(d: any, id: any) {
+  // let W = d.current.offsetWidth;
+  let H = d.current.offsetHeight + 34;
+
+  // let BW = id.offsetWidth;
+  let BH = id.offsetHeight;
+
+  // console.log(W, H);
+  // console.log(BW, BH);
+  return {
+    min: function () {
+      if (BH <= H) {
+        return H;
+      } else {
+        return 0;
+      }
+    },
+  };
 }
