@@ -27,7 +27,7 @@ export default function Resize(id: any, idCode: any) {
     modifiers: [
       // minimum size
       interact.modifiers.restrictSize({
-        min: { width: 250, height: 0 },
+        min: { width: 0, height: 0 },
       }),
     ],
     inertia: true,
