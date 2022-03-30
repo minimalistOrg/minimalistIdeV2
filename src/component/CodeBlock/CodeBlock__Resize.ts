@@ -1,6 +1,7 @@
 import interact from "interactjs";
+import {MutableRefObject} from "react";
 
-export default function Resize(id: any, idCode: any) {
+export default function Resize(id: any, idCode: MutableRefObject<HTMLElement|null>) {
   let limitHeight = 0;
   // console.log(id)
   interact(id).resizable({
@@ -34,7 +35,7 @@ export default function Resize(id: any, idCode: any) {
   });
 }
 
-function limit(d: any, id: any) {
+function limit(d:any, id: any) {
   // let W = d.current.offsetWidth;
   let H = d.current.offsetHeight + 34;
 

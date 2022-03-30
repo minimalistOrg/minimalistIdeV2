@@ -1,7 +1,7 @@
 import "./Root.css";
 import CodeBlock from "../CodeBlock/CodeBlock";
 
-function Root() {
+function Root(): JSX.Element {
   return (
     <section>
       <CodeBlock title="gameLoop" argument="a">
@@ -23,18 +23,6 @@ if(false){
       <CodeBlock title="nested" argument="a">
         {`
 plus(plus(1,2),3)
-        `}
-      </CodeBlock>
-      <CodeBlock title="html" argument="a">
-        {`
-<HTML>
-  <head>
-    <title>some codes</title>
-  </head>
-  <body>
-    <h2 class="txt">hello</h2>
-  </body>
-</HTML>
         `}
       </CodeBlock>
     </section>

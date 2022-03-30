@@ -1,8 +1,8 @@
-import { useEffect, useRef } from "react";
+import { MutableRefObject, useEffect, useRef } from "react";
 import "./CodeBlock.css";
 import Resize from "./CodeBlock__Resize";
-import hljs from "highlight.js"
-import "highlight.js/styles/stackoverflow-light.css"
+import hljs from "highlight.js";
+import "highlight.js/styles/stackoverflow-light.css";
 
 interface CodeBlockEntry {
   title: string;
@@ -10,14 +10,14 @@ interface CodeBlockEntry {
   children: string;
 }
 
-function CodeBlock(props: CodeBlockEntry) {
+function CodeBlock(props: CodeBlockEntry): JSX.Element {
   //Genera una instacia de Resize para cada burbuja
-  const Bubble = useRef(null);
-  const CodeTxt = useRef(null);
+  const Bubble = useRef<HTMLDivElement | null>(null);
+  const CodeTxt = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    const IDBubble = Bubble.current;
-    const IDCode = CodeTxt;
+    const IDBubble: HTMLDivElement | null = Bubble.current;
+    const IDCode: MutableRefObject<HTMLElement | null> = CodeTxt;
     Resize(IDBubble, IDCode);
     // console.log(IDBubble)
   }, []);
@@ -33,7 +33,12 @@ function CodeBlock(props: CodeBlockEntry) {
       </div>
       <div className="CodeBlock__body">
         <pre>
-          <code ref={CodeTxt} dangerouslySetInnerHTML={{__html: hljs.highlightAuto(props.children).value}}></code>
+          <code
+            ref={CodeTxt}
+            dangerouslySetInnerHTML={{
+              __html: hljs.highlight(props.children,{language: "javascript"}).value,
+            }}
+          ></code>
         </pre>
       </div>
     </div>
