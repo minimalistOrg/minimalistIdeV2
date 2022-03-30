@@ -4,9 +4,8 @@ import CodeBlockAST from "../CodeBlockAST/CodeBlockAST";
 import { api } from "../../AST/data";
 
 function Root(): JSX.Element {
-
   function SearchFunction(word: string): any {
-    let result:any = [];
+    let result: any = [];
 
     api.body.find(function (e) {
       if (e.type === "FunctionDeclaration" && e.id?.name === word) {
@@ -24,18 +23,18 @@ function Root(): JSX.Element {
   const firstRender = (list: any, index: number) => {
     if (list.type === "ExpressionStatement") {
       return (
-        <CodeBlockAST
-          key={index}
-          // @ts-ignore
-          title={api.body[index].expression.callee.name}
-          // @ts-ignore
-          body={SearchFunction(api.body[index].expression.callee.name)}
-          argument=""
-       />
-         
+        <div key={index} style={{display:"flex"}}>
+          <CodeBlockAST
+            // @ts-ignore
+            title={api.body[index].expression.callee.name}
+            // @ts-ignore
+            body={SearchFunction(api.body[index].expression.callee.name)}
+            argument=""
+          />
+        </div>
       );
     } else {
-      return ;
+      return;
     }
   };
 
@@ -44,7 +43,6 @@ function Root(): JSX.Element {
       {api.body.map((i, index) => {
         return firstRender(i, index);
       })}
-
     </section>
   );
 }

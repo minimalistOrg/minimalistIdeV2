@@ -19,13 +19,23 @@ function AstToCode(props: any) {
     }
   }
 
+  function BubbleCode(dato:any){
+    // console.log(dato)
+  console.log(dato.target.innerText,"FunctionDeclaration")
+  }
+
   return (
     <React.Fragment>
       {props.body.map((e: any, index: number) => {
         return (
           <React.Fragment key={index}>
             <span className="OneLine">
-              <span key={index} className="ExpressionStatement">
+              <span
+                onClick={(e) => {
+                  BubbleCode(e)
+                }}
+                className="ExpressionStatement"
+              >
                 {SelectType(e)}
               </span>
               <span className="ExpressionStatement__parameters">
