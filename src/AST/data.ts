@@ -1,7 +1,7 @@
 export const api= {
   "type": "Program",
   "start": 0,
-  "end": 46,
+  "end": 122,
   "body": [
     {
       "type": "FunctionDeclaration",
@@ -62,35 +62,166 @@ export const api= {
       }
     },
     {
-      "type": "ExpressionStatement",
+      "type": "FunctionDeclaration",
       "start": 37,
-      "end": 46,
-      "expression": {
-        "type": "CallExpression",
-        "start": 37,
-        "end": 46,
-        "callee": {
+      "end": 73,
+      "id": {
+        "type": "Identifier",
+        "start": 46,
+        "end": 51,
+        "name": "resta"
+      },
+      "expression": false,
+      "generator": false,
+      "async": false,
+      "params": [
+        {
           "type": "Identifier",
-          "start": 37,
-          "end": 41,
-          "name": "suma"
+          "start": 52,
+          "end": 53,
+          "name": "a"
         },
-        "arguments": [
+        {
+          "type": "Identifier",
+          "start": 54,
+          "end": 55,
+          "name": "b"
+        }
+      ],
+      "body": {
+        "type": "BlockStatement",
+        "start": 56,
+        "end": 73,
+        "body": [
           {
-            "type": "Literal",
-            "start": 42,
-            "end": 43,
-            "value": 2,
-            "raw": "2"
+            "type": "ReturnStatement",
+            "start": 59,
+            "end": 71,
+            "argument": {
+              "type": "BinaryExpression",
+              "start": 66,
+              "end": 71,
+              "left": {
+                "type": "Identifier",
+                "start": 66,
+                "end": 67,
+                "name": "a"
+              },
+              "operator": "-",
+              "right": {
+                "type": "Identifier",
+                "start": 70,
+                "end": 71,
+                "name": "b"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "FunctionDeclaration",
+      "start": 75,
+      "end": 114,
+      "id": {
+        "type": "Identifier",
+        "start": 84,
+        "end": 88,
+        "name": "test"
+      },
+      "expression": false,
+      "generator": false,
+      "async": false,
+      "params": [],
+      "body": {
+        "type": "BlockStatement",
+        "start": 90,
+        "end": 114,
+        "body": [
+          {
+            "type": "ExpressionStatement",
+            "start": 92,
+            "end": 101,
+            "expression": {
+              "type": "CallExpression",
+              "start": 92,
+              "end": 101,
+              "callee": {
+                "type": "Identifier",
+                "start": 92,
+                "end": 96,
+                "name": "suma"
+              },
+              "arguments": [
+                {
+                  "type": "Literal",
+                  "start": 97,
+                  "end": 98,
+                  "value": 1,
+                  "raw": "1"
+                },
+                {
+                  "type": "Literal",
+                  "start": 99,
+                  "end": 100,
+                  "value": 2,
+                  "raw": "2"
+                }
+              ],
+              "optional": false
+            }
           },
           {
-            "type": "Literal",
-            "start": 44,
-            "end": 45,
-            "value": 2,
-            "raw": "2"
+            "type": "ExpressionStatement",
+            "start": 102,
+            "end": 112,
+            "expression": {
+              "type": "CallExpression",
+              "start": 102,
+              "end": 112,
+              "callee": {
+                "type": "Identifier",
+                "start": 102,
+                "end": 107,
+                "name": "resta"
+              },
+              "arguments": [
+                {
+                  "type": "Literal",
+                  "start": 108,
+                  "end": 109,
+                  "value": 3,
+                  "raw": "3"
+                },
+                {
+                  "type": "Literal",
+                  "start": 110,
+                  "end": 111,
+                  "value": 4,
+                  "raw": "4"
+                }
+              ],
+              "optional": false
+            }
           }
-        ],
+        ]
+      }
+    },
+    {
+      "type": "ExpressionStatement",
+      "start": 116,
+      "end": 122,
+      "expression": {
+        "type": "CallExpression",
+        "start": 116,
+        "end": 122,
+        "callee": {
+          "type": "Identifier",
+          "start": 116,
+          "end": 120,
+          "name": "test"
+        },
+        "arguments": [],
         "optional": false
       }
     }

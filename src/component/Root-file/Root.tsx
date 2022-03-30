@@ -1,30 +1,50 @@
 import "./Root.css";
-import CodeBlock from "../CodeBlock/CodeBlock";
+// import CodeBlock from "../CodeBlock/CodeBlock";
+import CodeBlockAST from "../CodeBlockAST/CodeBlockAST";
+import { api } from "../../AST/data";
 
 function Root(): JSX.Element {
+
+  function SearchFunction(word: string): any {
+    let result:any = [];
+
+    api.body.find(function (e) {
+      if (e.type === "FunctionDeclaration" && e.id?.name === word) {
+        // console.log(e.body?.body);
+        result.push(e.body);
+        return "";
+      } else {
+        return "";
+      }
+    });
+
+    return result[0].body;
+  }
+
+  const firstRender = (list: any, index: number) => {
+    if (list.type === "ExpressionStatement") {
+      return (
+        <CodeBlockAST
+          key={index}
+          // @ts-ignore
+          title={api.body[index].expression.callee.name}
+          // @ts-ignore
+          body={SearchFunction(api.body[index].expression.callee.name)}
+          argument=""
+       />
+         
+      );
+    } else {
+      return ;
+    }
+  };
+
   return (
     <section>
-      <CodeBlock title="gameLoop" argument="a">
-        {`
-let turn = 0 
-let board = [[0,0,0],[0,0,0],[0,0,0]] 
-let gameEnded? = false
-        `}
-      </CodeBlock>
-      <CodeBlock title="conditional" argument="a">
-        {`
-if(false){
-  const x= plus(1,5)
-}else{
-  5
-}
-        `}
-      </CodeBlock>
-      <CodeBlock title="nested" argument="a">
-        {`
-plus(plus(1,2),3)
-        `}
-      </CodeBlock>
+      {api.body.map((i, index) => {
+        return firstRender(i, index);
+      })}
+
     </section>
   );
 }
