@@ -9,6 +9,7 @@ function AstToCode(props: any) {
       case "ExpressionStatement":
         return ExpressionType.expression.callee.name;
       default:
+        console.log(ExpressionType.type)
         return "";
     }
   }
@@ -21,6 +22,7 @@ function AstToCode(props: any) {
 
   function BubbleCode(dato:any){
     // console.log(dato)
+    props.pass(dato.target.innerText)
   console.log(dato.target.innerText,"FunctionDeclaration")
   }
 

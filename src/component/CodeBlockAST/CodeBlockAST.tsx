@@ -6,6 +6,7 @@ import Resize from "./CodeBlockAST__Resize";
 interface CodeBlockEntry {
   title: string;
   argument: string;
+  pass:any;
   // children: string;
   body: any;
 }
@@ -34,7 +35,7 @@ function CodeBlockAST(props: CodeBlockEntry): JSX.Element {
       <div className="CodeBlock__body">
         <pre>
           <code ref={CodeTxt}>
-            <AstToCode body={props.body}/>
+            <AstToCode body={props.body} pass={props.pass}/>
           </code>
         </pre>
       </div>
