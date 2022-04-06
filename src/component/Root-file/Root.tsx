@@ -3,6 +3,7 @@ import "./Root.css";
 import CodeBlockAST from "../CodeBlockAST/CodeBlockAST";
 import { api } from "../../AST/data";
 import { useState } from "react";
+import RenderAST from "../RenderAST/RenderAST";
 
 function Root(): JSX.Element {
   function SearchFunction(word: string): any {
@@ -41,21 +42,24 @@ function Root(): JSX.Element {
             body={SearchFunction(api.body[index].expression.callee.name)}
             argument=""
           />
-          {nuberBubbles.map((e: any, index: number) => (
-            <CodeBlockAST
-              key={index}
-              // @ts-ignore
-              title={nuberBubbles[index].title}
-              pass={addBubbles}
-              body={
-                /*SearchFunction("suma")*/ SearchFunction(
-              // @ts-ignore
-                  api.body[3].expression.callee.name
-                )
-              }
-              argument="a,b"
-            />
-          ))}{" "}
+          <div>
+            {nuberBubbles.map((e: any, index: number) => (
+              <CodeBlockAST
+                key={index}
+                // @ts-ignore
+                title={nuberBubbles[index].title}
+                pass={addBubbles}
+                body={
+                  /*SearchFunction("suma")*/ SearchFunction(
+                    // @ts-ignore
+                    api.body[3].expression.callee.name
+                  )
+                }
+                argument="a,b"
+              />
+            ))}{" "}
+
+          </div>
         </div>
       );
     } else {
@@ -65,9 +69,12 @@ function Root(): JSX.Element {
 
   return (
     <section>
+      <RenderAST />
       {api.body.map((i, index) => {
         return firstRender(i, index);
       })}
+      <div>
+      </div>
     </section>
   );
 }

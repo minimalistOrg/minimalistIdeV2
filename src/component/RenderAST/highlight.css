@@ -1,0 +1,21 @@
+.varType {
+  color: var(--blue);
+}
+
+.ast-literal-string {
+  color: var(--yellow);
+}
+
+.ast-literal-number {
+  color: var(--magenta);
+}
+
+.ast-literal-boolean {
+  color: purple;
+}
+
+.ast-CallExpression{
+ text-decoration: underline;
+ font-size: inherit;
+ font-family: inherit;
+}

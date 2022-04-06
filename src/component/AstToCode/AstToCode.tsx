@@ -2,7 +2,7 @@ import React from "react";
 import "./AstToCode.css";
 
 function AstToCode(props: any) {
-  console.log(props.body);
+  // console.log(props.body);
 
   function SelectType(ExpressionType: any) {
     switch (ExpressionType.type) {
