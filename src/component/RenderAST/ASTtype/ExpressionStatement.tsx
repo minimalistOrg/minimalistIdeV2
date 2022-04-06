@@ -5,7 +5,7 @@ function ExpressionStatement(props:any){
   console.log(data)
   return(
     <span>
-    <ChooseType info={data} />
+    <ChooseType info={data.expression} />
     </span>
   )
 }
