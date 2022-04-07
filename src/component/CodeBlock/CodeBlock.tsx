@@ -1,13 +1,11 @@
 import { MutableRefObject, useEffect, useRef } from "react";
 import "./CodeBlock.css";
 import Resize from "./CodeBlock__Resize";
-import hljs from "highlight.js";
-import "highlight.js/styles/stackoverflow-light.css";
 
 interface CodeBlockEntry {
   title: string;
   argument: string;
-  children: string;
+  children: any;
 }
 
 function CodeBlock(props: CodeBlockEntry): JSX.Element {
@@ -35,10 +33,9 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
         <pre>
           <code
             ref={CodeTxt}
-            dangerouslySetInnerHTML={{
-              __html: hljs.highlight(props.children,{language: "javascript"}).value,
-            }}
-          ></code>
+          >
+            {props.children}
+          </code>
         </pre>
       </div>
     </div>

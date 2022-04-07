@@ -7,6 +7,9 @@ import ArrayExpression from "./ASTtype/ArrayExpression";
 import ReturnStatement from "./ASTtype/ReturnStatement"
 import CallExpression from "./ASTtype/CallExpression"
 import ExpressionStatement from "./ASTtype/ExpressionStatement"
+import Identifier from "./ASTtype/Identifier"
+import IfStatement from "./ASTtype/IfStatement"
+import MemberExpression from "./ASTtype/MemberExpression"
 
 function ChooseType(props: any) {
   function choose(info: any) {
@@ -26,6 +29,12 @@ function ChooseType(props: any) {
         return <CallExpression data={info} />
       case "ExpressionStatement":
         return <ExpressionStatement data={info} />
+      case "Identifier":
+        return <Identifier data={info} />
+      case "IfStatement":
+        return <IfStatement data={info} />
+      case "MemberExpression":
+        return <MemberExpression data={info} />
       //type primitive
       case "Literal":
         return <Literal data={info} />;

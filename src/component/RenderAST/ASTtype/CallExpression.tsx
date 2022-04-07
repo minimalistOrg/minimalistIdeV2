@@ -1,8 +1,17 @@
 import ChooseType from "../ChooseType";
+import { useState, useEffect } from "react";
 
 function CallExpression(props: any) {
   const data = props.data;
-  // console.log(data);
+  // console.log(data.callee);
+
+  const [isfunction, setIsfunction] = useState("");
+
+  useEffect(() => {
+    if (data.callee.type === "Identifier") {
+      setIsfunction("ast-CallExpression");
+    }
+  }, [data.callee.type]);
 
   const long = data.arguments.length;
 
@@ -16,7 +25,9 @@ function CallExpression(props: any) {
 
   return (
     <span>
-      <button className="ast-CallExpression">{data.callee.name}</button>
+      <span className={isfunction}>
+        <ChooseType info={data.callee} />
+      </span>
       <span>( </span>
       <span>
         {data.arguments.map((e: any, index: number) => {
