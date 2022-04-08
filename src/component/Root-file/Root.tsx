@@ -35,7 +35,7 @@ function addBubble(data:any) {
         {bubble.map((e: any, index: number) => {
           return (
             <CodeBlock key={index} title="main" argument="">
-              <RenderAST ast={dataAst} />
+              <RenderAST ast={api.body[e].body?.body} />
             </CodeBlock>
           );
         })}
