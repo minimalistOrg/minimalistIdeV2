@@ -14,7 +14,7 @@ function Root(): JSX.Element {
 console.log(count)
 function addBubble(data:any) {
     setBubble(bubble.concat(data));
-    console.log(bubble,"here")
+    console.log(api.body[2],"here")
   }
 
   const sendFunction= useDispatch();
@@ -27,14 +27,14 @@ function addBubble(data:any) {
   return (
     <div style={{ display: "flex" }}>
         <div>
-          <CodeBlock title="main" argument="">
+          <CodeBlock title="main" argument={[]}>
             <RenderAST ast={dataAst} />
           </CodeBlock>
         </div>
       <div>
         {bubble.map((e: any, index: number) => {
           return (
-            <CodeBlock key={index} title="main" argument="">
+            <CodeBlock key={index} title={api.body[e].id?.name} argument={api.body[e].params}>
               <RenderAST ast={api.body[e].body?.body} />
             </CodeBlock>
           );

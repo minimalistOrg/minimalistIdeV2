@@ -1,10 +1,11 @@
 import { MutableRefObject, useEffect, useRef } from "react";
 import "./CodeBlock.css";
 import Resize from "./CodeBlock__Resize";
+import ChooseType from "../RenderAST/ChooseType";
 
 interface CodeBlockEntry {
-  title: string;
-  argument: string;
+  title: string | undefined;
+  argument: any;
   children: any;
 }
 
@@ -20,22 +21,39 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
     // console.log(IDBubble)
   }, []);
 
+  const long = props.argument.length;
+
+  function coma(actual: number) {
+    if (long - 1 === actual) {
+      return "";
+    } else {
+      return " , ";
+    }
+  }
+
   return (
     <div className="CodeBlock" ref={Bubble}>
       <div className="CodeBlock__header">
         <div className="CodeBlock__title">
           {props.title}
-          <span className="CodeBlock__arguments">({props.argument})</span>
+          <span className="CodeBlock__arguments">
+            (
+            {props.argument.map((e: any, index: any) => {
+              return (
+                <span key={index}>
+                  <ChooseType info={e} />
+                  <span>{coma(index)}</span>
+                </span>
+              );
+            })}
+            )
+          </span>
         </div>
         <button className="CodeBlock__menu">...</button>
       </div>
       <div className="CodeBlock__body">
         <pre>
-          <code
-            ref={CodeTxt}
-          >
-            {props.children}
-          </code>
+          <code ref={CodeTxt}>{props.children}</code>
         </pre>
       </div>
     </div>
