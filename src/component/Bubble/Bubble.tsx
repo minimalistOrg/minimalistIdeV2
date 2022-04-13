@@ -2,16 +2,27 @@ import CodeBlock from "../CodeBlock/CodeBlock";
 import RenderAST from "../RenderAST/RenderAST";
 import { useState } from "react";
 import "./Bubble.css";
+import { useDispatch } from "react-redux";
+import { add } from "../Root-file/slice/addBubbleSlice";
 
 function Bubble(props: any) {
   const [btnCount, setBtnCount] = useState<any>([]);
   const [btnIndex, setBtnIndex] = useState<any>([]);
+
+  const dispatch = useDispatch();
+
+  function setJson() {
+    dispatch(add(props.data));
+  }
+
+  setJson();
 
   // console.log(props.data);
   const data = props.data;
 
   const dataAst = (index: number) => {
     // console.log(data[index].body?.body);
+    // console.log(data[index])
     return {
       body: data[index].body?.body,
       name: data[index].id.name,

@@ -1,10 +1,13 @@
 import ChooseType from "../ChooseType";
 import { useState, useEffect } from "react";
-import { api } from "../../../AST/data";
+// import { api } from "../../../AST/data";
+import {useSelector} from "react-redux"
 
 function CallExpression(props: any) {
   const data = props.data;
   // console.log(data.callee);
+  const count:any = useSelector<any>((state) => state.addbubble.value);
+  // console.log(count,api.body,)
 
   const [isfunction, setIsfunction] = useState("");
   const [iffunction, setIffunction] = useState(false);
@@ -30,7 +33,7 @@ function CallExpression(props: any) {
   }
 
   function SearchIndex() {
-    const dato = api.body;
+    const dato = count;
 
     function index() {
       let point = null;

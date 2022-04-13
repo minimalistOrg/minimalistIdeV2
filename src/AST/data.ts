@@ -1,9 +1,9 @@
-//https://david.bonnet.cc/astring/demo/#function%20main()%7B%0A%20%20%20%20const%20n1=%2012;%0A%20%20%20%20const%20n2=%2022;%0A%20%20%20%20console.log(n1%20+%20n2);%0A%20%20%20%20logic(n1,n2)%0A%20%20%20%20let%20operation_one=%20multiplication(n1,n2)%0A%20%20%20%20let%20operation_two=%20division(n2,n1)%0A%20%20%20%20show(operation_one)%0A%20%20%20%20show(operation_two)%0A%20%20%20%20recursion(%22something%22)%0A%7D%0A%0Amain()%0A%0Afunction%20recursion(data)%7B%0A%20%20%20%20let%20txt=%20%22something%22%0A%20%20%20%20if(txt%20===%20data)%7B%0A%20%20%20%20%20%20%20%20return%20%22stop%22%0A%20%20%20%20%7Delse%7B%0A%20%20%20%20%20%20%20%20show(%22To%20infinity%22)%0A%20%20%20%20%20%20%20%20main()%0A%20%20%20%20%7D%0A%7D%0A%0Afunction%20logic(data1,data2)%7B%0A%20%20%20%20const%20result=%20data1%20%3C%20data2;%0A%20%20%20%20if(result)%7B%0A%20%20%20%20%20%20%20%20sum(data1,%20data2)%0A%20%20%20%20%7Delse%7B%0A%20%20%20%20%20%20%20%20subtraction(data1,data2)%0A%20%20%20%20%7D%0A%7D%0A%0Afunction%20sum()%7B%0A%20%20%20%20const%20result=%20a%20+%20b;%0A%20%20%20%20show(result);%0A%20%20%20%20return%20result;%0A%7D%0A%0Afunction%20subtraction()%7B%0A%20%20%20%20const%20result=%20a%20-%20b;%0A%20%20%20%20show(result);%0A%20%20%20%20return%20result;%0A%7D%0A%0Afunction%20multiplication()%7B%0A%20%20%20%20const%20result=%20a%20*%20b;%0A%20%20%20%20show(result);%0A%20%20%20%20return%20result;%0A%7D%0A%0A/*%20one%20line%0Atwo%20lines%0Athree%20lines%20*/%0Afunction%20division()%7B%0A%20%20%20%20const%20result=%20a%20/%20b;%0A%20%20%20%20show(result);%0A%20%20%20%20return%20result;%0A%7D%0A%0A//%20one%20line%0Afunction%20show(data)%7B%0A%20%20%20%20console.log(data);%0A%7D
+//https://david.bonnet.cc/astring/demo/#function%20main()%7B%0A%20%20%20%20const%20n1=%2012;%0A%20%20%20%20const%20n2=%2022;%0A%20%20%20%20console.log(n1%20+%20n2);%0A%20%20%20%20logic(n1,n2)%0A%20%20%20%20let%20operation_one=%20multiplication(n1,n2)%0A%20%20%20%20let%20operation_two=%20division(n2,n1)%0A%20%20%20%20show(operation_one)%0A%20%20%20%20show(operation_two)%0A%20%20%20%20recursion(%22something%22)%0A%7D%0A%0Amain()%0A%0Afunction%20recursion(data)%7B%0A%20%20%20%20let%20txt=%20%22something%22%0A%20%20%20%20if(txt%20===%20data)%7B%0A%20%20%20%20%20%20%20%20return%20%22stop%22%0A%20%20%20%20%7Delse%7B%0A%20%20%20%20%20%20%20%20show(%22To%20infinity%22)%0A%20%20%20%20%20%20%20%20main()%0A%20%20%20%20%7D%0A%7D%0A%0Afunction%20logic(data1,data2)%7B%0A%20%20%20%20const%20result=%20data1%20%3C%20data2;%0A%20%20%20%20if(result)%7B%0A%20%20%20%20%20%20%20%20sum(data1,%20data2)%0A%20%20%20%20%7Delse%7B%0A%20%20%20%20%20%20%20%20subtraction(data1,data2)%0A%20%20%20%20%7D%0A%7D%0A%0Afunction%20sum(a,b)%7B%0A%20%20%20%20const%20result=%20a%20+%20b;%0A%20%20%20%20show(result);%0A%20%20%20%20return%20result;%0A%7D%0A%0Afunction%20subtraction(a,b)%7B%0A%20%20%20%20const%20result=%20a%20-%20b;%0A%20%20%20%20show(result);%0A%20%20%20%20return%20result;%0A%7D%0A%0Afunction%20multiplication(a,b)%7B%0A%20%20%20%20const%20result=%20a%20*%20b;%0A%20%20%20%20show(result);%0A%20%20%20%20return%20result;%0A%7D%0A%0A/*%20one%20line%0Atwo%20lines%0Athree%20lines%20*/%0Afunction%20division(a,b)%7B%0A%20%20%20%20const%20result=%20a%20/%20b;%0A%20%20%20%20show(result);%0A%20%20%20%20return%20result;%0A%7D%0A%0A//%20one%20line%0Afunction%20show(data)%7B%0A%20%20%20%20console.log(data);%0A%7D
 
 export const api= {
   "type": "Program",
   "start": 0,
-  "end": 1023,
+  "end": 1035,
   "loc": {
     "start": {
       "line": 1,
@@ -1674,7 +1674,7 @@ export const api= {
     {
       "type": "FunctionDeclaration",
       "start": 581,
-      "end": 660,
+      "end": 663,
       "loc": {
         "start": {
           "line": 34,
@@ -1704,15 +1704,48 @@ export const api= {
       "expression": false,
       "generator": false,
       "async": false,
-      "params": [],
+      "params": [
+        {
+          "type": "Identifier",
+          "start": 594,
+          "end": 595,
+          "loc": {
+            "start": {
+              "line": 34,
+              "column": 13
+            },
+            "end": {
+              "line": 34,
+              "column": 14
+            }
+          },
+          "name": "a"
+        },
+        {
+          "type": "Identifier",
+          "start": 596,
+          "end": 597,
+          "loc": {
+            "start": {
+              "line": 34,
+              "column": 15
+            },
+            "end": {
+              "line": 34,
+              "column": 16
+            }
+          },
+          "name": "b"
+        }
+      ],
       "body": {
         "type": "BlockStatement",
-        "start": 595,
-        "end": 660,
+        "start": 598,
+        "end": 663,
         "loc": {
           "start": {
             "line": 34,
-            "column": 14
+            "column": 17
           },
           "end": {
             "line": 38,
@@ -1722,8 +1755,8 @@ export const api= {
         "body": [
           {
             "type": "VariableDeclaration",
-            "start": 601,
-            "end": 621,
+            "start": 604,
+            "end": 624,
             "loc": {
               "start": {
                 "line": 35,
@@ -1737,8 +1770,8 @@ export const api= {
             "declarations": [
               {
                 "type": "VariableDeclarator",
-                "start": 607,
-                "end": 620,
+                "start": 610,
+                "end": 623,
                 "loc": {
                   "start": {
                     "line": 35,
@@ -1751,8 +1784,8 @@ export const api= {
                 },
                 "id": {
                   "type": "Identifier",
-                  "start": 607,
-                  "end": 613,
+                  "start": 610,
+                  "end": 616,
                   "loc": {
                     "start": {
                       "line": 35,
@@ -1767,8 +1800,8 @@ export const api= {
                 },
                 "init": {
                   "type": "BinaryExpression",
-                  "start": 615,
-                  "end": 620,
+                  "start": 618,
+                  "end": 623,
                   "loc": {
                     "start": {
                       "line": 35,
@@ -1781,8 +1814,8 @@ export const api= {
                   },
                   "left": {
                     "type": "Identifier",
-                    "start": 615,
-                    "end": 616,
+                    "start": 618,
+                    "end": 619,
                     "loc": {
                       "start": {
                         "line": 35,
@@ -1798,8 +1831,8 @@ export const api= {
                   "operator": "+",
                   "right": {
                     "type": "Identifier",
-                    "start": 619,
-                    "end": 620,
+                    "start": 622,
+                    "end": 623,
                     "loc": {
                       "start": {
                         "line": 35,
@@ -1819,8 +1852,8 @@ export const api= {
           },
           {
             "type": "ExpressionStatement",
-            "start": 626,
-            "end": 639,
+            "start": 629,
+            "end": 642,
             "loc": {
               "start": {
                 "line": 36,
@@ -1833,8 +1866,8 @@ export const api= {
             },
             "expression": {
               "type": "CallExpression",
-              "start": 626,
-              "end": 638,
+              "start": 629,
+              "end": 641,
               "loc": {
                 "start": {
                   "line": 36,
@@ -1847,8 +1880,8 @@ export const api= {
               },
               "callee": {
                 "type": "Identifier",
-                "start": 626,
-                "end": 630,
+                "start": 629,
+                "end": 633,
                 "loc": {
                   "start": {
                     "line": 36,
@@ -1864,8 +1897,8 @@ export const api= {
               "arguments": [
                 {
                   "type": "Identifier",
-                  "start": 631,
-                  "end": 637,
+                  "start": 634,
+                  "end": 640,
                   "loc": {
                     "start": {
                       "line": 36,
@@ -1884,8 +1917,8 @@ export const api= {
           },
           {
             "type": "ReturnStatement",
-            "start": 644,
-            "end": 658,
+            "start": 647,
+            "end": 661,
             "loc": {
               "start": {
                 "line": 37,
@@ -1898,8 +1931,8 @@ export const api= {
             },
             "argument": {
               "type": "Identifier",
-              "start": 651,
-              "end": 657,
+              "start": 654,
+              "end": 660,
               "loc": {
                 "start": {
                   "line": 37,
@@ -1918,8 +1951,8 @@ export const api= {
     },
     {
       "type": "FunctionDeclaration",
-      "start": 662,
-      "end": 749,
+      "start": 665,
+      "end": 755,
       "loc": {
         "start": {
           "line": 40,
@@ -1932,8 +1965,8 @@ export const api= {
       },
       "id": {
         "type": "Identifier",
-        "start": 671,
-        "end": 682,
+        "start": 674,
+        "end": 685,
         "loc": {
           "start": {
             "line": 40,
@@ -1949,15 +1982,48 @@ export const api= {
       "expression": false,
       "generator": false,
       "async": false,
-      "params": [],
+      "params": [
+        {
+          "type": "Identifier",
+          "start": 686,
+          "end": 687,
+          "loc": {
+            "start": {
+              "line": 40,
+              "column": 21
+            },
+            "end": {
+              "line": 40,
+              "column": 22
+            }
+          },
+          "name": "a"
+        },
+        {
+          "type": "Identifier",
+          "start": 688,
+          "end": 689,
+          "loc": {
+            "start": {
+              "line": 40,
+              "column": 23
+            },
+            "end": {
+              "line": 40,
+              "column": 24
+            }
+          },
+          "name": "b"
+        }
+      ],
       "body": {
         "type": "BlockStatement",
-        "start": 684,
-        "end": 749,
+        "start": 690,
+        "end": 755,
         "loc": {
           "start": {
             "line": 40,
-            "column": 22
+            "column": 25
           },
           "end": {
             "line": 44,
@@ -1967,8 +2033,8 @@ export const api= {
         "body": [
           {
             "type": "VariableDeclaration",
-            "start": 690,
-            "end": 710,
+            "start": 696,
+            "end": 716,
             "loc": {
               "start": {
                 "line": 41,
@@ -1982,8 +2048,8 @@ export const api= {
             "declarations": [
               {
                 "type": "VariableDeclarator",
-                "start": 696,
-                "end": 709,
+                "start": 702,
+                "end": 715,
                 "loc": {
                   "start": {
                     "line": 41,
@@ -1996,8 +2062,8 @@ export const api= {
                 },
                 "id": {
                   "type": "Identifier",
-                  "start": 696,
-                  "end": 702,
+                  "start": 702,
+                  "end": 708,
                   "loc": {
                     "start": {
                       "line": 41,
@@ -2012,8 +2078,8 @@ export const api= {
                 },
                 "init": {
                   "type": "BinaryExpression",
-                  "start": 704,
-                  "end": 709,
+                  "start": 710,
+                  "end": 715,
                   "loc": {
                     "start": {
                       "line": 41,
@@ -2026,8 +2092,8 @@ export const api= {
                   },
                   "left": {
                     "type": "Identifier",
-                    "start": 704,
-                    "end": 705,
+                    "start": 710,
+                    "end": 711,
                     "loc": {
                       "start": {
                         "line": 41,
@@ -2043,8 +2109,8 @@ export const api= {
                   "operator": "-",
                   "right": {
                     "type": "Identifier",
-                    "start": 708,
-                    "end": 709,
+                    "start": 714,
+                    "end": 715,
                     "loc": {
                       "start": {
                         "line": 41,
@@ -2064,8 +2130,8 @@ export const api= {
           },
           {
             "type": "ExpressionStatement",
-            "start": 715,
-            "end": 728,
+            "start": 721,
+            "end": 734,
             "loc": {
               "start": {
                 "line": 42,
@@ -2078,8 +2144,8 @@ export const api= {
             },
             "expression": {
               "type": "CallExpression",
-              "start": 715,
-              "end": 727,
+              "start": 721,
+              "end": 733,
               "loc": {
                 "start": {
                   "line": 42,
@@ -2092,8 +2158,8 @@ export const api= {
               },
               "callee": {
                 "type": "Identifier",
-                "start": 715,
-                "end": 719,
+                "start": 721,
+                "end": 725,
                 "loc": {
                   "start": {
                     "line": 42,
@@ -2109,8 +2175,8 @@ export const api= {
               "arguments": [
                 {
                   "type": "Identifier",
-                  "start": 720,
-                  "end": 726,
+                  "start": 726,
+                  "end": 732,
                   "loc": {
                     "start": {
                       "line": 42,
@@ -2129,8 +2195,8 @@ export const api= {
           },
           {
             "type": "ReturnStatement",
-            "start": 733,
-            "end": 747,
+            "start": 739,
+            "end": 753,
             "loc": {
               "start": {
                 "line": 43,
@@ -2143,8 +2209,8 @@ export const api= {
             },
             "argument": {
               "type": "Identifier",
-              "start": 740,
-              "end": 746,
+              "start": 746,
+              "end": 752,
               "loc": {
                 "start": {
                   "line": 43,
@@ -2163,8 +2229,8 @@ export const api= {
     },
     {
       "type": "FunctionDeclaration",
-      "start": 751,
-      "end": 841,
+      "start": 757,
+      "end": 850,
       "loc": {
         "start": {
           "line": 46,
@@ -2177,8 +2243,8 @@ export const api= {
       },
       "id": {
         "type": "Identifier",
-        "start": 760,
-        "end": 774,
+        "start": 766,
+        "end": 780,
         "loc": {
           "start": {
             "line": 46,
@@ -2194,15 +2260,48 @@ export const api= {
       "expression": false,
       "generator": false,
       "async": false,
-      "params": [],
+      "params": [
+        {
+          "type": "Identifier",
+          "start": 781,
+          "end": 782,
+          "loc": {
+            "start": {
+              "line": 46,
+              "column": 24
+            },
+            "end": {
+              "line": 46,
+              "column": 25
+            }
+          },
+          "name": "a"
+        },
+        {
+          "type": "Identifier",
+          "start": 783,
+          "end": 784,
+          "loc": {
+            "start": {
+              "line": 46,
+              "column": 26
+            },
+            "end": {
+              "line": 46,
+              "column": 27
+            }
+          },
+          "name": "b"
+        }
+      ],
       "body": {
         "type": "BlockStatement",
-        "start": 776,
-        "end": 841,
+        "start": 785,
+        "end": 850,
         "loc": {
           "start": {
             "line": 46,
-            "column": 25
+            "column": 28
           },
           "end": {
             "line": 50,
@@ -2212,8 +2311,8 @@ export const api= {
         "body": [
           {
             "type": "VariableDeclaration",
-            "start": 782,
-            "end": 802,
+            "start": 791,
+            "end": 811,
             "loc": {
               "start": {
                 "line": 47,
@@ -2227,8 +2326,8 @@ export const api= {
             "declarations": [
               {
                 "type": "VariableDeclarator",
-                "start": 788,
-                "end": 801,
+                "start": 797,
+                "end": 810,
                 "loc": {
                   "start": {
                     "line": 47,
@@ -2241,8 +2340,8 @@ export const api= {
                 },
                 "id": {
                   "type": "Identifier",
-                  "start": 788,
-                  "end": 794,
+                  "start": 797,
+                  "end": 803,
                   "loc": {
                     "start": {
                       "line": 47,
@@ -2257,8 +2356,8 @@ export const api= {
                 },
                 "init": {
                   "type": "BinaryExpression",
-                  "start": 796,
-                  "end": 801,
+                  "start": 805,
+                  "end": 810,
                   "loc": {
                     "start": {
                       "line": 47,
@@ -2271,8 +2370,8 @@ export const api= {
                   },
                   "left": {
                     "type": "Identifier",
-                    "start": 796,
-                    "end": 797,
+                    "start": 805,
+                    "end": 806,
                     "loc": {
                       "start": {
                         "line": 47,
@@ -2288,8 +2387,8 @@ export const api= {
                   "operator": "*",
                   "right": {
                     "type": "Identifier",
-                    "start": 800,
-                    "end": 801,
+                    "start": 809,
+                    "end": 810,
                     "loc": {
                       "start": {
                         "line": 47,
@@ -2309,8 +2408,8 @@ export const api= {
           },
           {
             "type": "ExpressionStatement",
-            "start": 807,
-            "end": 820,
+            "start": 816,
+            "end": 829,
             "loc": {
               "start": {
                 "line": 48,
@@ -2323,8 +2422,8 @@ export const api= {
             },
             "expression": {
               "type": "CallExpression",
-              "start": 807,
-              "end": 819,
+              "start": 816,
+              "end": 828,
               "loc": {
                 "start": {
                   "line": 48,
@@ -2337,8 +2436,8 @@ export const api= {
               },
               "callee": {
                 "type": "Identifier",
-                "start": 807,
-                "end": 811,
+                "start": 816,
+                "end": 820,
                 "loc": {
                   "start": {
                     "line": 48,
@@ -2354,8 +2453,8 @@ export const api= {
               "arguments": [
                 {
                   "type": "Identifier",
-                  "start": 812,
-                  "end": 818,
+                  "start": 821,
+                  "end": 827,
                   "loc": {
                     "start": {
                       "line": 48,
@@ -2374,8 +2473,8 @@ export const api= {
           },
           {
             "type": "ReturnStatement",
-            "start": 825,
-            "end": 839,
+            "start": 834,
+            "end": 848,
             "loc": {
               "start": {
                 "line": 49,
@@ -2388,8 +2487,8 @@ export const api= {
             },
             "argument": {
               "type": "Identifier",
-              "start": 832,
-              "end": 838,
+              "start": 841,
+              "end": 847,
               "loc": {
                 "start": {
                   "line": 49,
@@ -2408,8 +2507,8 @@ export const api= {
     },
     {
       "type": "FunctionDeclaration",
-      "start": 880,
-      "end": 964,
+      "start": 889,
+      "end": 976,
       "loc": {
         "start": {
           "line": 55,
@@ -2422,8 +2521,8 @@ export const api= {
       },
       "id": {
         "type": "Identifier",
-        "start": 889,
-        "end": 897,
+        "start": 898,
+        "end": 906,
         "loc": {
           "start": {
             "line": 55,
@@ -2439,15 +2538,48 @@ export const api= {
       "expression": false,
       "generator": false,
       "async": false,
-      "params": [],
+      "params": [
+        {
+          "type": "Identifier",
+          "start": 907,
+          "end": 908,
+          "loc": {
+            "start": {
+              "line": 55,
+              "column": 18
+            },
+            "end": {
+              "line": 55,
+              "column": 19
+            }
+          },
+          "name": "a"
+        },
+        {
+          "type": "Identifier",
+          "start": 909,
+          "end": 910,
+          "loc": {
+            "start": {
+              "line": 55,
+              "column": 20
+            },
+            "end": {
+              "line": 55,
+              "column": 21
+            }
+          },
+          "name": "b"
+        }
+      ],
       "body": {
         "type": "BlockStatement",
-        "start": 899,
-        "end": 964,
+        "start": 911,
+        "end": 976,
         "loc": {
           "start": {
             "line": 55,
-            "column": 19
+            "column": 22
           },
           "end": {
             "line": 59,
@@ -2457,8 +2589,8 @@ export const api= {
         "body": [
           {
             "type": "VariableDeclaration",
-            "start": 905,
-            "end": 925,
+            "start": 917,
+            "end": 937,
             "loc": {
               "start": {
                 "line": 56,
@@ -2472,8 +2604,8 @@ export const api= {
             "declarations": [
               {
                 "type": "VariableDeclarator",
-                "start": 911,
-                "end": 924,
+                "start": 923,
+                "end": 936,
                 "loc": {
                   "start": {
                     "line": 56,
@@ -2486,8 +2618,8 @@ export const api= {
                 },
                 "id": {
                   "type": "Identifier",
-                  "start": 911,
-                  "end": 917,
+                  "start": 923,
+                  "end": 929,
                   "loc": {
                     "start": {
                       "line": 56,
@@ -2502,8 +2634,8 @@ export const api= {
                 },
                 "init": {
                   "type": "BinaryExpression",
-                  "start": 919,
-                  "end": 924,
+                  "start": 931,
+                  "end": 936,
                   "loc": {
                     "start": {
                       "line": 56,
@@ -2516,8 +2648,8 @@ export const api= {
                   },
                   "left": {
                     "type": "Identifier",
-                    "start": 919,
-                    "end": 920,
+                    "start": 931,
+                    "end": 932,
                     "loc": {
                       "start": {
                         "line": 56,
@@ -2533,8 +2665,8 @@ export const api= {
                   "operator": "/",
                   "right": {
                     "type": "Identifier",
-                    "start": 923,
-                    "end": 924,
+                    "start": 935,
+                    "end": 936,
                     "loc": {
                       "start": {
                         "line": 56,
@@ -2554,8 +2686,8 @@ export const api= {
           },
           {
             "type": "ExpressionStatement",
-            "start": 930,
-            "end": 943,
+            "start": 942,
+            "end": 955,
             "loc": {
               "start": {
                 "line": 57,
@@ -2568,8 +2700,8 @@ export const api= {
             },
             "expression": {
               "type": "CallExpression",
-              "start": 930,
-              "end": 942,
+              "start": 942,
+              "end": 954,
               "loc": {
                 "start": {
                   "line": 57,
@@ -2582,8 +2714,8 @@ export const api= {
               },
               "callee": {
                 "type": "Identifier",
-                "start": 930,
-                "end": 934,
+                "start": 942,
+                "end": 946,
                 "loc": {
                   "start": {
                     "line": 57,
@@ -2599,8 +2731,8 @@ export const api= {
               "arguments": [
                 {
                   "type": "Identifier",
-                  "start": 935,
-                  "end": 941,
+                  "start": 947,
+                  "end": 953,
                   "loc": {
                     "start": {
                       "line": 57,
@@ -2619,8 +2751,8 @@ export const api= {
           },
           {
             "type": "ReturnStatement",
-            "start": 948,
-            "end": 962,
+            "start": 960,
+            "end": 974,
             "loc": {
               "start": {
                 "line": 58,
@@ -2633,8 +2765,8 @@ export const api= {
             },
             "argument": {
               "type": "Identifier",
-              "start": 955,
-              "end": 961,
+              "start": 967,
+              "end": 973,
               "loc": {
                 "start": {
                   "line": 58,
@@ -2654,8 +2786,8 @@ export const api= {
         {
           "type": "Block",
           "value": " one line\ntwo lines\nthree lines ",
-          "start": 843,
-          "end": 879,
+          "start": 852,
+          "end": 888,
           "loc": {
             "start": {
               "line": 52,
@@ -2671,8 +2803,8 @@ export const api= {
     },
     {
       "type": "FunctionDeclaration",
-      "start": 978,
-      "end": 1023,
+      "start": 990,
+      "end": 1035,
       "loc": {
         "start": {
           "line": 62,
@@ -2685,8 +2817,8 @@ export const api= {
       },
       "id": {
         "type": "Identifier",
-        "start": 987,
-        "end": 991,
+        "start": 999,
+        "end": 1003,
         "loc": {
           "start": {
             "line": 62,
@@ -2705,8 +2837,8 @@ export const api= {
       "params": [
         {
           "type": "Identifier",
-          "start": 992,
-          "end": 996,
+          "start": 1004,
+          "end": 1008,
           "loc": {
             "start": {
               "line": 62,
@@ -2722,8 +2854,8 @@ export const api= {
       ],
       "body": {
         "type": "BlockStatement",
-        "start": 997,
-        "end": 1023,
+        "start": 1009,
+        "end": 1035,
         "loc": {
           "start": {
             "line": 62,
@@ -2737,8 +2869,8 @@ export const api= {
         "body": [
           {
             "type": "ExpressionStatement",
-            "start": 1003,
-            "end": 1021,
+            "start": 1015,
+            "end": 1033,
             "loc": {
               "start": {
                 "line": 63,
@@ -2751,8 +2883,8 @@ export const api= {
             },
             "expression": {
               "type": "CallExpression",
-              "start": 1003,
-              "end": 1020,
+              "start": 1015,
+              "end": 1032,
               "loc": {
                 "start": {
                   "line": 63,
@@ -2765,8 +2897,8 @@ export const api= {
               },
               "callee": {
                 "type": "MemberExpression",
-                "start": 1003,
-                "end": 1014,
+                "start": 1015,
+                "end": 1026,
                 "loc": {
                   "start": {
                     "line": 63,
@@ -2779,8 +2911,8 @@ export const api= {
                 },
                 "object": {
                   "type": "Identifier",
-                  "start": 1003,
-                  "end": 1010,
+                  "start": 1015,
+                  "end": 1022,
                   "loc": {
                     "start": {
                       "line": 63,
@@ -2795,8 +2927,8 @@ export const api= {
                 },
                 "property": {
                   "type": "Identifier",
-                  "start": 1011,
-                  "end": 1014,
+                  "start": 1023,
+                  "end": 1026,
                   "loc": {
                     "start": {
                       "line": 63,
@@ -2815,8 +2947,8 @@ export const api= {
               "arguments": [
                 {
                   "type": "Identifier",
-                  "start": 1015,
-                  "end": 1019,
+                  "start": 1027,
+                  "end": 1031,
                   "loc": {
                     "start": {
                       "line": 63,
@@ -2839,8 +2971,8 @@ export const api= {
         {
           "type": "Line",
           "value": " one line",
-          "start": 966,
-          "end": 977,
+          "start": 978,
+          "end": 989,
           "loc": {
             "start": {
               "line": 61,
