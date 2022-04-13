@@ -66,7 +66,7 @@ function CallExpression(props: any) {
         {data.arguments.map((e: any, index: number) => {
           return (
             <span key={index}>
-              <span>
+              <span className="ast-params">
                 <ChooseType info={e} />
               </span>
               <span>{coma(index)}</span>

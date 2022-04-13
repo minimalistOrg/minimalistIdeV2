@@ -6,9 +6,9 @@ function VariableDeclaration(props: any) {
 
   return (
     <>
-      <span className="varType">{data.kind}</span>
+      <span className="ast-variable-type">{data.kind}</span>
       <span> </span>
-      <span>{data.declarations[0].id.name}</span>
+      <span className="ast-variable-name">{data.declarations[0].id.name}</span>
       <span> </span>
       <span>=</span>
       <span> </span>

@@ -14,9 +14,28 @@
   color: purple;
 }
 
-.ast-CallExpression{
- text-decoration: underline;
- font-size: inherit;
- font-family: inherit;
- cursor: pointer;
+.ast-variable-type {
+  color: var(--keyword-color);
+}
+
+.ast-variable-name {
+  color: var(--assignment-name);
+  font-weight: 700;
+}
+
+.ast-CallExpression {
+  color: var(--std-library-color);
+  font-weight: 700;
+  font-size: inherit;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.ast-CallExpression:hover {
+  text-decoration: underline;
+}
+
+.ast-params{
+  color: #895903;
+  font-style: italic;
 }
