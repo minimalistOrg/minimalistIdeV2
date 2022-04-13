@@ -7,6 +7,7 @@ interface CodeBlockEntry {
   title: string | undefined;
   argument: any;
   children: any;
+  onClick: any;
 }
 
 function CodeBlock(props: CodeBlockEntry): JSX.Element {
@@ -32,7 +33,8 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
   }
 
   return (
-    <div className="CodeBlock" ref={Bubble}>
+
+    <div className="CodeBlock" ref={Bubble} onClick={e => props.onClick(e)}>
       <div className="CodeBlock__header">
         <div className="CodeBlock__title">
           {props.title}
@@ -57,6 +59,7 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
         </pre>
       </div>
     </div>
+
   );
 }
 

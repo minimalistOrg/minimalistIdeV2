@@ -1,18 +1,22 @@
 import ChooseType from "../ChooseType";
 import { useState, useEffect } from "react";
 import { api } from "../../../AST/data";
-import { useSelector } from "react-redux";
 
 function CallExpression(props: any) {
   const data = props.data;
   // console.log(data.callee);
 
   const [isfunction, setIsfunction] = useState("");
+  const [iffunction, setIffunction] = useState(false);
+  const [indexFuction, setIndexFunction] = useState(null);
 
   useEffect(() => {
     if (data.callee.type === "Identifier") {
       setIsfunction("ast-CallExpression");
+      setIffunction(true);
+      setIndexFunction(SearchIndex())
     }
+    // eslint-disable-next-line
   }, [data.callee.type]);
 
   const long = data.arguments.length;
@@ -25,10 +29,9 @@ function CallExpression(props: any) {
     }
   }
 
-  const addBubble:any= useSelector<any>((state)=> state.addbubble.value) 
-  function test() {
+  function SearchIndex() {
     const dato = api.body;
-    const t = () => {
+    const index = () => {
       let rutaIndex = null;
       dato.forEach((e, index) => {
         let names = e.id;
@@ -41,13 +44,13 @@ function CallExpression(props: any) {
       });
       return rutaIndex;
     };
-    addBubble.add(t())
-    // console.log(t());
+
+    return index()
   }
 
   return (
     <span>
-      <span className={isfunction} onClick={test}>
+      <span className={isfunction} data-event={iffunction} data-index={indexFuction}>
         <ChooseType info={data.callee} />
       </span>
       <span>( </span>
