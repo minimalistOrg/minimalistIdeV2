@@ -8,13 +8,13 @@ function CallExpression(props: any) {
 
   const [isfunction, setIsfunction] = useState("");
   const [iffunction, setIffunction] = useState(false);
-  const [indexFuction, setIndexFunction] = useState(null);
+  const [indexFuction, setIndexFunction] = useState<any>(null);
 
   useEffect(() => {
     if (data.callee.type === "Identifier") {
       setIsfunction("ast-CallExpression");
       setIffunction(true);
-      setIndexFunction(SearchIndex())
+      setIndexFunction(SearchIndex());
     }
     // eslint-disable-next-line
   }, [data.callee.type]);
@@ -31,26 +31,31 @@ function CallExpression(props: any) {
 
   function SearchIndex() {
     const dato = api.body;
-    const index = () => {
-      let rutaIndex = null;
-      dato.forEach((e, index) => {
-        let names = e.id;
-        if (names?.name === data.callee.name) {
-          rutaIndex = index;
-        }
-        if(names?.name === undefined){
-          rutaIndex= null
-        }
-      });
-      return rutaIndex;
-    };
 
-    return index()
+    function index() {
+      let point = null;
+
+      let Niteracion = 0;
+      let validation = true;
+      while (validation) {
+        validation = !(dato[Niteracion].id?.name === data.callee.name);
+        point = Niteracion;
+        Niteracion = Niteracion + 1;
+      }
+
+      return point;
+    }
+
+    return index();
   }
 
   return (
     <span>
-      <span className={isfunction} data-event={iffunction} data-index={indexFuction}>
+      <span
+        className={isfunction}
+        data-event={iffunction}
+        data-index={indexFuction + ""}
+      >
         <ChooseType info={data.callee} />
       </span>
       <span>( </span>
