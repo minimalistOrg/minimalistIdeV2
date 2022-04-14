@@ -2,6 +2,7 @@ import { MutableRefObject, useEffect, useRef } from "react";
 import "./CodeBlock.css";
 import Resize from "./CodeBlock__Resize";
 import ChooseType from "../RenderAST/ChooseType";
+import { resetGlobal } from "../RenderAST/ASTtype/useGlobalCounter";
 
 interface CodeBlockEntry {
   title: string | undefined;
@@ -19,7 +20,9 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
     const IDBubble: HTMLDivElement | null = Bubble.current;
     const IDCode: MutableRefObject<HTMLElement | null> = CodeTxt;
     Resize(IDBubble, IDCode);
+    // console.log(NRender)
     // console.log(IDBubble)
+    resetGlobal(1);
   }, []);
 
   const long = props.argument.length;
@@ -33,8 +36,7 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
   }
 
   return (
-
-    <div className="CodeBlock" ref={Bubble} onClick={e => props.onClick(e)}>
+    <div className="CodeBlock" ref={Bubble} onClick={(e) => props.onClick(e)}>
       <div className="CodeBlock__header">
         <div className="CodeBlock__title">
           {props.title}
@@ -59,7 +61,6 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
         </pre>
       </div>
     </div>
-
   );
 }
 

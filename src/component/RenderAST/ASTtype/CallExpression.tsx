@@ -1,17 +1,26 @@
 import ChooseType from "../ChooseType";
 import { useState, useEffect } from "react";
 // import { api } from "../../../AST/data";
-import {useSelector} from "react-redux"
+import { useSelector } from "react-redux";
+import { useGlobalCounter } from "./useGlobalCounter";
 
 function CallExpression(props: any) {
   const data = props.data;
   // console.log(data.callee);
-  const count:any = useSelector<any>((state) => state.addbubble.value);
+  const count: any = useSelector<any>((state) => state.addbubble.value);
   // console.log(count,api.body,)
 
   const [isfunction, setIsfunction] = useState("");
   const [iffunction, setIffunction] = useState(false);
   const [indexFuction, setIndexFunction] = useState<any>(null);
+
+  const RenderNumber = useGlobalCounter();
+
+  let NumberReal = null;
+
+  if (data.callee.type === "Identifier") {
+    NumberReal = RenderNumber;
+  }
 
   useEffect(() => {
     if (data.callee.type === "Identifier") {
@@ -45,7 +54,6 @@ function CallExpression(props: any) {
         point = Niteracion;
         Niteracion = Niteracion + 1;
       }
-
       return point;
     }
 
@@ -58,6 +66,7 @@ function CallExpression(props: any) {
         className={isfunction}
         data-event={iffunction}
         data-index={indexFuction + ""}
+        data-order={NumberReal}
       >
         <ChooseType info={data.callee} />
       </span>
