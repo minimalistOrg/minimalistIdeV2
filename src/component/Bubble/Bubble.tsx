@@ -8,7 +8,7 @@ import { add } from "../Root-file/slice/addBubbleSlice";
 function Bubble(props: any) {
   const [btnCount, setBtnCount] = useState<any>([]);
   const [btnIndex, setBtnIndex] = useState<any>([]);
-  const [order,setOrder]= useState<any>([]);
+  const [order, setOrder] = useState<any>([]);
 
   const dispatch = useDispatch();
 
@@ -50,10 +50,12 @@ function Bubble(props: any) {
     const evalFunctionIndex = eval(event.target.getAttribute("data-index"));
     // eslint-disable-next-line
     const evalFunctionOrder = eval(event.target.getAttribute("data-order"));
+    //
     if (evalFunction) {
       setBtnCount(btnCount.concat(Codebubble(evalFunctionIndex)));
       setBtnIndex(btnIndex.concat(evalFunctionIndex));
-      setOrder(order.concat(evalFunctionOrder) )
+      setOrder(order.concat(evalFunctionOrder));
+      event.target.setAttribute("data-event", false);
     }
     // console.log(evalFunction, evalFunctionIndex);
   }
@@ -69,7 +71,11 @@ function Bubble(props: any) {
         <div className="ColBubbles">
           {btnCount.map((element: any, index: number) => {
             return (
-              <div key={index} className="order" style={{order: order[index]}}>
+              <div
+                key={index}
+                className="order"
+                style={{ order: order[index] }}
+              >
                 <Bubble entryPoint={btnIndex[index]} data={data} />
               </div>
             );
