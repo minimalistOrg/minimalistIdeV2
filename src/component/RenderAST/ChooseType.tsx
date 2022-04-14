@@ -11,7 +11,7 @@ import Identifier from "./ASTtype/Identifier"
 import IfStatement from "./ASTtype/IfStatement"
 import MemberExpression from "./ASTtype/MemberExpression"
 
-function ChooseType(props: any) {
+function ChooseType(props: any):JSX.Element {
   function choose(info: any) {
     //
     switch (info.type) {

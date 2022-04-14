@@ -1,7 +1,8 @@
 import ChooseType from "../ChooseType";
+import {VariableDeclarationType} from "./interfaceType"
 
-function VariableDeclaration(props: any) {
-  const data = props.data;
+function VariableDeclaration(props:{data: VariableDeclarationType}):JSX.Element {
+  const data: VariableDeclarationType = props.data;
   // console.log(props.data);
 
   return (

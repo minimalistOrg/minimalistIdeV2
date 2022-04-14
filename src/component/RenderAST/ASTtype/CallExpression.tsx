@@ -1,22 +1,26 @@
 import ChooseType from "../ChooseType";
 import { useState, useEffect } from "react";
-// import { api } from "../../../AST/data";
 import { useSelector } from "react-redux";
 import { useGlobalCounter } from "./useGlobalCounter";
+import {
+  CallExpressionType,
+  reduxSliceaddBubble,
+} from "./interfaceType";
+import { Coma } from "./Coma";
 
-function CallExpression(props: any) {
-  const data = props.data;
-  // console.log(data.callee);
-  const count: any = useSelector<any>((state) => state.addbubble.value);
-  // console.log(count,api.body,)
+function CallExpression(props: CallExpressionType): JSX.Element {
+  const data: any = props.data;
+  const count: any = useSelector<reduxSliceaddBubble>(
+    (state) => state.addbubble.value
+  );
 
-  const [isfunction, setIsfunction] = useState("");
-  const [iffunction, setIffunction] = useState(false);
-  const [indexFuction, setIndexFunction] = useState<any>(null);
+  const [isfunction, setIsfunction] = useState<string>("");
+  const [iffunction, setIffunction] = useState<boolean>(false);
+  const [indexFuction, setIndexFunction] = useState<number | null>(null);
 
-  const RenderNumber = useGlobalCounter();
+  const RenderNumber: number = useGlobalCounter();
 
-  let NumberReal = null;
+  let NumberReal: number | null = null;
 
   if (data.callee.type === "Identifier") {
     NumberReal = RenderNumber;
@@ -31,24 +35,16 @@ function CallExpression(props: any) {
     // eslint-disable-next-line
   }, [data.callee.type]);
 
-  const long = data.arguments.length;
+  const long: number = data.arguments.length;
 
-  function coma(actual: number) {
-    if (long - 1 === actual) {
-      return "";
-    } else {
-      return " , ";
-    }
-  }
-
-  function SearchIndex() {
+  function SearchIndex():number | null {
     const dato = count;
 
-    function index() {
-      let point = null;
+    function index(): number | null {
+      let point: number | null = null;
 
-      let Niteracion = 0;
-      let validation = true;
+      let Niteracion: number = 0;
+      let validation: boolean = true;
       while (validation) {
         validation = !(dato[Niteracion].id?.name === data.callee.name);
         point = Niteracion;
@@ -78,7 +74,7 @@ function CallExpression(props: any) {
               <span className="ast-params">
                 <ChooseType info={e} />
               </span>
-              <span>{coma(index)}</span>
+              <span>{Coma(index, long)}</span>
             </span>
           );
         })}

@@ -1,9 +1,7 @@
-function Identifier(props:any){
-  const data= props.data;
+function Identifier(props: { data: { name: string } }):JSX.Element {
+  const data: { name: string } = props.data;
   // console.log(data)
-  return (
-    <>{data.name}</>
-  )
+  return <>{data.name}</>;
 }
 
 export default Identifier;

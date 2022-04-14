@@ -1,7 +1,8 @@
 import ChooseType from "../ChooseType";
+import {MemberExpressionType} from "./interfaceType";
 
-function MemberExpression(props:any){
-  const data= props.data;
+function MemberExpression(props:{data: MemberExpressionType}):JSX.Element{
+  const data:MemberExpressionType= props.data;
   // console.log(data)
   return (
     <span>

@@ -1,31 +1,27 @@
-import ChooseType from "../ChooseType"
+import ChooseType from "../ChooseType";
+import { Coma } from "./Coma";
 
-function ObjectExpression(props: any) {
-  const data = props.data;
+function ObjectExpression(props: { data: { properties: [] } }):JSX.Element {
+  const data: { properties: [] } = props.data;
   // console.log(data);
 
-  const open = "{ ";
-  const close = " }";
-  const long= data.properties.length;
-
-  function coma(actual:number){
-    if(long - 1 === actual){
-      return ""
-    }else{
-      return " , "
-    }
-  }
+  const open:string = "{ ";
+  const close:string = " }";
+  const long:number = data.properties.length;
 
   return (
     <>
       <span>{open}</span>
       <span>
-        {data.properties.map((e: any,index:number) => {
+        {data.properties.map((e:{key:{name:string},value: object}, index: number) => {
           return (
             <span key={index}>
               <span>{e.key.name}:</span>
-              <span> <ChooseType info={e.value}/></span>
-              <span>{coma(index)}</span>
+              <span>
+                {" "}
+                <ChooseType info={e.value} />
+              </span>
+              <span>{Coma(index, long)}</span>
             </span>
           );
         })}

@@ -1,10 +1,9 @@
 import ChooseType from "../ChooseType";
 
-function ReturnStatement(props:any){
+function ReturnStatement(props:{data:{argument: object}}):JSX.Element{
 
-  const data= props.data;
+  const data:{argument: object}= props.data;
   // console.log(data);
-
   return(
     <span>
       <span>return </span>

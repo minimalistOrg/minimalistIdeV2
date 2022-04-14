@@ -1,9 +1,10 @@
 import ChooseType from "../ChooseType"
+import {LogicalExpressionType} from "./interfaceType";
 
-function LogicalExpression(props:any){
+function LogicalExpression(props:{data: LogicalExpressionType}):JSX.Element{
 
- const data = props.data.left;
-  const data2 = props.data.right;
+  const data:object = props.data.left;
+  const data2:object = props.data.right;
 
   return (
  <>
