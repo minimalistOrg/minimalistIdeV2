@@ -10,6 +10,7 @@ interface CodeBlockEntry {
   argument: [];
   children: JSX.Element;
   onClick: (event:any) => void;
+  onHoverevent: any
 }
 
 function CodeBlock(props: CodeBlockEntry): JSX.Element {
@@ -29,7 +30,8 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
   const long:number = props.argument.length;
 
   return (
-    <div className="CodeBlock" ref={Bubble} onClick={(e) => props.onClick(e)}>
+    <div className="CodeBlock" ref={Bubble} onClick={(e) => props.onClick(e)} onMouseOverCapture={(e) => props.onHoverevent(e)}>
+      
       <div className="CodeBlock__header">
         <div className="CodeBlock__title">
           {props.title}

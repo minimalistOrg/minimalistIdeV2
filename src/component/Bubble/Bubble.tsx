@@ -38,12 +38,45 @@ function Bubble(props: BubbleType) {
     };
   };
 
+  function hoverState(e: any) {
+    // eslint-disable-next-line
+    const evalFunction: boolean = eval(e.target.getAttribute("data-hover"));
+    // eslint-disable-next-line
+    const evalFunctionOrder: number = eval(e.target.getAttribute("data-order"));
+    // console.log(evalFunction)
+
+    if (evalFunction) {
+      document.getElementById("style-hover")?.remove();
+      // console.log(e.currentTarget.parentNode.parentNode);
+      const node = document.createElement("style");
+      node.id = "style-hover";
+      let style = `.pointRef:hover > .ColBubbles > .order[style="order: ${evalFunctionOrder};"] > div > div > div > .CodeBlock {
+                      box-shadow: 5px 5px 6px -4px #e5cb77;
+                      transition: background-color 300ms ease-in-out;
+                  }
+
+                  .pointRef:hover > .ColBubbles > .order[style="order: ${evalFunctionOrder};"] > div > div > div > .CodeBlock > .CodeBlock__header {
+                      background-color: #e5cb77;
+                      transition: background-color 300ms ease-in-out;
+                  }
+
+
+
+                  `;
+      node.innerHTML = style;
+      document.body.appendChild(node);
+    } else {
+      document.getElementById("style-hover")?.remove();
+    }
+  }
+
   const Codebubble = (index: number): JSX.Element => {
     return (
       <CodeBlock
         title={dataAst(index).name}
         argument={dataAst(index).params}
         onClick={handleAdd}
+        onHoverevent={hoverState}
       >
         <RenderAST ast={dataAst(index).body} />
       </CodeBlock>
@@ -84,7 +117,7 @@ function Bubble(props: BubbleType) {
 
   return (
     <div>
-      <div style={style}>
+      <div style={style} className="pointRef">
         <div>{Codebubble(props.entryPoint)}</div>
         <div className="ColBubbles">
           {btnCount.map((element: JSX.Element, index: number) => {
