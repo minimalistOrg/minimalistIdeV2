@@ -4,7 +4,7 @@ import store from "./component/Root-file/Redux/store";
 
 import Root from "./component/Root-file/Root"
 
-function App() {
+function App():JSX.Element {
   return (
 
       <Provider store={store}>

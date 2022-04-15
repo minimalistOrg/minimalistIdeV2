@@ -3,7 +3,7 @@ import {MutableRefObject} from "react";
 
 export default function Resize(id: any, idCode: MutableRefObject<HTMLElement|null>) {
 
-let limitHeight= 0
+let limitHeight:number= 0
 
   interact(id).resizable({
     edges: { top: false, left: false, bottom: true, right: true },
