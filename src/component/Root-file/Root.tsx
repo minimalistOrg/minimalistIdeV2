@@ -8,7 +8,7 @@ const data= api.body
 
   return (
     <div>
-      <Bubble entryPoint={0} data={data} />
+      <Bubble order={0} entryPoint={0} data={data} />
     </div>
   );
 }

@@ -29,6 +29,12 @@
   --constant-color-string: var(--cyan);
   --same-line-spacing: 0.25em;
   --nested-spacing: 1em;
+  /**/
+  --bg-highligth-function: rgba(240, 232, 24, 0.28);
+  --bs-bubble: 5px 5px 6px -4px #e5cb77;
+  --bst-bubble: box-shadow 300ms ease-in-out;
+  --bg-bubble-header: #e5cb77;
+  --bgt-bubble-header: background-color 300ms ease-in-out;
 }
 
 body {

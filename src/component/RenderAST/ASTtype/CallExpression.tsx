@@ -14,9 +14,10 @@ function CallExpression(props: CallExpressionType): JSX.Element {
     (state) => state.addbubble.value
   );
 
-  const [isfunction, setIsfunction] = useState<string>("");
+  const [isfunction, setIsfunction] = useState("");
   const [iffunction, setIffunction] = useState<boolean>(false);
   const [indexFuction, setIndexFunction] = useState<number | null>(null);
+  const [yesclass,setYesclass]= useState("")
 
   const RenderNumber: number = useGlobalCounter();
 
@@ -29,6 +30,7 @@ function CallExpression(props: CallExpressionType): JSX.Element {
   useEffect(() => {
     if (data.callee.type === "Identifier") {
       setIsfunction("ast-CallExpression");
+      setYesclass("ast-call")
       setIffunction(true);
       setIndexFunction(SearchIndex());
     }
@@ -56,8 +58,16 @@ function CallExpression(props: CallExpressionType): JSX.Element {
     return index();
   }
 
+function classlistobj(){
+  if(data.callee.name === undefined){
+    return ""
+  }else{
+    return data.callee.name + ""
+  }
+}
+
   return (
-    <span>
+    <span className={`${yesclass} ast-function-${classlistobj()}-${NumberReal}`}>
       <span
         className={isfunction}
         data-event={iffunction}

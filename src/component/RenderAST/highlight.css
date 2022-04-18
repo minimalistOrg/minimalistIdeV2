@@ -35,7 +35,25 @@
   text-decoration: underline;
 }
 
-.ast-params{
+.CodeBlock__header:hover {
+  background-color: #e5cb77;
+  transition: background-color 300ms ease-in-out;
+}
+
+.CodeBlockHover:hover {
+  box-shadow: 5px 5px 6px -4px #e5cb77;
+  transition: box-shadow 300ms ease-in-out;
+}
+
+.ast-params {
   color: #895903;
   font-style: italic;
+}
+
+.ast-call{
+  padding: 3px;
+}
+
+.ast-call:hover{
+  background-color: var(--bg-highligth-function)
 }
