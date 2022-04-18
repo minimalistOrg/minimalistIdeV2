@@ -67,20 +67,20 @@ function CallExpression(props: CallExpressionType): JSX.Element {
       >
         <ChooseType info={data.callee} />
       </span>
-      <span>( </span>
-      <span>
+      <span data-hover="true" data-order={NumberReal}>( </span>
+      <span data-hover="true" data-order={NumberReal}>
         {data.arguments.map((e: any, index: number) => {
           return (
-            <span key={index}>
-              <span className="ast-params">
-                <ChooseType info={e} />
+            <span data-hover="true" key={index}>
+              <span data-hover="true" data-order={NumberReal} className="ast-params">
+                <ChooseType info={e} order={NumberReal} />
               </span>
-              <span>{Coma(index, long)}</span>
+              <span data-hover="true" data-order={NumberReal}>{Coma(index, long)}</span>
             </span>
           );
         })}
       </span>
-      <span> )</span>
+      <span data-hover="true" data-order={NumberReal}> )</span>
     </span>
   );
 }

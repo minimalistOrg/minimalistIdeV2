@@ -50,12 +50,12 @@ function Bubble(props: BubbleType) {
       // console.log(e.currentTarget.parentNode.parentNode);
       const node = document.createElement("style");
       node.id = "style-hover";
-      let style = `.pointRef:hover > .ColBubbles > .order[style="order: ${evalFunctionOrder};"] > div > div > div > .CodeBlock {
+      let style = `.pointRef:hover + .ColBubbles > .order[style="order: ${evalFunctionOrder};"] > div > div > div > .CodeBlock {
                       box-shadow: 5px 5px 6px -4px #e5cb77;
-                      transition: background-color 300ms ease-in-out;
+                      transition: box-shadow 300ms ease-in-out;
                   }
 
-                  .pointRef:hover > .ColBubbles > .order[style="order: ${evalFunctionOrder};"] > div > div > div > .CodeBlock > .CodeBlock__header {
+                  .pointRef:hover + .ColBubbles > .order[style="order: ${evalFunctionOrder};"] > div > div > div > .CodeBlock > .CodeBlock__header {
                       background-color: #e5cb77;
                       transition: background-color 300ms ease-in-out;
                   }
@@ -117,8 +117,8 @@ function Bubble(props: BubbleType) {
 
   return (
     <div>
-      <div style={style} className="pointRef">
-        <div>{Codebubble(props.entryPoint)}</div>
+      <div style={style}>
+        <div className="pointRef">{Codebubble(props.entryPoint)}</div>
         <div className="ColBubbles">
           {btnCount.map((element: JSX.Element, index: number) => {
             return (

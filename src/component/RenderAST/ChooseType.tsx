@@ -37,7 +37,7 @@ function ChooseType(props: any):JSX.Element {
         return <MemberExpression data={info} />
       //type primitive
       case "Literal":
-        return <Literal data={info} />;
+        return <Literal data={info} order={props.order} />;
       case "BinaryExpression":
         return <BinaryExpression data={info} />;
       default:
