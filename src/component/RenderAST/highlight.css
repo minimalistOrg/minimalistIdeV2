@@ -36,13 +36,13 @@
 }
 
 .CodeBlock__header:hover {
-  background-color: #e5cb77;
-  transition: background-color 300ms ease-in-out;
+  background-color: var(--bg-bubble-header);
+  transition: var(--bgt-bubble-header);
 }
 
 .CodeBlockHover:hover {
-  box-shadow: 5px 5px 6px -4px #e5cb77;
-  transition: box-shadow 300ms ease-in-out;
+  box-shadow: var(--bs-bubble);
+  transition: var(--bst-bubble);
 }
 
 .ast-params {
@@ -55,5 +55,6 @@
 }
 
 .ast-call:hover{
-  background-color: var(--bg-highligth-function)
+  background-color: var(--bg-highligth-function);
+  transition: var(--bgt-bubble-header);
 }

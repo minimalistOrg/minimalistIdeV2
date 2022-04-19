@@ -48,7 +48,8 @@ code .ast-function-${e.currentTarget.getAttribute(
       "data-title"
     )}-${e.currentTarget.getAttribute("data-order")}
 {
-  background-color: var(--bg-highligth-function) 
+  background-color: var(--bg-highligth-function);
+  transition: var(--bgt-bubble-header);
 }
       `;
     document.body.appendChild(style);
