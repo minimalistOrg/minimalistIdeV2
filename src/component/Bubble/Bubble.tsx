@@ -4,6 +4,7 @@ import { useState } from "react";
 import "./Bubble.css";
 import { useDispatch } from "react-redux";
 import { add } from "../Root-file/slice/addBubbleSlice";
+import { hoverState } from "../CodeBlock/Functions/HoverIdentifier";
 
 interface BubbleType {
   entryPoint: number;
@@ -39,37 +40,6 @@ function Bubble(props: BubbleType) {
     };
   };
 
-  function hoverState(e: any) {
-    // eslint-disable-next-line
-    const evalFunction: boolean = eval(e.target.getAttribute("data-hover"));
-    // eslint-disable-next-line
-    const evalFunctionOrder: number = eval(e.target.getAttribute("data-order"));
-
-    if (evalFunction) {
-      document.getElementById("style-hover")?.remove();
-      // console.log(e.currentTarget.parentNode.parentNode);
-      const node = document.createElement("style");
-      node.id = "style-hover";
-      let style = `.pointRef:hover + .ColBubbles > .order[style="order: ${evalFunctionOrder};"] > div > div > div > .CodeBlock {
-                      box-shadow: var(--bs-bubble); 
-                      transition: var(--bst-bubble); 
-                  }
-
-                  .pointRef:hover + .ColBubbles > .order[style="order: ${evalFunctionOrder};"] > div > div > div > .CodeBlock > .CodeBlock__header {
-                      background-color: var(--bg-bubble-header);
-                      transition: var(--bgt-bubble-header); 
-                  }
-
-
-
-                  `;
-      node.innerHTML = style;
-      document.body.appendChild(node);
-    } else {
-      document.getElementById("style-hover")?.remove();
-    }
-  }
-
   const Codebubble = (index: number): JSX.Element => {
     return (
       <CodeBlock
@@ -84,30 +54,25 @@ function Bubble(props: BubbleType) {
     );
   };
 
-  interface addType {
-    target: {
-      getAttribute: (className: string) => string;
-      setAttribute: (className: string, state: boolean) => void;
-    };
-  }
-
-  function handleAdd(event: addType): void {
+  function handleAdd(event: any): void {
     // eslint-disable-next-line
-    const evalFunction: boolean = eval(event.target.getAttribute("data-event"));
+    const evalFunction: boolean = eval(
+      event.target.parentNode.getAttribute("data-event")
+    );
     // eslint-disable-next-line
     const evalFunctionIndex: number = eval(
-      event.target.getAttribute("data-index")
+      event.target.parentNode.getAttribute("data-index")
     );
     // eslint-disable-next-line
     const evalFunctionOrder: number = eval(
-      event.target.getAttribute("data-order")
+      event.target.parentNode.getAttribute("data-order")
     );
     //
     if (evalFunction) {
       setBtnCount(btnCount.concat(Codebubble(evalFunctionIndex)));
       setBtnIndex(btnIndex.concat(evalFunctionIndex));
       setOrder(order.concat(evalFunctionOrder));
-      event.target.setAttribute("data-event", false);
+      event.target.parentNode.setAttribute("data-event", false);
     }
     // console.log(evalFunction, evalFunctionIndex);
   }

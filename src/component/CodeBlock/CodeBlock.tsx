@@ -4,6 +4,7 @@ import Resize from "./CodeBlock__Resize";
 import ChooseType from "../RenderAST/ChooseType";
 import { resetGlobal } from "../RenderAST/ASTtype/useGlobalCounter";
 import { Coma } from "../RenderAST/ASTtype/Coma";
+import {HoverIdentifier, hoverHeader, hoverHeaderLose} from "./Functions/HoverIdentifier";
 
 interface CodeBlockEntry {
   title: string | undefined;
@@ -30,34 +31,6 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
 
   const long: number = props.argument.length;
 
-  function hoverHeader(e: any) {
-    const grandparentHover =
-      e.currentTarget.parentNode.parentNode.parentNode.parentNode.parentNode
-        .parentNode.parentNode;
-
-    e.currentTarget.parentNode.classList.add("CodeBlockHover");
-    const style = document.createElement("style");
-    style.id = "titleHover";
-    style.innerHTML = `
-.${grandparentHover.classList.value}:hover >
-.pointRef > 
-.CodeBlock >
-.CodeBlock__body >
-pre >
-code .ast-function-${e.currentTarget.getAttribute(
-      "data-title"
-    )}-${e.currentTarget.getAttribute("data-order")}
-{
-  background-color: var(--bg-highligth-function);
-  transition: var(--bgt-bubble-header);
-}
-      `;
-    document.body.appendChild(style);
-  }
-  function hoverHeaderLose(e: any) {
-    e.currentTarget.parentNode.classList.remove("CodeBlockHover");
-    document.getElementById("titleHover")?.remove();
-  }
 
   return (
     <div
@@ -90,7 +63,7 @@ code .ast-function-${e.currentTarget.getAttribute(
         </div>
         <button className="CodeBlock__menu">...</button>
       </div>
-      <div className="CodeBlock__body">
+      <div className="CodeBlock__body" onMouseOver={HoverIdentifier}>
         <pre>
           <code ref={CodeTxt}>{props.children}</code>
         </pre>

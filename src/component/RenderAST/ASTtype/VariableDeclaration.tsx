@@ -9,7 +9,7 @@ function VariableDeclaration(props:{data: VariableDeclarationType}):JSX.Element 
     <>
       <span className="ast-variable-type">{data.kind}</span>
       <span> </span>
-      <span className="ast-variable-name">{data.declarations[0].id.name}</span>
+      <span className="ast-variable-name" data-idhover={data.declarations[0].id.name}>{data.declarations[0].id.name}</span>
       <span> </span>
       <span>=</span>
       <span> </span>

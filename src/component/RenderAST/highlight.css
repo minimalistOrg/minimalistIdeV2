@@ -54,7 +54,13 @@
   padding: 3px;
 }
 
-.ast-call:hover{
+.ast-call:hover, .ast-variable-name:hover{
   background-color: var(--bg-highligth-function);
   transition: var(--bgt-bubble-header);
 }
+
+.p3{
+  padding: 3px;
+}
+
+
