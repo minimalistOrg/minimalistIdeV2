@@ -63,4 +63,7 @@
   padding: 3px;
 }
 
+.ast-call *:hover{
+   background-color: transparent !important;
+} 
 
