@@ -67,3 +67,10 @@
    background-color: transparent !important;
 } 
 
+pre{
+  padding: 6px;
+}
+
+/* .ast-identifier-n1, .ast-identifier-data1{ */
+/*    background: red; */
+/* } */

@@ -12,7 +12,7 @@ function VariableDeclaration(props: {
       <span className="ast-variable-type">{data.kind}</span>
       <span> </span>
       <span
-        className={`ast-variable-name ast-identifier-${data.declarations[0].id.name}`}
+        className={`p3 ast-variable-name ast-identifier-${data.declarations[0].id.name}`}
         data-idhover={data.declarations[0].id.name}
       >
         {data.declarations[0].id.name}

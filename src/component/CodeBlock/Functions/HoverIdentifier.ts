@@ -78,9 +78,31 @@ code .ast-function-${e.currentTarget.getAttribute(
 }
       `;
   document.body.appendChild(style);
+
+  const inheritParam = e.target.parentNode.getAttribute("data-params");
+  if (e.target.getAttribute("data-idhover")) {
+    // console.log(inheritParam);
+
+  const style = document.createElement("style");
+  style.id = "paramsHover";
+  style.innerHTML = `
+.${grandparentHover.classList.value}:hover >
+.pointRef > 
+.CodeBlock >
+.CodeBlock__body >
+pre >
+code .ast-identifier-${inheritParam}
+{
+  background-color: var(--bg-highligth-function);
+  transition: var(--bgt-bubble-header);
+}
+      `;
+  document.body.appendChild(style);
+  }
 }
 
 export function hoverHeaderLose(e: any) {
   e.currentTarget.parentNode.classList.remove("CodeBlockHover");
   document.getElementById("titleHover")?.remove();
+  document.getElementById("paramsHover")?.remove();
 }

@@ -10,12 +10,14 @@ interface BubbleType {
   entryPoint: number;
   data: any[];
   order: number;
+  dataparams: string[];
 }
 
 function Bubble(props: BubbleType) {
   const [btnCount, setBtnCount] = useState<JSX.Element[]>([]);
   const [btnIndex, setBtnIndex] = useState<number[]>([]);
   const [order, setOrder] = useState<number[]>([]);
+  const [paramsHover, setParamsHover]= useState([])
 
   const dispatch = useDispatch();
 
@@ -48,6 +50,7 @@ function Bubble(props: BubbleType) {
         onClick={handleAdd}
         onHoverevent={hoverState}
         order={props.order}
+        dataparams={props.dataparams}
       >
         <RenderAST ast={dataAst(index).body} />
       </CodeBlock>
@@ -55,6 +58,14 @@ function Bubble(props: BubbleType) {
   };
 
   function handleAdd(event: any): void {
+    const elementFunction= event.target.parentNode.parentNode
+    const arguument= elementFunction.querySelectorAll(".ast-params > .p3")
+    let arg:any= []
+    arguument.forEach( (e:any)=>{
+      arg.push(e.textContent)
+    } )
+    console.log(arg)
+    setParamsHover(arg)
     // eslint-disable-next-line
     const evalFunction: boolean = eval(
       event.target.parentNode.getAttribute("data-event")
@@ -101,6 +112,7 @@ function Bubble(props: BubbleType) {
                   order={order[index]}
                   entryPoint={btnIndex[index]}
                   data={data}
+                  dataparams={paramsHover}
                 />
               </div>
             );

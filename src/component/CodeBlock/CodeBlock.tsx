@@ -13,6 +13,7 @@ interface CodeBlockEntry {
   onClick: (event: any) => void;
   onHoverevent: any;
   order: number;
+  dataparams: string[];
 }
 
 function CodeBlock(props: CodeBlockEntry): JSX.Element {
@@ -48,11 +49,11 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
       >
         <div className="CodeBlock__title">
           {props.title}
-          <span className="CodeBlock__arguments">
+          <span className="CodeBlock__arguments" onMouseOver={HoverIdentifier}>
             (
             {props.argument.map((e: any, index: any) => {
               return (
-                <span key={index}>
+                <span key={index} data-params={props.dataparams[index]}>
                   <ChooseType info={e} />
                   <span>{Coma(index, long)}</span>
                 </span>
