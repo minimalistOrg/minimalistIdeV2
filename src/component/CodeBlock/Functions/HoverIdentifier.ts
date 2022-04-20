@@ -9,6 +9,10 @@ export function HoverIdentifier(event: any) {
           background-color: var(--bg-highligth-function);
           transition: var(--bgt-bubble-header);
       }
+      .CodeBlock:hover .ast-CallExpression > .ast-identifier-${condition}{
+          background-color: transparent;
+          transition: none;
+      }
     `;
     document.body.appendChild(style);
   } else {

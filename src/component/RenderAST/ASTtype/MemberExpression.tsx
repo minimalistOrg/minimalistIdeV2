@@ -5,7 +5,7 @@ function MemberExpression(props:{data: MemberExpressionType}):JSX.Element{
   const data:MemberExpressionType= props.data;
   // console.log(data)
   return (
-    <span>
+    <span className="identifierNot">
       <span>
       <ChooseType info={data.object} />
       </span>

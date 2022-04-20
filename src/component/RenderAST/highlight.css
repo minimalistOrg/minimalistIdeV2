@@ -71,6 +71,10 @@ pre{
   padding: 6px;
 }
 
+.identifierNot:hover *{
+  background-color: transparent !important;
+}
+
 /* .ast-identifier-n1, .ast-identifier-data1{ */
 /*    background: red; */
 /* } */
