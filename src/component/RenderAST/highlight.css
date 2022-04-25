@@ -97,6 +97,9 @@ pre{
 .highligth-c6{
   background-color: var(--color-6) !important;
 }
+.highligth-c7{
+  background-color: var(--color-7) !important;
+}
 
 .ast-CallExpression .highligth-c1, .ast-CallExpression span[data-toggle] {
   background-color: transparent !important;

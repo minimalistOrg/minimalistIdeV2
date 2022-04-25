@@ -111,7 +111,7 @@ export function hoverHeaderLose(e: any) {
   document.getElementById("paramsHover")?.remove();
 }
 
-let watch = 1;
+let watch = 0;
 export function highligthToogle(e: any) {
   const element = e.target.parentNode;
   const validation = element.querySelector(".p3[data-idhover]");
@@ -122,9 +122,10 @@ export function highligthToogle(e: any) {
       `span[class~="ast-identifier-${validation.getAttribute("data-idhover")}"]`
     );
 
-    watch += 1;
     if(watch > 6){
-      watch= 0
+      watch= 1
+    }else{
+      watch = watch + 1;
     }
 
     searchInBox.forEach((e: any) => {
