@@ -10,6 +10,9 @@ import ExpressionStatement from "./ASTtype/ExpressionStatement"
 import Identifier from "./ASTtype/Identifier"
 import IfStatement from "./ASTtype/IfStatement"
 import MemberExpression from "./ASTtype/MemberExpression"
+import ArrowFunctionExpression from "./ASTtype/ArrowFunctionExpression"
+import BlockStatement from "./ASTtype/BlockStatement";
+import TemplateLiteral from "./ASTtype/TemplateLiteral";
 
 function ChooseType(props: any):JSX.Element {
   function choose(info: any) {
@@ -19,6 +22,12 @@ function ChooseType(props: any):JSX.Element {
         return <VariableDeclaration data={info} />;
       case "LogicalExpression":
         return <LogicalExpression data={info}/>
+      case "ArrowFunctionExpression":
+        return <ArrowFunctionExpression data={info}/>
+      case "BlockStatement":
+        return <BlockStatement data={info}/>
+      case "TemplateLiteral":
+        return <TemplateLiteral data={info}/>
       case "ObjectExpression":
         return <ObjectExpression data={info}/>
       case "ArrayExpression":
