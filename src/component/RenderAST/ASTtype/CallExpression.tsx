@@ -78,7 +78,7 @@ function classlistobj(){
         <ChooseType info={data.callee} />
       </span>
       <span data-hover="true" data-order={NumberReal}>( </span>
-      <span data-hover="true" data-order={NumberReal} datas-test="hi">
+      <span data-hover="true" data-order={NumberReal}>
         {data.arguments.map((e: any, index: number) => {
           return (
             <span data-hover="true" key={index}>

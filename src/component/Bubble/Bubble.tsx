@@ -62,9 +62,9 @@ function Bubble(props: BubbleType) {
     highligthToogle(event)
     //
     const elementFunction= event.target.parentNode.parentNode
-    const arguument= elementFunction.querySelectorAll(".ast-params > .p3")
+    const argument = elementFunction.querySelectorAll(".ast-params > .p3")
     let arg:any= []
-    arguument.forEach( (e:any)=>{
+    argument.forEach( (e:any)=>{
       arg.push(e.textContent)
     } )
     // console.log(arg)
