@@ -63,15 +63,38 @@
   padding: 3px;
 }
 
-.ast-call *:hover{
-   background-color: transparent !important;
-} 
+/* .ast-call *:hover{ */
+/*    background-color: transparent !important; */
+/* } */ 
 
 pre{
   padding: 6px;
 }
 
 .identifierNot:hover *{
+  background-color: transparent !important;
+}
+
+.highligth-c1{
+  background-color: var(--color-1) !important;
+}
+.highligth-c2{
+  background-color: var(--color-2) !important;
+}
+.highligth-c3{
+  background-color: var(--color-3) !important;
+}
+.highligth-c4{
+  background-color: var(--color-4) !important;
+}
+.highligth-c5{
+  background-color: var(--color-5) !important;
+}
+.highligth-c6{
+  background-color: var(--color-6) !important;
+}
+
+.ast-CallExpression .highligth-c1, .ast-CallExpression span[data-toggle] {
   background-color: transparent !important;
 }
 

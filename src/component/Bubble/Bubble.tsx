@@ -4,7 +4,7 @@ import { useState } from "react";
 import "./Bubble.css";
 import { useDispatch } from "react-redux";
 import { add } from "../Root-file/slice/addBubbleSlice";
-import { hoverState } from "../CodeBlock/Functions/HoverIdentifier";
+import { hoverState, highligthToogle } from "../CodeBlock/Functions/HoverIdentifier";
 
 interface BubbleType {
   entryPoint: number;
@@ -58,6 +58,9 @@ function Bubble(props: BubbleType) {
   };
 
   function handleAdd(event: any): void {
+    //
+    highligthToogle(event)
+    //
     const elementFunction= event.target.parentNode.parentNode
     const arguument= elementFunction.querySelectorAll(".ast-params > .p3")
     let arg:any= []

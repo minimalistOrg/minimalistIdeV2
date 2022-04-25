@@ -87,9 +87,9 @@ code .ast-function-${e.currentTarget.getAttribute(
   if (e.target.getAttribute("data-idhover")) {
     // console.log(inheritParam);
 
-  const style = document.createElement("style");
-  style.id = "paramsHover";
-  style.innerHTML = `
+    const style = document.createElement("style");
+    style.id = "paramsHover";
+    style.innerHTML = `
 .${grandparentHover.classList.value}:hover >
 .pointRef > 
 .CodeBlock >
@@ -101,7 +101,7 @@ code .ast-identifier-${inheritParam}
   transition: var(--bgt-bubble-header);
 }
       `;
-  document.body.appendChild(style);
+    document.body.appendChild(style);
   }
 }
 
@@ -109,4 +109,34 @@ export function hoverHeaderLose(e: any) {
   e.currentTarget.parentNode.classList.remove("CodeBlockHover");
   document.getElementById("titleHover")?.remove();
   document.getElementById("paramsHover")?.remove();
+}
+
+let watch = 1;
+export function highligthToogle(e: any) {
+  const element = e.target.parentNode;
+  const validation = element.querySelector(".p3[data-idhover]");
+  if (e.target.getAttribute("data-idhover")) {
+    console.log(e.target);
+
+    const searchInBox = e.currentTarget.querySelectorAll(
+      `span[class~="ast-identifier-${validation.getAttribute("data-idhover")}"]`
+    );
+
+    watch += 1;
+    if(watch > 6){
+      watch= 0
+    }
+
+    searchInBox.forEach((e: any) => {
+      let state = e.getAttribute("data-toggle");
+      if (!state) {
+        e.removeAttribute("data-toggle");
+        e.classList.toggle("highligth-c" + watch);
+        e.setAttribute("data-toggle", "highligth-c" + watch);
+      } else {
+        e.removeAttribute("data-toggle");
+        e.classList.toggle(state);
+      }
+    });
+  }
 }
