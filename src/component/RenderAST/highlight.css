@@ -1,3 +1,7 @@
+code div{
+  padding: 3px;
+}
+
 .varType {
   color: var(--blue);
 }
