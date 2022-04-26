@@ -8,8 +8,10 @@ import {
   HoverIdentifier,
   hoverHeader,
   hoverHeaderLose,
-  close
+  close,
 } from "./Functions/HoverIdentifier";
+import IcoCollapse from "./IcoCollapse";
+import { BubbleCollapse } from "./Functions/BubbleCollapse";
 
 interface CodeBlockEntry {
   title: string | undefined;
@@ -37,7 +39,6 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
 
   const long: number = props.argument.length;
 
-
   return (
     <div
       className="CodeBlock"
@@ -53,6 +54,12 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
         data-title={props.title}
       >
         <div className="CodeBlock__title">
+          <div
+            className="CodeBlock__collapse rotateIco-90"
+            onClick={BubbleCollapse}
+          >
+            <IcoCollapse />
+          </div>
           {props.title}
           <span className="CodeBlock__arguments" onMouseOver={HoverIdentifier}>
             (

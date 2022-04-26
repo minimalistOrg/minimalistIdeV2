@@ -26,6 +26,8 @@
 
 .CodeBlock__title {
   margin-right: 0.6rem;
+  display: flex;
+  align-items: center;
 }
 
 .CodeBlock__menu {
@@ -36,10 +38,6 @@
   padding: 0 0.4rem;
 }
 
-.CodeBlock__body {
-  color: var(--code-block-body);
-  padding: 0.3em;
-}
 
 code{
   white-space: pre-wrap;
@@ -48,3 +46,31 @@ code{
 pre{
   margin: 0;
 }
+
+.CodeBlock__collapse{
+  padding: 2px 4px 2px 4px;
+  margin-right: 5px;
+  cursor: pointer;
+  transition: 0.7s ease-in-out;
+}
+
+.animation-collapse{
+  transition: 0.7s ease-in-out;
+}
+
+/* animation */
+.rotateIco-90{
+  transform: rotate(90deg);
+}
+
+.CodeBlock__body {
+  color: var(--code-block-body);
+  padding: 0.3em;
+  transition: 2s ease-in-out;
+}
+.CodeBlock__body--collapse{
+  padding-top: 0px;
+  padding-bottom: 0px;
+  max-height: 1px;
+}
+
