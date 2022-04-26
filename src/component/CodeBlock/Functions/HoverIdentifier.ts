@@ -116,7 +116,7 @@ export function highligthToogle(e: any) {
   const element = e.target.parentNode;
   const validation = element.querySelector(".p3[data-idhover]");
   if (e.target.getAttribute("data-idhover")) {
-    console.log(e.target);
+    // console.log(e.target);
 
     const searchInBox = e.currentTarget.querySelectorAll(
       `span[class~="ast-identifier-${validation.getAttribute("data-idhover")}"]`

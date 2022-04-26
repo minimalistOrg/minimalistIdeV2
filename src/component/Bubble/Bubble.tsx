@@ -4,7 +4,10 @@ import { useState } from "react";
 import "./Bubble.css";
 import { useDispatch } from "react-redux";
 import { add } from "../Root-file/slice/addBubbleSlice";
-import { hoverState, highligthToogle } from "../CodeBlock/Functions/HoverIdentifier";
+import {
+  hoverState,
+  highligthToogle,
+} from "../CodeBlock/Functions/HoverIdentifier";
 
 interface BubbleType {
   entryPoint: number;
@@ -17,7 +20,7 @@ function Bubble(props: BubbleType) {
   const [btnCount, setBtnCount] = useState<JSX.Element[]>([]);
   const [btnIndex, setBtnIndex] = useState<number[]>([]);
   const [order, setOrder] = useState<number[]>([]);
-  const [paramsHover, setParamsHover]= useState<string[]>([])
+  const [paramsHover, setParamsHover] = useState<string[]>([]);
 
   const dispatch = useDispatch();
 
@@ -35,10 +38,30 @@ function Bubble(props: BubbleType) {
   ): { body: object; name: string; params: [] } => {
     // console.log(data[index].body?.body);
     // console.log(data[index])
+    let name = "";
+    let params = [];
+    let body = [];
+    if (data[index]["id"] === undefined) {
+      // console.log("hi");
+    } else {
+      name = data[index].id.name;
+      params = data[index].params;
+      body = data[index].body?.body;
+    }
+    if (data[index]["declarations"] === undefined) {
+      // console.log("hi");
+    } else {
+      name = data[index].declarations[0].id.name;
+      params = data[index].declarations[0].init.params;
+      body = data[index].declarations[0].init.body.body;
+      // console.log(data[index].declarations, "test");
+    }
+
+    //
     return {
-      body: data[index].body?.body,
-      name: data[index].id.name,
-      params: data[index].params,
+      body: body,
+      name: name,
+      params: params,
     };
   };
 
@@ -59,16 +82,16 @@ function Bubble(props: BubbleType) {
 
   function handleAdd(event: any): void {
     //
-    highligthToogle(event)
+    highligthToogle(event);
     //
-    const elementFunction= event.target.parentNode.parentNode
-    const argument = elementFunction.querySelectorAll(".ast-params > .p3")
-    let arg:any= []
-    argument.forEach( (e:any)=>{
-      arg.push(e.textContent)
-    } )
+    const elementFunction = event.target.parentNode.parentNode;
+    const argument = elementFunction.querySelectorAll(".ast-params > .p3");
+    let arg: any = [];
+    argument.forEach((e: any) => {
+      arg.push(e.textContent);
+    });
     // console.log(arg)
-    setParamsHover(paramsHover.concat([arg]))
+    setParamsHover(paramsHover.concat([arg]));
     // eslint-disable-next-line
     const evalFunction: boolean = eval(
       event.target.parentNode.getAttribute("data-event")
