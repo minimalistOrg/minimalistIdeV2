@@ -4,7 +4,12 @@ import Resize from "./CodeBlock__Resize";
 import ChooseType from "../RenderAST/ChooseType";
 import { resetGlobal } from "../RenderAST/ASTtype/useGlobalCounter";
 import { Coma } from "../RenderAST/ASTtype/Coma";
-import {HoverIdentifier, hoverHeader, hoverHeaderLose} from "./Functions/HoverIdentifier";
+import {
+  HoverIdentifier,
+  hoverHeader,
+  hoverHeaderLose,
+  close
+} from "./Functions/HoverIdentifier";
 
 interface CodeBlockEntry {
   title: string | undefined;
@@ -62,7 +67,9 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
             )
           </span>
         </div>
-        <button className="CodeBlock__menu">X</button>
+        <button className="CodeBlock__menu" title="Close" onClick={close}>
+          X
+        </button>
       </div>
       <div className="CodeBlock__body" onMouseOver={HoverIdentifier}>
         <pre>
