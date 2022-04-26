@@ -62,7 +62,7 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
             )
           </span>
         </div>
-        <button className="CodeBlock__menu">...</button>
+        <button className="CodeBlock__menu">X</button>
       </div>
       <div className="CodeBlock__body" onMouseOver={HoverIdentifier}>
         <pre>

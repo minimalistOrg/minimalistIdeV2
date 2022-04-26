@@ -38,7 +38,7 @@ function Bubble(props: BubbleType) {
   ): { body: object; name: string; params: [] } => {
     // console.log(data[index].body?.body);
     // console.log(data[index])
-    let name = "";
+    let name: string = "";
     let params = [];
     let body = [];
     if (data[index]["id"] === undefined) {

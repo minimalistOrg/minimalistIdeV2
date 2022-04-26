@@ -32,6 +32,8 @@
   font-family: sans-serif;
   font-size: 0.7rem;
   margin-top: -0.2rem;
+  border:none;
+  padding: 0 0.4rem;
 }
 
 .CodeBlock__body {
