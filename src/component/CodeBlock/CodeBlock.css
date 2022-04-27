@@ -37,7 +37,7 @@
   font-size: 0.7rem;
   margin-top: -0.2rem;
   border:none;
-  padding: 0 0.4rem;
+  /* padding: 0 0.4rem; */
 }
 
 
@@ -53,7 +53,7 @@ pre{
   padding: 2px 4px 2px 4px;
   margin-right: 5px;
   cursor: pointer;
-  transition: 0.7s ease-in-out;
+  transition: 400ms ease-in-out;
 }
 
 .animation-collapse{
@@ -62,14 +62,14 @@ pre{
 
 /* animation */
 .rotateIco-90{
-  transform: rotate(90deg);
+  transform: rotate(-90deg);
 }
 
 .CodeBlock__body {
   height: 100%;
   color: var(--code-block-body);
   padding: 0.3em;
-  transition: max-height 0.7s;
+  transition: max-height 400ms;
 }
 
 .CodeBlock__body--collapse{

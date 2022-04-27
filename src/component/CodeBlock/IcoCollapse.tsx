@@ -1,9 +1,8 @@
 function IcoCollapse() {
-
-const style={
-  display: "flex",
-  alignContent: "center"
-}
+  const style = {
+    display: "flex",
+    alignContent: "center",
+  };
 
   return (
     <div style={style}>
@@ -12,11 +11,14 @@ const style={
         width="16"
         height="16"
         fill="currentColor"
-        className="bi bi-caret-right-fill"
+        className="bi bi-chevron-down"
         viewBox="0 0 16 16"
       >
-        <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
-      </svg>
+        <path
+          fillRule="evenodd"
+          d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+        />
+      </svg>{" "}
     </div>
   );
 }

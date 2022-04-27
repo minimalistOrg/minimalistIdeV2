@@ -12,6 +12,7 @@ import {
 } from "./Functions/HoverIdentifier";
 import IcoCollapse from "./IcoCollapse";
 import { BubbleCollapse, maxHeightBody } from "./Functions/BubbleCollapse";
+import IcoClose from "./IcoClose";
 
 interface CodeBlockEntry {
   title: string | undefined;
@@ -56,7 +57,7 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
       >
         <div className="CodeBlock__title">
           <div
-            className="CodeBlock__collapse rotateIco-90"
+            className="CodeBlock__collapse"
             onClick={BubbleCollapse}
           >
             <IcoCollapse />
@@ -76,7 +77,7 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
           </span>
         </div>
         <button className="CodeBlock__menu" title="Close" onClick={close}>
-          X
+          <IcoClose />
         </button>
       </div>
       <div className="CodeBlock__body" onMouseOver={HoverIdentifier}>
