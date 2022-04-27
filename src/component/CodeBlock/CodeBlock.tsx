@@ -11,7 +11,7 @@ import {
   close,
 } from "./Functions/HoverIdentifier";
 import IcoCollapse from "./IcoCollapse";
-import { BubbleCollapse } from "./Functions/BubbleCollapse";
+import { BubbleCollapse, maxHeightBody } from "./Functions/BubbleCollapse";
 
 interface CodeBlockEntry {
   title: string | undefined;
@@ -35,6 +35,7 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
     // console.log(NRender)
     // console.log(IDBubble)
     resetGlobal(1);
+    maxHeightBody(IDBubble)
   }, []);
 
   const long: number = props.argument.length;

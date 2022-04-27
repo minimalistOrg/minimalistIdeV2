@@ -13,6 +13,8 @@
   height: max-content;
   min-width: min-content;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .CodeBlock__header {
@@ -64,13 +66,15 @@ pre{
 }
 
 .CodeBlock__body {
+  height: 100%;
   color: var(--code-block-body);
   padding: 0.3em;
-  transition: 2s ease-in-out;
+  transition: max-height 0.7s;
 }
+
 .CodeBlock__body--collapse{
   padding-top: 0px;
   padding-bottom: 0px;
-  max-height: 1px;
+  max-height: 0px !important;
 }
 
