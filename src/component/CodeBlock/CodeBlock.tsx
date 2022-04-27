@@ -25,7 +25,8 @@ interface CodeBlockEntry {
 }
 
 function CodeBlock(props: CodeBlockEntry): JSX.Element {
-  //Genera una instacia de Resize para cada burbuja
+
+    //Genera una instacia de Resize para cada burbuja
   const Bubble = useRef<HTMLDivElement | null>(null);
   const CodeTxt = useRef<HTMLElement | null>(null);
 

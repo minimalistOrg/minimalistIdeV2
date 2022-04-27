@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import addBubbleSlice from "../slice/addBubbleSlice";
+import callTreeSlice from "../slice/callTreeSlice";
 
 export default configureStore({
   reducer: {
     addbubble: addBubbleSlice,
+    callTree: callTreeSlice
   },
 
   middleware: (getDefaultMiddleware) =>

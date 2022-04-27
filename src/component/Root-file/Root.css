@@ -69,3 +69,7 @@ button {
     outline: none;
     padding: 0px;
 }
+
+.d-flex{
+  display: flex;
+}

@@ -1,13 +1,14 @@
 import CodeBlock from "../CodeBlock/CodeBlock";
 import RenderAST from "../RenderAST/RenderAST";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Bubble.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { add } from "../Root-file/slice/addBubbleSlice";
 import {
   hoverState,
   highligthToogle,
 } from "../CodeBlock/Functions/HoverIdentifier";
+import { add as bubbleTree } from "../Root-file/slice/callTreeSlice";
 
 interface BubbleType {
   entryPoint: number;
@@ -23,6 +24,19 @@ function Bubble(props: BubbleType) {
   const [paramsHover, setParamsHover] = useState<string[]>([]);
 
   const dispatch = useDispatch();
+  const Tree = useSelector((state: any) => state.callTree.value);
+
+  useEffect(() => {
+    // console.log(btnCount, "btnCount");
+    const datos= btnIndex.map((e)=>{
+      let l= [];
+      l.push({ init: dataAst(e).name, value: [] })
+      return l
+    }) 
+    dispatch(
+      bubbleTree([{ CallTree: [ { init: dataAst(props.entryPoint).name, value: datos } ] }])
+    );
+  }, [btnIndex]);
 
   function setJson(): void {
     dispatch(add(props.data));
