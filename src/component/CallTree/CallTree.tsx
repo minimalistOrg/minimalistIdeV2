@@ -23,8 +23,10 @@ function CallTree(props:any) {
         { input.map((e:any,index:number)=>{
           return (
             <React.Fragment key={index}>
-              <li style={{order: e.order}}>{e.name}</li>
-            {TreeLi(e.value)}
+              <li style={{order: e.order}}>{e.name}
+{TreeLi(e.value)}
+              </li>
+            
               </React.Fragment>
           )
         }) }

@@ -74,8 +74,9 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
           <span className="CodeBlock__arguments" onMouseOver={HoverIdentifier}>
             (
             {props.argument.map((e: any, index: any) => {
+              console.log(props.argument)
               return (
-                <span key={index} data-params={props.dataparams[index]}>
+                <span key={index}>
                   <ChooseType info={e} />
                   <span>{Coma(index, long)}</span>
                 </span>
