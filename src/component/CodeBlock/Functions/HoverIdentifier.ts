@@ -25,6 +25,7 @@ export function HoverIdentifierRemove() {
 }
 
 export function hoverState(e: any) {
+  console.log("hi")
   // eslint-disable-next-line
   const evalFunction: boolean = eval(
     e.target.parentNode.getAttribute("data-hover")
@@ -39,12 +40,12 @@ export function hoverState(e: any) {
     // console.log(e.currentTarget.parentNode.parentNode);
     const node = document.createElement("style");
     node.id = "style-hover";
-    let style = `.pointRef:hover + .ColBubbles > .order[style="order: ${evalFunctionOrder};"] > div > div > div > .CodeBlock {
+    let style = `.pointRef:hover + .ColBubbles > div > .grandparentHover-${evalFunctionOrder} > .pointRef > .CodeBlock {
                       box-shadow: var(--bs-bubble); 
                       transition: var(--bst-bubble); 
                   }
 
-                  .pointRef:hover + .ColBubbles > .order[style="order: ${evalFunctionOrder};"] > div > div > div > .CodeBlock > .CodeBlock__header {
+                  .pointRef:hover + .ColBubbles > div > .grandparentHover-${evalFunctionOrder} > .pointRef > .CodeBlock > .CodeBlock__header {
                       background-color: var(--bg-bubble-header);
                       transition: var(--bgt-bubble-header); 
                   }
@@ -63,6 +64,8 @@ export function hoverHeader(e: any) {
   const grandparentHover =
     e.currentTarget.parentNode.parentNode.parentNode.parentNode.parentNode
       .parentNode.parentNode;
+
+      // console.log(grandparentHover,"hi")
 
   e.currentTarget.parentNode.classList.add("CodeBlockHover");
   const style = document.createElement("style");

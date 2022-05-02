@@ -144,7 +144,7 @@ function Bubble(props: BubbleType) {
             key={index}
             style={{order: e.order,display:"flex"}}
             data-order={order[index]}
-            className={`grandparentHover-${props.order}`}
+            className={`grandparentHover-${e.order}`}
           >
             <div className="pointRef">{Codebubble(e.index,e,{parent:renderBubble,child: e})}</div>
             <div className="ColBubbles">
