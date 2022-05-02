@@ -8,7 +8,7 @@ function CallTree(props:any) {
   const dataBubbleTree = useSelector((state:any) => state.callTree.value);
 
   useEffect(() => {
-    console.log(TreeCall, dataBubbleTree)
+    // console.log(TreeCall, dataBubbleTree)
   // eslint-disable-next-line
   }, [dataBubbleTree]);
 

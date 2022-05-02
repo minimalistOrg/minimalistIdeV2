@@ -13,6 +13,8 @@ import {
 import IcoCollapse from "./IcoCollapse";
 import { BubbleCollapse, maxHeightBody } from "./Functions/BubbleCollapse";
 import IcoClose from "./IcoClose";
+import {useDispatch, useSelector} from "react-redux";
+import {add} from "../Root-file/slice/callTreeSlice"
 
 interface CodeBlockEntry {
   title: string | undefined;
@@ -26,6 +28,10 @@ interface CodeBlockEntry {
 }
 
 function CodeBlock(props: CodeBlockEntry): JSX.Element {
+
+  const dispatch= useDispatch()
+  const stateTree= useSelector<any>((state)=> state.callTree.value)
+  // console.log(stateTree)
 
     //Genera una instacia de Resize para cada burbuja
   const Bubble = useRef<HTMLDivElement | null>(null);
@@ -78,7 +84,10 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
             )
           </span>
         </div>
-        <button className="CodeBlock__menu" title="Close" onClick={(e)=> close(e,props.entryPoint)}>
+        <button className="CodeBlock__menu" title="Close" onClick={(e)=>{
+          close(e,props.entryPoint)
+          dispatch(add(! stateTree))
+          }}>
           <IcoClose />
         </button>
       </div>

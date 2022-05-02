@@ -143,7 +143,7 @@ export function highligthToogle(e: any) {
 }
 
 export function close(e: any,close:any) {
-  console.log(close)
+  // console.log(close)
   let removeBubble= close.parent.indexOf(close.child)
   close.parent.splice(removeBubble,1)
   // const elementParent =
@@ -169,7 +169,7 @@ export function close(e: any,close:any) {
   // }
   // hoverHeaderLose(e);
   // removeBubble.remove();
-  // const HTML= document.getElementsByTagName("html")[0]
-  // HTML.setAttribute("style", "")
+  const HTML= document.getElementsByTagName("html")[0]
+  HTML.setAttribute("style", "cursor:default")
   // // console.log(HTML)
 }
