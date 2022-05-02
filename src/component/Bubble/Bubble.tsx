@@ -9,34 +9,31 @@ import {
   highligthToogle,
 } from "../CodeBlock/Functions/HoverIdentifier";
 import { add as bubbleTree } from "../Root-file/slice/callTreeSlice";
+import {TreeCall} from "../Root-file/CallTree"
 
 interface BubbleType {
-  entryPoint: number;
+  entryPoint: any;
   data: any[];
   order: number;
   dataparams: any;
 }
 
+
 function Bubble(props: BubbleType) {
-  const [btnCount, setBtnCount] = useState<JSX.Element[]>([]);
+  // const [btnCount, setBtnCount] = useState<any>([]);
   const [btnIndex, setBtnIndex] = useState<number[]>([]);
   const [order, setOrder] = useState<number[]>([]);
   const [paramsHover, setParamsHover] = useState<string[]>([]);
+  const [renderBubble, setRenderBubble] = useState<any>([]);
 
   const dispatch = useDispatch();
   const Tree = useSelector((state: any) => state.callTree.value);
 
   useEffect(() => {
-    // console.log(btnCount, "btnCount");
-    const datos= btnIndex.map((e)=>{
-      let l= [];
-      l.push({ init: dataAst(e).name, value: [] })
-      return l
-    }) 
-    dispatch(
-      bubbleTree([{ CallTree: [ { init: dataAst(props.entryPoint).name, value: datos } ] }])
-    );
-  }, [btnIndex]);
+    setRenderBubble(props.entryPoint);
+    dispatch(bubbleTree(! Tree ));
+    // console.log(Tree, "btnCount");
+  }, []);
 
   function setJson(): void {
     dispatch(add(props.data));
@@ -79,12 +76,12 @@ function Bubble(props: BubbleType) {
     };
   };
 
-  const Codebubble = (index: number): JSX.Element => {
+  const Codebubble = (index: number,json:any): JSX.Element => {
     return (
       <CodeBlock
         title={dataAst(index).name}
         argument={dataAst(index).params}
-        onClick={handleAdd}
+        onClick={(e)=>{handleAdd(e,json)}}
         onHoverevent={hoverState}
         order={props.order}
         dataparams={props.dataparams}
@@ -94,8 +91,9 @@ function Bubble(props: BubbleType) {
     );
   };
 
-  function handleAdd(event: any): void {
+  function handleAdd(event: any,json:any): void {
     //
+    let dato= json.value;
     highligthToogle(event);
     //
     const elementFunction = event.target.parentNode.parentNode;
@@ -120,7 +118,11 @@ function Bubble(props: BubbleType) {
     );
     //
     if (evalFunction) {
-      setBtnCount(btnCount.concat(Codebubble(evalFunctionIndex)));
+
+      dato.push({name: dataAst(evalFunctionIndex).name ,index: evalFunctionIndex,value:[]})
+
+    // dispatch(bubbleTree(TreeCall));
+      // setBtnCount(btnCount.concat(Codebubble(evalFunctionIndex)));
       setBtnIndex(btnIndex.concat(evalFunctionIndex));
       setOrder(order.concat(evalFunctionOrder));
       event.target.parentNode.setAttribute("data-event", false);
@@ -134,31 +136,36 @@ function Bubble(props: BubbleType) {
 
   return (
     <div>
-      <div
-        style={style}
-        data-order={props.order}
-        className={`grandparentHover-${props.order}`}
-      >
-        <div className="pointRef">{Codebubble(props.entryPoint)}</div>
-        <div className="ColBubbles">
-          {btnCount.map((element: JSX.Element, index: number) => {
+      {renderBubble.map((e: any,index:number) => {
+        return (
+          <div
+            key={index}
+            style={style}
+            data-order={props.order}
+            className={`grandparentHover-${props.order}`}
+          >
+            <div className="pointRef">{Codebubble(e.index,e)}</div>
+            <div className="ColBubbles">
+              {/*btnCount.map((element: JSX.Element, index: number) => {
             return (
               <div
                 key={index}
                 className="order"
                 style={{ order: order[index] }}
-              >
+                >*/}
                 <Bubble
                   order={order[index]}
-                  entryPoint={btnIndex[index]}
+                  entryPoint={e.value}
                   data={data}
                   dataparams={paramsHover[index]}
-                />
+                />{/*
               </div>
             );
-          })}
-        </div>
-      </div>
+            })*/}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

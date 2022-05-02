@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const callTreeSlice = createSlice({
   name: "callTree",
   initialState: {
-    value: [],
+    value: true,
   },
   reducers: {
     add: (state, action) => {
