@@ -12,13 +12,18 @@ function CallTree(props:any) {
   // eslint-disable-next-line
   }, [dataBubbleTree]);
 
+  const style:any={
+  display: "flex",
+  flexDirection: "column"
+}
+
   const TreeLi= (input:any)=>{
     return (
-      <ul>
+      <ul style={style}>
         { input.map((e:any,index:number)=>{
           return (
             <React.Fragment key={index}>
-            <li>{e.name}</li>
+              <li style={{order: e.order}}>{e.name}</li>
             {TreeLi(e.value)}
               </React.Fragment>
           )

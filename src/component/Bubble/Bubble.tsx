@@ -120,7 +120,7 @@ function Bubble(props: BubbleType) {
     //
     if (evalFunction) {
 
-      dato.push({name: dataAst(evalFunctionIndex).name ,index: evalFunctionIndex,value:[]})
+      dato.push({name: dataAst(evalFunctionIndex).name ,index: evalFunctionIndex,value:[], order: evalFunctionOrder})
 
     // dispatch(bubbleTree(TreeCall));
       // setBtnCount(btnCount.concat(Codebubble(evalFunctionIndex)));
@@ -133,16 +133,17 @@ function Bubble(props: BubbleType) {
 
   const style: object = {
     display: "flex",
+    flexDirection: "column"
   };
 
   return (
-    <div>
+    <div style={style}>
       {renderBubble.map((e: any,index:number) => {
         return (
           <div
             key={index}
-            style={style}
-            data-order={props.order}
+            style={{order: e.order,display:"flex"}}
+            data-order={order[index]}
             className={`grandparentHover-${props.order}`}
           >
             <div className="pointRef">{Codebubble(e.index,e,{parent:renderBubble,child: e})}</div>
