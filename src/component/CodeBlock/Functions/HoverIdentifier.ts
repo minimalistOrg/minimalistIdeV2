@@ -65,7 +65,6 @@ export function hoverHeader(e: any) {
     e.currentTarget.parentNode.parentNode.parentNode.parentNode.parentNode
       .parentNode;
 
-      console.log(grandparentHover,"hi")
 
   e.currentTarget.parentNode.classList.add("CodeBlockHover");
   const style = document.createElement("style");
@@ -90,6 +89,7 @@ code .ast-function-${e.currentTarget.getAttribute(
   if (e.target.getAttribute("data-idhover")) {
     // console.log(inheritParam);
 
+      console.log(inheritParam,"hi")
     const style = document.createElement("style");
     style.id = "paramsHover";
     style.innerHTML = `

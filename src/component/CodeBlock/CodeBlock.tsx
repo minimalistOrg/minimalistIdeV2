@@ -76,7 +76,7 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
             {props.argument.map((e: any, index: any) => {
               console.log(props.argument)
               return (
-                <span key={index}>
+                <span key={index} data-params={props.dataparams[index]}>
                   <ChooseType info={e} />
                   <span>{Coma(index, long)}</span>
                 </span>

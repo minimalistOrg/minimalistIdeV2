@@ -76,7 +76,7 @@ function Bubble(props: BubbleType) {
     };
   };
 
-  const Codebubble = (index: number,json:any,close:any,order:any): JSX.Element => {
+  const Codebubble = (index: number,json:any,close:any,order:any,params:any): JSX.Element => {
     return (
       <CodeBlock
         title={dataAst(index).name}
@@ -84,7 +84,7 @@ function Bubble(props: BubbleType) {
         onClick={(e)=>{handleAdd(e,json)}}
         onHoverevent={hoverState}
         order={order}
-        dataparams={props.dataparams}
+        dataparams={params}
         entryPoint={close}
       >
         <RenderAST ast={dataAst(index).body} />
@@ -120,7 +120,7 @@ function Bubble(props: BubbleType) {
     //
     if (evalFunction) {
 
-      dato.push({name: dataAst(evalFunctionIndex).name ,index: evalFunctionIndex,value:[], order: evalFunctionOrder})
+      dato.push({name: dataAst(evalFunctionIndex).name ,index: evalFunctionIndex,value:[], order: evalFunctionOrder, paramsId: arg })
 
     // dispatch(bubbleTree(TreeCall));
       // setBtnCount(btnCount.concat(Codebubble(evalFunctionIndex)));
@@ -146,7 +146,7 @@ function Bubble(props: BubbleType) {
             data-order={e.order}
             className={`grandparentHover-${e.order}`}
           >
-            <div className="pointRef">{Codebubble(e.index,e,{parent:renderBubble,child: e},e.order)}</div>
+            <div className="pointRef">{Codebubble(e.index,e,{parent:renderBubble,child: e},e.order,e.paramsId)}</div>
             <div className="ColBubbles">
               {/*btnCount.map((element: JSX.Element, index: number) => {
             return (
@@ -159,7 +159,7 @@ function Bubble(props: BubbleType) {
                   order={e.order}
                   entryPoint={e.value}
                   data={data}
-                  dataparams={paramsHover[index]}
+                  dataparams={e.paramsId}
                 />{/*
               </div>
             );
