@@ -25,7 +25,6 @@ export function HoverIdentifierRemove() {
 }
 
 export function hoverState(e: any) {
-  console.log("hi")
   // eslint-disable-next-line
   const evalFunction: boolean = eval(
     e.target.parentNode.getAttribute("data-hover")
@@ -65,7 +64,6 @@ export function hoverHeader(e: any) {
     e.currentTarget.parentNode.parentNode.parentNode.parentNode.parentNode
       .parentNode;
 
-
   e.currentTarget.parentNode.classList.add("CodeBlockHover");
   const style = document.createElement("style");
   style.id = "titleHover";
@@ -89,7 +87,7 @@ code .ast-function-${e.currentTarget.getAttribute(
   if (e.target.getAttribute("data-idhover")) {
     // console.log(inheritParam);
 
-      console.log(inheritParam,"hi")
+    console.log(inheritParam, "hi");
     const style = document.createElement("style");
     style.id = "paramsHover";
     style.innerHTML = `
@@ -145,34 +143,25 @@ export function highligthToogle(e: any) {
   }
 }
 
-export function close(e: any,close:any) {
+export function close(e: any, close: any) {
   // console.log(close)
-  let removeBubble= close.parent.indexOf(close.child)
-  close.parent.splice(removeBubble,1)
-  // const elementParent =
-  //   e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
-  //     .parentNode.parentNode;
-  // const dataOrder = e.target.parentNode;
-  // const removeBubble =
-  //   e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
-  // const FnLine = elementParent.querySelectorAll(`
-  //   .pointRef > 
-  //   .CodeBlock >
-  //   .CodeBlock__body >
-  //   pre >
-  //   code .ast-function-${dataOrder.getAttribute(
-  //     "data-title"
-  //   )}-${dataOrder.getAttribute("data-order")}`)[0];
-  // let validationNode = null;
-  // if (FnLine === undefined) {
-  //   validationNode = null;
-  // } else {
-  //   validationNode = FnLine.querySelectorAll(".ast-CallExpression")[0];
-  //   validationNode.setAttribute("data-event", "true");
-  // }
-  // hoverHeaderLose(e);
+  let removeBubble = close.parent.indexOf(close.child);
+  close.parent.splice(removeBubble, 1);
+  const element =
+    e.currentTarget.parentNode.parentNode.parentNode.parentNode.parentNode
+      .parentNode.parentNode;
+  const json = e.currentTarget.parentNode;
+  const name = json.getAttribute("data-title");
+  const index = json.getAttribute("data-order");
+  const fnCall = element.querySelectorAll(
+    `.pointRef > .CodeBlock > .CodeBlock__body > pre > code .ast-function-${name}-${index} > .ast-CallExpression`
+  )[0];
+  fnCall.setAttribute("data-event","true")
+
+  console.log(json, fnCall);
+  hoverHeaderLose(e);
   // removeBubble.remove();
-  const HTML= document.getElementsByTagName("html")[0]
-  HTML.setAttribute("style", "cursor:default")
+  const HTML = document.getElementsByTagName("html")[0];
+  HTML.setAttribute("style", "cursor:default");
   // // console.log(HTML)
 }
