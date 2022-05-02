@@ -63,9 +63,9 @@ export function hoverState(e: any) {
 export function hoverHeader(e: any) {
   const grandparentHover =
     e.currentTarget.parentNode.parentNode.parentNode.parentNode.parentNode
-      .parentNode.parentNode;
+      .parentNode;
 
-      // console.log(grandparentHover,"hi")
+      console.log(grandparentHover,"hi")
 
   e.currentTarget.parentNode.classList.add("CodeBlockHover");
   const style = document.createElement("style");
