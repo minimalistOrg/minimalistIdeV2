@@ -142,31 +142,34 @@ export function highligthToogle(e: any) {
   }
 }
 
-export function close(e: any) {
-  const elementParent =
-    e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
-      .parentNode.parentNode;
-  const dataOrder = e.target.parentNode;
-  const removeBubble =
-    e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
-  const FnLine = elementParent.querySelectorAll(`
-    .pointRef > 
-    .CodeBlock >
-    .CodeBlock__body >
-    pre >
-    code .ast-function-${dataOrder.getAttribute(
-      "data-title"
-    )}-${dataOrder.getAttribute("data-order")}`)[0];
-  let validationNode = null;
-  if (FnLine === undefined) {
-    validationNode = null;
-  } else {
-    validationNode = FnLine.querySelectorAll(".ast-CallExpression")[0];
-    validationNode.setAttribute("data-event", "true");
-  }
-  hoverHeaderLose(e);
-  removeBubble.remove();
-  const HTML= document.getElementsByTagName("html")[0]
-  HTML.setAttribute("style", "")
-  // console.log(HTML)
+export function close(e: any,close:any) {
+  console.log(close)
+  let removeBubble= close.parent.indexOf(close.child)
+  close.parent.splice(removeBubble,1)
+  // const elementParent =
+  //   e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
+  //     .parentNode.parentNode;
+  // const dataOrder = e.target.parentNode;
+  // const removeBubble =
+  //   e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+  // const FnLine = elementParent.querySelectorAll(`
+  //   .pointRef > 
+  //   .CodeBlock >
+  //   .CodeBlock__body >
+  //   pre >
+  //   code .ast-function-${dataOrder.getAttribute(
+  //     "data-title"
+  //   )}-${dataOrder.getAttribute("data-order")}`)[0];
+  // let validationNode = null;
+  // if (FnLine === undefined) {
+  //   validationNode = null;
+  // } else {
+  //   validationNode = FnLine.querySelectorAll(".ast-CallExpression")[0];
+  //   validationNode.setAttribute("data-event", "true");
+  // }
+  // hoverHeaderLose(e);
+  // removeBubble.remove();
+  // const HTML= document.getElementsByTagName("html")[0]
+  // HTML.setAttribute("style", "")
+  // // console.log(HTML)
 }

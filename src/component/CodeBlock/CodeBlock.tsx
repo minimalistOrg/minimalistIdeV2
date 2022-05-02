@@ -22,6 +22,7 @@ interface CodeBlockEntry {
   onHoverevent: any;
   order: number;
   dataparams: string[];
+  entryPoint:any
 }
 
 function CodeBlock(props: CodeBlockEntry): JSX.Element {
@@ -77,7 +78,7 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
             )
           </span>
         </div>
-        <button className="CodeBlock__menu" title="Close" onClick={close}>
+        <button className="CodeBlock__menu" title="Close" onClick={(e)=> close(e,props.entryPoint)}>
           <IcoClose />
         </button>
       </div>
