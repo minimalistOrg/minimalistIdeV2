@@ -9,7 +9,6 @@ import {
   highligthToogle,
 } from "../CodeBlock/Functions/HoverIdentifier";
 import { add as bubbleTree } from "../Root-file/slice/callTreeSlice";
-import {TreeCall} from "../Root-file/CallTree"
 
 interface BubbleType {
   entryPoint: any;
@@ -33,6 +32,7 @@ function Bubble(props: BubbleType) {
     setRenderBubble(props.entryPoint);
     dispatch(bubbleTree(! Tree ));
     // console.log(Tree, "btnCount");
+    // eslint-disable-next-line
   }, []);
 
   function setJson(): void {
