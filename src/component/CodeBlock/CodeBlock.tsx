@@ -25,6 +25,7 @@ interface CodeBlockEntry {
   order: number;
   dataparams: string[];
   entryPoint:any
+  id:any
 }
 
 function CodeBlock(props: CodeBlockEntry): JSX.Element {
@@ -51,6 +52,7 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
 
   return (
     <div
+      id={"id" + props.id}
       className="CodeBlock"
       ref={Bubble}
       onClick={(e) => props.onClick(e)}
@@ -74,7 +76,6 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
           <span className="CodeBlock__arguments" onMouseOver={HoverIdentifier}>
             (
             {props.argument.map((e: any, index: any) => {
-              console.log(props.argument)
               return (
                 <span key={index} data-params={props.dataparams[index]}>
                   <ChooseType info={e} />

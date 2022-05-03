@@ -14,7 +14,7 @@ function Root(): JSX.Element {
         <CallTree data={json} />
       </section>
       <section>
-        <Bubble order={0} entryPoint={json} data={data} dataparams={[]} />
+        <Bubble order={0} entryPoint={json} data={data} dataparams={[]} id={0} />
       </section>
     </div>
   );

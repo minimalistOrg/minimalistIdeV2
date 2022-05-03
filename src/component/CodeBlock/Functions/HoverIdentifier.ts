@@ -87,7 +87,6 @@ code .ast-function-${e.currentTarget.getAttribute(
   if (e.target.getAttribute("data-idhover")) {
     // console.log(inheritParam);
 
-    console.log(inheritParam, "hi");
     const style = document.createElement("style");
     style.id = "paramsHover";
     style.innerHTML = `
@@ -158,7 +157,6 @@ export function close(e: any, close: any) {
   )[0];
   fnCall.setAttribute("data-event","true")
 
-  console.log(json, fnCall);
   hoverHeaderLose(e);
   // removeBubble.remove();
   const HTML = document.getElementsByTagName("html")[0];

@@ -58,7 +58,7 @@ code div{
   padding: 3px;
 }
 
-.ast-call:hover, .ast-variable-name:hover{
+.ast-call:hover, .ast-variable-name:hover, .fnhover{
   background-color: var(--bg-highligth-function);
   transition: var(--bgt-bubble-header);
 }

@@ -1,3 +1,4 @@
+import {v4 as generateid} from "uuid"
 import CodeBlock from "../CodeBlock/CodeBlock";
 import RenderAST from "../RenderAST/RenderAST";
 import { useEffect, useState } from "react";
@@ -15,6 +16,7 @@ interface BubbleType {
   data: any[];
   order: number;
   dataparams: any;
+  id:any
 }
 
 
@@ -30,7 +32,7 @@ function Bubble(props: BubbleType) {
 
   useEffect(() => {
     setRenderBubble(props.entryPoint);
-    dispatch(bubbleTree(! Tree ));
+    dispatch(bubbleTree(!Tree));
     // console.log(Tree, "btnCount");
     // eslint-disable-next-line
   }, []);
@@ -76,25 +78,35 @@ function Bubble(props: BubbleType) {
     };
   };
 
-  const Codebubble = (index: number,json:any,close:any,order:any,params:any): JSX.Element => {
+  const Codebubble = (
+    index: number,
+    json: any,
+    close: any,
+    order: any,
+    params: any,
+    id: any
+  ): JSX.Element => {
     return (
       <CodeBlock
         title={dataAst(index).name}
         argument={dataAst(index).params}
-        onClick={(e)=>{handleAdd(e,json)}}
+        onClick={(e) => {
+          handleAdd(e, json);
+        }}
         onHoverevent={hoverState}
         order={order}
         dataparams={params}
         entryPoint={close}
+        id={id}
       >
         <RenderAST ast={dataAst(index).body} />
       </CodeBlock>
     );
   };
 
-  function handleAdd(event: any,json:any): void {
+  function handleAdd(event: any, json: any): void {
     //
-    let dato= json.value;
+    let dato = json.value;
     highligthToogle(event);
     //
     const elementFunction = event.target.parentNode.parentNode;
@@ -119,10 +131,16 @@ function Bubble(props: BubbleType) {
     );
     //
     if (evalFunction) {
+      dato.push({
+        name: dataAst(evalFunctionIndex).name,
+        index: evalFunctionIndex,
+        value: [],
+        order: evalFunctionOrder,
+        paramsId: arg,
+        id: generateid(),
+      });
 
-      dato.push({name: dataAst(evalFunctionIndex).name ,index: evalFunctionIndex,value:[], order: evalFunctionOrder, paramsId: arg })
-
-    // dispatch(bubbleTree(TreeCall));
+      // dispatch(bubbleTree(TreeCall));
       // setBtnCount(btnCount.concat(Codebubble(evalFunctionIndex)));
       setBtnIndex(btnIndex.concat(evalFunctionIndex));
       setOrder(order.concat(evalFunctionOrder));
@@ -133,20 +151,29 @@ function Bubble(props: BubbleType) {
 
   const style: object = {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
   };
 
   return (
     <div style={style}>
-      {renderBubble.map((e: any,index:number) => {
+      {renderBubble.map((e: any, index: number) => {
         return (
           <div
             key={index}
-            style={{order: e.order,display:"flex"}}
+            style={{ order: e.order, display: "flex" }}
             data-order={e.order}
             className={`grandparentHover-${e.order}`}
           >
-            <div className="pointRef">{Codebubble(e.index,e,{parent:renderBubble,child: e},e.order,e.paramsId)}</div>
+            <div className="pointRef">
+              {Codebubble(
+                e.index,
+                e,
+                { parent: renderBubble, child: e },
+                e.order,
+                e.paramsId,
+                e.id
+              )}
+            </div>
             <div className="ColBubbles">
               {/*btnCount.map((element: JSX.Element, index: number) => {
             return (
@@ -155,12 +182,14 @@ function Bubble(props: BubbleType) {
                 className="order"
                 style={{ order: order[index] }}
                 >*/}
-                <Bubble
-                  order={e.order}
-                  entryPoint={e.value}
-                  data={data}
-                  dataparams={e.paramsId}
-                />{/*
+              <Bubble
+                order={e.order}
+                entryPoint={e.value}
+                data={data}
+                dataparams={e.paramsId}
+                id={e.id}
+              />
+              {/*
               </div>
             );
             })*/}
