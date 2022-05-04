@@ -35,7 +35,7 @@ function Bubble(props: BubbleType) {
     dispatch(bubbleTree(!Tree));
     // console.log(Tree, "btnCount");
     // eslint-disable-next-line
-  }, []);
+  }, [Tree]);
 
   function setJson(): void {
     dispatch(add(props.data));

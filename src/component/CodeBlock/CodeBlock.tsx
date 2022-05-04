@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect, useRef } from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 import "./CodeBlock.css";
 import Resize from "./CodeBlock__Resize";
 import ChooseType from "../RenderAST/ChooseType";
@@ -37,6 +37,7 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
     //Genera una instacia de Resize para cada burbuja
   const Bubble = useRef<HTMLDivElement | null>(null);
   const CodeTxt = useRef<HTMLElement | null>(null);
+  const [recoveryHeight,setRecoveryHeight] = useState<any>(true)
 
   useEffect(() => {
     const IDBubble: HTMLDivElement | null = Bubble.current;
@@ -46,7 +47,8 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
     // console.log(IDBubble)
     resetGlobal(1);
     maxHeightBody(IDBubble)
-  }, []);
+    // console.log(stateTree)
+  }, [recoveryHeight]);
 
   const long: number = props.argument.length;
 
@@ -89,6 +91,7 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
         <button className="CodeBlock__menu" title="Close" onClick={(e)=>{
           close(e,props.entryPoint)
           dispatch(add(! stateTree))
+          setRecoveryHeight(! recoveryHeight)
           }}>
           <IcoClose />
         </button>

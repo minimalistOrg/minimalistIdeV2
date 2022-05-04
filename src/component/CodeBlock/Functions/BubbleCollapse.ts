@@ -15,7 +15,8 @@ export function maxHeightBody(element:any){
     if(body.clientHeight === 0){
 
     }else{
-    body.style= `max-height: ${body.clientHeight}px`
+    body.style= ''
+    body.style= `max-height: ${body.clientHeight}px;`
     }
   }
   out()
