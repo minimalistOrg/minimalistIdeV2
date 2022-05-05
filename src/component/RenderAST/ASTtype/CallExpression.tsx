@@ -84,6 +84,7 @@ function CallExpression(props: CallExpressionType): JSX.Element {
         data-index={indexFuction + ""}
         data-order={NumberReal}
         data-hover="true"
+        data-testid="fncall"
       >
         <ChooseType info={data.callee} />
       </span>

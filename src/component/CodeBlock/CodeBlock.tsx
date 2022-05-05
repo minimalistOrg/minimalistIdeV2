@@ -57,12 +57,14 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
     <div
       id={"id" + props.id}
       className="CodeBlock"
+      data-testid="Bubble"
       ref={Bubble}
       onClick={(e) => props.onClick(e)}
       onMouseOverCapture={(e) => props.onHoverevent(e)}
     >
       <div
         className="CodeBlock__header"
+        data-testid="BubbleOrder"
         data-order={props.order}
         onMouseOut={hoverHeaderLose}
         onMouseOver={hoverHeader}

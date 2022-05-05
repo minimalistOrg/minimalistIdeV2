@@ -71,7 +71,7 @@ function CallTree(props: any) {
         {input.map((e: any, index: number) => {
           return (
             <React.Fragment key={index}>
-              <li style={{ order: e.order }}>
+              <li style={{ order: e.order }} data-testid="calltree">
                 <span
                   onMouseOver={() => hoverBubbles(e)}
                   onMouseOut={() => hoverBubblesOut(e)}
