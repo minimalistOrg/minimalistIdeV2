@@ -29,13 +29,15 @@ function Bubble(props: BubbleType) {
 
   const dispatch = useDispatch();
   const Tree = useSelector((state: any) => state.callTree.value);
+  const TreeClose = useSelector((state: any) => state.callTree.close);
 
   useEffect(() => {
     setRenderBubble(props.entryPoint);
     dispatch(bubbleTree(!Tree));
     // console.log(Tree, "btnCount");
     // eslint-disable-next-line
-  }, [Tree]);
+    console.log(TreeClose,"close")
+  }, [TreeClose]);
 
   function setJson(): void {
     dispatch(add(props.data));
