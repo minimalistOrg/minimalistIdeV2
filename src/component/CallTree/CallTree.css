@@ -4,8 +4,18 @@
   font-size: 0.9rem;
 }
 
-ul{
-    list-style: none;
-    margin: 0;
-    padding-inline-start: 2ch;
+ul {
+  list-style: none;
+  margin: 0;
+  padding-inline-start: 2ch;
+}
+
+.liBubble {
+  padding: 3px;
+  transition: background-color 300ms ease-in-out;
+  padding: 3px;
+}
+
+.liBubble:hover {
+  background-color: var(--bg-highligth-function);
 }

@@ -14,7 +14,7 @@ import IcoCollapse from "./IcoCollapse";
 import { BubbleCollapse, maxHeightBody } from "./Functions/BubbleCollapse";
 import IcoClose from "./IcoClose";
 import {useDispatch, useSelector} from "react-redux";
-import {add, setclose} from "../Root-file/slice/callTreeSlice"
+import {setclose} from "../Root-file/slice/callTreeSlice"
 
 interface CodeBlockEntry {
   title: string | undefined;
@@ -31,7 +31,6 @@ interface CodeBlockEntry {
 function CodeBlock(props: CodeBlockEntry): JSX.Element {
 
   const dispatch= useDispatch()
-  const stateTree= useSelector<any>((state)=> state.callTree.value)
   const stateTreeClose= useSelector<any>((state)=> state.callTree.close)
   // console.log(stateTree)
 
@@ -95,7 +94,7 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
           close(e,props.entryPoint)
           dispatch(setclose( ! stateTreeClose ))
           //dispatch(add(! stateTree))
-          console.log(stateTreeClose)
+          // console.log(stateTreeClose)
           setRecoveryHeight(! recoveryHeight)
           }}>
           <IcoClose />

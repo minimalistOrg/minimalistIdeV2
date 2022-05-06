@@ -36,7 +36,7 @@ function Bubble(props: BubbleType) {
     dispatch(bubbleTree(!Tree));
     // console.log(Tree, "btnCount");
     // eslint-disable-next-line
-    console.log(TreeClose,"close")
+    // console.log(TreeClose,"close")
   }, [TreeClose]);
 
   function setJson(): void {

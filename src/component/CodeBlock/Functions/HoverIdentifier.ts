@@ -155,7 +155,10 @@ export function close(e: any, close: any) {
   const fnCall = element.querySelectorAll(
     `.pointRef > .CodeBlock > .CodeBlock__body > pre > code .ast-function-${name}-${index} > .ast-CallExpression`
   )[0];
-  if( ! fnCall === undefined){
+  // console.log(fnCall.getAttribute("data-event") === "true","here")
+  if( fnCall === undefined){
+  // console.log(fnCall)
+  }else{
   fnCall.setAttribute("data-event","true")
   }
 
