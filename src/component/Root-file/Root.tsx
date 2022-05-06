@@ -2,8 +2,7 @@ import "./Root.css";
 import Bubble from "../Bubble/Bubble";
 import { api } from "../../AST/data";
 import CallTree from "../CallTree/CallTree";
-import {TreeCall as json} from "./CallTree"
-
+import { TreeCall as json } from "./CallTree";
 
 function Root(): JSX.Element {
   const data = api.body;
@@ -13,8 +12,14 @@ function Root(): JSX.Element {
       <section>
         <CallTree data={json} />
       </section>
-      <section>
-        <Bubble order={0} entryPoint={json} data={data} dataparams={[]} id={0} />
+      <section className="code-area">
+        <Bubble
+          order={0}
+          entryPoint={json}
+          data={data}
+          dataparams={[]}
+          id={0}
+        />
       </section>
     </div>
   );

@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "./CallTree.css";
-import { TreeCall } from "../Root-file/CallTree";
 import React from "react";
+import ListNested from "./icons/ListNested";
 
 function CallTree(props: any) {
   const dataBubbleTree = useSelector((state: any) => state.callTree.value);
@@ -40,8 +40,8 @@ function CallTree(props: any) {
     fnCall = fnCall.querySelectorAll(
       `.pointRef > .CodeBlock > .CodeBlock__body > pre > code .ast-function-${e.name}-${e.order}`
     )[0];
-    if(! (typeof fnCall === "undefined")){
-    fnCall.classList.toggle("fnhover")
+    if (!(typeof fnCall === "undefined")) {
+      fnCall.classList.toggle("fnhover");
     }
   }
 
@@ -60,8 +60,8 @@ function CallTree(props: any) {
     fnCall = fnCall.querySelectorAll(
       `.pointRef > .CodeBlock > .CodeBlock__body > pre > code .ast-function-${e.name}-${e.order}`
     )[0];
-    if(! (typeof fnCall === "undefined")){
-    fnCall.classList.toggle("fnhover")
+    if (!(typeof fnCall === "undefined")) {
+      fnCall.classList.toggle("fnhover");
     }
   }
 
@@ -71,7 +71,7 @@ function CallTree(props: any) {
         {input.map((e: any, index: number) => {
           return (
             <React.Fragment key={index}>
-              <li  style={{ order: e.order }} data-testid="calltree">
+              <li style={{ order: e.order }} data-testid="calltree">
                 <span
                   className="liBubble"
                   onMouseOver={() => hoverBubbles(e)}
@@ -88,14 +88,33 @@ function CallTree(props: any) {
     );
   };
 
+  function toogleBtntree(state: boolean) {
+    if (state) {
+      return "CallTree--active";
+    } else {
+      return "";
+    }
+  }
+
+  const [opentree, setOpentree] = useState(false);
+
   return (
-    <section
-      className="CallTree"
-      onClick={() => {
-        console.log(TreeCall);
-      }}
-    >
-      {TreeLi(props.data)}
+    <section className="CallTree">
+      <div className={`CallTree__bar ${toogleBtntree(opentree)}`}>
+        <div className="CallTree__listToggle">
+          <button
+            className="CallTree__listToggle-btn"
+            onClick={() => {
+              setOpentree(!opentree);
+            }}
+          >
+            <ListNested w="24" h="24" />
+          </button>
+        </div>
+      </div>
+      <div className={`CallTree__list ${toogleBtntree(opentree)}`}>
+        {TreeLi(props.data)}
+      </div>
     </section>
   );
 }

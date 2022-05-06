@@ -36,13 +36,13 @@
   --bg-bubble-header: #e5cb77;
   --bgt-bubble-header: background-color 300ms ease-in-out;
   /**/
---color-1:rgba(71, 159, 248, 0.3);
---color-2:rgba(110, 221, 202, 0.3);
---color-3:rgba(143, 214, 105, 0.3);
---color-4:rgba(249, 174, 121, 0.3);
---color-5:rgba(237, 110, 87, 0.3);
---color-6:rgba(235, 83, 159, 0.3);
---color-7:rgba(169, 129, 208, 0.3);
+  --color-1: rgba(71, 159, 248, 0.3);
+  --color-2: rgba(110, 221, 202, 0.3);
+  --color-3: rgba(143, 214, 105, 0.3);
+  --color-4: rgba(249, 174, 121, 0.3);
+  --color-5: rgba(237, 110, 87, 0.3);
+  --color-6: rgba(235, 83, 159, 0.3);
+  --color-7: rgba(169, 129, 208, 0.3);
 }
 
 body {
@@ -59,17 +59,21 @@ html {
 }
 
 button {
-    background-color: inherit;
-    cursor: pointer;
-    border-width: initial;
-    border-style: none;
-    border-color: initial;
-    border-image: initial;
-    margin: 0px;
-    outline: none;
-    padding: 0px;
+  background-color: inherit;
+  cursor: pointer;
+  border-width: initial;
+  border-style: none;
+  border-color: initial;
+  border-image: initial;
+  margin: 0px;
+  outline: none;
+  padding: 0px;
 }
 
-.d-flex{
+.d-flex {
   display: flex;
+}
+
+.code-area {
+  padding-left: 42px;
 }
