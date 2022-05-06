@@ -91,7 +91,7 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
             )
           </span>
         </div>
-        <button className="CodeBlock__menu" title="Close" onClick={(e)=>{
+        <button className="CodeBlock__menu" data-testid="closeBubble" title="Close" onClick={(e)=>{
           close(e,props.entryPoint)
           dispatch(setclose( ! stateTreeClose ))
           //dispatch(add(! stateTree))

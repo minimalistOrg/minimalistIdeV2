@@ -155,7 +155,9 @@ export function close(e: any, close: any) {
   const fnCall = element.querySelectorAll(
     `.pointRef > .CodeBlock > .CodeBlock__body > pre > code .ast-function-${name}-${index} > .ast-CallExpression`
   )[0];
+  if( ! fnCall === undefined){
   fnCall.setAttribute("data-event","true")
+  }
 
   hoverHeaderLose(e);
   // removeBubble.remove();
