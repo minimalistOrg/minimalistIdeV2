@@ -4,7 +4,7 @@ export const callTreeSlice = createSlice({
   name: "callTree",
   initialState: {
     value: true,
-    close: false
+    close: false,
   },
   reducers: {
     add: (state, action) => {
@@ -17,6 +17,6 @@ export const callTreeSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { add,setclose } = callTreeSlice.actions;
+export const { add, setclose } = callTreeSlice.actions;
 
 export default callTreeSlice.reducer;

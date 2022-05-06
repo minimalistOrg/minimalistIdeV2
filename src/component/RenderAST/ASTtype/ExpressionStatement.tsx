@@ -1,6 +1,8 @@
 import ChooseType from "../ChooseType";
 
-function ExpressionStatement(props: { data: { expression: object } }): JSX.Element {
+function ExpressionStatement(props: {
+  data: { expression: object };
+}): JSX.Element {
   const data: { expression: object } = props.data;
 
   return (

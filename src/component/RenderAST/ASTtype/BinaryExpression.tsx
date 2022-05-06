@@ -1,10 +1,9 @@
 import ChooseType from "../ChooseType";
-import {BinaryExpressionType,DataBubble} from "./interfaceType"
-
+import { BinaryExpressionType, DataBubble } from "./interfaceType";
 
 function BinaryExpression(props: BinaryExpressionType): JSX.Element {
-  const data:DataBubble = props.data.left;
-  const data2:DataBubble = props.data.right;
+  const data: DataBubble = props.data.left;
+  const data2: DataBubble = props.data.right;
 
   return (
     <>

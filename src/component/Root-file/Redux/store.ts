@@ -5,7 +5,7 @@ import callTreeSlice from "../slice/callTreeSlice";
 export default configureStore({
   reducer: {
     addbubble: addBubbleSlice,
-    callTree: callTreeSlice
+    callTree: callTreeSlice,
   },
 
   middleware: (getDefaultMiddleware) =>

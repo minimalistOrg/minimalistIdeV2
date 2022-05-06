@@ -1,4 +1,4 @@
-code div{
+code div {
   padding: 3px;
 }
 
@@ -54,54 +54,57 @@ code div{
   font-style: italic;
 }
 
-.ast-call{
+.ast-call {
   padding: 3px;
 }
 
-.ast-call:hover, .ast-variable-name:hover, .fnhover{
+.ast-call:hover,
+.ast-variable-name:hover,
+.fnhover {
   background-color: var(--bg-highligth-function);
   transition: var(--bgt-bubble-header);
 }
 
-.p3{
+.p3 {
   padding: 3px;
 }
 
 /* .ast-call *:hover{ */
 /*    background-color: transparent !important; */
-/* } */ 
+/* } */
 
-pre{
+pre {
   padding: 6px;
 }
 
-.identifierNot:hover *{
+.identifierNot:hover * {
   background-color: transparent !important;
 }
 
-.highligth-c1{
+.highligth-c1 {
   background-color: var(--color-1) !important;
 }
-.highligth-c2{
+.highligth-c2 {
   background-color: var(--color-2) !important;
 }
-.highligth-c3{
+.highligth-c3 {
   background-color: var(--color-3) !important;
 }
-.highligth-c4{
+.highligth-c4 {
   background-color: var(--color-4) !important;
 }
-.highligth-c5{
+.highligth-c5 {
   background-color: var(--color-5) !important;
 }
-.highligth-c6{
+.highligth-c6 {
   background-color: var(--color-6) !important;
 }
-.highligth-c7{
+.highligth-c7 {
   background-color: var(--color-7) !important;
 }
 
-.ast-CallExpression .highligth-c1, .ast-CallExpression span[data-toggle] {
+.ast-CallExpression .highligth-c1,
+.ast-CallExpression span[data-toggle] {
   background-color: transparent !important;
 }
 

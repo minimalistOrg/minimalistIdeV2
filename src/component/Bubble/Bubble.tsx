@@ -1,4 +1,4 @@
-import {v4 as generateid} from "uuid"
+import { v4 as generateid } from "uuid";
 import CodeBlock from "../CodeBlock/CodeBlock";
 import RenderAST from "../RenderAST/RenderAST";
 import { useEffect, useState } from "react";
@@ -16,9 +16,8 @@ interface BubbleType {
   data: any[];
   order: number;
   dataparams: any;
-  id:any
+  id: any;
 }
-
 
 function Bubble(props: BubbleType) {
   // const [btnCount, setBtnCount] = useState<any>([]);
@@ -36,7 +35,6 @@ function Bubble(props: BubbleType) {
     dispatch(bubbleTree(!Tree));
     // console.log(Tree, "btnCount");
     // eslint-disable-next-line
-    // console.log(TreeClose,"close")
   }, [TreeClose]);
 
   function setJson(): void {

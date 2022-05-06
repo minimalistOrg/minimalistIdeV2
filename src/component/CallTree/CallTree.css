@@ -23,21 +23,21 @@
   display: none;
 }
 
-.CallTree__listToggle{
+.CallTree__listToggle {
   display: flex;
   justify-content: center;
   color: white;
 }
 
-.CallTree__listToggle-btn{
+.CallTree__listToggle-btn {
   color: white;
   padding: 4px;
 }
 
-.CallTree__bar.CallTree--active{
+.CallTree__bar.CallTree--active {
   background-color: purple;
 }
-.CallTree__list.CallTree--active{
+.CallTree__list.CallTree--active {
   display: block;
 }
 

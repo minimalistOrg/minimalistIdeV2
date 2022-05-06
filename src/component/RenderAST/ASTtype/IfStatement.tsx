@@ -2,7 +2,7 @@ import ChooseType from "../ChooseType";
 import RenderAST from "../RenderAST";
 import { IfStatementType } from "./interfaceType";
 
-function IfStatement(props: { data: IfStatementType }):JSX.Element {
+function IfStatement(props: { data: IfStatementType }): JSX.Element {
   const data: IfStatementType = props.data;
   // console.log(data)
   return (

@@ -36,32 +36,31 @@
   font-family: sans-serif;
   font-size: 0.7rem;
   margin-top: -0.2rem;
-  border:none;
+  border: none;
   /* padding: 0 0.4rem; */
 }
 
-
-code{
+code {
   white-space: pre-wrap;
   padding: 0px !important;
 }
-pre{
+pre {
   margin: 0;
 }
 
-.CodeBlock__collapse{
+.CodeBlock__collapse {
   padding: 2px 4px 2px 4px;
   margin-right: 5px;
   cursor: pointer;
   transition: 400ms ease-in-out;
 }
 
-.animation-collapse{
+.animation-collapse {
   transition: 0.7s ease-in-out;
 }
 
 /* animation */
-.rotateIco-90{
+.rotateIco-90 {
   transform: rotate(-90deg);
 }
 
@@ -72,9 +71,8 @@ pre{
   transition: max-height 400ms;
 }
 
-.CodeBlock__body--collapse{
+.CodeBlock__body--collapse {
   padding-top: 0px;
   padding-bottom: 0px;
   max-height: 0px !important;
 }
-

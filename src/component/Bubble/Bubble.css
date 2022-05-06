@@ -1,8 +1,8 @@
-.rowBubble{
+.rowBubble {
   display: flex;
 }
 
-.ColBubbles{
+.ColBubbles {
   display: flex;
   flex-direction: column;
 }

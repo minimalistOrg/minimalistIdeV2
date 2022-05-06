@@ -13,8 +13,8 @@ import {
 import IcoCollapse from "./IcoCollapse";
 import { BubbleCollapse, maxHeightBody } from "./Functions/BubbleCollapse";
 import IcoClose from "./IcoClose";
-import {useDispatch, useSelector} from "react-redux";
-import {setclose} from "../Root-file/slice/callTreeSlice"
+import { useDispatch, useSelector } from "react-redux";
+import { setclose } from "../Root-file/slice/callTreeSlice";
 
 interface CodeBlockEntry {
   title: string | undefined;
@@ -24,20 +24,19 @@ interface CodeBlockEntry {
   onHoverevent: any;
   order: number;
   dataparams: string[];
-  entryPoint:any
-  id:any
+  entryPoint: any;
+  id: any;
 }
 
 function CodeBlock(props: CodeBlockEntry): JSX.Element {
-
-  const dispatch= useDispatch()
-  const stateTreeClose= useSelector<any>((state)=> state.callTree.close)
+  const dispatch = useDispatch();
+  const stateTreeClose = useSelector<any>((state) => state.callTree.close);
   // console.log(stateTree)
 
-    //Genera una instacia de Resize para cada burbuja
+  //Genera una instacia de Resize para cada burbuja
   const Bubble = useRef<HTMLDivElement | null>(null);
   const CodeTxt = useRef<HTMLElement | null>(null);
-  const [recoveryHeight,setRecoveryHeight] = useState<any>(true)
+  const [recoveryHeight, setRecoveryHeight] = useState<any>(true);
 
   useEffect(() => {
     const IDBubble: HTMLDivElement | null = Bubble.current;
@@ -46,7 +45,7 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
     // console.log(NRender)
     // console.log(IDBubble)
     resetGlobal(1);
-    maxHeightBody(IDBubble)
+    maxHeightBody(IDBubble);
     // console.log(stateTree)
   }, [recoveryHeight]);
 
@@ -70,10 +69,7 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
         data-title={props.title}
       >
         <div className="CodeBlock__title">
-          <div
-            className="CodeBlock__collapse"
-            onClick={BubbleCollapse}
-          >
+          <div className="CodeBlock__collapse" onClick={BubbleCollapse}>
             <IcoCollapse />
           </div>
           {props.title}
@@ -90,13 +86,18 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
             )
           </span>
         </div>
-        <button className="CodeBlock__menu" data-testid="closeBubble" title="Close" onClick={(e)=>{
-          close(e,props.entryPoint)
-          dispatch(setclose( ! stateTreeClose ))
-          //dispatch(add(! stateTree))
-          // console.log(stateTreeClose)
-          setRecoveryHeight(! recoveryHeight)
-          }}>
+        <button
+          className="CodeBlock__menu"
+          data-testid="closeBubble"
+          title="Close"
+          onClick={(e) => {
+            close(e, props.entryPoint);
+            dispatch(setclose(!stateTreeClose));
+            //dispatch(add(! stateTree))
+            // console.log(stateTreeClose)
+            setRecoveryHeight(!recoveryHeight);
+          }}
+        >
           <IcoClose />
         </button>
       </div>

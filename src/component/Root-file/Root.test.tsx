@@ -54,8 +54,7 @@ test("Assert the bubble closes and the tree updates", () => {
 
   const BubbleMain = screen.queryByTestId("Bubble");
   const calltree = screen.queryByTestId("calltree");
-  console.log(BubbleMain)
-  expect(BubbleMain).toBeNull()
-  expect(calltree).toBeNull()
-
+  console.log(BubbleMain);
+  expect(BubbleMain).toBeNull();
+  expect(calltree).toBeNull();
 });

@@ -1,9 +1,11 @@
 import interact from "interactjs";
-import {MutableRefObject} from "react";
+import { MutableRefObject } from "react";
 
-export default function Resize(id: any, idCode: MutableRefObject<HTMLElement|null>) {
-
-let limitHeight:number= 0
+export default function Resize(
+  id: any,
+  idCode: MutableRefObject<HTMLElement | null>
+) {
+  let limitHeight: number = 0;
 
   interact(id).resizable({
     edges: { top: false, left: false, bottom: true, right: true },
@@ -14,7 +16,7 @@ let limitHeight:number= 0
         x = (parseFloat(x) || 0) + event.deltaRect.left;
         y = (parseFloat(y) || 0) + event.deltaRect.top;
 
-        limitHeight= limit(idCode).height
+        limitHeight = limit(idCode).height;
         // console.log(limitHeight,"here")
 
         Object.assign(event.target.style, {
@@ -38,14 +40,11 @@ let limitHeight:number= 0
   });
 }
 
-function limit(element:any){
-
+function limit(element: any) {
   // console.log(element.current.parentNode.clientHeight)
-  let totalHeight= element.current.parentNode.clientHeight
+  let totalHeight = element.current.parentNode.clientHeight;
 
   return {
-    height: totalHeight
-  }
-
-
+    height: totalHeight,
+  };
 }
