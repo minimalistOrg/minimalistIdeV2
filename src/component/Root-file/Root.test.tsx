@@ -67,26 +67,17 @@ test("test btn that open and close calltree", () => {
   );
 
   const btn = screen.getByTestId("calltreeBtn");
-  fireEvent.click(btn)
-  const bar= screen.getByTestId("calltreeBar")
-  const container= screen.getByTestId("calltreeBar")
-  expect(bar.classList).toContain("CallTree--active")
+  const bar = screen.getByTestId("calltreeBar");
+  const container = screen.getByTestId("calltreeBar");
+
+  expect(bar.classList).toContain("CallTree--active");
   expect(container.classList).toContain("CallTree--active")
-  fireEvent.click(btn)
-  expect(bar.classList).not.toContain("CallTree--active")
+
+  fireEvent.click(btn);
+  expect(bar.classList).not.toContain("CallTree--active");
   expect(container.classList).not.toContain("CallTree--active")
+
+  fireEvent.click(btn);
+  expect(bar.classList).toContain("CallTree--active");
+  expect(container.classList).toContain("CallTree--active")
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
