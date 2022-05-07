@@ -6,6 +6,7 @@ import ListNested from "./icons/ListNested";
 
 function CallTree(props: any) {
   const dataBubbleTree = useSelector((state: any) => state.callTree.value);
+  const [opentree, setOpentree] = useState(true);
 
   useEffect(() => {
     // console.log(TreeCall, dataBubbleTree)
@@ -95,8 +96,6 @@ function CallTree(props: any) {
       return "";
     }
   }
-
-  const [opentree, setOpentree] = useState(false);
 
   return (
     <section className="CallTree">
