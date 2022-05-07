@@ -54,7 +54,39 @@ test("Assert the bubble closes and the tree updates", () => {
 
   const BubbleMain = screen.queryByTestId("Bubble");
   const calltree = screen.queryByTestId("calltree");
-  console.log(BubbleMain);
+  // console.log(BubbleMain);
   expect(BubbleMain).toBeNull();
   expect(calltree).toBeNull();
 });
+
+test("test btn that open and close calltree", () => {
+  render(
+    <Provider store={store}>
+      <Root />
+    </Provider>
+  );
+
+  const btn = screen.getByTestId("calltreeBtn");
+  fireEvent.click(btn)
+  const bar= screen.getByTestId("calltreeBar")
+  const container= screen.getByTestId("calltreeBar")
+  expect(bar.classList).toContain("CallTree--active")
+  expect(container.classList).toContain("CallTree--active")
+  fireEvent.click(btn)
+  expect(bar.classList).not.toContain("CallTree--active")
+  expect(container.classList).not.toContain("CallTree--active")
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+

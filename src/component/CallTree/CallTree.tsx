@@ -100,10 +100,14 @@ function CallTree(props: any) {
 
   return (
     <section className="CallTree">
-      <div className={`CallTree__bar ${toogleBtntree(opentree)}`}>
+      <div
+        data-testid="calltreeBar"
+        className={`CallTree__bar ${toogleBtntree(opentree)}`}
+      >
         <div className="CallTree__listToggle">
           <button
             className="CallTree__listToggle-btn"
+            data-testid="calltreeBtn"
             onClick={() => {
               setOpentree(!opentree);
             }}
@@ -112,7 +116,10 @@ function CallTree(props: any) {
           </button>
         </div>
       </div>
-      <div className={`CallTree__list ${toogleBtntree(opentree)}`}>
+      <div
+        data-testid="calltreeContainer"
+        className={`CallTree__list ${toogleBtntree(opentree)}`}
+      >
         {TreeLi(props.data)}
       </div>
     </section>
