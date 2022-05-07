@@ -3,6 +3,7 @@ import Bubble from "../Bubble/Bubble";
 import { api } from "../../AST/data";
 import CallTree from "../CallTree/CallTree";
 import { TreeCall as json } from "./CallTree";
+import FuzzySearch from "../FuzzySearch/FuzzySearch";
 
 function Root(): JSX.Element {
   const data = api.body;
@@ -20,6 +21,9 @@ function Root(): JSX.Element {
           dataparams={[]}
           id={0}
         />
+        <div className="FuzzySearch-container">
+          <FuzzySearch />
+        </div>
       </section>
     </div>
   );
