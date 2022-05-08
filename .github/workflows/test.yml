@@ -34,8 +34,10 @@
          with:
            node-version: ${{ matrix.node-version }}
 
-       - name: npm ci, build
+       - name: install & build
          run: |
            yarn install
            yarn build
-           yarn test
+
+       - name: test
+         run: yarn test
