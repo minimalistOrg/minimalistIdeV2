@@ -4,21 +4,20 @@ declare global {
   }
 }
 
-export const code= `
+export const code = `
   function main(){
     console.log("Hello Word")
   }
 
-`
+`;
 
 export function test() {
+  const Parser: any = window?.TreeSitter;
 
-  const Parser:any = window?.TreeSitter;
-
-  Parser.init().then(() => {
+let data=  Parser.init().then(() => {
     /* the library is ready */
     const parser = new Parser();
-    const test = async () => {
+    const testing = async () => {
       const JavaScript = await Parser.Language.load(
         process.env.PUBLIC_URL +
           "/assets/TreeSitter/tree-sitter-javascript.wasm"
@@ -26,8 +25,12 @@ export function test() {
       parser.setLanguage(JavaScript);
       const sourceCode = code;
       const tree = parser.parse(sourceCode);
-      console.log(tree.rootNode.toString());
+      console.log(tree.rootNode)
+      return tree
+      
     };
-    test();
+   return testing();
   });
+
+  return data
 }
