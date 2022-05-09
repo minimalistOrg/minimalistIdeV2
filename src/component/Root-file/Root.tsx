@@ -4,9 +4,11 @@ import { api } from "../../AST/data";
 import CallTree from "../CallTree/CallTree";
 import { TreeCall as json } from "./CallTree";
 import FuzzySearch from "../FuzzySearch/FuzzySearch";
+import {test} from "../Tree-Sitter/TreeSitter"
 
 function Root(): JSX.Element {
   const data = api.body;
+  test()
 
   return (
     <div className="d-flex">
