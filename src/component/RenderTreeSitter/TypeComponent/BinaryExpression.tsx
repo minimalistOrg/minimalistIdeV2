@@ -1,9 +1,8 @@
 import ChooseType from "../ChooseType";
 
-function Arguments(props:any){
+function BinaryExpression(props:any){
   const data= props.data;
-  // console.log(data.children)
-
+  // console.log(data)
   return (
     <span>{
       data.children.map((e:any,index:number)=>{
@@ -17,4 +16,4 @@ function Arguments(props:any){
   )
 }
 
-export default Arguments;
+export default BinaryExpression;
