@@ -5,7 +5,7 @@ function VariableDeclarator(props: any) {
   // console.log(data);
 
   return (
-    <span>
+    <span className="VariableDeclarator">
       <span>
         <ChooseType info={data.children[0]} />
       </span>

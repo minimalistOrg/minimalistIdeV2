@@ -5,10 +5,10 @@ function StatementBlock(props: any) {
   // console.log(data);
 
   return (
-    <div>
+    <div className="StatementBlock">
       {data.children.map((e: any, index: number) => {
         return (
-          <div key={index}>
+          <div key={index} className="StatementBlock__line">
             <ChooseType info={e} />
           </div>
         );

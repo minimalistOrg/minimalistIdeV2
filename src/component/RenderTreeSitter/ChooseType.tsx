@@ -38,7 +38,7 @@ function ChooseType(props: any): JSX.Element {
         return <StatementBlock data={info} />;
       //simbols
       case ",":
-        return <span>,</span>;
+        return <span>, </span>;
       case "(":
         return <></>;
       case ")":
@@ -48,7 +48,7 @@ function ChooseType(props: any): JSX.Element {
       case "}":
         return <></>;
       case "+":
-        return <>+</>;
+        return <> + </>;
       case "loading":
         return <p>Loading...</p>;
       default:

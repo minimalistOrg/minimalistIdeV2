@@ -1,4 +1,5 @@
 import "./Root.css";
+import "../RenderTreeSitter/highlight.css"
 //import Bubble from "../Bubble/Bubble";
 //import CallTree from "../CallTree/CallTree";
 //import { TreeCall as json } from "./CallTree";

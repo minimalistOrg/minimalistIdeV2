@@ -4,7 +4,7 @@ function BinaryExpression(props:any){
   const data= props.data;
   // console.log(data)
   return (
-    <span>{
+    <span className="BinaryExpression">{
       data.children.map((e:any,index:number)=>{
         return (
           <span key={index}>

@@ -5,7 +5,7 @@ function Arguments(props:any){
   // console.log(data.children)
 
   return (
-    <span>{
+    <span className="Arguments">{
       data.children.map((e:any,index:number)=>{
         return (
           <span key={index}>

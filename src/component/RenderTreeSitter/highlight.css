@@ -1,0 +1,44 @@
+:root {
+  --variableType: #859900;
+  --variableName: #6c71c4;
+  --fnDefinition: #2aa198;
+  --numberType: #d33682;
+  --stringType: #b58900;
+  --FnParams: #895903;
+}
+
+.LexicalDeclaration__variableType {
+  color: var(--variableType);
+}
+
+.LexicalDeclaration__variableName > .VariableDeclarator .Identifier {
+  color: var(--variableName);
+  font-weight: 700;
+}
+
+.CallExpression > .Identifier {
+  color: var(--fnDefinition);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.CallExpression > .Identifier:hover {
+  text-decoration: underline;
+}
+
+.Arguments .Identifier{
+  color: var(--FnParams);
+  font-style: italic;
+}
+
+.NumberType {
+  color: var(--numberType);
+}
+
+.StringType {
+  color: var(--stringType);
+}
+
+.StatementBlock__line{
+  padding: 3px;
+}

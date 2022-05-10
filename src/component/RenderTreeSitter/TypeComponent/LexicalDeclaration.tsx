@@ -6,8 +6,10 @@ function LexicalDeclaration(props: any) {
 
   return (
     <span className="LexicalDeclaration">
-      <span>{data.children[0].text} </span>
-      <span>
+      <span className="LexicalDeclaration__variableType">
+        {data.children[0].text}{" "}
+      </span>
+      <span className="LexicalDeclaration__variableName">
         <ChooseType info={data.children[1]} />
       </span>
     </span>
