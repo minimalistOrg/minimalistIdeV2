@@ -1,4 +1,3 @@
-import { Query } from "web-tree-sitter";
 
 declare global {
   interface Window {
@@ -85,6 +84,7 @@ export function test() {
   // const {Query}= Parser
 
   const querySearchFnDeclaration = "(function_declaration) @name";
+  const queryArrowFn= "(lexical_declaration (variable_declarator value:(arrow_function)  ) ) @name"
   // const querySearchCallExpression = "(call_expression function:(identifier) ) @name";
 
   let data = Parser.init().then(() => {
@@ -97,11 +97,12 @@ export function test() {
       );
       parser.setLanguage(JavaScript);
       const runSearchFnDeclaration = JavaScript.query(querySearchFnDeclaration);
+      const runSearchFnDeclarationArrow = JavaScript.query(queryArrowFn);
       const sourceCode = code;
       const tree = parser.parse(sourceCode);
       // console.log(tree);
       let listFunctionDeclaration = runSearchFnDeclaration.captures(tree.rootNode);
-      return listFunctionDeclaration;
+      return listFunctionDeclaration.concat(runSearchFnDeclarationArrow.captures(tree.rootNode));
     };
     return testing();
   });

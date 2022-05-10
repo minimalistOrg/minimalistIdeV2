@@ -7,12 +7,18 @@ import IcoCollapse from "./IcoCollapse";
 function CodeBlockTS(props: any): JSX.Element {
   // console.log(props.code, "CodeBlockTS");
   const [title, setTitle] = useState("Loading...");
-  const [code, setCode] = useState({type:"loading",text:"Loading"});
+  const [code, setCode] = useState({ type: "loading", text: "Loading" });
 
   useEffect(() => {
-    if (!(props.code[0] === undefined)) {
-      setTitle(props.code[1].text);
-      setCode(props.code[3])
+    if (!(props.code === undefined)) {
+      if (props.code.node.children[3] === undefined) {
+        setCode(props.code.node.children[1].children[2].children[2]);
+        setTitle(props.code.node.children[1].children[0].text);
+        console.log(props.code.node.children[1].children[2].children[2]);
+      } else {
+        setTitle(props.code.node.children[1].text);
+        setCode(props.code.node.children[3]);
+      }
     }
   }, [props.code]);
 

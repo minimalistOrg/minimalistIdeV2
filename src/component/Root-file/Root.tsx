@@ -11,14 +11,11 @@ import {useDispatch} from "react-redux"
 import {add} from "../Root-file/slice/addBubbleSlice"
 
 function Root(): JSX.Element {
-  const [load, setLoad] = useState({});
 const dispatch= useDispatch()
 
   useEffect(() => {
     const data = async () => {
       const loadData = await test();
-      console.log(loadData[0].node.children)
-      setLoad(loadData[0].node.children);
       dispatch(add(loadData))
 
     };
@@ -34,7 +31,7 @@ const dispatch= useDispatch()
       </section>
       <section className="code-area">
         <Bubble
-          data={load}
+          fnindex={0}
           tree={json}
         />
       {/*<CodeBlockTS code={load} />*/}
