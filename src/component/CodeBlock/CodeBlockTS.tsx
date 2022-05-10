@@ -34,7 +34,7 @@ function CodeBlockTS(props: any): JSX.Element {
           <IcoClose />{" "}
         </button>
       </div>
-      <div className="CodeBlock__body">
+      <div className="CodeBlock__body" onClick={props.openBubble}>
         <pre>
           <code>
             <ChooseType info={code} />

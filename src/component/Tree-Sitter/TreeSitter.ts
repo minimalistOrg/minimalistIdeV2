@@ -1,3 +1,5 @@
+import { Query } from "web-tree-sitter";
+
 declare global {
   interface Window {
     TreeSitter?: any;
@@ -80,8 +82,12 @@ function fnArrowTwo() {
 
 export function test() {
   const Parser: any = window?.TreeSitter;
+  // const {Query}= Parser
 
-let data=  Parser.init().then(() => {
+  const querySearchFnDeclaration = "(function_declaration) @name";
+  // const querySearchCallExpression = "(call_expression function:(identifier) ) @name";
+
+  let data = Parser.init().then(() => {
     /* the library is ready */
     const parser = new Parser();
     const testing = async () => {
@@ -90,14 +96,15 @@ let data=  Parser.init().then(() => {
           "/assets/TreeSitter/tree-sitter-javascript.wasm"
       );
       parser.setLanguage(JavaScript);
+      const runSearchFnDeclaration = JavaScript.query(querySearchFnDeclaration);
       const sourceCode = code;
       const tree = parser.parse(sourceCode);
-      console.log(tree.rootNode)
-      return tree
-      
+      // console.log(tree);
+      let listFunctionDeclaration = runSearchFnDeclaration.captures(tree.rootNode);
+      return listFunctionDeclaration;
     };
-   return testing();
+    return testing();
   });
 
-  return data
+  return data;
 }

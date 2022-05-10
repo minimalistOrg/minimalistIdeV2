@@ -75,8 +75,6 @@ function CallTree(props: any) {
               <li style={{ order: e.order }} data-testid="calltree">
                 <span
                   className="liBubble"
-                  onMouseOver={() => hoverBubbles(e)}
-                  onMouseOut={() => hoverBubblesOut(e)}
                 >
                   {e.name}
                 </span>

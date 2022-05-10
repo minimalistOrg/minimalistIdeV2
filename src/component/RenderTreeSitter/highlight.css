@@ -17,7 +17,7 @@
 }
 
 .CallExpression > .Identifier {
-  color: var(--fnDefinition);
+  color: var(--fnDefinition) !important;
   font-weight: 700;
   cursor: pointer;
 }
@@ -27,8 +27,9 @@
 }
 
 .Arguments .Identifier{
-  color: var(--FnParams);
+  color: var(--FnParams) !important;
   font-style: italic;
+  font-weight: normal !important;
 }
 
 .NumberType {
