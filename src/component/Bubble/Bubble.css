@@ -1,8 +1,13 @@
-.rowBubble {
+.RowBubble {
   display: flex;
 }
 
 .ColBubbles {
+  display: flex;
+  flex-direction: column;
+}
+
+.BubbleContainer{
   display: flex;
   flex-direction: column;
 }

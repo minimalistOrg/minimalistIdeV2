@@ -36,6 +36,7 @@ function CodeBlockTS(props: any): JSX.Element {
           className="CodeBlock__menu"
           data-testid="closeBubble"
           title="Close"
+          onClick={props.closeBubble}
         >
           <IcoClose />{" "}
         </button>
