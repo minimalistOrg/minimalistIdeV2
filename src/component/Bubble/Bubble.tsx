@@ -12,9 +12,9 @@ function Bubble(props: any) {
 
   useEffect(() => {
     setRenderBubble(props.tree);
-  }, []);
+    // console.log("test number of render")
+  }, [props.tree]);
 
-  const [t, setT] = useState(null);
 
   function handleAdd(event: any, dato: any) {
     let value = dato.value;
@@ -23,7 +23,6 @@ function Bubble(props: any) {
       if (readIndex.fninfo.event) {
         value.push(readIndex.fninfo);
         readIndex.fninfo.event = false;
-        setT(readIndex.fninfo);
         dispatch(add(!reRender));
       }
     }
