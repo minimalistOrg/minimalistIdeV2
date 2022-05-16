@@ -15,6 +15,7 @@ function CodeBlockTS(props: any): JSX.Element {
       if (props.code.node.children[3] === undefined) {
         setCode(props.code.node.children[1].children[2].children[2]);
         setTitle(props.code.node.children[1].children[0].text);
+        setParams(props.code.node.children[1].children[2].children[0].children)
         // setParams("1");
       } else {
         setTitle(props.code.node.children[1].text);
