@@ -1,8 +1,8 @@
-import "./Bubble.css";
-import { useState, useEffect } from "react";
-import CodeBlockTS from "../CodeBlock/CodeBlockTS";
-import { useDispatch, useSelector } from "react-redux";
-import { add } from "../Root-file/slice/callTreeSlice";
+import './Bubble.css';
+import { useState, useEffect } from 'react';
+import CodeBlockTS from '../CodeBlock/CodeBlockTS';
+import { useDispatch, useSelector } from 'react-redux';
+import { add } from '../Root-file/slice/callTreeSlice';
 
 function Bubble(props: any) {
   const [renderBubble, setRenderBubble] = useState([]);
@@ -14,7 +14,6 @@ function Bubble(props: any) {
     setRenderBubble(props.tree);
     // console.log("test number of render")
   }, [props.tree]);
-
 
   function handleAdd(event: any, dato: any) {
     let value = dato.value;

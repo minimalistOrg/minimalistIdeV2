@@ -61,7 +61,7 @@ function CallExpression(props: any) {
     <span className="CallExpression" ref={expression}>
       <ChooseType info={data.children[0]} />
       <span>
-        (<ChooseType info={data.children[1]} />)
+        <ChooseType info={data.children[1]} />
       </span>
     </span>
   );

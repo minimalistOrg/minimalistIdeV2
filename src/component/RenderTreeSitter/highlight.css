@@ -5,6 +5,8 @@
   --numberType: #d33682;
   --stringType: #b58900;
   --FnParams: #895903;
+  --purple: #9c27b0;
+  --ReservedWords: #e91e63;
 }
 
 .LexicalDeclaration__variableType {
@@ -42,4 +44,64 @@
 
 .StatementBlock__line{
   padding: 3px;
+}
+
+.ReturnStatement__text{
+  color: var(--purple);
+  font-weight: bold;
+}
+
+.ReservedWords{
+  color: var(--ReservedWords);
+  font-weight: bold;
+}
+
+.TemplateString{
+  color: var(--stringType);
+}
+
+.IfStatement > .StatementBlock .StatementBlock__line:first-child{
+  /* background-color: red; */
+  display: none;
+}
+
+
+.IfStatement > .StatementBlock .StatementBlock__line:last-child{
+  /* background-color: red; */
+  display: none;
+}
+
+
+.ElseClause > .StatementBlock .StatementBlock__line:first-child{
+  /* background-color: red; */
+  display: none;
+}
+
+
+.ElseClause > .StatementBlock .StatementBlock__line:last-child{
+  /* background-color: red; */
+  display: none;
+}
+
+code > .StatementBlock .StatementBlock__line:first-child{
+  /* background-color: red; */
+  display: none;
+}
+
+
+code > .StatementBlock .StatementBlock__line:last-child{
+  /* background-color: red; */
+  display: none;
+}
+
+
+.ArrowFunction > span > .StatementBlock .StatementBlock__line:first-child{
+  /* background-color: red; */
+  display: none;
+}
+
+
+.ArrowFunction > span > .StatementBlock .StatementBlock__line:last-child{
+  /* background-color: red; */
+  display: none;
 }

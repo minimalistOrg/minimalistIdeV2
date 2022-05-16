@@ -40,6 +40,12 @@ function logic(data1, data2) {
   } else {
     subtraction(data1, data2);
   }
+
+
+  if (result) {
+    sum(data1 + 2, data2 + 2);
+  }
+
 }
 function sum(a, b) {
   const result = a + b;
@@ -72,7 +78,7 @@ function fnArrow() {
   [].map(i => i * 2);
 }
 function fnArrowTwo() {
-  [].map(i => {
+  [].map((i) => {
     show("hello", i);
     return \`\${i + " test"} RESULT \${2 + 4} now \${i}\`;
   });

@@ -9,11 +9,35 @@ import VariableDeclarator from "./TypeComponent/VariableDeclarator";
 import NumberType from "./TypeComponent/NumberType";
 import Identifier from "./TypeComponent/Identifier";
 import BinaryExpression from "./TypeComponent/BinaryExpression"
+import ReturnStatement from "./TypeComponent/ReturnStatement"
+import IfStatement from "./TypeComponent/IfStatement"
+import ElseClause from "./TypeComponent/ElseClause";
+import ParenthesizedExpression from "./TypeComponent/ParenthesizedExpression"
+import ArrowFunction from "./TypeComponent/ArrowFunction"
+import FormalParameters from "./TypeComponent/FormalParameters"
+import TemplateString from "./TypeComponent/TemplateString";
+import TemplateSubstitution from "./TypeComponent/TemplateSubstitution";
 
 function ChooseType(props: any): JSX.Element {
   function choose(info: any) {
     //
     switch (info.type) {
+      case "template_substitution":
+        return <TemplateSubstitution data={info} />
+      case "template_string":
+        return <TemplateString data={info} />
+      case "formal_parameters":
+        return <FormalParameters data={info} />
+      case "arrow_function":
+        return <ArrowFunction data={info} />
+      case "parenthesized_expression":
+        return <ParenthesizedExpression data={info} />
+      case "else_clause":
+        return <ElseClause data={info} />
+      case "if_statement":
+        return <IfStatement data={info} />
+      case "return_statement":
+        return <ReturnStatement data={info} />
       case "binary_expression":
         return <BinaryExpression data={info} />
       case "identifier":
@@ -36,19 +60,40 @@ function ChooseType(props: any): JSX.Element {
         return <ExpressionStatement data={info} />;
       case "statement_block":
         return <StatementBlock data={info} />;
+      //
+      case "if":
+        return <span className="ReservedWords">if</span>
+      case "else":
+        return <span className="ReservedWords">else</span>
       //simbols
       case ",":
         return <span>, </span>;
       case "(":
-        return <></>;
+        return <>(</>;
       case ")":
-        return <></>;
+        return <>)</>;
       case "{":
-        return <></>;
+        return <>{"{"}</>;
       case "}":
-        return <></>;
+        return <>{"}"}</>;
       case "+":
         return <> + </>;
+      case "/":
+        return <> / </>;
+      case "*":
+        return <> * </>;
+      case ">":
+        return <> {'>'} </>;
+      case "<":
+        return <> {'<'} </>;
+      case "===":
+        return <> === </>
+      case "=>":
+        return <> {"=>"} </>
+      case "${":
+        return <>{"${"}</>
+      case "`":
+        return <>{"`"}</>
       case "loading":
         return <p>Loading...</p>;
       default:
