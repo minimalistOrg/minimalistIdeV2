@@ -1,14 +1,16 @@
-import './Bubble.css';
-import { useState, useEffect } from 'react';
-import CodeBlockTS from '../CodeBlock/CodeBlockTS';
-import { useDispatch, useSelector } from 'react-redux';
-import { add } from '../Root-file/slice/callTreeSlice';
+import "./Bubble.css";
+import { useState, useEffect, useRef } from "react";
+import CodeBlockTS from "../CodeBlock/CodeBlockTS";
+import { useDispatch, useSelector } from "react-redux";
+import { add } from "../Root-file/slice/callTreeSlice";
 
 function Bubble(props: any) {
   const [renderBubble, setRenderBubble] = useState([]);
   const dispatch = useDispatch();
   const reRender = useSelector((state: any) => state.callTree.value);
   const listFn = useSelector((state: any) => state.addbubble.value);
+  const currentBubble = useRef<any>(null);
+  const [fninfoData,setFninfoData]= useState<any>(null)
 
   useEffect(() => {
     setRenderBubble(props.tree);
@@ -20,8 +22,10 @@ function Bubble(props: any) {
     const readIndex = event.target.parentNode;
     if (!(readIndex.fninfo === undefined)) {
       if (readIndex.fninfo.event) {
+        setFninfoData(readIndex)
         value.push(readIndex.fninfo);
         readIndex.fninfo.event = false;
+        // console.log(readIndex.fninfo);
         dispatch(add(!reRender));
       }
     }
@@ -40,11 +44,13 @@ function Bubble(props: any) {
   const Codebubble = (
     children: any,
     parent: any,
-    fnindex: number
+    fnindex: number,
+    fninfoData:any
   ): JSX.Element => {
     return (
       <CodeBlockTS
         code={listFn[fnindex]}
+        call={fninfoData}
         openBubble={(event: any) => handleAdd(event, children)}
         closeBubble={() => closeBubble(parent, children)}
       />
@@ -56,9 +62,9 @@ function Bubble(props: any) {
       {renderBubble.map((e: any, index: number) => {
         return (
           <div key={index} style={{ order: e.order }} className="RowBubble">
-            <div className="Bubble">{Codebubble(e, renderBubble, e.index)}</div>
-            <div className="ColBubbles">
-              <Bubble fnindex={e.index} tree={e.value} />
+            <div className="Bubble">{Codebubble(e, renderBubble, e.index, props.call)}</div>
+            <div className="ColBubbles" ref={currentBubble}>
+              <Bubble fnindex={e.index} tree={e.value} call={fninfoData} />
             </div>
           </div>
         );

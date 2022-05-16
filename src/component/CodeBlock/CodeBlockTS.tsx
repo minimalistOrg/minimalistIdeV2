@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ChooseType from "../RenderTreeSitter/ChooseType";
 import "./CodeBlock.css";
 import IcoClose from "./IcoClose";
@@ -9,13 +9,15 @@ function CodeBlockTS(props: any): JSX.Element {
   const [title, setTitle] = useState("Loading...");
   const [code, setCode] = useState({ type: "loading", text: "Loading" });
   const [params, setParams] = useState([]);
+  const activeBubble = useRef<any>(null);
+  const [activeclass,setActiveclass]= useState(["CodeBlock","CodeBlock__header"])
 
   useEffect(() => {
     if (!(props.code === undefined)) {
       if (props.code.node.children[3] === undefined) {
         setCode(props.code.node.children[1].children[2].children[2]);
         setTitle(props.code.node.children[1].children[0].text);
-        setParams(props.code.node.children[1].children[2].children[0].children)
+        setParams(props.code.node.children[1].children[2].children[0].children);
         // setParams("1");
       } else {
         setTitle(props.code.node.children[1].text);
@@ -23,13 +25,24 @@ function CodeBlockTS(props: any): JSX.Element {
         setParams(props.code.node.children[2].children);
       }
     }
-  }, [props.code]);
+    if (!(props.call === undefined)) {
+      props.call.fninfo.Bubble = activeBubble.current;
+      setActiveclass(["CodeBlockHover CodeBlock","CodeBlock__header CodeBlock__header--hover"])
+      // console.log("her")
+      // activeBubble.current.classList.add("CodeBlockHover");
+      // activeBubble.current.children[0].classList.add("CodeBlock__header--hover");
+    }
+  }, [props.code, props.call]);
+
+  function fnHover(event: any) {
+    // console.log(event.target.parentNode)
+  }
 
   // console.log(params);
 
   return (
-    <div className="CodeBlock" data-testid="Bubble">
-      <div className="CodeBlock__header" data-testid="BubbleOrder">
+    <div className={activeclass[0]} data-testid="Bubble" ref={activeBubble}>
+      <div className={activeclass[1]} data-testid="BubbleOrder">
         <div className="CodeBlock__title">
           <div className="CodeBlock__collapse">
             <IcoCollapse />
@@ -57,7 +70,7 @@ function CodeBlockTS(props: any): JSX.Element {
       </div>
       <div className="CodeBlock__body" onClick={props.openBubble}>
         <pre>
-          <code>
+          <code onMouseOver={fnHover}>
             <ChooseType info={code} />
           </code>
         </pre>

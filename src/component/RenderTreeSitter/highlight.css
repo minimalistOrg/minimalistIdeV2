@@ -9,6 +9,25 @@
   --ReservedWords: #e91e63;
 }
 
+.CallExpression:hover{
+    background-color: var(--bg-highligth-function);
+    transition: var(--bgt-bubble-header);
+}
+
+.CodeBlockHover{
+  box-shadow: var(--bs-bubble) !important;
+  transition: var(--bst-bubble);
+}
+
+.CodeBlock__header:hover, .CodeBlock__header--hover {
+    background-color: var(--bg-bubble-header) !important;
+    transition: var(--bgt-bubble-header);
+}
+
+.CallExpression{
+  padding: 3px;
+}
+
 .LexicalDeclaration__variableType {
   color: var(--variableType);
 }

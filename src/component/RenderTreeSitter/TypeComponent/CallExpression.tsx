@@ -48,6 +48,7 @@ function CallExpression(props: any) {
       event: event,
       order: fnOrder,
       element: expression.current,
+      Bubble: null
     };
     // console.log(fndata);
     validifFnCall();
@@ -59,9 +60,33 @@ function CallExpression(props: any) {
   }, [name, fnindex]);
 
   // console.log(data.walk());
+  function fnHover(data: any) {
+    // console.log(data.currentTarget,"here")
+    if (!(data.currentTarget.fninfo.Bubble === null)) {
+      data.currentTarget.fninfo.Bubble.classList.add("CodeBlockHover");
+      data.currentTarget.fninfo.Bubble.children[0].classList.add(
+        "CodeBlock__header--hover"
+      );
+    }
+  }
+
+
+  function fnHoverClose(data: any) {
+    if (!(data.currentTarget.fninfo.Bubble === null)) {
+      data.currentTarget.fninfo.Bubble.classList.remove("CodeBlockHover");
+      data.currentTarget.fninfo.Bubble.children[0].classList.remove(
+        "CodeBlock__header--hover"
+      );
+    }
+  }
 
   return (
-    <span className="CallExpression" ref={expression}>
+    <span
+      className="CallExpression"
+      onMouseOver={fnHover}
+      onMouseLeave={fnHoverClose}
+      ref={expression}
+    >
       <ChooseType info={data.children[0]} />
       <span>
         <ChooseType info={data.children[1]} />
