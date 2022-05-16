@@ -8,19 +8,23 @@ function CodeBlockTS(props: any): JSX.Element {
   // console.log(props.code, "CodeBlockTS");
   const [title, setTitle] = useState("Loading...");
   const [code, setCode] = useState({ type: "loading", text: "Loading" });
+  const [params, setParams] = useState([]);
 
   useEffect(() => {
     if (!(props.code === undefined)) {
       if (props.code.node.children[3] === undefined) {
         setCode(props.code.node.children[1].children[2].children[2]);
         setTitle(props.code.node.children[1].children[0].text);
-        console.log(props.code.node.children[1].children[2].children[2]);
+        // setParams("1");
       } else {
         setTitle(props.code.node.children[1].text);
         setCode(props.code.node.children[3]);
+        setParams(props.code.node.children[2].children);
       }
     }
   }, [props.code]);
+
+  // console.log(params);
 
   return (
     <div className="CodeBlock" data-testid="Bubble">
@@ -30,7 +34,16 @@ function CodeBlockTS(props: any): JSX.Element {
             <IcoCollapse />
           </div>
           {title}
-          <span className="CodeBlock__arguments"> () </span>
+          <span className="CodeBlock__arguments">
+            {" "}
+            {params.map((e: any, index: number) => {
+              return (
+                <span key={index}>
+                  <ChooseType info={e} />
+                </span>
+              );
+            })}{" "}
+          </span>
         </div>
         <button
           className="CodeBlock__menu"
