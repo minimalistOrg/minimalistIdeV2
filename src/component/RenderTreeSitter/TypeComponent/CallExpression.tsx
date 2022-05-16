@@ -80,9 +80,18 @@ function CallExpression(props: any) {
     }
   }
 
+  function typeCall(){
+    if(event){
+      return "CallExpression"
+    }else{
+      return "CallExpression--member_expression"
+    }
+
+  }
+
   return (
     <span
-      className="CallExpression"
+      className={typeCall()}
       onMouseOver={fnHover}
       onMouseLeave={fnHoverClose}
       ref={expression}
