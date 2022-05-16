@@ -7,9 +7,9 @@ function CallExpression(props: any) {
   const data = props.data;
   const [fnindex, setFnindex] = useState("");
   const [name, setName] = useState("");
-  const [event,setEvent] = useState(false)
+  const [event, setEvent] = useState(false);
   const expression = useRef(null);
-  const fnOrder= useGlobalCounter()
+  const fnOrder = useGlobalCounter();
 
   const listFN = useSelector((state: any) => state.addbubble.value);
   //
@@ -19,9 +19,13 @@ function CallExpression(props: any) {
 
     if (expre_is === "identifier") {
       setName(data.children[0].text);
-      setEvent(true)
+      setEvent(true);
       let result = listFN.find((json: any, index: number) => {
         if (json.node.children[1].text === data.children[0].text) {
+          // console.log("main" === data.children[0].text, index);
+          if (index === 0) {
+            return true;
+          }
           return index;
         } else {
           if (json.node.type === "lexical_declaration") {
@@ -32,7 +36,6 @@ function CallExpression(props: any) {
           }
         }
       });
-      // console.log(listFN.indexOf(r));
       setFnindex(listFN.indexOf(result));
     }
   }
@@ -44,7 +47,7 @@ function CallExpression(props: any) {
       value: [],
       event: event,
       order: fnOrder,
-      element: expression.current
+      element: expression.current,
     };
     // console.log(fndata);
     validifFnCall();

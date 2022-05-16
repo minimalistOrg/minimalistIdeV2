@@ -2,7 +2,7 @@ import ChooseType from "../ChooseType";
 
 function TemplateString(props:any){
   const data= props.data;
-  console.log(data)
+  // console.log(data)
   return (
     <span className="TemplateString">
       {
