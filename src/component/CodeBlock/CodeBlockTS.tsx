@@ -10,10 +10,6 @@ function CodeBlockTS(props: any): JSX.Element {
   const [code, setCode] = useState({ type: "loading", text: "Loading" });
   const [params, setParams] = useState([]);
   const activeBubble = useRef<any>(null);
-  const [activeclass, setActiveclass] = useState([
-    "CodeBlock",
-    "CodeBlock__header",
-  ]);
 
   useEffect(() => {
     if (!(props.code === undefined)) {
@@ -31,26 +27,10 @@ function CodeBlockTS(props: any): JSX.Element {
       // setID(props.call.fninfo.id)
       }
     }
-    if (!(props.call === undefined)) {
-      // console.log(props.call,"test",props.call.fninfo.event)
-      // props.call.fninfo.Bubble = activeBubble.current;
-      // console.log(props.call.fninfo)
-      // setID(props.call.fninfo.id)
-      setActiveclass([
-        "CodeBlockHover CodeBlock",
-        "CodeBlock__header CodeBlock__header--hover",
-      ]);
-      // console.log(props.call.fninfo.Bubble,"test")
-      // let activeBubbledata= props.call.fninfo;
-      // console.log(activeBubbledata)
-      // Object.defineProperty(activeBubbledata.Bubble, "fninfo", {value: activeBubbledata, writable: true})
-      // activeBubble.current.classList.add("CodeBlockHover");
-      // activeBubble.current.children[0].classList.add("CodeBlock__header--hover");
-    }
 
     Object.defineProperty(activeBubble.current, "fninfo", {value: props.data,writable:true})
     //eslint-disable-next-line
-  }, [props.code, props.call]);
+  }, [props.code]);
 
   function fnHover(event: any) {
     let data = event.currentTarget.parentNode.fninfo;
@@ -81,9 +61,9 @@ function CodeBlockTS(props: any): JSX.Element {
   // console.log(params);
 
   return (
-    <div id={"id" + props.id} className={activeclass[0]} data-testid="Bubble" ref={activeBubble}>
+    <div id={"id" + props.id} className="CodeBlock" data-testid="Bubble" ref={activeBubble}>
       <div
-        className={activeclass[1]}
+        className="CodeBlock__header"
         data-testid="BubbleOrder"
         onMouseOver={fnHover}
         onMouseLeave={fnHoverLeave}

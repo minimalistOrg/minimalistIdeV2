@@ -10,7 +10,7 @@ function Bubble(props: any) {
   const reRender = useSelector((state: any) => state.callTree.value);
   const listFn = useSelector((state: any) => state.addbubble.value);
   const currentBubble = useRef<any>(null);
-  const [fninfoData,setFninfoData]= useState<any>(null)
+  const [fninfoData, setFninfoData] = useState<any>(null);
 
   useEffect(() => {
     setRenderBubble(props.tree);
@@ -22,13 +22,19 @@ function Bubble(props: any) {
     const readIndex = event.target.parentNode;
     if (!(readIndex.fninfo === undefined)) {
       if (readIndex.fninfo.event) {
-        setFninfoData(readIndex)
+        setFninfoData(readIndex);
         // console.log(readIndex.fninfo,"here")
 
         value.push(readIndex.fninfo);
         readIndex.fninfo.event = false;
         // let dataBubble= readIndex.fninfo;
         dispatch(add(!reRender));
+        setTimeout(() => {
+          readIndex.fninfo.Bubble().classList.add("CodeBlockHover");
+          readIndex.fninfo
+            .Bubble()
+            .children[0].classList.add("CodeBlock__header--hover");
+        }, 150);
         // let openBubble= document.getElementById("id" + readIndex.fninfo.id)
         // console.log(openBubble,readIndex.fninfo.id)
         // let BubbleRender= readIndex.fninfo.Bubble;
@@ -45,7 +51,7 @@ function Bubble(props: any) {
       // children.element.fninfo.Bubble = null;
     }
 
-    document.querySelector<any>("html").style="cursor:default"
+    document.querySelector<any>("html").style = "cursor:default";
     const listParent = parent.indexOf(children);
     parent.splice(listParent, 1);
     dispatch(add(!reRender));
@@ -55,8 +61,8 @@ function Bubble(props: any) {
     children: any,
     parent: any,
     fnindex: number,
-    fninfoData:any,
-    id:number
+    fninfoData: any,
+    id: number
   ): JSX.Element => {
     return (
       <CodeBlockTS
@@ -75,7 +81,9 @@ function Bubble(props: any) {
       {renderBubble.map((e: any, index: number) => {
         return (
           <div key={index} style={{ order: e.order }} className="RowBubble">
-            <div className="Bubble">{Codebubble(e, renderBubble, e.index, props.call, e.id)}</div>
+            <div className="Bubble">
+              {Codebubble(e, renderBubble, e.index, props.call, e.id)}
+            </div>
             <div className="ColBubbles" ref={currentBubble}>
               <Bubble fnindex={e.index} tree={e.value} call={fninfoData} />
             </div>
