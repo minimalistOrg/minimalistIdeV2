@@ -6,17 +6,17 @@ function TemplateString(props: any) {
   const [stringtxt, setStringtxt] = useState([]);
   useEffect(() => {
     let txt = data.text;
-    console.log(txt);
     data.children.map((e: any, index: number) => {
       if (index > 0 && index < data.children.length - 1) {
         txt = txt.replace(e.text, ",");
       }
+      return true
     });
 
     txt = txt.substring(1, txt.length - 1);
     txt = txt.split(",");
     setStringtxt(txt);
-    console.log(txt);
+    //eslint-disable-next-line
   }, []);
 
   return (

@@ -46,7 +46,7 @@ function CodeBlock(props: CodeBlockEntry): JSX.Element {
     // console.log(IDBubble)
     resetGlobal(1);
     maxHeightBody(IDBubble);
-    // console.log(stateTree)
+    //eslint-disable-next-line
   }, [recoveryHeight]);
 
   const long: number = props.argument.length;

@@ -23,10 +23,16 @@ function Bubble(props: any) {
     if (!(readIndex.fninfo === undefined)) {
       if (readIndex.fninfo.event) {
         setFninfoData(readIndex)
+        // console.log(readIndex.fninfo,"here")
+
         value.push(readIndex.fninfo);
         readIndex.fninfo.event = false;
-        // console.log(readIndex.fninfo);
+        // let dataBubble= readIndex.fninfo;
         dispatch(add(!reRender));
+        // let openBubble= document.getElementById("id" + readIndex.fninfo.id)
+        // console.log(openBubble,readIndex.fninfo.id)
+        // let BubbleRender= readIndex.fninfo.Bubble;
+        // Object.defineProperty(BubbleRender, "fninfo", {value: readIndex.fninfo})
       }
     }
   }
@@ -35,7 +41,11 @@ function Bubble(props: any) {
     // console.log(children);
     if (!(children.element === undefined)) {
       children.element.fninfo.event = true;
+      children.element.fninfo.element.classList.remove("CallExpressionHover");
+      // children.element.fninfo.Bubble = null;
     }
+
+    document.querySelector<any>("html").style="cursor:default"
     const listParent = parent.indexOf(children);
     parent.splice(listParent, 1);
     dispatch(add(!reRender));
@@ -45,11 +55,14 @@ function Bubble(props: any) {
     children: any,
     parent: any,
     fnindex: number,
-    fninfoData:any
+    fninfoData:any,
+    id:number
   ): JSX.Element => {
     return (
       <CodeBlockTS
         code={listFn[fnindex]}
+        id={id}
+        data={children}
         call={fninfoData}
         openBubble={(event: any) => handleAdd(event, children)}
         closeBubble={() => closeBubble(parent, children)}
@@ -62,7 +75,7 @@ function Bubble(props: any) {
       {renderBubble.map((e: any, index: number) => {
         return (
           <div key={index} style={{ order: e.order }} className="RowBubble">
-            <div className="Bubble">{Codebubble(e, renderBubble, e.index, props.call)}</div>
+            <div className="Bubble">{Codebubble(e, renderBubble, e.index, props.call, e.id)}</div>
             <div className="ColBubbles" ref={currentBubble}>
               <Bubble fnindex={e.index} tree={e.value} call={fninfoData} />
             </div>

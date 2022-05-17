@@ -9,7 +9,7 @@
   --ReservedWords: #e91e63;
 }
 
-.CallExpression:hover{
+.CallExpression:hover, .CallExpressionHover{
     background-color: var(--bg-highligth-function);
     transition: var(--bgt-bubble-header);
 }

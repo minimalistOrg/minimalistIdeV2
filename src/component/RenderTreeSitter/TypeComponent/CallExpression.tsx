@@ -8,7 +8,8 @@ function CallExpression(props: any) {
   const [fnindex, setFnindex] = useState("");
   const [name, setName] = useState("");
   const [event, setEvent] = useState(false);
-  const expression = useRef(null);
+  const [id, setId] = useState("");
+  const expression = useRef<any>(null);
   const fnOrder = useGlobalCounter();
 
   const listFN = useSelector((state: any) => state.addbubble.value);
@@ -19,6 +20,7 @@ function CallExpression(props: any) {
 
     if (expre_is === "identifier") {
       setName(data.children[0].text);
+      setId(data.children[0].id)
       setEvent(true);
       let result = listFN.find((json: any, index: number) => {
         if (json.node.children[1].text === data.children[0].text) {
@@ -42,13 +44,17 @@ function CallExpression(props: any) {
 
   useEffect(() => {
     const fndata = {
+      id: id,
       name: name,
       index: fnindex,
       value: [],
       event: event,
       order: fnOrder,
       element: expression.current,
-      Bubble: null
+      Bubble: ()=>{
+          let result= document.getElementById("id" + id)
+          return result
+        }
     };
     // console.log(fndata);
     validifFnCall();
@@ -62,31 +68,29 @@ function CallExpression(props: any) {
   // console.log(data.walk());
   function fnHover(data: any) {
     // console.log(data.currentTarget,"here")
-    if (!(data.currentTarget.fninfo.Bubble === null)) {
-      data.currentTarget.fninfo.Bubble.classList.add("CodeBlockHover");
-      data.currentTarget.fninfo.Bubble.children[0].classList.add(
+    if (!(data.currentTarget.fninfo.Bubble() === null)) {
+      data.currentTarget.fninfo.Bubble().classList.add("CodeBlockHover");
+      data.currentTarget.fninfo.Bubble().children[0].classList.add(
         "CodeBlock__header--hover"
       );
     }
   }
-
 
   function fnHoverClose(data: any) {
-    if (!(data.currentTarget.fninfo.Bubble === null)) {
-      data.currentTarget.fninfo.Bubble.classList.remove("CodeBlockHover");
-      data.currentTarget.fninfo.Bubble.children[0].classList.remove(
+    if (!(data.currentTarget.fninfo.Bubble() === null)) {
+      data.currentTarget.fninfo.Bubble().classList.remove("CodeBlockHover");
+      data.currentTarget.fninfo.Bubble().children[0].classList.remove(
         "CodeBlock__header--hover"
       );
     }
   }
 
-  function typeCall(){
-    if(event){
-      return "CallExpression"
-    }else{
-      return "CallExpression--member_expression"
+  function typeCall() {
+    if (event) {
+      return "CallExpression";
+    } else {
+      return "CallExpression--member_expression";
     }
-
   }
 
   return (
