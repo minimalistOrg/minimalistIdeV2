@@ -24,11 +24,14 @@ function CodeBlockTS(props: any): JSX.Element {
         setCode(props.code.node.children[3]);
         setParams(props.code.node.children[2].children);
         // setID(props.code.node.children[1].id)
-      // setID(props.call.fninfo.id)
+        // setID(props.call.fninfo.id)
       }
     }
 
-    Object.defineProperty(activeBubble.current, "fninfo", {value: props.data,writable:true})
+    Object.defineProperty(activeBubble.current, "fninfo", {
+      value: props.data,
+      writable: true,
+    });
     //eslint-disable-next-line
   }, [props.code]);
 
@@ -43,6 +46,8 @@ function CodeBlockTS(props: any): JSX.Element {
     } else {
       event.currentTarget.parentNode.classList.add("CodeBlockHover");
     }
+    //identifier
+    // console.log(event)
   }
 
   function fnHoverLeave(event: any) {
@@ -58,10 +63,114 @@ function CodeBlockTS(props: any): JSX.Element {
     }
   }
 
+  function identifierHover(event: any) {
+    let elements = event.currentTarget.querySelectorAll(".Identifier");
+    elements.forEach((e: any) => {
+      e.classList.remove("IdentifierHover");
+    });
+    if (event.target.classList[0] === "Identifier") {
+      let elements = event.currentTarget.querySelectorAll(
+        `.Identifier[data-identifier=${event.target.dataset.identifier}]`
+      );
+      elements.forEach((e: any) => {
+        e.classList.add("IdentifierHover");
+      });
+      // console.log(elements);
+    }
+  }
+
+  function identifierHoverOut(event: any) {
+    // console.log(event.currentTarget)
+    let elements = event.currentTarget.querySelectorAll(".Identifier");
+    elements.forEach((e: any) => {
+      e.classList.remove("IdentifierHover");
+    });
+  }
+
+  function paramsHoverOut(event: any) {
+    let CodeBlock =
+      event.currentTarget.parentNode.parentNode.parentNode.parentNode;
+    let body = event.currentTarget.parentNode.parentNode.parentNode.nextSibling;
+    let elements = body.querySelectorAll(".Identifier");
+    elements.forEach((e: any) => {
+      e.classList.remove("IdentifierHover");
+    });
+
+    if (event.currentTarget.dataset.identifier) {
+      let BubbleBack = CodeBlock.fninfo.element;
+
+      do {
+        BubbleBack = BubbleBack.parentNode;
+      } while (!(BubbleBack.classList[0] === "CodeBlock"));
+
+      let elements = BubbleBack.querySelectorAll(".Identifier");
+      elements.forEach((e: any) => {
+        e.classList.remove("IdentifierHover");
+      });
+      // console.log(BubbleBack);
+    }
+  }
+
+  function paramsHover(event: any) {
+    let CodeBlock =
+      event.currentTarget.parentNode.parentNode.parentNode.parentNode;
+    let body = event.currentTarget.parentNode.parentNode.parentNode.nextSibling;
+    let elements = body.querySelectorAll(".Identifier");
+    elements.forEach((e: any) => {
+      e.classList.remove("IdentifierHover");
+    });
+    if (event.target.classList[0] === "Identifier") {
+      let body =
+        event.currentTarget.parentNode.parentNode.parentNode.nextSibling;
+      let elements = body.querySelectorAll(
+        `.Identifier[data-identifier=${event.target.dataset.identifier}]`
+      );
+      elements.forEach((e: any) => {
+        e.classList.add("IdentifierHover");
+      });
+      //
+      if (event.currentTarget.dataset.identifier) {
+        let BubbleBack = CodeBlock.fninfo.element;
+
+        do {
+          BubbleBack = BubbleBack.parentNode;
+        } while (!(BubbleBack.classList[0] === "CodeBlock"));
+
+        let elements = BubbleBack.querySelectorAll(
+          `.Identifier[data-identifier=${event.currentTarget.dataset.identifier}]`
+        );
+        elements.forEach((e: any) => {
+          e.classList.add("IdentifierHover");
+        });
+        // console.log(BubbleBack);
+      }
+    }
+  }
+
+  function checkParams(index: number) {
+    let txt = activeBubble.current.fninfo.params[index].text;
+
+    switch (txt) {
+      case "(":
+        return;
+      case ")":
+        return;
+      case ",":
+        return;
+      default:
+        return txt;
+    }
+  }
+
   // console.log(params);
 
   return (
-    <div id={"id" + props.id} className="CodeBlock" data-testid="Bubble" ref={activeBubble}>
+    <div
+      id={"id" + props.id}
+      className="CodeBlock"
+      data-testid="Bubble"
+      ref={activeBubble}
+    >
       <div
         className="CodeBlock__header"
         data-testid="BubbleOrder"
@@ -77,7 +186,12 @@ function CodeBlockTS(props: any): JSX.Element {
             {" "}
             {params.map((e: any, index: number) => {
               return (
-                <span key={index}>
+                <span
+                  key={index}
+                  onMouseLeave={paramsHoverOut}
+                  onMouseMove={paramsHover}
+                  data-identifier={checkParams(index)}
+                >
                   <ChooseType info={e} />
                 </span>
               );
@@ -93,7 +207,12 @@ function CodeBlockTS(props: any): JSX.Element {
           <IcoClose />{" "}
         </button>
       </div>
-      <div className="CodeBlock__body" onClick={props.openBubble}>
+      <div
+        className="CodeBlock__body"
+        onMouseMove={identifierHover}
+        onMouseLeave={identifierHoverOut}
+        onClick={props.openBubble}
+      >
         <pre>
           <code>
             <ChooseType info={code} />

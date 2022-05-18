@@ -2,6 +2,7 @@ export let TreeCall = [
   {
     id: 0,
     name: "main",
+    params: [{text:"("},{text:")"}],
     index: 0,
     value: [],
     event: false,

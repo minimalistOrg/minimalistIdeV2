@@ -45,7 +45,7 @@ function Bubble(props: any) {
 
   function closeBubble(parent: any, children: any) {
     // console.log(children);
-    if (!(children.element === undefined)) {
+    if (!(children.element === null)) {
       children.element.fninfo.event = true;
       children.element.fninfo.element.classList.remove("CallExpressionHover");
       // children.element.fninfo.Bubble = null;

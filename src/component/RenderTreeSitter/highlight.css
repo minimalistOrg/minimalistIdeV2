@@ -9,9 +9,14 @@
   --ReservedWords: #e91e63;
 }
 
-.CallExpression:hover, .CallExpressionHover{
+.CallExpression:hover, .CallExpressionHover, .Identifier:hover, .IdentifierHover{
     background-color: var(--bg-highligth-function);
     transition: var(--bgt-bubble-header);
+}
+
+.CallExpression > .Identifier{
+    background-color: transparent;
+    transition: transparent;
 }
 
 .CodeBlockHover{
@@ -24,8 +29,9 @@
     transition: var(--bgt-bubble-header);
 }
 
-.CallExpression{
+.CallExpression, .Identifier{
   padding: 3px;
+  cursor: pointer;
 }
 
 .LexicalDeclaration__variableType {
