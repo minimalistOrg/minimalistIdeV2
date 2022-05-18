@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import ChooseType from "../RenderTreeSitter/ChooseType";
 import "./CodeBlock.css";
 import IcoClose from "./IcoClose";
@@ -6,10 +7,12 @@ import IcoCollapse from "./IcoCollapse";
 
 function CodeBlockTS(props: any): JSX.Element {
   // console.log(props.code, "CodeBlockTS");
+  const dataBubbleTree = useSelector((state: any) => state.callTree.value);
   const [title, setTitle] = useState("Loading...");
   const [code, setCode] = useState({ type: "loading", text: "Loading" });
   const [params, setParams] = useState([]);
   const activeBubble = useRef<any>(null);
+
 
   useEffect(() => {
     if (!(props.code === undefined)) {
@@ -28,12 +31,14 @@ function CodeBlockTS(props: any): JSX.Element {
       }
     }
 
-    Object.defineProperty(activeBubble.current, "fninfo", {
+    let BubbleById= document.getElementById("id"+props.id)
+    Object.defineProperty(BubbleById, "fninfo", {
       value: props.data,
       writable: true,
     });
+    console.log("t")
     //eslint-disable-next-line
-  }, [props.code]);
+  }, [dataBubbleTree]);
 
   function fnHover(event: any) {
     let data = event.currentTarget.parentNode.fninfo;
@@ -47,7 +52,7 @@ function CodeBlockTS(props: any): JSX.Element {
       event.currentTarget.parentNode.classList.add("CodeBlockHover");
     }
     //identifier
-    // console.log(event)
+    // console.log("test")
   }
 
   function fnHoverLeave(event: any) {
@@ -148,9 +153,10 @@ function CodeBlockTS(props: any): JSX.Element {
   }
 
   function checkParams(index: number) {
-    let txt = activeBubble.current.fninfo.params[index].text;
-
-    switch (txt) {
+    let txt:any = document.getElementById("id"+props.id)
+    let identifier= txt.fninfo.params[index].text
+console.log(identifier)
+    switch (identifier) {
       case "(":
         return;
       case ")":
@@ -158,7 +164,7 @@ function CodeBlockTS(props: any): JSX.Element {
       case ",":
         return;
       default:
-        return txt;
+        return identifier;
     }
   }
 

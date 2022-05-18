@@ -29,8 +29,11 @@
     transition: var(--bgt-bubble-header);
 }
 
-.CallExpression, .Identifier{
+.CallExpression{
   padding: 3px;
+}
+
+.Identifier{
   cursor: pointer;
 }
 

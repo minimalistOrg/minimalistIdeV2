@@ -1,21 +1,21 @@
 import "./Bubble.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import CodeBlockTS from "../CodeBlock/CodeBlockTS";
 import { useDispatch, useSelector } from "react-redux";
 import { add } from "../Root-file/slice/callTreeSlice";
 
 function Bubble(props: any) {
-  const [renderBubble, setRenderBubble] = useState([]);
+  // const [renderBubble, setRenderBubble] = useState([]);
   const dispatch = useDispatch();
   const reRender = useSelector((state: any) => state.callTree.value);
   const listFn = useSelector((state: any) => state.addbubble.value);
   const currentBubble = useRef<any>(null);
   const [fninfoData, setFninfoData] = useState<any>(null);
 
-  useEffect(() => {
-    setRenderBubble(props.tree);
-    // console.log("test number of render")
-  }, [props.tree]);
+  // useEffect(() => {
+  //   // setRenderBubble(props.tree);
+  //   // console.log("test number of render")
+  // }, []);
 
   function handleAdd(event: any, dato: any) {
     let value = dato.value;
@@ -30,6 +30,7 @@ function Bubble(props: any) {
         // let dataBubble= readIndex.fninfo;
         dispatch(add(!reRender));
         setTimeout(() => {
+          // console.log("test")
           readIndex.fninfo.Bubble().classList.add("CodeBlockHover");
           readIndex.fninfo
             .Bubble()
@@ -78,11 +79,11 @@ function Bubble(props: any) {
 
   return (
     <div className="BubbleContainer">
-      {renderBubble.map((e: any, index: number) => {
+      {props.tree.map((e: any, index: number) => {
         return (
           <div key={index} style={{ order: e.order }} className="RowBubble">
             <div className="Bubble">
-              {Codebubble(e, renderBubble, e.index, props.call, e.id)}
+              {Codebubble(e, props.tree, e.index, props.call, e.id)}
             </div>
             <div className="ColBubbles" ref={currentBubble}>
               <Bubble fnindex={e.index} tree={e.value} call={fninfoData} />
