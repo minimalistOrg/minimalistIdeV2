@@ -155,7 +155,7 @@ function CodeBlockTS(props: any): JSX.Element {
   function checkParams(index: number) {
     let txt:any = document.getElementById("id"+props.id)
     let identifier= txt.fninfo.params[index].text
-console.log(identifier)
+// console.log(identifier)
     switch (identifier) {
       case "(":
         return;

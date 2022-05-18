@@ -17,6 +17,7 @@
 .CallExpression > .Identifier{
     background-color: transparent;
     transition: transparent;
+    padding: 0px;
 }
 
 .CodeBlockHover{
@@ -35,6 +36,8 @@
 
 .Identifier{
   cursor: pointer;
+  padding: 3px;
+
 }
 
 .LexicalDeclaration__variableType {
