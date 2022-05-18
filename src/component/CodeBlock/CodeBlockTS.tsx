@@ -35,7 +35,7 @@ function CodeBlockTS(props: any): JSX.Element {
   function fnHover(event: any) {
     let data = event.currentTarget.parentNode.fninfo;
     // console.log(event.currentTarget.parentNode)
-    if (!(data.element === undefined)) {
+    if (!(data.element === null)) {
       data.element.classList.add("CallExpressionHover");
       if (!(data.Bubble() === null)) {
         data.Bubble().classList.add("CodeBlockHover");
@@ -47,7 +47,7 @@ function CodeBlockTS(props: any): JSX.Element {
 
   function fnHoverLeave(event: any) {
     let data = event.currentTarget.parentNode.fninfo;
-    if (!(data.element === undefined)) {
+    if (!(data.element === null)) {
       // console.log(data.element);
       data.element.classList.remove("CallExpressionHover");
       if (!(data.Bubble() === null)) {

@@ -19,50 +19,25 @@ function CallTree(props: any) {
   };
 
   function hoverBubbles(e: any) {
-    var sheet = window.document.styleSheets[0];
-    sheet.insertRule(
-      `.grandparentHover-${e.order} > .pointRef > #id${e.id}{box-shadow: var(--bs-bubble); 
-                      transition: var(--bst-bubble); }`,
-      sheet.cssRules.length
-    );
-    sheet.insertRule(
-      `.grandparentHover-${e.order} > .pointRef > #id${e.id} > .CodeBlock__header{background: var(--bg-bubble-header); 
-                      transition: var(--bgt-bubble-header); }`,
-      sheet.cssRules.length
-    );
-    function getParent(obj: any, n: any) {
-      for (let j = 0; j < n; j++) {
-        obj = obj.parentNode;
-      }
-      return obj;
-    }
-    let fnBubble = document.getElementById("id" + e.id);
-    let fnCall: any = getParent(fnBubble, 5);
-    fnCall = fnCall.querySelectorAll(
-      `.pointRef > .CodeBlock > .CodeBlock__body > pre > code .ast-function-${e.name}-${e.order}`
-    )[0];
-    if (!(typeof fnCall === "undefined")) {
-      fnCall.classList.toggle("fnhover");
+    // console.log(e);
+    if (e.element === null) {
+      e.Bubble().classList.add("CodeBlockHover");
+      e.Bubble().children[0].classList.add("CodeBlock__header--hover");
+    } else {
+      e.element.classList.add("CallExpressionHover");
+      e.Bubble().classList.add("CodeBlockHover");
+      e.Bubble().children[0].classList.add("CodeBlock__header--hover");
     }
   }
 
   function hoverBubblesOut(e: any) {
-    var sheet = window.document.styleSheets[0];
-    sheet.deleteRule(sheet.cssRules.length - 1);
-    sheet.deleteRule(sheet.cssRules.length - 1);
-    function getParent(obj: any, n: any) {
-      for (let j = 0; j < n; j++) {
-        obj = obj.parentNode;
-      }
-      return obj;
-    }
-    let fnBubble = document.getElementById("id" + e.id);
-    let fnCall: any = getParent(fnBubble, 5);
-    fnCall = fnCall.querySelectorAll(
-      `.pointRef > .CodeBlock > .CodeBlock__body > pre > code .ast-function-${e.name}-${e.order}`
-    )[0];
-    if (!(typeof fnCall === "undefined")) {
-      fnCall.classList.toggle("fnhover");
+    if (e.element === null) {
+      e.Bubble().classList.remove("CodeBlockHover");
+      e.Bubble().children[0].classList.remove("CodeBlock__header--hover");
+    } else {
+      e.element.classList.remove("CallExpressionHover");
+      e.Bubble().classList.remove("CodeBlockHover");
+      e.Bubble().children[0].classList.remove("CodeBlock__header--hover");
     }
   }
 
@@ -73,10 +48,14 @@ function CallTree(props: any) {
           return (
             <React.Fragment key={index}>
               <li style={{ order: e.order }} data-testid="calltree">
-                <span
-                  className="liBubble"
-                >
-                  {e.name}
+                <span>
+                  <span
+                    className="pointer liBubble"
+                    onMouseOver={() => hoverBubbles(e)}
+                    onMouseLeave={() => hoverBubblesOut(e)}
+                  >
+                    {e.name}
+                  </span>
                 </span>
                 {TreeLi(e.value)}
               </li>

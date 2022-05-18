@@ -82,6 +82,8 @@ function ChooseType(props: any): JSX.Element {
         return <> / </>;
       case "*":
         return <> * </>;
+      case "-":
+        return <> - </>;
       case ">":
         return <> {'>'} </>;
       case "<":
