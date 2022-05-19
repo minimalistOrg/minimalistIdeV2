@@ -7,37 +7,70 @@
   --FnParams: #895903;
   --purple: #9c27b0;
   --ReservedWords: #e91e63;
+  /**/
+  --color-1: rgba(71, 159, 248, 0.3);
+  --color-2: rgba(110, 221, 202, 0.3);
+  --color-3: hsla(99, 57%, 63%, 0.3);
+  --color-4: hsla(25, 91%, 73%, 0.3);
+  --color-5: hsla(9, 81%, 64%, 0.3);
+  --color-6: rgba(235, 83, 159, 0.3);
+  --color-7: rgba(169, 129, 208, 0.3);
 }
 
-.CallExpression:hover, .CallExpressionHover, .Identifier:hover, .IdentifierHover{
-    background-color: var(--bg-highligth-function);
-    transition: var(--bgt-bubble-header);
+.color-1{
+  background:  var(--color-1) !important;
+}
+.color-2{
+  background:  var(--color-2) !important;
+}
+.color-3{
+  background:  var(--color-3) !important;
+}
+.color-4{
+  background:  var(--color-4) !important;
+}
+.color-5{
+  background:  var(--color-5) !important;
+}
+.color-6{
+  background:  var(--color-6) !important;
+}
+.color-7{
+  background:  var(--color-7) !important;
 }
 
-.CallExpression > .Identifier{
-    background-color: transparent;
-    transition: transparent;
-    padding: 0px;
+.CallExpression:hover,
+.CallExpressionHover,
+.Identifier:hover,
+.IdentifierHover {
+  background-color: var(--bg-highligth-function);
+  transition: var(--bgt-bubble-header);
 }
 
-.CodeBlockHover{
+.CallExpression > .Identifier {
+  background-color: transparent;
+  transition: transparent;
+  padding: 0px;
+}
+
+.CodeBlockHover {
   box-shadow: var(--bs-bubble) !important;
   transition: var(--bst-bubble);
 }
 
-.CodeBlock__header:hover, .CodeBlock__header--hover {
-    background-color: var(--bg-bubble-header) !important;
-    transition: var(--bgt-bubble-header);
+.CodeBlock__header:hover,
+.CodeBlock__header--hover {
+  background-color: var(--bg-bubble-header) !important;
+  transition: var(--bgt-bubble-header);
 }
 
-.CallExpression{
+.CallExpression {
   padding: 3px;
 }
 
-.Identifier{
+.Identifier {
   cursor: pointer;
   padding: 3px;
-
 }
 
 .LexicalDeclaration__variableType {
@@ -59,7 +92,7 @@
   text-decoration: underline;
 }
 
-.Arguments .Identifier{
+.Arguments .Identifier {
   color: var(--FnParams) !important;
   font-style: italic;
   font-weight: normal !important;
@@ -73,66 +106,60 @@
   color: var(--stringType);
 }
 
-.StatementBlock__line{
+.StatementBlock__line {
   padding: 3px;
 }
 
-.ReturnStatement__text{
+.ReturnStatement__text {
   color: var(--purple);
   font-weight: bold;
 }
 
-.ReservedWords{
+.ReservedWords {
   color: var(--ReservedWords);
   font-weight: bold;
 }
 
-.TemplateString{
+.TemplateString {
   color: var(--stringType);
 }
 
-.IfStatement > .StatementBlock .StatementBlock__line:first-child{
+.IfStatement > .StatementBlock .StatementBlock__line:first-child {
   /* background-color: red; */
   display: none;
 }
 
-
-.IfStatement > .StatementBlock .StatementBlock__line:last-child{
+.IfStatement > .StatementBlock .StatementBlock__line:last-child {
   /* background-color: red; */
   display: none;
 }
 
-
-.ElseClause > .StatementBlock .StatementBlock__line:first-child{
+.ElseClause > .StatementBlock .StatementBlock__line:first-child {
   /* background-color: red; */
   display: none;
 }
 
-
-.ElseClause > .StatementBlock .StatementBlock__line:last-child{
+.ElseClause > .StatementBlock .StatementBlock__line:last-child {
   /* background-color: red; */
   display: none;
 }
 
-code > .StatementBlock .StatementBlock__line:first-child{
+code > .StatementBlock .StatementBlock__line:first-child {
   /* background-color: red; */
   display: none;
 }
 
-
-code > .StatementBlock .StatementBlock__line:last-child{
+code > .StatementBlock .StatementBlock__line:last-child {
   /* background-color: red; */
   display: none;
 }
 
-
-.ArrowFunction > span > .StatementBlock .StatementBlock__line:first-child{
+.ArrowFunction > span > .StatementBlock .StatementBlock__line:first-child {
   /* background-color: red; */
   display: none;
 }
 
-
-.ArrowFunction > span > .StatementBlock .StatementBlock__line:last-child{
+.ArrowFunction > span > .StatementBlock .StatementBlock__line:last-child {
   /* background-color: red; */
   display: none;
 }

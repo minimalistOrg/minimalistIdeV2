@@ -36,7 +36,7 @@ function CodeBlockTS(props: any): JSX.Element {
       value: props.data,
       writable: true,
     });
-    console.log("t")
+    // console.log("t")
     //eslint-disable-next-line
   }, [dataBubbleTree]);
 

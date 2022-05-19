@@ -4,6 +4,8 @@ import CodeBlockTS from "../CodeBlock/CodeBlockTS";
 import { useDispatch, useSelector } from "react-redux";
 import { add } from "../Root-file/slice/callTreeSlice";
 
+let c = 0;
+
 function Bubble(props: any) {
   // const [renderBubble, setRenderBubble] = useState([]);
   const dispatch = useDispatch();
@@ -41,6 +43,53 @@ function Bubble(props: any) {
         // let BubbleRender= readIndex.fninfo.Bubble;
         // Object.defineProperty(BubbleRender, "fninfo", {value: readIndex.fninfo})
       }
+    }
+
+    //
+    //
+    if (
+      event.target.classList[0] === "Identifier" &&
+      !(event.target.parentNode.classList[0] === "CallExpression")
+    ) {
+      let BubbleBack = event.target;
+
+      do {
+        BubbleBack = BubbleBack.parentNode;
+      } while (!(BubbleBack.classList[0] === "CodeBlock"));
+
+      let identifiers = BubbleBack.querySelectorAll(
+        `.Identifier[data-identifier=${event.target.dataset.identifier}]`
+      );
+      // console.log(identifiers);
+      if (event.target.dataset.color === undefined) {
+        c++;
+        // console.log(c);
+      }
+      identifiers.forEach((e: any) => {
+        e.classList.toggle(colorhash(e));
+      });
+      // event.target.classList.toggle("color-1");
+    }
+  }
+
+  function colorhash(data: any) {
+    let list = [
+      "color-1",
+      "color-2",
+      "color-3",
+      "color-4",
+      "color-5",
+      "color-6",
+      "color-7",
+    ];
+    if (c > list.length - 1) {
+      c = 0;
+    }
+    if (data.dataset.color === undefined) {
+      data.dataset.color = list[c];
+      return data.dataset.color;
+    } else {
+      return data.dataset.color;
     }
   }
 

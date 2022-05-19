@@ -22,7 +22,7 @@ function Root(): JSX.Element {
     };
 
     data();
-    console.log("test");
+    // console.log("test");
     //eslint-disable-next-line
   }, [wait]);
 
