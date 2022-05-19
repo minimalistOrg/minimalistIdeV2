@@ -9,12 +9,15 @@
   /*Default*/
   /* width: 300px; */
   /* height: 100px; */
-  width: max-content;
-  height: max-content;
-  min-width: min-content;
+  /* width: max-content; */
+  /* height: max-content; */
+  /* min-width: min-content; */
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  min-width: min-content;
+  min-height: min-content;
+  transition: height 400ms;
 }
 
 .CodeBlock__header {
@@ -74,5 +77,5 @@ pre {
 .CodeBlock__body--collapse {
   padding-top: 0px;
   padding-bottom: 0px;
-  max-height: 0px !important;
+  height: 30px !important;
 }

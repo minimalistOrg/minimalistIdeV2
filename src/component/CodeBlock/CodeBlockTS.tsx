@@ -2,8 +2,10 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import ChooseType from "../RenderTreeSitter/ChooseType";
 import "./CodeBlock.css";
+import {BubbleCollapse,maxHeightBody} from "./Functions/BubbleCollapse";
 import IcoClose from "./IcoClose";
 import IcoCollapse from "./IcoCollapse";
+import Resize from "./CodeBlock__Resize"
 
 function CodeBlockTS(props: any): JSX.Element {
   // console.log(props.code, "CodeBlockTS");
@@ -12,9 +14,13 @@ function CodeBlockTS(props: any): JSX.Element {
   const [code, setCode] = useState({ type: "loading", text: "Loading" });
   const [params, setParams] = useState([]);
   const activeBubble = useRef<any>(null);
+ const CodeTxt = useRef<any>(null);
 
 
   useEffect(() => {
+
+    Resize(activeBubble.current,CodeTxt.current)
+
     if (!(props.code === undefined)) {
       if (props.code.node.children[3] === undefined) {
         setCode(props.code.node.children[1].children[2].children[2]);
@@ -37,6 +43,7 @@ function CodeBlockTS(props: any): JSX.Element {
       writable: true,
     });
     // console.log("t")
+    maxHeightBody(activeBubble.current)
     //eslint-disable-next-line
   }, [dataBubbleTree]);
 
@@ -184,7 +191,7 @@ function CodeBlockTS(props: any): JSX.Element {
         onMouseLeave={fnHoverLeave}
       >
         <div className="CodeBlock__title">
-          <div className="CodeBlock__collapse">
+          <div onClick={BubbleCollapse} className="CodeBlock__collapse">
             <IcoCollapse />
           </div>
           {title}
@@ -220,7 +227,7 @@ function CodeBlockTS(props: any): JSX.Element {
         onClick={props.openBubble}
       >
         <pre>
-          <code>
+          <code ref={CodeTxt}>
             <ChooseType info={code} />
           </code>
         </pre>
