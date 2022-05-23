@@ -1,14 +1,17 @@
 import { useSelector } from "react-redux";
 import "./FuzzySearch.css";
 import {ReactSearchAutocomplete} from "react-search-autocomplete"
+import {useEffect, useState} from "react";
 
 function FuzzySearch() {
 
   const listFn = useSelector((state: any) => state.addbubble.value);
+  const [li,setLi]= useState([{name:"Loading..."}])
 
-console.log(listFn)
+useEffect(()=>{
+setLi(listFn)
+},[listFn])
 
-let items = listFn
 
 
 
@@ -44,7 +47,7 @@ const handleOnSearch = (string:any, results:any) => {
     <div className="FuzzySearch__input">
       <ReactSearchAutocomplete
         placeholder="Search functions by name"
-        items={items}
+        items={li}
         onSearch={handleOnSearch}
         onHover={handleOnHover}
         onSelect={handleOnSelect}
