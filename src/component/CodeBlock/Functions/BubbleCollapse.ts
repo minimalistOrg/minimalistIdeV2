@@ -13,5 +13,5 @@ export function maxHeightBody(element: any) {
   setTimeout(() => {
     element.style.height = (element.children[1].children[0].clientHeight + 34) + "px";
   }, 100);
-  console.log(element.children[1].clientHeight,element.children[1]);
+  // console.log(element.children[1].clientHeight,element.children[1]);
 }

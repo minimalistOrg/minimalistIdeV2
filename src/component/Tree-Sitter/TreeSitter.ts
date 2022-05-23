@@ -1,4 +1,3 @@
-
 declare global {
   interface Window {
     TreeSitter?: any;
@@ -90,7 +89,8 @@ export function test() {
   // const {Query}= Parser
 
   const querySearchFnDeclaration = "(function_declaration) @name";
-  const queryArrowFn= "(lexical_declaration (variable_declarator value:(arrow_function)  ) ) @name"
+  const queryArrowFn =
+    "(lexical_declaration (variable_declarator value:(arrow_function)  ) ) @name";
   // const querySearchCallExpression = "(call_expression function:(identifier) ) @name";
 
   let data = Parser.init().then(() => {
@@ -107,8 +107,22 @@ export function test() {
       const sourceCode = code;
       const tree = parser.parse(sourceCode);
       // console.log(tree);
-      let listFunctionDeclaration = runSearchFnDeclaration.captures(tree.rootNode);
-      return listFunctionDeclaration.concat(runSearchFnDeclarationArrow.captures(tree.rootNode));
+      let listFunctionDeclaration = runSearchFnDeclaration.captures(
+        tree.rootNode
+      );
+      listFunctionDeclaration = listFunctionDeclaration.concat(
+        runSearchFnDeclarationArrow.captures(tree.rootNode)
+      );
+      listFunctionDeclaration.forEach((item: any) => {
+        if (item.node.type === "lexical_declaration") {
+          // console.log("here")
+          item.name = item.node.children[1].children[0].text;
+        }
+        if (item.node.type === "function_declaration") {
+          item.name = item.node.children[1].text;
+        }
+      });
+      return listFunctionDeclaration;
     };
     return testing();
   });
