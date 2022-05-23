@@ -124,7 +124,7 @@ export function test() {
 
         item.id= index
       });
-      console.log(listFunctionDeclaration)
+      // console.log(listFunctionDeclaration)
       return listFunctionDeclaration;
     };
     return testing();

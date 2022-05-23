@@ -1,47 +1,45 @@
 import { useSelector } from "react-redux";
 import "./FuzzySearch.css";
-import {ReactSearchAutocomplete} from "react-search-autocomplete"
-import {useEffect, useState} from "react";
+import { ReactSearchAutocomplete } from "react-search-autocomplete";
+import { useEffect, useState } from "react";
 
 function FuzzySearch() {
-
   const listFn = useSelector((state: any) => state.addbubble.value);
-  const [li,setLi]= useState([{name:"Loading..."}])
+  const [li, setLi] = useState([{ name: "Loading..." }]);
 
-useEffect(()=>{
-setLi(listFn)
-},[listFn])
+  useEffect(() => {
+    setLi(listFn);
+  }, [listFn]);
 
-
-
-
-const handleOnSearch = (string:any, results:any) => {
+  const handleOnSearch = (string: any, results: any) => {
     // onSearch will have as the first callback parameter
     // the string searched and for the second the results.
     // console.log(string, results)
-  }
+  };
 
-  const handleOnHover = (result:any) => {
+  const handleOnHover = (result: any) => {
     // the item hovered
     // console.log(result)
-  }
+  };
 
-  const handleOnSelect = (item:any) => {
+  const handleOnSelect = (item: any) => {
     // the item selected
     // console.log(item)
-  }
+  };
 
   const handleOnFocus = () => {
     // console.log('Focused')
-  }
+  };
 
-  const formatResult = (item:any) => {
+  const formatResult = (item: any) => {
     return (
       <>
-        <span style={{ display: 'block', textAlign: 'left' }}>fn: {item.name}</span>
+        <span style={{ display: "block", textAlign: "left" }}>
+          fn: {item.name}
+        </span>
       </>
-    )
-  }
+    );
+  };
 
   return (
     <div className="FuzzySearch__input">
@@ -54,6 +52,13 @@ const handleOnSearch = (string:any, results:any) => {
         onFocus={handleOnFocus}
         autoFocus
         formatResult={formatResult}
+        styling={{
+          backgroundColor: "inherit",
+          height: "30px",
+          borderRadius: "inherit",
+          boxShadow: "none",
+          fontFamily: "inherit"
+        }}
       />
     </div>
   );
