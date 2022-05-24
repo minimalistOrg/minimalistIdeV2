@@ -28,7 +28,7 @@ function Root(): JSX.Element {
 
   function BubbleLoad(state: Boolean) {
     if (state) {
-      return <Bubble fnindex={0} tree={json} />;
+      return <Bubble tree={json} />;
     } else {
       return <p>Loading...</p>;
     }

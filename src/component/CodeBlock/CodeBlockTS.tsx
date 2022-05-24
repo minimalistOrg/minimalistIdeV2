@@ -108,7 +108,7 @@ function CodeBlockTS(props: any): JSX.Element {
       e.classList.remove("IdentifierHover");
     });
 
-    if (event.currentTarget.dataset.identifier) {
+    if (event.currentTarget.dataset.identifier && !(CodeBlock.fninfo.element === null) ) {
       let BubbleBack = CodeBlock.fninfo.element;
 
       do {
@@ -141,7 +141,7 @@ function CodeBlockTS(props: any): JSX.Element {
         e.classList.add("IdentifierHover");
       });
       //
-      if (event.currentTarget.dataset.identifier) {
+      if (event.currentTarget.dataset.identifier && !(CodeBlock.fninfo.element === null)) {
         let BubbleBack = CodeBlock.fninfo.element;
 
         do {
