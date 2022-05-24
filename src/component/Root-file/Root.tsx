@@ -28,7 +28,14 @@ function Root(): JSX.Element {
 
   function BubbleLoad(state: Boolean) {
     if (state) {
-      return <Bubble tree={json} />;
+      return (
+        <>
+          <Bubble tree={json} />
+          <div className="FuzzySearch-container">
+            <FuzzySearch />
+          </div>
+        </>
+      );
     } else {
       return <p>Loading...</p>;
     }
@@ -42,9 +49,6 @@ function Root(): JSX.Element {
       <section className="code-area">
         {BubbleLoad(wait)}
         {/*<CodeBlockTS code={load} />*/}
-        <div className="FuzzySearch-container">
-          <FuzzySearch />
-        </div>
       </section>
     </div>
   );
