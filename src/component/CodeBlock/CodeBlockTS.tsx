@@ -2,10 +2,10 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import ChooseType from "../RenderTreeSitter/ChooseType";
 import "./CodeBlock.css";
-import {BubbleCollapse,maxHeightBody} from "./Functions/BubbleCollapse";
+import { BubbleCollapse, maxHeightBody } from "./Functions/BubbleCollapse";
 import IcoClose from "./IcoClose";
 import IcoCollapse from "./IcoCollapse";
-import Resize from "./CodeBlock__Resize"
+import Resize from "./CodeBlock__Resize";
 
 function CodeBlockTS(props: any): JSX.Element {
   // console.log(props.code, "CodeBlockTS");
@@ -14,12 +14,10 @@ function CodeBlockTS(props: any): JSX.Element {
   const [code, setCode] = useState({ type: "loading", text: "Loading" });
   const [params, setParams] = useState([]);
   const activeBubble = useRef<any>(null);
- const CodeTxt = useRef<any>(null);
-
+  const CodeTxt = useRef<any>(null);
 
   useEffect(() => {
-
-    Resize(activeBubble.current,CodeTxt.current)
+    Resize(activeBubble.current, CodeTxt.current);
 
     if (!(props.code === undefined)) {
       if (props.code.node.children[3] === undefined) {
@@ -37,13 +35,13 @@ function CodeBlockTS(props: any): JSX.Element {
       }
     }
 
-    let BubbleById= document.getElementById("id"+props.id)
+    let BubbleById = document.getElementById("id" + props.id);
     Object.defineProperty(BubbleById, "fninfo", {
       value: props.data,
       writable: true,
     });
     // console.log("t")
-    maxHeightBody(activeBubble.current)
+    maxHeightBody(activeBubble.current);
     //eslint-disable-next-line
   }, [dataBubbleTree]);
 
@@ -108,7 +106,10 @@ function CodeBlockTS(props: any): JSX.Element {
       e.classList.remove("IdentifierHover");
     });
 
-    if (event.currentTarget.dataset.identifier && !(CodeBlock.fninfo.element === null) ) {
+    if (
+      event.currentTarget.dataset.identifier &&
+      !(CodeBlock.fninfo.element === null)
+    ) {
       let BubbleBack = CodeBlock.fninfo.element;
 
       do {
@@ -141,7 +142,10 @@ function CodeBlockTS(props: any): JSX.Element {
         e.classList.add("IdentifierHover");
       });
       //
-      if (event.currentTarget.dataset.identifier && !(CodeBlock.fninfo.element === null)) {
+      if (
+        event.currentTarget.dataset.identifier &&
+        !(CodeBlock.fninfo.element === null)
+      ) {
         let BubbleBack = CodeBlock.fninfo.element;
 
         do {
@@ -160,9 +164,13 @@ function CodeBlockTS(props: any): JSX.Element {
   }
 
   function checkParams(index: number) {
-    let txt:any = document.getElementById("id"+props.id)
-    let identifier= txt.fninfo.params[index].text
-// console.log(identifier)
+    let txt: any = document.getElementById("id" + props.id);
+    console.log(index, txt.fninfo);
+    if (txt.fninfo.params[index] === undefined) {
+      return;
+    }
+    let identifier = txt.fninfo.params[index].text;
+    // console.log(identifier)
     switch (identifier) {
       case "(":
         return;
