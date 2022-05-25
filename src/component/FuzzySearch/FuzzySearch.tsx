@@ -27,6 +27,7 @@ function FuzzySearch():JSX.Element {
     // console.log(result)
   };
 
+
   const handleOnSelect = (item: any) => {
 
   // {
@@ -95,6 +96,7 @@ function FuzzySearch():JSX.Element {
         onSearch={handleOnSearch}
         onHover={handleOnHover}
         onSelect={handleOnSelect}
+        resultStringKeyName={"nothing"}
         onFocus={handleOnFocus}
         autoFocus
         formatResult={formatResult}

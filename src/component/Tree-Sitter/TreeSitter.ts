@@ -113,7 +113,7 @@ export function test() {
       listFunctionDeclaration = listFunctionDeclaration.concat(
         runSearchFnDeclarationArrow.captures(tree.rootNode)
       );
-      listFunctionDeclaration.forEach((item: any, index:number) => {
+      listFunctionDeclaration.forEach((item: any, index: number) => {
         if (item.node.type === "lexical_declaration") {
           // console.log("here")
           item.name = item.node.children[1].children[0].text;
@@ -122,7 +122,8 @@ export function test() {
           item.name = item.node.children[1].text;
         }
 
-        item.id= index
+        item.id = index;
+        item.nothing = "";
       });
       // console.log(listFunctionDeclaration)
       return listFunctionDeclaration;
