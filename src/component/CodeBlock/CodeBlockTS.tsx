@@ -165,21 +165,20 @@ function CodeBlockTS(props: any): JSX.Element {
 
   function checkParams(index: number) {
     let txt: any = document.getElementById("id" + props.id);
-    console.log(index, txt.fninfo);
+    // console.log(params.length, txt.fninfo.params.length);
     if (txt.fninfo.params[index] === undefined) {
       return;
     }
     let identifier = txt.fninfo.params[index].text;
     // console.log(identifier)
-    switch (identifier) {
-      case "(":
-        return;
-      case ")":
-        return;
-      case ",":
-        return;
-      default:
-        return identifier;
+    // eslint-disable-next-line
+    let check= (/^[^\"\s\d][^\s\"\(\)]*[^\"\(\)\s]$/gm).test(identifier)
+    // console.log(check)
+    if(check){
+        // console.log("here")
+        return identifier
+    }else{
+    return
     }
   }
 
