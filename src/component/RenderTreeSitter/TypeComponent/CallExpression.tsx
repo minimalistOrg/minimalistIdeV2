@@ -8,7 +8,7 @@ function CallExpression(props: any) {
   const [fnindex, setFnindex] = useState("");
   const [name, setName] = useState("");
   const [event, setEvent] = useState(false);
-  const [params,setParams] = useState([])
+  const [params, setParams] = useState([]);
   const [id, setId] = useState("");
   const expression = useRef<any>(null);
   const fnOrder = useGlobalCounter();
@@ -59,6 +59,7 @@ function CallExpression(props: any) {
         let result = document.getElementById("id" + id);
         return result;
       },
+      visibility: true,
     };
     // console.log(fndata);
     validifFnCall();

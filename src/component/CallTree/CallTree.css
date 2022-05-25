@@ -60,3 +60,19 @@ ul {
 .pointer{
   cursor: pointer;
 }
+
+.li-container{
+    display: flex;
+}
+
+.btn-eye{
+    margin: 0px 5px;
+}
+
+button{
+    border: none;
+}
+
+.d-none{
+    display: none;
+}

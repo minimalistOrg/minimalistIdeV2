@@ -1,13 +1,13 @@
 import "./FuzzySearch.css";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { useEffect, useState } from "react";
-import {TreeCall} from "../Root-file/CallTree"
+import { TreeCall } from "../Root-file/CallTree";
 import { useDispatch, useSelector } from "react-redux";
 import { add } from "../Root-file/slice/callTreeSlice";
 
-function FuzzySearch():JSX.Element {
+function FuzzySearch(): JSX.Element {
   const listFn = useSelector((state: any) => state.addbubble.value);
-  const [li, setLi] = useState<[{name: string}]>([{ name: "Loading..." }]);
+  const [li, setLi] = useState<[{ name: string }]>([{ name: "Loading..." }]);
 
   const dispatch = useDispatch();
   const reRender = useSelector((state: any) => state.callTree.value);
@@ -27,50 +27,50 @@ function FuzzySearch():JSX.Element {
     // console.log(result)
   };
 
-
   const handleOnSelect = (item: any) => {
-
-  // {
-  //   id: 0,
-  //   name: "main",
-  //   params: [{text:"("},{text:")"}],
-  //   index: 0,
-  //   value: [],
-  //   event: false,
-  //   order: 0,
-  //   element: null,
-  //   Bubble: () => {
-  //     let result = document.getElementById("id" + 0);
-  //     return result;
-  //   },
-  // },
- function checkFunctionType(item:any){
-    if(item.node.type === "function_declaration"){
-    return {params: item.node.children[2].children}
+    // {
+    //   id: 0,
+    //   name: "main",
+    //   params: [{text:"("},{text:")"}],
+    //   index: 0,
+    //   value: [],
+    //   event: false,
+    //   order: 0,
+    //   element: null,
+    //   Bubble: () => {
+    //     let result = document.getElementById("id" + 0);
+    //     return result;
+    //   },
+    // },
+    function checkFunctionType(item: any) {
+      if (item.node.type === "function_declaration") {
+        return { params: item.node.children[2].children };
+      }
+      if (item.node.type === "lexical_declaration") {
+        return {
+          params: item.node.children[1].children[2].children[0].children,
+        };
+      }
     }
-    if(item.node.type === "lexical_declaration"){
-    return {params: item.node.children[1].children[2].children[0].children}
-    }
- }
-  //
-  TreeCall.push({
-  id: item.node.id,
-  name: item.name,
-  params: checkFunctionType(item)?.params,
-  index: item.id,
-  value: [],
-  event: false,
-  order: 0,
-  element: null,
-  Bubble: () => {
-      let result = document.getElementById("id" + item.node.id);
-      return result;
-    },
-
-  })
+    //
+    TreeCall.push({
+      id: item.node.id,
+      name: item.name,
+      params: checkFunctionType(item)?.params,
+      index: item.id,
+      value: [],
+      event: false,
+      order: 0,
+      element: null,
+      Bubble: () => {
+        let result = document.getElementById("id" + item.node.id);
+        return result;
+      },
+      visibility: true,
+    });
     // console.log(item,TreeCall)
-        dispatch(add(!reRender));
-  //
+    dispatch(add(!reRender));
+    //
     // the item selected
   };
 
@@ -105,7 +105,7 @@ function FuzzySearch():JSX.Element {
           height: "30px",
           borderRadius: "inherit",
           boxShadow: "none",
-          fontFamily: "inherit"
+          fontFamily: "inherit",
         }}
       />
     </div>

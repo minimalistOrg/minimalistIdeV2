@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { add } from "../Root-file/slice/callTreeSlice";
 import "./CallTree.css";
 import React from "react";
 import ListNested from "./icons/ListNested";
+import IconEye from "./icons/IconEye";
+import IconEyeSlash from "./icons/IconEyeSlash";
 
 function CallTree(props: any) {
   const dataBubbleTree = useSelector((state: any) => state.callTree.value);
   const [opentree, setOpentree] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    // console.log(TreeCall, dataBubbleTree)
+    // dispatch(add(!dataBubbleTree));
     // eslint-disable-next-line
   }, [dataBubbleTree]);
 
@@ -41,6 +45,35 @@ function CallTree(props: any) {
     }
   }
 
+  function ToggleHidden(show: { visibility: boolean; Bubble: () => any }) {
+    if (show.visibility) {
+      // console.log(show)
+      if (show.Bubble() === null) {
+        setTimeout(() => {
+          show.Bubble().classList.remove("d-none");
+        }, 100);
+      } else {
+        show.Bubble().classList.remove("d-none");
+      }
+      return {
+        element: <IconEye />,
+        msj: "hidden",
+      };
+    } else {
+      if (show.Bubble() === null) {
+        setTimeout(() => {
+          show.Bubble().classList.add("d-none");
+        }, 100);
+      } else {
+        show.Bubble().classList.add("d-none");
+      }
+      return {
+        element: <IconEyeSlash />,
+        msj: "show",
+      };
+    }
+  }
+
   const TreeLi = (input: any) => {
     return (
       <ul style={style}>
@@ -48,7 +81,7 @@ function CallTree(props: any) {
           return (
             <React.Fragment key={index}>
               <li style={{ order: e.order }} data-testid="calltree">
-                <span>
+                <span className="li-container">
                   <span
                     className="pointer liBubble"
                     onMouseOver={() => hoverBubbles(e)}
@@ -56,6 +89,17 @@ function CallTree(props: any) {
                   >
                     {e.name}
                   </span>
+                  <button
+                    className="btn-eye"
+                    title={ToggleHidden(e).msj}
+                    onClick={() => {
+                      e.visibility = !e.visibility;
+                      dispatch(add(!dataBubbleTree));
+                      // console.log(e);
+                    }}
+                  >
+                    {ToggleHidden(e).element}
+                  </button>
                 </span>
                 {TreeLi(e.value)}
               </li>
