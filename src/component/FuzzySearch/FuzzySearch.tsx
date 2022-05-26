@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { TreeCall } from "../Root-file/CallTree";
 import { useDispatch, useSelector } from "react-redux";
 import { add } from "../Root-file/slice/callTreeSlice";
+import {v4 as uuidv4} from "uuid"
 
 function FuzzySearch(): JSX.Element {
   const listFn = useSelector((state: any) => state.addbubble.value);
@@ -52,9 +53,10 @@ function FuzzySearch(): JSX.Element {
         };
       }
     }
+    const gId= uuidv4()
     //
     TreeCall.push({
-      id: item.node.id,
+      id: gId, //item.node.id
       name: item.name,
       params: checkFunctionType(item)?.params,
       index: item.id,
@@ -63,7 +65,7 @@ function FuzzySearch(): JSX.Element {
       order: 0,
       element: null,
       Bubble: () => {
-        let result = document.getElementById("id" + item.node.id);
+        let result = document.getElementById("id" + gId);
         return result;
       },
       visibility: true,

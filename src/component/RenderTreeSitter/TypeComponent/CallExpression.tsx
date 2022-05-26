@@ -2,6 +2,7 @@ import ChooseType from "../ChooseType";
 import { useSelector } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 import { useGlobalCounter } from "../util/useGlobalCounter";
+import {v4 as uuidv4} from "uuid"
 
 function CallExpression(props: any) {
   const data = props.data;
@@ -22,7 +23,7 @@ function CallExpression(props: any) {
 
     if (expre_is === "identifier") {
       setName(data.children[0].text);
-      setId(data.children[0].id);
+      setId(uuidv4());
       setEvent(true);
       setParams(data.children[1].children);
       let result = listFN.find((json: any, index: number) => {

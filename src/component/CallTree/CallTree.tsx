@@ -74,6 +74,8 @@ function CallTree(props: any) {
     }
   }
 
+  // console.log(props.data)
+
   const TreeLi = (input: any) => {
     return (
       <ul style={style}>
