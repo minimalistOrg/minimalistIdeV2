@@ -17,7 +17,7 @@ export default function Resize(
         y = (parseFloat(y) || 0) + event.deltaRect.top;
 
         let limitHeight = limit(idCode).height;
-        //   console.log(limitHeight,"here")
+          // console.log("here")
 
         Object.assign(event.target.style, {
           width: `${event.rect.width}px`,
@@ -35,7 +35,7 @@ export default function Resize(
 }
 
 function limit(element: any) {
-  console.log(element.parentNode.clientHeight);
+  // console.log(element.parentNode.clientHeight);
   let totalHeight = element.parentNode.clientHeight;
 
   return {

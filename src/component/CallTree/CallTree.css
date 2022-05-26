@@ -76,3 +76,7 @@ button{
 .d-none{
     display: none;
 }
+
+.t-none{
+    transition: none;
+}

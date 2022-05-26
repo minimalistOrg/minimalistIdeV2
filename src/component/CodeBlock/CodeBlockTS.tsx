@@ -41,9 +41,12 @@ function CodeBlockTS(props: any): JSX.Element {
       writable: true,
     });
     // console.log("t")
-    maxHeightBody(activeBubble.current);
     //eslint-disable-next-line
   }, [dataBubbleTree]);
+
+  useEffect(()=>{
+    maxHeightBody(activeBubble.current);
+  },[])
 
   function fnHover(event: any) {
     let data = event.currentTarget.parentNode.fninfo;
