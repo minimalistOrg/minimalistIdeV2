@@ -81,3 +81,15 @@ button {
 .FuzzySearch-container{
   margin: 0.5rem;
 }
+
+.MenuHeader-container{
+    position: fixed;
+    left: 0px;
+    padding-left: 45px;
+    width: 100%;
+    /* height: 48px; */
+    border-bottom: solid 1px grey;
+}
+.BubbleArea{
+    padding-top: 35px;
+}

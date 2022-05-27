@@ -13,6 +13,7 @@
   position: fixed;
   width: 42px;
   height: 100%;
+  z-index: 1000;
 }
 
 .CallTree__list {
@@ -79,4 +80,8 @@ button{
 
 .t-none{
     transition: none;
+}
+
+.CallTree__list{
+    padding-top: 25px;
 }

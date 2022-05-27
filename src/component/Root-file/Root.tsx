@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { TreeCall as json } from "./CallTree";
 import { useDispatch } from "react-redux";
 import { add } from "../Root-file/slice/addBubbleSlice";
+import MenuHeader from "../MenuHeader/MenuHeader";
 
 function Root(): JSX.Element {
   const dispatch = useDispatch();
@@ -47,7 +48,10 @@ function Root(): JSX.Element {
         <CallTree data={json} />
       </section>
       <section className="code-area">
-        {BubbleLoad(wait)}
+        <section className="MenuHeader-container">
+          <MenuHeader />
+        </section>
+        <section className="BubbleArea">{BubbleLoad(wait)}</section>
         {/*<CodeBlockTS code={load} />*/}
       </section>
     </div>
