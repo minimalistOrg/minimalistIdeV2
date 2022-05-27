@@ -83,7 +83,7 @@ function FuzzySearch(): JSX.Element {
   const formatResult = (item: any) => {
     return (
       <>
-        <span style={{ display: "block", textAlign: "left" }}>
+        <span style={{ display: "block", textAlign: "left", background: "white" }}>
           fn: {item.name}
         </span>
       </>
@@ -103,7 +103,7 @@ function FuzzySearch(): JSX.Element {
         autoFocus
         formatResult={formatResult}
         styling={{
-          backgroundColor: "inherit",
+          backgroundColor: "white",
           height: "30px",
           borderRadius: "inherit",
           boxShadow: "none",
