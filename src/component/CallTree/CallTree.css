@@ -6,6 +6,7 @@
 
 .CallTree {
   display: flex;
+  z-index:  -1;
 }
 
 .CallTree__bar {

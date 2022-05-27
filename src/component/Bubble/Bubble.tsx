@@ -15,9 +15,9 @@ function Bubble(props: any) {
   const [fninfoData, setFninfoData] = useState<any>(null);
 
   // useEffect(() => {
-  //   // setRenderBubble(props.tree);
-  //   // console.log("test number of render")
-  // }, []);
+  // //   // setRenderBubble(props.tree);
+  // //   // console.log("test number of render")
+  // }, [props.tree]);
 
   function handleAdd(event: any, dato: any) {
     let value = dato.value;

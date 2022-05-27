@@ -84,7 +84,7 @@ function fnArrowTwo() {
 }
 `;
 
-export function test() {
+export function test(code:string) {
   const Parser: any = window?.TreeSitter;
   // const {Query}= Parser
 

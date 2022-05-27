@@ -14,3 +14,7 @@ export let TreeCall:any = [
   //   },
   // },
 ];
+
+export function resetTreeCall(){
+    TreeCall= [];
+}
