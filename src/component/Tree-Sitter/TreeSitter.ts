@@ -84,52 +84,51 @@ function fnArrowTwo() {
 }
 `;
 
-export function test(code:string) {
+export async function test(code:string) {
   const Parser: any = window?.TreeSitter;
-  // const {Query}= Parser
 
   const querySearchFnDeclaration = "(function_declaration) @name";
   const queryArrowFn =
     "(lexical_declaration (variable_declarator value:(arrow_function)  ) ) @name";
   // const querySearchCallExpression = "(call_expression function:(identifier) ) @name";
 
-  let data = Parser.init().then(() => {
-    /* the library is ready */
-    const parser = new Parser();
-    const testing = async () => {
-      const JavaScript = await Parser.Language.load(
-        process.env.PUBLIC_URL +
-          "/assets/TreeSitter/tree-sitter-javascript.wasm"
-      );
-      parser.setLanguage(JavaScript);
-      const runSearchFnDeclaration = JavaScript.query(querySearchFnDeclaration);
-      const runSearchFnDeclarationArrow = JavaScript.query(queryArrowFn);
-      const sourceCode = code;
-      const tree = parser.parse(sourceCode);
-      // console.log(tree);
-      let listFunctionDeclaration = runSearchFnDeclaration.captures(
-        tree.rootNode
-      );
-      listFunctionDeclaration = listFunctionDeclaration.concat(
-        runSearchFnDeclarationArrow.captures(tree.rootNode)
-      );
-      listFunctionDeclaration.forEach((item: any, index: number) => {
-        if (item.node.type === "lexical_declaration") {
-          // console.log("here")
-          item.name = item.node.children[1].children[0].text;
-        }
-        if (item.node.type === "function_declaration") {
-          item.name = item.node.children[1].text;
-        }
+  await Parser.init()
+  const parser = new Parser();
 
-        item.id = index;
-        item.nothing = "";
-      });
-      // console.log(listFunctionDeclaration)
-      return listFunctionDeclaration;
-    };
-    return testing();
+  const JavaScript = await Parser.Language.load(
+    process.env.PUBLIC_URL +
+      "/assets/TreeSitter/tree-sitter-javascript.wasm"
+  );
+
+  parser.setLanguage(JavaScript);
+  const runSearchFnDeclaration = JavaScript.query(querySearchFnDeclaration);
+  const runSearchFnDeclarationArrow = JavaScript.query(queryArrowFn);
+  const sourceCode = code;
+  const tree = parser.parse(sourceCode);
+  // console.log(tree);
+
+  let listFunctionDeclaration = runSearchFnDeclaration.captures(
+    tree.rootNode
+  );
+
+  listFunctionDeclaration = listFunctionDeclaration.concat(
+    runSearchFnDeclarationArrow.captures(tree.rootNode)
+  );
+
+  listFunctionDeclaration.forEach((item: any, index: number) => {
+    if (item.node.type === "lexical_declaration") {
+      // console.log("here")
+      item.name = item.node.children[1].children[0].text;
+    }
+
+    if (item.node.type === "function_declaration") {
+      item.name = item.node.children[1].text;
+    }
+
+    item.id = index;
+    item.nothing = "";
   });
 
-  return data;
+  // console.log(listFunctionDeclaration)
+  return listFunctionDeclaration;
 }
