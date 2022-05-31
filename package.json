@@ -14,7 +14,6 @@
     "@types/uuid": "^8.3.4",
     "interactjs": "^1.10.11",
     "rc-dropdown": "^3.6.2",
-    "rc-menu": "^9.6.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-redux": "^7.2.8",

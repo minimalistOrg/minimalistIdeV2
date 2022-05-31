@@ -3,3 +3,13 @@
     border: solid 1px blue;
     border-radius: 8px;
 }
+
+.LoadCode__input{
+    border-radius: 8px;
+    outline: none;
+    height: 20px;
+    width: 400px;
+    margin: 5px;
+    border: solid 1px;
+    padding: 4px;
+}
