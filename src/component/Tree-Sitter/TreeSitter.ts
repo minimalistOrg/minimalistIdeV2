@@ -1,3 +1,4 @@
+
 declare global {
   interface Window {
     TreeSitter?: any;
@@ -84,7 +85,7 @@ function fnArrowTwo() {
 }
 `;
 
-export function test(code:string) {
+export function test(code: string, from: string) {
   const Parser: any = window?.TreeSitter;
   // const {Query}= Parser
 
@@ -124,6 +125,7 @@ export function test(code:string) {
 
         item.id = index;
         item.nothing = "";
+        item.from = from;
       });
       // console.log(listFunctionDeclaration)
       return listFunctionDeclaration;

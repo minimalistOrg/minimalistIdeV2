@@ -1,4 +1,4 @@
-import {useRef, useState } from "react";
+import { useRef, useState } from "react";
 import ReactModal from "react-modal";
 import IcoClose from "../../CodeBlock/IcoClose";
 import "./LoadCode.css";
@@ -24,12 +24,17 @@ function LoadCode(props: any) {
     setBtnload("Load");
     setEnablebtn(true);
     const files: any = Object.values(readGist.files);
-    if (files.length === 1 && files[0].language === "JavaScript") {
-      props.load(files[0].content, { reset: true });
+    if (files[0].language === "JavaScript") {
+      // props.load(files[0].content, { reset: true });
+      let onliJavascript = files.filter((element:any) => {
+        return (element.language === "JavaScript");
+      });
+      props.load(onliJavascript)
+      // console.log(onliJavascript);
       setResult("successful upload");
     } else {
-      console.error("error gits not is one file or the file not is JavaScript");
-      setResult("error loading code");
+      // console.log(readGist)
+      // setResult("error loading code");
     }
     // console.log(files);
   }
@@ -54,7 +59,6 @@ function LoadCode(props: any) {
       setEnablebtn(false);
     }
   }
-
 
   return (
     <ReactModal

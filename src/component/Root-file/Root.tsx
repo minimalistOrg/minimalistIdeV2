@@ -19,23 +19,51 @@ function Root(): JSX.Element {
   const [wait, setWait] = useState(false);
   const reRender = useSelector((state: any) => state.callTree.value);
 
-  const data = async (code: string, reset: any) => {
+  const data = async (code: string, reset: any, from: string) => {
     if (reset.reset) {
-      resetTreeCall();
-      dispatch(callrender(!reRender));
-      dispatch(add(""));
-      const codedata = await test(code);
-      dispatch(add(codedata));
-      console.log("load", json, codedata);
+      // resetTreeCall();
+      // dispatch(callrender(!reRender));
+      // dispatch(add(""));
+      // const codedata = await test(code,from);
+      // //
+      // //
+      // console.log(codedata)
+      // // dispatch(add(codedata));
+      // console.log("load", json, codedata);
     } else {
-      const loadData = await test(testCode);
+      const loadData = await test(testCode, "Placeholder");
       dispatch(add(loadData));
       setWait(true);
     }
   };
 
+  async function setGistCode(data: any) {
+    resetTreeCall();
+    dispatch(callrender(!reRender));
+    dispatch(add(""));
+    async function getCodeParse(e: any) {
+      let response = await test(e.content, e.filename);
+      let result = await response;
+      return result;
+    }
+    let allfn: any = await Promise.all(
+      data.map(async (e: any) => {
+        let x = await getCodeParse(e);
+        return x;
+      })
+    );
+
+    let result = [].concat.apply([], allfn);
+    result.forEach((e: any, index: number) => {
+      e.id = index;
+    });
+    dispatch(add(result));
+
+    console.log(result);
+  }
+
   useEffect(() => {
-    data("", { reset: false });
+    data("", { reset: false }, "Placeholder");
     // console.log("test");
     //eslint-disable-next-line
   }, [wait]);
@@ -55,11 +83,11 @@ function Root(): JSX.Element {
     }
   }
 
-  const [opengist,setOpengist]= useState(false)
-  function OpenModalGist(){
-    setOpengist(!opengist)
+  const [opengist, setOpengist] = useState(false);
+  function OpenModalGist() {
+    setOpengist(!opengist);
   }
-  const fnlist= {gist: OpenModalGist}
+  const fnlist = { gist: OpenModalGist };
 
   return (
     <div className="d-flex">
@@ -71,7 +99,7 @@ function Root(): JSX.Element {
           <MenuHeader fn={fnlist} />
         </section>
         <section className="BubbleArea">{BubbleLoad(wait)}</section>
-        <LoadCode load={data} isOpen={opengist} event={fnlist} />
+        <LoadCode load={setGistCode} isOpen={opengist} event={fnlist} />
         {/*<CodeBlockTS code={load} />*/}
       </section>
     </div>

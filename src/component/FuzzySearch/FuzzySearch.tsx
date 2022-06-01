@@ -84,7 +84,8 @@ function FuzzySearch(): JSX.Element {
     return (
       <>
         <span style={{ display: "block", textAlign: "left" }}>
-          fn: {item.name}
+          fn: {item.name} <br/>
+          <span>/{item.from}</span>
         </span>
       </>
     );
