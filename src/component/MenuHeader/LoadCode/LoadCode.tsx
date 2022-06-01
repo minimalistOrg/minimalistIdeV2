@@ -36,9 +36,10 @@ function LoadCode(props: any) {
       props.load(onliJavascript);
       // console.log(onliJavascript);
       setResult("successful upload");
+      resetValues();
     } else {
-        setResult("Gist does not include jsx or js files")
-        console.error("it is not a JavaScript file")
+      setResult("Gist does not include jsx or js files");
+      console.error("it is not a JavaScript file");
     }
   }
 
@@ -47,11 +48,11 @@ function LoadCode(props: any) {
       `https://api.github.com/gists/${id}?gist_id=${id}`
     );
 
-      // console.log(response)
-      if(response.status === 404){
-      setResult("Error 404")
-      return {}
-      }
+    // console.log(response)
+    if (response.status === 404) {
+      setResult("Error 404");
+      return {};
+    }
     let data = response.json();
     return data;
   };
