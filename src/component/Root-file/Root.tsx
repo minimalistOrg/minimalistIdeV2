@@ -38,6 +38,7 @@ function Root(): JSX.Element {
   };
 
   async function setGistCode(data: any) {
+    setWait(false);
     resetTreeCall();
     dispatch(callrender(!reRender));
     dispatch(add(""));
@@ -58,6 +59,7 @@ function Root(): JSX.Element {
       e.id = index;
     });
     dispatch(add(result));
+    setWait(true);
 
     // console.log(result);
   }
