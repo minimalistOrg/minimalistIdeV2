@@ -48,7 +48,7 @@ function LoadCode(props: any) {
   };
 
   function validURL(event: any) {
-    const regex = /(https:\/\/gist.github.com\/[\w\d]+\/[\w\d]+\/?)/g;
+    const regex = /(https:\/\/gist.github.com\/[\w\d-]+\/[\w\d]+\/?)/g;
     const evaluation = regex.test(event.target.value);
     console.log(evaluation);
     if (evaluation) {
