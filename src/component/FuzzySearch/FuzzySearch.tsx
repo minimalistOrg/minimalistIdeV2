@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { add } from "../Root-file/slice/callTreeSlice";
 import { v4 as uuidv4 } from "uuid";
 
-function FuzzySearch(): JSX.Element {
+function FuzzySearch(props:any): JSX.Element {
   const listFn = useSelector((state: any) => state.addbubble.value);
   const [li, setLi] = useState<[{ name: string }]>([{ name: "Loading..." }]);
 
@@ -94,7 +94,7 @@ function FuzzySearch(): JSX.Element {
   return (
     <div className="FuzzySearch__input">
       <ReactSearchAutocomplete
-        placeholder="Search functions by name"
+        placeholder={props.placeholder}
         items={li}
         onSearch={handleOnSearch}
         onHover={handleOnHover}

@@ -18,6 +18,7 @@ function Root(): JSX.Element {
   const dispatch = useDispatch();
   const [wait, setWait] = useState(false);
   const reRender = useSelector((state: any) => state.callTree.value);
+  const [placeholderinput,setPlaceholderinput]= useState("Search functions by name")
 
   const data = async (code: string, reset: any, from: string) => {
     if (reset.reset) {
@@ -38,7 +39,7 @@ function Root(): JSX.Element {
   };
 
   async function setGistCode(data: any) {
-    setWait(false);
+    setPlaceholderinput("Loading data...")
     resetTreeCall();
     dispatch(callrender(!reRender));
     dispatch(add(""));
@@ -59,7 +60,7 @@ function Root(): JSX.Element {
       e.id = index;
     });
     dispatch(add(result));
-    setWait(true);
+    setPlaceholderinput("Search functions by name")
 
     // console.log(result);
   }
@@ -76,7 +77,7 @@ function Root(): JSX.Element {
         <>
           <Bubble tree={json} />
           <div className="FuzzySearch-container">
-            <FuzzySearch />
+            <FuzzySearch placeholder={placeholderinput} />
           </div>
         </>
       );
