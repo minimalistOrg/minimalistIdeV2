@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { TreeCall } from "../Root-file/CallTree";
 import { useDispatch, useSelector } from "react-redux";
 import { add } from "../Root-file/slice/callTreeSlice";
-import {v4 as uuidv4} from "uuid"
+import { v4 as uuidv4 } from "uuid";
 
 function FuzzySearch(): JSX.Element {
   const listFn = useSelector((state: any) => state.addbubble.value);
@@ -53,7 +53,7 @@ function FuzzySearch(): JSX.Element {
         };
       }
     }
-    const gId= uuidv4()
+    const gId = uuidv4();
     //
     TreeCall.push({
       id: gId, //item.node.id
@@ -83,7 +83,7 @@ function FuzzySearch(): JSX.Element {
   const formatResult = (item: any) => {
     return (
       <>
-        <span style={{ display: "block", textAlign: "left", background: "white" }}>
+        <span style={{ display: "block", textAlign: "left" }}>
           fn: {item.name}
         </span>
       </>
@@ -103,7 +103,7 @@ function FuzzySearch(): JSX.Element {
         autoFocus
         formatResult={formatResult}
         styling={{
-          backgroundColor: "white",
+          backgroundColor: "inherit",
           height: "30px",
           borderRadius: "inherit",
           boxShadow: "none",

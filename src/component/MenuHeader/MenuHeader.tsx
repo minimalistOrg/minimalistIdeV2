@@ -2,15 +2,15 @@ import Dropdown from "rc-dropdown";
 import "./MenuHeader.css";
 import "rc-dropdown/assets/index.css";
 
-const menuFile = (
-  <ul className="Dropdown-Menu">
-    <li className= "Dropdown-Menu__item">
-      <button>Load Code</button>
-    </li>
-  </ul>
-);
+function MenuHeader(props: any) {
+  const menuFile = (
+    <ul className="Dropdown-Menu">
+      <li className="Dropdown-Menu__item">
+        <button onClick={() => props.fn.gist()}>Load Code</button>
+      </li>
+    </ul>
+  );
 
-function MenuHeader() {
   return (
     <div className="MenuHeader">
       <ul>

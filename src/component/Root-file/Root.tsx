@@ -55,6 +55,12 @@ function Root(): JSX.Element {
     }
   }
 
+  const [opengist,setOpengist]= useState(false)
+  function OpenModalGist(){
+    setOpengist(!opengist)
+  }
+  const fnlist= {gist: OpenModalGist}
+
   return (
     <div className="d-flex">
       <section>
@@ -62,10 +68,10 @@ function Root(): JSX.Element {
       </section>
       <section className="code-area">
         <section className="MenuHeader-container">
-          <MenuHeader />
+          <MenuHeader fn={fnlist} />
         </section>
         <section className="BubbleArea">{BubbleLoad(wait)}</section>
-        <LoadCode load={data} />
+        <LoadCode load={data} isOpen={opengist} event={fnlist} />
         {/*<CodeBlockTS code={load} />*/}
       </section>
     </div>
