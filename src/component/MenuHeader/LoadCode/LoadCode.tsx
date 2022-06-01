@@ -64,10 +64,11 @@ function LoadCode(props: any) {
     <ReactModal
       isOpen={props.isOpen}
       className="LoadCode__Modal"
-      ariaHideApp={false}
       shouldCloseOnOverlayClick={true}
       shouldFocusAfterRender={true}
       shouldCloseOnEsc={true}
+      onRequestClose={()=> props.event.gist()}
+      ariaHideApp={false}
     >
       <div className="LoadCode__header">
         <div>
