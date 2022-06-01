@@ -24,7 +24,11 @@ function LoadCode(props: any) {
     setBtnload("Load");
     setEnablebtn(true);
     const files: any = Object.values(readGist.files);
-    if (files[0].language === "JavaScript") {
+    const there_js =
+      files.filter((e: any) => e.language === "JavaScript").length > 0;
+
+    // console.log(there_js);
+    if (there_js) {
       // props.load(files[0].content, { reset: true });
       let onliJavascript = files.filter((element: any) => {
         return element.language === "JavaScript";
@@ -33,16 +37,21 @@ function LoadCode(props: any) {
       // console.log(onliJavascript);
       setResult("successful upload");
     } else {
-      // console.log(readGist)
-      // setResult("error loading code");
+        setResult("Gist does not include jsx or js files")
+        console.error("it is not a JavaScript file")
     }
-    // console.log(files);
   }
 
   const getCode = async (id: any) => {
     let response = await fetch(
       `https://api.github.com/gists/${id}?gist_id=${id}`
     );
+
+      // console.log(response)
+      if(response.status === 404){
+      setResult("Error 404")
+      return {}
+      }
     let data = response.json();
     return data;
   };
