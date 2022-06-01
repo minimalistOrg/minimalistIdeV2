@@ -26,10 +26,10 @@ function LoadCode(props: any) {
     const files: any = Object.values(readGist.files);
     if (files[0].language === "JavaScript") {
       // props.load(files[0].content, { reset: true });
-      let onliJavascript = files.filter((element:any) => {
-        return (element.language === "JavaScript");
+      let onliJavascript = files.filter((element: any) => {
+        return element.language === "JavaScript";
       });
-      props.load(onliJavascript)
+      props.load(onliJavascript);
       // console.log(onliJavascript);
       setResult("successful upload");
     } else {
@@ -50,7 +50,7 @@ function LoadCode(props: any) {
   function validURL(event: any) {
     const regex = /(https:\/\/gist.github.com\/[\w\d-]+\/[\w\d]+\/?)/g;
     const evaluation = regex.test(event.target.value);
-    console.log(evaluation);
+    // console.log(evaluation);
     if (evaluation) {
       setTextValidURL("");
       setEnablebtn(true);
@@ -60,6 +60,13 @@ function LoadCode(props: any) {
     }
   }
 
+  function resetValues() {
+    props.event.gist();
+    setResult("");
+    setTextValidURL("");
+    setEnablebtn(false);
+  }
+
   return (
     <ReactModal
       isOpen={props.isOpen}
@@ -67,7 +74,7 @@ function LoadCode(props: any) {
       shouldCloseOnOverlayClick={true}
       shouldFocusAfterRender={true}
       shouldCloseOnEsc={true}
-      onRequestClose={()=> props.event.gist()}
+      onRequestClose={resetValues}
       ariaHideApp={false}
     >
       <div className="LoadCode__header">
@@ -75,7 +82,7 @@ function LoadCode(props: any) {
           <span>Load Code from a Gist</span>
         </div>
         <div>
-          <button title="Close" onClick={() => props.event.gist()}>
+          <button title="Close" onClick={resetValues}>
             <IcoClose />
           </button>
         </div>

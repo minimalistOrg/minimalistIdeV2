@@ -59,7 +59,7 @@ function Root(): JSX.Element {
     });
     dispatch(add(result));
 
-    console.log(result);
+    // console.log(result);
   }
 
   useEffect(() => {
