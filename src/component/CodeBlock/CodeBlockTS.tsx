@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import ChooseType from "../RenderTreeSitter/ChooseType";
 import "./CodeBlock.css";
-import { BubbleCollapse, maxHeightBody } from "./Functions/BubbleCollapse";
+import { BubbleCollapse } from "./Functions/BubbleCollapse";
 import IcoClose from "./IcoClose";
 import IcoCollapse from "./IcoCollapse";
 import Resize from "./CodeBlock__Resize";
