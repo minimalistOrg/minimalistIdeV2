@@ -10,6 +10,7 @@ export function BubbleCollapse(e: any) {
 }
 
 export function maxHeightBody(element: any) {
+    // console.log("hi")
   setTimeout(() => {
     element.style.height = (element.children[1].children[0].clientHeight + 34) + "px";
   }, 100);
