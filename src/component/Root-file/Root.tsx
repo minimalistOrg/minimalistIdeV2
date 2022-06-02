@@ -86,7 +86,7 @@ function Root(): JSX.Element {
     }
   }
 
-  const [opengist, setOpengist] = useState(false);
+  const [opengist, setOpengist] = useState(true);
   function OpenModalGist() {
     setOpengist(!opengist);
   }
