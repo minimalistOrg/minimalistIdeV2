@@ -1,15 +1,18 @@
 import { useRef, useState } from "react";
+import { useAlert } from "react-alert";
 import ReactModal from "react-modal";
+import ClockwiseIco from "../../../Icons/ClockwiseIco";
 import IcoClose from "../../CodeBlock/IcoClose";
 import "./LoadCode.css";
 
 function LoadCode(props: any) {
   const code = useRef<any>(null);
+  const alert= useAlert()
 
   const [textValidURL, setTextValidURL] = useState("");
   const [enablebtn, setEnablebtn] = useState(false);
   const [btnload, setBtnload] = useState("Load");
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState<any>("");
 
   async function loadCodeTreeSitter() {
     // props.load(code.current.value, { reset: true });
@@ -19,7 +22,16 @@ function LoadCode(props: any) {
     const id = allvalues[allvalues.length - 1];
     setBtnload("Wait...");
     setEnablebtn(false);
-    setResult("Loading...");
+    setResult(
+      <>
+        <span className="LoadCode__textloading">
+          <span className="LoadCode__ico">
+            <ClockwiseIco size={20} />
+          </span>
+          Loading...
+        </span>
+      </>
+    );
     const readGist = await getCode(id);
     setBtnload("Load");
     setEnablebtn(true);
@@ -35,26 +47,43 @@ function LoadCode(props: any) {
       });
       props.load(onliJavascript);
       // console.log(onliJavascript);
-      setResult("successful upload");
+      setResult("");
       resetValues();
+      alert.success("Code loaded successfully")
     } else {
-      setResult("Gist does not include jsx or js files");
+      setResult(
+        <span className="LoadCode__msg">
+          The gist doesn't include any Javascript files
+        </span>
+      );
       console.error("it is not a JavaScript file");
     }
   }
 
   const getCode = async (id: any) => {
-    let response = await fetch(
-      `https://api.github.com/gists/${id}?gist_id=${id}`
-    );
+    try {
+      let response = await fetch(
+        `https://api.github.com/gists/${id}?gist_id=${id}`
+      );
 
-    // console.log(response)
-    if (response.status === 404) {
-      setResult("Error 404");
+      // console.log(response);
+      if (response.status === 404) {
+        setResult(
+          <span className="LoadCode__msg">
+            The gist doesn't exist. Check the URL and try again
+          </span>
+        );
+        return {};
+      }
+      let data = response.json();
+      return data;
+    } catch (error) {
+      setResult(
+        <span className="LoadCode__msg">Error Internet Disconnected</span>
+      );
+      console.error(error);
       return {};
     }
-    let data = response.json();
-    return data;
   };
 
   function validURL(event: any) {
@@ -104,7 +133,7 @@ function LoadCode(props: any) {
         </div>
       </div>
       <div className="LoadCode">
-        <h3 style={{ margin: "0px" }}>{result}</h3>
+        <h3 style={{ textAlign: "center", margin: "0px" }}>{result}</h3>
         <input
           ref={code}
           type="text"

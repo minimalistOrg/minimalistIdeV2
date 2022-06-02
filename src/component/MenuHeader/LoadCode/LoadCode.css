@@ -48,35 +48,61 @@
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.LoadCode__Modal{
-    width: 400px;
-    height: 200px;
-    background-color: white;
-    border: solid gray 1px;
-    padding: 5px;
-    margin-top: 50px;
+.LoadCode__Modal {
+  width: 400px;
+  height: 200px;
+  background-color: white;
+  border: solid gray 1px;
+  padding: 5px;
+  margin-top: 50px;
 }
 
-.text-error{
-    color: red;
+.text-error {
+  color: red;
 }
 
-.ReactModal__Overlay{
-    display: flex;
-    justify-content: center;
-    z-index: 1500;
-    background-color: #bbbbbbbf !important;
+.ReactModal__Overlay {
+  display: flex;
+  justify-content: center;
+  z-index: 1500;
+  background-color: #bbbbbbbf !important;
 }
 
-.LoadCode__Overlay{
-    background-color: black;
+.LoadCode__Overlay {
+  background-color: black;
 }
 
-.LoadCode__header{
-    border-bottom: solid 1px gray;
-    height: 30px;
-    margin-bottom: 5px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.LoadCode__header {
+  border-bottom: solid 1px gray;
+  height: 30px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.LoadCode__msg {
+  margin: 0px;
+  text-align: center;
+  color: red;
+  padding: 5px;
+}
+
+.LoadCode__textloading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+
+@keyframes rotate{
+    from{transform: rotate(0deg);}
+    to{transform: rotate(360deg);}
+}
+
+.LoadCode__ico{
+    padding: 2px;
+    animation-name: rotate;
+    animation-duration: 0.7s;
+    animation-iteration-count: infinite;
 }
