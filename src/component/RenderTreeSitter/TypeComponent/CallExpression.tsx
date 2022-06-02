@@ -27,6 +27,9 @@ function CallExpression(props: any) {
       setEvent(true);
       setParams(data.children[1].children);
       let position = listFN.find((e: any) => e.name === data.children[0].text);
+      if(position === undefined){
+      return -1
+      }
       setFnindex(position.id);
     }
   }
