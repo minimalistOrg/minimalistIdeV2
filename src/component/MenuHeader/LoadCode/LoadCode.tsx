@@ -77,6 +77,11 @@ function LoadCode(props: any) {
     setEnablebtn(false);
   }
 
+  function focusInput() {
+    code.current.focus();
+    // console.log("hi");
+  }
+
   return (
     <ReactModal
       isOpen={props.isOpen}
@@ -85,6 +90,7 @@ function LoadCode(props: any) {
       shouldFocusAfterRender={true}
       shouldCloseOnEsc={true}
       onRequestClose={resetValues}
+      onAfterOpen={focusInput}
       ariaHideApp={false}
     >
       <div className="LoadCode__header">
