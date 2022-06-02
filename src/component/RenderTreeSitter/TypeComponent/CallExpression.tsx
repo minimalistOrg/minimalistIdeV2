@@ -2,7 +2,7 @@ import ChooseType from "../ChooseType";
 import { useSelector } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 import { useGlobalCounter } from "../util/useGlobalCounter";
-import {v4 as uuidv4} from "uuid"
+import { v4 as uuidv4 } from "uuid";
 
 function CallExpression(props: any) {
   const data = props.data;
@@ -26,23 +26,8 @@ function CallExpression(props: any) {
       setId(uuidv4());
       setEvent(true);
       setParams(data.children[1].children);
-      let result = listFN.find((json: any, index: number) => {
-        if (json.node.children[1].text === data.children[0].text) {
-          // console.log("main" === data.children[0].text, index);
-          if (index === 0) {
-            return true;
-          }
-          return index;
-        } else {
-          if (json.node.type === "lexical_declaration") {
-            // console.log(expre_is,json.node,"here")
-            return index;
-          } else {
-            return "";
-          }
-        }
-      });
-      setFnindex(listFN.indexOf(result));
+      let position = listFN.find((e: any) => e.name === data.children[0].text);
+      setFnindex(position.id);
     }
   }
 
