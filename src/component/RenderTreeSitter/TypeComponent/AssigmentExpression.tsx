@@ -6,8 +6,12 @@ function AssigmentExpression(props: any) {
 
   return (
     <span className="AssigmentExpression">
-      {data.children.map((e: any) => {
-        return <ChooseType info={e} />;
+      {data.children.map((e: any, index: number) => {
+        return (
+          <span key={index}>
+            <ChooseType info={e} />
+          </span>
+        );
       })}
     </span>
   );
