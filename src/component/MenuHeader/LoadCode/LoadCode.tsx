@@ -3,16 +3,137 @@ import { useAlert } from "react-alert";
 import ReactModal from "react-modal";
 import ClockwiseIco from "../../../Icons/ClockwiseIco";
 import IcoClose from "../../CodeBlock/IcoClose";
+import { test } from "../../Tree-Sitter/TreeSitter";
 import "./LoadCode.css";
 
 function LoadCode(props: any) {
   const code = useRef<any>(null);
-  const alert= useAlert()
+  const alert = useAlert();
 
   const [textValidURL, setTextValidURL] = useState("");
   const [enablebtn, setEnablebtn] = useState(false);
   const [btnload, setBtnload] = useState("Load");
   const [result, setResult] = useState<any>("");
+
+  function selectURL() {
+    const github = /https\:\/\/github.com\//;
+    if (github.test(code.current.value)) {
+      // console.log(code.current.value);
+      getDetailsURL(code.current.value);
+    } else {
+      loadCodeTreeSitter();
+    }
+  }
+
+  async function getDetailsURL(url: string) {
+    console.time("loading");
+    setResult(
+      <>
+        <span className="LoadCode__textloading">
+          <span className="LoadCode__ico">
+            <ClockwiseIco size={20} />
+          </span>
+          Loading...
+        </span>
+      </>
+    );
+    const urlrepo = url;
+    let regex =
+      /(https:\/\/github.com\/)([\w\d\-]+)(\/)([\w\d\-]+)(\/)?((tree)(\/)([\w\d\-]+))?/g;
+
+    let validURL = regex.test(url);
+    if (!validURL) {
+      console.error("url incorrect");
+    }
+
+    const username = urlrepo.replace(regex, "$2");
+    const repo = urlrepo.replace(regex, "$4");
+    let rama = urlrepo.replace(regex, "$9");
+    const urldata = {
+      username: username,
+      repo: repo,
+      url: urlrepo,
+      rama: rama,
+    };
+    if (urldata.rama === "") {
+      let info = await getrepo(
+        `https://api.github.com/repos/${urldata.username}/${urldata.repo}/branches`
+      );
+      let files = await getrepo(
+        `https://api.github.com/repos/${urldata.username}/${urldata.repo}/git/trees/${info[0].name}?recursive=1`
+      );
+      searchJavascript(files.tree);
+    } else {
+      let files = await getrepo(
+        `https://api.github.com/repos/${urldata.username}/${urldata.repo}/git/trees/${urldata.rama}?recursive=1`
+      );
+      searchJavascript(files.tree);
+    }
+    // console.log(urldata);
+    console.timeEnd("loading");
+  }
+
+  function searchJavascript(files: any) {
+    // console.log(files);
+    const JavaScriptFiles = files.filter((element: any) => {
+      let regex_js = /js$|jsx$/g;
+      return regex_js.test(element.path);
+    });
+    if (JavaScriptFiles.length === 0) {
+      setResult(
+        <span className="LoadCode__msg">
+          The github repo doesn't include any Javascript files
+        </span>
+      );
+    } else {
+      // console.log(JavaScriptFiles);
+      LoadAllFilesFromGithub(JavaScriptFiles);
+    }
+  }
+
+  async function LoadAllFilesFromGithub(files: any) {
+    let files64 = await Promise.all(
+      files.map((element: any) => {
+        return getrepo(element.url);
+      })
+    );
+
+    let datafile: any = [];
+    files64.forEach((element: any, index: number) => {
+      datafile.push({ code: atob(element.content), from: files[index].path });
+    });
+
+    // console.log(datafile);
+    getast(datafile);
+  }
+
+  async function getast(data: any) {
+    let TreeSitterAst = await Promise.all(
+      data.map((element: any) => {
+        let ast = test(element.code, element.from);
+        return ast;
+      })
+    );
+
+    let result = [].concat.apply([], TreeSitterAst);
+
+    result.forEach((e: any, index: number) => {
+      e.id = index;
+    });
+
+    console.log(result);
+    props.setData(result)
+  }
+
+  async function getrepo(url: string) {
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   async function loadCodeTreeSitter() {
     // props.load(code.current.value, { reset: true });
@@ -49,7 +170,7 @@ function LoadCode(props: any) {
       // console.log(onliJavascript);
       setResult("");
       resetValues();
-      alert.success("Code loaded successfully")
+      alert.success("Code loaded successfully");
     } else {
       setResult(
         <span className="LoadCode__msg">
@@ -87,10 +208,15 @@ function LoadCode(props: any) {
   };
 
   function validURL(event: any) {
-    const regex = /(https:\/\/gist.github.com\/[\w\d-]+\/[\w\d]+\/?)/g;
+    const regex = /(https:\/\/gist.github.com\/[\w\d-]+\/[\w\d]+\/?)/;
+    const regex_git_branch =
+      /(https:\/\/github.com\/)([\w\d\-]+)(\/)([\w\d\-]+)(\/)tree\/main\/?/;
+    const regex_git = /https:\/\/github.com\/([\w\d\-]+)\/([\w\d\-]+)\/?/;
     const evaluation = regex.test(event.target.value);
-    // console.log(evaluation);
-    if (evaluation) {
+    const evaluation2 = regex_git_branch.test(event.target.value);
+    const evaluation3 = regex_git.test(event.target.value);
+    // console.log(evaluation,evaluation2,evaluation3);
+    if (evaluation || evaluation2 || evaluation3) {
       setTextValidURL("");
       setEnablebtn(true);
     } else {
@@ -147,7 +273,7 @@ function LoadCode(props: any) {
         <div>
           <button
             className="LoadCode__btn"
-            onClick={loadCodeTreeSitter}
+            onClick={selectURL}
             disabled={!enablebtn}
           >
             {btnload}
