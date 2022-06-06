@@ -248,6 +248,12 @@ function LoadCode(props: any) {
     // console.log("hi");
   }
 
+  const handleKeyDown = (event: any) => {
+    if (event.key === "Enter") {
+      selectURL();
+    }
+  };
+
   return (
     <ReactModal
       isOpen={props.isOpen}
@@ -277,6 +283,7 @@ function LoadCode(props: any) {
           className="LoadCode__input"
           placeholder="https://gist.github.com/.../..."
           onChange={validURL}
+          onKeyDown={handleKeyDown}
         />
         <div>
           <span className="text-error">{textValidURL}</span>

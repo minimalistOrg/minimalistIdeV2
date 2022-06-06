@@ -23,11 +23,20 @@ import ObjectPattern from "./TypeComponent/ObjectPattern";
 import ShorthandPropertyIdentifierPattern from "./TypeComponent/ShorthandPropertyIdentifierPattern";
 import SubscriptExpression from "./TypeComponent/SubscriptExpression";
 import AssigmentExpression from "./TypeComponent/AssigmentExpression";
+import VariableDeclaration from "./TypeComponent/VariableDeclaration";
+import ForStatement from "./TypeComponent/ForStatement";
+import Array from "./TypeComponent/Array";
 
 function ChooseType(props: any): JSX.Element {
   function choose(info: any) {
     //
     switch (info.type) {
+      case "array":
+        return <Array data={info} />;
+      case "for_statement":
+        return <ForStatement data={info} />;
+      case "variable_declaration":
+        return <VariableDeclaration data={info} />;
       case "assignment_expression":
         return <AssigmentExpression data={info} />;
       case "subscript_expression":
@@ -112,6 +121,16 @@ function ChooseType(props: any): JSX.Element {
         return <> {"=>"} </>;
       case "${":
         return <>{"${"}</>;
+      case "[":
+        return <>[</>;
+      case "]":
+        return <>]</>;
+      case ";":
+        return <>;</>;
+      case "var":
+        return <span className="LexicalDeclaration__variableType">var</span>;
+      case "for":
+        return <span className="ReservedWords">for</span>;
       case "`":
         return <>{"`"}</>;
       case "loading":
