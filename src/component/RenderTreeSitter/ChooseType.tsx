@@ -8,38 +8,56 @@ import LexicalDeclaration from "./TypeComponent/LexicalDeclaration";
 import VariableDeclarator from "./TypeComponent/VariableDeclarator";
 import NumberType from "./TypeComponent/NumberType";
 import Identifier from "./TypeComponent/Identifier";
-import BinaryExpression from "./TypeComponent/BinaryExpression"
-import ReturnStatement from "./TypeComponent/ReturnStatement"
-import IfStatement from "./TypeComponent/IfStatement"
+import BinaryExpression from "./TypeComponent/BinaryExpression";
+import ReturnStatement from "./TypeComponent/ReturnStatement";
+import IfStatement from "./TypeComponent/IfStatement";
 import ElseClause from "./TypeComponent/ElseClause";
-import ParenthesizedExpression from "./TypeComponent/ParenthesizedExpression"
-import ArrowFunction from "./TypeComponent/ArrowFunction"
-import FormalParameters from "./TypeComponent/FormalParameters"
+import ParenthesizedExpression from "./TypeComponent/ParenthesizedExpression";
+import ArrowFunction from "./TypeComponent/ArrowFunction";
+import FormalParameters from "./TypeComponent/FormalParameters";
 import TemplateString from "./TypeComponent/TemplateString";
 import TemplateSubstitution from "./TypeComponent/TemplateSubstitution";
+import UnaryExpression from "./TypeComponent/UnaryExpression";
+import Comment from "./TypeComponent/Comment";
+import ObjectPattern from "./TypeComponent/ObjectPattern";
+import ShorthandPropertyIdentifierPattern from "./TypeComponent/ShorthandPropertyIdentifierPattern";
+import SubscriptExpression from "./TypeComponent/SubscriptExpression";
+import AssigmentExpression from "./TypeComponent/AssigmentExpression";
 
 function ChooseType(props: any): JSX.Element {
   function choose(info: any) {
     //
     switch (info.type) {
+      case "assignment_expression":
+        return <AssigmentExpression data={info} />;
+      case "subscript_expression":
+        return <SubscriptExpression data={info} />;
+      case "shorthand_property_identifier_pattern":
+        return <ShorthandPropertyIdentifierPattern data={info} />;
+      case "object_pattern":
+        return <ObjectPattern data={info} />;
+      case "comment":
+        return <Comment data={info} />;
+      case "unary_expression":
+        return <UnaryExpression data={info} />;
       case "template_substitution":
-        return <TemplateSubstitution data={info} />
+        return <TemplateSubstitution data={info} />;
       case "template_string":
-        return <TemplateString data={info} />
+        return <TemplateString data={info} />;
       case "formal_parameters":
-        return <FormalParameters data={info} />
+        return <FormalParameters data={info} />;
       case "arrow_function":
-        return <ArrowFunction data={info} />
+        return <ArrowFunction data={info} />;
       case "parenthesized_expression":
-        return <ParenthesizedExpression data={info} />
+        return <ParenthesizedExpression data={info} />;
       case "else_clause":
-        return <ElseClause data={info} />
+        return <ElseClause data={info} />;
       case "if_statement":
-        return <IfStatement data={info} />
+        return <IfStatement data={info} />;
       case "return_statement":
-        return <ReturnStatement data={info} />
+        return <ReturnStatement data={info} />;
       case "binary_expression":
-        return <BinaryExpression data={info} />
+        return <BinaryExpression data={info} />;
       case "identifier":
         return <Identifier data={info} />;
       case "number":
@@ -62,9 +80,9 @@ function ChooseType(props: any): JSX.Element {
         return <StatementBlock data={info} />;
       //
       case "if":
-        return <span className="ReservedWords">if</span>
+        return <span className="ReservedWords">if</span>;
       case "else":
-        return <span className="ReservedWords">else</span>
+        return <span className="ReservedWords">else</span>;
       //simbols
       case ",":
         return <span>, </span>;
@@ -77,25 +95,25 @@ function ChooseType(props: any): JSX.Element {
       case "}":
         return <>{"}"}</>;
       case "+":
-        return <> + </>;
+        return <>+</>;
       case "/":
-        return <> / </>;
+        return <>/</>;
       case "*":
-        return <> * </>;
+        return <>*</>;
       case "-":
-        return <> - </>;
+        return <>-</>;
       case ">":
-        return <> {'>'} </>;
+        return <> {">"} </>;
       case "<":
-        return <> {'<'} </>;
+        return <> {"<"} </>;
       case "===":
-        return <> === </>
+        return <> === </>;
       case "=>":
-        return <> {"=>"} </>
+        return <> {"=>"} </>;
       case "${":
-        return <>{"${"}</>
+        return <>{"${"}</>;
       case "`":
-        return <>{"`"}</>
+        return <>{"`"}</>;
       case "loading":
         return <p>Loading...</p>;
       default:
