@@ -38,7 +38,7 @@ function LoadCode(props: any) {
     );
     const urlrepo = url;
     let regex =
-      /(https:\/\/github.com\/)([\w\d\-]+)(\/)([\w\d\-]+)(\/)?((tree)(\/)([\w\d\-]+))?/g;
+      /(https:\/\/github.com\/)([\w\d\-\_]+)(\/)([\w\d\-\_]+)(\/)?((tree)(\/)([\w\d\-\_]+))?/g;
 
     let validURL = regex.test(url);
     if (!validURL) {
@@ -74,7 +74,7 @@ function LoadCode(props: any) {
   function searchJavascript(files: any) {
     // console.log(files);
     const JavaScriptFiles = files.filter((element: any) => {
-      let regex_js = /js$|jsx$/g;
+      let regex_js = /\.js$|\.jsx$/g;
       return regex_js.test(element.path);
     });
     if (JavaScriptFiles.length === 0) {
@@ -95,7 +95,7 @@ function LoadCode(props: any) {
         return getrepo(element.url);
       })
     );
-
+    // console.log(files);
     let datafile: any = [];
     files64.forEach((element: any, index: number) => {
       datafile.push({ code: atob(element.content), from: files[index].path });
@@ -219,10 +219,10 @@ function LoadCode(props: any) {
   };
 
   function validURL(event: any) {
-    const regex = /(https:\/\/gist.github.com\/[\w\d-]+\/[\w\d]+\/?)/;
+    const regex = /(https:\/\/gist.github.com\/[\w\d-\_]+\/[\w\d\-\_]+\/?)/;
     const regex_git_branch =
-      /(https:\/\/github.com\/)([\w\d\-]+)(\/)([\w\d\-]+)(\/)tree\/main\/?/;
-    const regex_git = /https:\/\/github.com\/([\w\d\-]+)\/([\w\d\-]+)\/?/;
+      /(https:\/\/github.com\/)([\w\d\-\_]+)(\/)([\w\d\-\_]+)(\/)tree\/([\w\d\-\_]+)\/?/;
+    const regex_git = /https:\/\/github.com\/([\w\d\-\_]+)\/([\w\d\-\_]+)\/?/;
     const evaluation = regex.test(event.target.value);
     const evaluation2 = regex_git_branch.test(event.target.value);
     const evaluation3 = regex_git.test(event.target.value);
