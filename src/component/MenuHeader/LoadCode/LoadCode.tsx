@@ -16,7 +16,7 @@ function LoadCode(props: any) {
   const [result, setResult] = useState<any>("");
 
   function selectURL() {
-    const github = /https\:\/\/github.com\//;
+    const github = /https:\/\/github.com\//;
     if (github.test(code.current.value)) {
       // console.log(code.current.value);
       getDetailsURL(code.current.value);
@@ -38,7 +38,7 @@ function LoadCode(props: any) {
     );
     const urlrepo = url;
     let regex =
-      /(https:\/\/github.com\/)([\w\d\-\_]+)(\/)([\w\d\-\_]+)(\/)?((tree)(\/)([\w\d\-\_]+))?/g;
+      /(https:\/\/github.com\/)([\w\d\-_]+)(\/)([\w\d\-_]+)(\/)?((tree)(\/)([\w\d\-_]+))?/g;
 
     let validURL = regex.test(url);
     if (!validURL) {
@@ -219,10 +219,10 @@ function LoadCode(props: any) {
   };
 
   function validURL(event: any) {
-    const regex = /(https:\/\/gist.github.com\/[\w\d-\_]+\/[\w\d\-\_]+\/?)/;
+    const regex = /(https:\/\/gist.github.com\/[\w\d-_]+\/[\w\d\-_]+\/?)/;
     const regex_git_branch =
-      /(https:\/\/github.com\/)([\w\d\-\_]+)(\/)([\w\d\-\_]+)(\/)tree\/([\w\d\-\_]+)\/?/;
-    const regex_git = /https:\/\/github.com\/([\w\d\-\_]+)\/([\w\d\-\_]+)\/?/;
+      /(https:\/\/github.com\/)([\w\d\-_]+)(\/)([\w\d\-_]+)(\/)tree\/([\w\d\-_]+)\/?/;
+    const regex_git = /https:\/\/github.com\/([\w\d\-_]+)\/([\w\d\-_]+)\/?/;
     const evaluation = regex.test(event.target.value);
     const evaluation2 = regex_git_branch.test(event.target.value);
     const evaluation3 = regex_git.test(event.target.value);
