@@ -18,7 +18,9 @@ function Root(): JSX.Element {
   const dispatch = useDispatch();
   const [wait, setWait] = useState(false);
   const reRender = useSelector((state: any) => state.callTree.value);
-  const [placeholderinput,setPlaceholderinput]= useState("Search functions by name")
+  const [placeholderinput, setPlaceholderinput] = useState(
+    "Search functions by name"
+  );
 
   const data = async (code: string, reset: any, from: string) => {
     if (reset.reset) {
@@ -33,15 +35,15 @@ function Root(): JSX.Element {
       // console.log("load", json, codedata);
     } else {
       const loadData = await test(testCode, "Placeholder");
-      console.log(loadData,testCode)
+      // console.log(loadData,testCode)
       dispatch(add(loadData));
       setWait(true);
     }
   };
 
   async function setGistCode(data: any) {
-  // console.log(data)
-    setPlaceholderinput("Loading data...")
+    // console.log(data)
+    setPlaceholderinput("Loading data...");
     resetTreeCall();
     dispatch(callrender(!reRender));
     dispatch(add(""));
@@ -61,19 +63,20 @@ function Root(): JSX.Element {
     result.forEach((e: any, index: number) => {
       e.id = index;
     });
-    console.log(result)
+    console.log(result);
     dispatch(add(result));
-    setPlaceholderinput("Search functions by name")
+    setPlaceholderinput("Search functions by name");
 
     // console.log(result);
   }
 
-  function setDataCode(data:any){
-    setPlaceholderinput("Loading data...")
+  function setDataCode(data: any) {
+    setPlaceholderinput("Loading data...");
     resetTreeCall();
     dispatch(callrender(!reRender));
     dispatch(add(""));
-    dispatch(add(data))
+    dispatch(add(data));
+    setPlaceholderinput("Search functions by name");
   }
 
   useEffect(() => {
@@ -113,7 +116,12 @@ function Root(): JSX.Element {
           <MenuHeader fn={fnlist} />
         </section>
         <section className="BubbleArea">{BubbleLoad(wait)}</section>
-        <LoadCode load={setGistCode} setData={setDataCode} isOpen={opengist} event={fnlist} />
+        <LoadCode
+          load={setGistCode}
+          setData={setDataCode}
+          isOpen={opengist}
+          event={fnlist}
+        />
         {/*<CodeBlockTS code={load} />*/}
       </section>
     </div>

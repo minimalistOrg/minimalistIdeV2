@@ -26,7 +26,6 @@ function LoadCode(props: any) {
   }
 
   async function getDetailsURL(url: string) {
-    console.time("loading");
     setResult(
       <>
         <span className="LoadCode__textloading">
@@ -70,7 +69,6 @@ function LoadCode(props: any) {
       searchJavascript(files.tree);
     }
     // console.log(urldata);
-    console.timeEnd("loading");
   }
 
   function searchJavascript(files: any) {
@@ -121,13 +119,26 @@ function LoadCode(props: any) {
       e.id = index;
     });
 
-    console.log(result);
-    props.setData(result)
+    // console.log(result);
+    props.setData(result);
+    setResult("");
+    resetValues();
+    alert.success("Code loaded successfully");
   }
 
   async function getrepo(url: string) {
     try {
       const response = await fetch(url);
+
+      if (response.status === 404) {
+        setResult(
+          <span className="LoadCode__msg">
+            The gist doesn't exist. Check the URL and try again
+          </span>
+        );
+        return [];
+      }
+
       const data = await response.json();
       return data;
     } catch (error) {
