@@ -186,3 +186,32 @@ code > .StatementBlock .StatementBlock__line:last-child {
   /* background-color: red; */
   display: none;
 }
+
+.WhileStatement .StatementBlock .StatementBlock__line:first-child{
+    display: flex;
+}
+.WhileStatement .StatementBlock .StatementBlock__line:last-child{
+    display: flex;
+}
+
+.DoStatement .StatementBlock .StatementBlock__line:first-child{
+    display: flex;
+}
+.DoStatement .StatementBlock .StatementBlock__line:last-child{
+    display: flex;
+}
+
+.ForInStatement .StatementBlock .StatementBlock__line:first-child{
+    display: flex;
+}
+.ForInStatement .StatementBlock .StatementBlock__line:last-child{
+    display: flex;
+}
+
+
+.TryStatement .StatementBlock .StatementBlock__line:first-child{
+    display: flex;
+}
+.TryStatement .StatementBlock .StatementBlock__line:last-child{
+    display: flex;
+}

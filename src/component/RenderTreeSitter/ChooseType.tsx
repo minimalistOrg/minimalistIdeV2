@@ -31,34 +31,82 @@ import UpdateExpression from "./TypeComponent/UpdateExpression";
 import PropertyIdentifier from "./TypeComponent/PropertyIdentifier";
 import JsxElement from "./TypeComponent/JsxElement";
 import JsxOpeningElement from "./TypeComponent/JsxOpeningElement";
-import JsxClosingElement from "./TypeComponent/JsxClosingElement"
-import JsxAttributeElement from "./TypeComponent/JsxAttribute"
-import JsxSelfClosingElement from "./TypeComponent/JsxSelfClosingElement"
+import JsxClosingElement from "./TypeComponent/JsxClosingElement";
+import JsxAttributeElement from "./TypeComponent/JsxAttribute";
+import JsxSelfClosingElement from "./TypeComponent/JsxSelfClosingElement";
 import JsxExpression from "./TypeComponent/JsxExpression";
-import JsxText from "./TypeComponent/JsxText"
-import ArrayPattern from "./TypeComponent/ArrayPattern"
-import JsxFragment from "./TypeComponent/JsxFragment"
+import JsxText from "./TypeComponent/JsxText";
+import ArrayPattern from "./TypeComponent/ArrayPattern";
+import JsxFragment from "./TypeComponent/JsxFragment";
+import TernaryExpression from "./TypeComponent/TernaryExpression";
+import Object from "./TypeComponent/Object";
+import Pair from "./TypeComponent/Pair";
+import AugmentedAssignmentExpression from "./TypeComponent/AugmentedAssignmentExpression";
+import PairPattern from "./TypeComponent/PairPattern";
+import WhileStatement from "./TypeComponent/WhileStatement";
+import DoStatement from "./TypeComponent/DoStatement";
+import SwitchStatement from "./TypeComponent/SwitchStatement";
+import SwitchBody from "./TypeComponent/SwitchBody";
+import SwitchCase from "./TypeComponent/SwitchCase";
+import BreakStatementcase from "./TypeComponent/BreakStatementcase";
+import SwitchDefault from "./TypeComponent/SwitchDefault";
+import ForInStatement from "./TypeComponent/ForInStatement";
+import TryStatement from "./TypeComponent/TryStatement";
+import CatchClause from "./TypeComponent/CatchClause";
+import NestedIdentifier from "./TypeComponent/NestedIdentifier";
 
 function ChooseType(props: any): JSX.Element {
   function choose(info: any) {
     //
     switch (info.type) {
-    case "array_pattern":
-    return <ArrayPattern data={info} />
-    case "jsx_fragment":
-    return <JsxFragment data={info} />
-    case "jsx_text":
-    return <JsxText data={info} />
-    case "jsx_expression":
-    return <JsxExpression data={info} />
-    case "jsx_self_closing_element":
-    return <JsxSelfClosingElement data={info} />
-    case "jsx_attribute":
-    return <JsxAttributeElement data={info} />
-    case "jsx_closing_element":
-    return <JsxClosingElement data={info} />
-    case "jsx_opening_element":
-    return <JsxOpeningElement data={info} />
+      case "catch_clause":
+        return <CatchClause data={info} />;
+      case "nested_identifier":
+        return <NestedIdentifier data={info} />;
+      case "try_statement":
+        return <TryStatement data={info} />;
+      case "for_in_statement":
+        return <ForInStatement data={info} />;
+      case "switch_default":
+        return <SwitchDefault data={info} />;
+      case "break_statement":
+        return <BreakStatementcase data={info} />;
+      case "switch_case":
+        return <SwitchCase data={info} />;
+      case "switch_body":
+        return <SwitchBody data={info} />;
+      case "switch_statement":
+        return <SwitchStatement data={info} />;
+      case "do_statement":
+        return <DoStatement data={info} />;
+      case "while_statement":
+        return <WhileStatement data={info} />;
+      case "augmented_assignment_expression":
+        return <AugmentedAssignmentExpression data={info} />;
+      case "pair":
+        return <Pair data={info} />;
+      case "pair_pattern":
+        return <PairPattern data={info} />;
+      case "object":
+        return <Object data={info} />;
+      case "ternary_expression":
+        return <TernaryExpression data={info} />;
+      case "array_pattern":
+        return <ArrayPattern data={info} />;
+      case "jsx_fragment":
+        return <JsxFragment data={info} />;
+      case "jsx_text":
+        return <JsxText data={info} />;
+      case "jsx_expression":
+        return <JsxExpression data={info} />;
+      case "jsx_self_closing_element":
+        return <JsxSelfClosingElement data={info} />;
+      case "jsx_attribute":
+        return <JsxAttributeElement data={info} />;
+      case "jsx_closing_element":
+        return <JsxClosingElement data={info} />;
+      case "jsx_opening_element":
+        return <JsxOpeningElement data={info} />;
       case "jsx_element":
         return <JsxElement data={info} />;
       case "property_identifier":
@@ -124,12 +172,30 @@ function ChooseType(props: any): JSX.Element {
       case "statement_block":
         return <StatementBlock data={info} />;
       //
+      case "while":
+        return <span className="ReservedWords">while</span>;
+      case "do":
+        return <span className="ReservedWords">do</span>;
       case "if":
         return <span className="ReservedWords">if</span>;
       case "else":
         return <span className="ReservedWords">else</span>;
       case "continue":
         return <span className="ReservedWords">continue</span>;
+      case "switch":
+        return <span className="ReservedWords">switch</span>;
+      case "case":
+        return <span className="ReservedWords">case</span>;
+      case "break":
+        return <div className="ReservedWords">break</div>;
+      case "default":
+        return <span className="ReservedWords">default</span>;
+      case "in":
+        return <span className="ReservedWords">in</span>;
+      case "try":
+        return <span className="ReservedWords">try</span>;
+      case "catch":
+        return <span className="ReservedWords">catch</span>;
       //simbols
       case ",":
         return <span>, </span>;
@@ -161,12 +227,24 @@ function ChooseType(props: any): JSX.Element {
         return <> === </>;
       case "=":
         return <> = </>;
+      case "==":
+        return <> == </>;
+      case "+=":
+        return <> += </>;
       case "!==":
         return <>!== </>;
+      case "!":
+        return <>!</>;
+      case "||":
+        return <>||</>;
       case "=>":
         return <> {"=>"} </>;
       case "<=":
         return <> {"<="} </>;
+      case ">=":
+        return <> {">="} </>;
+      case "&&":
+        return <> {"&&"} </>;
       case "${":
         return <>{"${"}</>;
       case "[":
@@ -175,10 +253,16 @@ function ChooseType(props: any): JSX.Element {
         return <>]</>;
       case ";":
         return <>;</>;
+      case ":":
+        return <>:</>;
+      case "?":
+        return <>?</>;
       case ".":
         return <>.</>;
       case "var":
         return <span className="LexicalDeclaration__variableType">var</span>;
+      case "const":
+        return <span className="LexicalDeclaration__variableType">const</span>;
       case "for":
         return <span className="ReservedWords">for</span>;
       case "false":
@@ -202,3 +286,7 @@ function ChooseType(props: any): JSX.Element {
 }
 
 export default ChooseType;
+
+// function AllOperator(){
+//
+// }

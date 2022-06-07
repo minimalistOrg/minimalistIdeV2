@@ -101,7 +101,6 @@ function FuzzySearch(props:any): JSX.Element {
         onSelect={handleOnSelect}
         resultStringKeyName={"nothing"}
         onFocus={handleOnFocus}
-        autoFocus
         formatResult={formatResult}
         styling={{
           backgroundColor: "inherit",
