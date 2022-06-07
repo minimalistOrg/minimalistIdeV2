@@ -3,25 +3,26 @@ import { useState, useRef } from "react";
 import CodeBlockTS from "../CodeBlock/CodeBlockTS";
 import { useDispatch, useSelector } from "react-redux";
 import { add } from "../Root-file/slice/callTreeSlice";
+import {BubbleProps, ObjTree, RenderType, StoreFn} from "../../interface"
 
-let c = 0;
+let c:number= 0;
 
-function Bubble(props: any) {
+function Bubble(props: BubbleProps):JSX.Element{
   // const [renderBubble, setRenderBubble] = useState([]);
   const dispatch = useDispatch();
-  const reRender = useSelector((state: any) => state.callTree.value);
-  const listFn = useSelector((state: any) => state.addbubble.value);
-  const currentBubble = useRef<any>(null);
-  const [fninfoData, setFninfoData] = useState<any>(null);
+  const reRender:boolean = useSelector((state: RenderType) => state.callTree.value);
+  const listFn:ObjTree[] = useSelector((state: StoreFn) => state.addbubble.value);
+  // const currentBubble = useRef<any>(null);
+  const [fninfoData, setFninfoData] = useState<null|number>(null);
 
   // useEffect(() => {
   // //   // setRenderBubble(props.tree);
   // //   // console.log("test number of render")
   // }, [props.tree]);
 
-  function handleAdd(event: any, dato: any) {
-    let value = dato.value;
-    const readIndex = event.target.parentNode;
+  function handleAdd(event: {target:any}, dato: {value: ObjTree[]}):void {
+    let value:ObjTree[] = dato.value;
+    const readIndex:any = event.target.parentNode;
     if (!(readIndex.fninfo === undefined)) {
       if (readIndex.fninfo.event) {
         setFninfoData(readIndex);
@@ -51,13 +52,13 @@ function Bubble(props: any) {
       event.target.classList[0] === "Identifier" &&
       !(event.target.parentNode.classList[0] === "CallExpression")
     ) {
-      let BubbleBack = event.target;
+      let BubbleBack:any = event.target;
 
       do {
         BubbleBack = BubbleBack.parentNode;
       } while (!(BubbleBack.classList[0] === "CodeBlock"));
 
-      let identifiers = BubbleBack.querySelectorAll(
+      let identifiers:HTMLElement[] = BubbleBack.querySelectorAll(
         `.Identifier[data-identifier=${event.target.dataset.identifier}]`
       );
       // console.log(identifiers);
@@ -72,8 +73,8 @@ function Bubble(props: any) {
     }
   }
 
-  function colorhash(data: any) {
-    let list = [
+  function colorhash(data: HTMLElement):string {
+    let list: string[] = [
       "color-1",
       "color-2",
       "color-3",
@@ -93,7 +94,7 @@ function Bubble(props: any) {
     }
   }
 
-  function closeBubble(parent: any, children: any) {
+  function closeBubble(parent: HTMLElement[], children: any) {
     // console.log(children);
     if (!(children.element === null)) {
       children.value= []
@@ -103,7 +104,7 @@ function Bubble(props: any) {
     }
 
     document.querySelector<any>("html").style = "cursor:default";
-    const listParent = parent.indexOf(children);
+    const listParent:number = parent.indexOf(children);
     parent.splice(listParent, 1);
     dispatch(add(!reRender));
   }
@@ -135,7 +136,8 @@ function Bubble(props: any) {
             <div className="Bubble">
               {Codebubble(e, props.tree, e.index, props.call, e.id)}
             </div>
-            <div className="ColBubbles" ref={currentBubble}>
+            {/*ref={currentBubble}*/}
+            <div className="ColBubbles" >
               <Bubble fnindex={e.index} tree={e.value} call={fninfoData} />
             </div>
           </div>

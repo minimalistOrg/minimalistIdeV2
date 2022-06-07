@@ -1,4 +1,6 @@
-export let TreeCall:any = [
+import { ObjTree } from "../../interface";
+
+export let TreeCall: ObjTree[] = [
   // {
   //   id: 0,
   //   name: "main",
@@ -15,6 +17,6 @@ export let TreeCall:any = [
   // },
 ];
 
-export function resetTreeCall(){
-    TreeCall= [];
+export function resetTreeCall(): void {
+  TreeCall = [];
 }
