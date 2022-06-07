@@ -1,11 +1,12 @@
+
 import ChooseType from "../ChooseType";
 
-function Array(props: any) {
+function JsxAttributeElement(props: any) {
   const data = props.data;
   // console.log(data);
 
   return (
-    <span className="Array">
+    <span className="JsxAttributeElement">
       {data.children.map((e: any, index: number) => {
         return (
           <span key={index}>
@@ -17,4 +18,4 @@ function Array(props: any) {
   );
 }
 
-export default Array;
+export default JsxAttributeElement;

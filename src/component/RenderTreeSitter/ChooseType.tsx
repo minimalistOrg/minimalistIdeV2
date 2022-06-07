@@ -26,11 +26,47 @@ import AssigmentExpression from "./TypeComponent/AssigmentExpression";
 import VariableDeclaration from "./TypeComponent/VariableDeclaration";
 import ForStatement from "./TypeComponent/ForStatement";
 import Array from "./TypeComponent/Array";
+import ContinueStatement from "./TypeComponent/ContinueStatement";
+import UpdateExpression from "./TypeComponent/UpdateExpression";
+import PropertyIdentifier from "./TypeComponent/PropertyIdentifier";
+import JsxElement from "./TypeComponent/JsxElement";
+import JsxOpeningElement from "./TypeComponent/JsxOpeningElement";
+import JsxClosingElement from "./TypeComponent/JsxClosingElement"
+import JsxAttributeElement from "./TypeComponent/JsxAttribute"
+import JsxSelfClosingElement from "./TypeComponent/JsxSelfClosingElement"
+import JsxExpression from "./TypeComponent/JsxExpression";
+import JsxText from "./TypeComponent/JsxText"
+import ArrayPattern from "./TypeComponent/ArrayPattern"
+import JsxFragment from "./TypeComponent/JsxFragment"
 
 function ChooseType(props: any): JSX.Element {
   function choose(info: any) {
     //
     switch (info.type) {
+    case "array_pattern":
+    return <ArrayPattern data={info} />
+    case "jsx_fragment":
+    return <JsxFragment data={info} />
+    case "jsx_text":
+    return <JsxText data={info} />
+    case "jsx_expression":
+    return <JsxExpression data={info} />
+    case "jsx_self_closing_element":
+    return <JsxSelfClosingElement data={info} />
+    case "jsx_attribute":
+    return <JsxAttributeElement data={info} />
+    case "jsx_closing_element":
+    return <JsxClosingElement data={info} />
+    case "jsx_opening_element":
+    return <JsxOpeningElement data={info} />
+      case "jsx_element":
+        return <JsxElement data={info} />;
+      case "property_identifier":
+        return <PropertyIdentifier data={info} />;
+      case "update_expression":
+        return <UpdateExpression data={info} />;
+      case "continue_statement":
+        return <ContinueStatement data={info} />;
       case "array":
         return <Array data={info} />;
       case "for_statement":
@@ -92,6 +128,8 @@ function ChooseType(props: any): JSX.Element {
         return <span className="ReservedWords">if</span>;
       case "else":
         return <span className="ReservedWords">else</span>;
+      case "continue":
+        return <span className="ReservedWords">continue</span>;
       //simbols
       case ",":
         return <span>, </span>;
@@ -105,20 +143,30 @@ function ChooseType(props: any): JSX.Element {
         return <>{"}"}</>;
       case "+":
         return <>+</>;
+      case "++":
+        return <>++</>;
       case "/":
         return <>/</>;
       case "*":
         return <>*</>;
       case "-":
         return <>-</>;
+      case "--":
+        return <>--</>;
       case ">":
         return <> {">"} </>;
       case "<":
         return <> {"<"} </>;
       case "===":
         return <> === </>;
+      case "=":
+        return <> = </>;
+      case "!==":
+        return <>!== </>;
       case "=>":
         return <> {"=>"} </>;
+      case "<=":
+        return <> {"<="} </>;
       case "${":
         return <>{"${"}</>;
       case "[":
@@ -127,10 +175,18 @@ function ChooseType(props: any): JSX.Element {
         return <>]</>;
       case ";":
         return <>;</>;
+      case ".":
+        return <>.</>;
       case "var":
         return <span className="LexicalDeclaration__variableType">var</span>;
       case "for":
         return <span className="ReservedWords">for</span>;
+      case "false":
+        return <span className="TypeBoolean">false</span>;
+      case "null":
+        return <span className="TypeBoolean">null</span>;
+      case "true":
+        return <span className="TypeBoolean">true</span>;
       case "`":
         return <>{"`"}</>;
       case "loading":

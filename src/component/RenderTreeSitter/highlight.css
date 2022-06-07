@@ -7,9 +7,11 @@
   --FnParams: #895903;
   --purple: #9c27b0;
   --ReservedWords: #e91e63;
-  --comment: #3e3c3c;
+  --comment: #657e99;
+  --boolean: #008d32;
   --ShorthandPropertyIdentifierPattern: #8080e1;
   --identifier: #444343;
+  --property_identifier: #d2691e;
   /**/
   --color-1: rgba(71, 159, 248, 0.3);
   --color-2: rgba(110, 221, 202, 0.3);
@@ -20,26 +22,26 @@
   --color-7: rgba(169, 129, 208, 0.3);
 }
 
-.color-1{
-  background:  var(--color-1) !important;
+.color-1 {
+  background: var(--color-1) !important;
 }
-.color-2{
-  background:  var(--color-2) !important;
+.color-2 {
+  background: var(--color-2) !important;
 }
-.color-3{
-  background:  var(--color-3) !important;
+.color-3 {
+  background: var(--color-3) !important;
 }
-.color-4{
-  background:  var(--color-4) !important;
+.color-4 {
+  background: var(--color-4) !important;
 }
-.color-5{
-  background:  var(--color-5) !important;
+.color-5 {
+  background: var(--color-5) !important;
 }
-.color-6{
-  background:  var(--color-6) !important;
+.color-6 {
+  background: var(--color-6) !important;
 }
-.color-7{
-  background:  var(--color-7) !important;
+.color-7 {
+  background: var(--color-7) !important;
 }
 
 .CallExpression:hover,
@@ -110,8 +112,8 @@
   color: var(--stringType);
 }
 
-.CommentType{
-    color: var(--comment);
+.CommentType {
+  color: var(--comment);
 }
 
 .StatementBlock__line {
@@ -132,8 +134,17 @@
   color: var(--stringType);
 }
 
-.TypeShorthandPropertyIdentifierPattern{
-    color: var(--ShorthandPropertyIdentifierPattern);
+.TypeBoolean {
+  color: var(--boolean);
+  font-weight: bold;
+}
+
+.PropertyIdentifier{
+    color: var(--property_identifier);
+}
+
+.TypeShorthandPropertyIdentifierPattern {
+  color: var(--ShorthandPropertyIdentifierPattern);
 }
 
 .IfStatement > .StatementBlock .StatementBlock__line:first-child {

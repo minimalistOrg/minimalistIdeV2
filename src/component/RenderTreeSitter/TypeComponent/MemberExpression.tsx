@@ -1,11 +1,17 @@
+import ChooseType from "../ChooseType";
+
 function MemberExpression(props: any) {
   const data = props.data;
   // console.log(data);
   return (
     <span className="MemberExpression">
-      <span>{data.children[0].text}</span>
-      <span>{data.children[1].text}</span>
-      <span>{data.children[2].text}</span>
+      {data.children.map((e: any, index: number) => {
+        return (
+          <span key={index}>
+            <ChooseType info={e} />
+          </span>
+        );
+      })}
     </span>
   );
 }
