@@ -1,23 +1,26 @@
 import interact from "interactjs";
-import { MutableRefObject } from "react";
 
-export default function Resize(
-  id: any,
-  idCode: MutableRefObject<HTMLElement | null>
-) {
+interface resizeType {
+  target: HTMLElement;
+  deltaRect: { left: number; top: number };
+  rect: { width: number; height: number };
+}
+
+function Resize(id: HTMLElement, idCode: HTMLElement) {
   // let limitHeight: number = 0;
 
   interact(id).resizable({
     edges: { top: false, left: false, bottom: true, right: true },
     listeners: {
-      move: function (event: any) {
+      move: function (event: resizeType) {
+        // console.log(event);
         let { x, y } = event.target.dataset;
 
-        x = (parseFloat(x) || 0) + event.deltaRect.left;
-        y = (parseFloat(y) || 0) + event.deltaRect.top;
+        x = ((parseFloat(x as string) || 0) + event.deltaRect.left).toString();
+        y = ((parseFloat(y as string) || 0) + event.deltaRect.top).toString();
 
         let limitHeight = limit(idCode).height;
-          // console.log("here")
+        // console.log("here")
 
         Object.assign(event.target.style, {
           width: `${event.rect.width}px`,
@@ -34,11 +37,13 @@ export default function Resize(
   });
 }
 
-function limit(element: any) {
+function limit(element: HTMLElement): { height: number } {
   // console.log(element.parentNode.clientHeight);
-  let totalHeight = element.parentNode.clientHeight;
+  let totalHeight: number = (element.parentNode as HTMLElement).clientHeight;
 
   return {
     height: totalHeight,
   };
 }
+
+export default Resize;

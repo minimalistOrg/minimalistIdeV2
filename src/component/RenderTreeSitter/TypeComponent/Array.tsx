@@ -1,12 +1,13 @@
 import ChooseType from "../ChooseType";
+import { TreesitterData, TypeComponentProps } from "../../../types/interface";
 
-function Array(props: any) {
-  const data = props.data;
+function Array(props: TypeComponentProps): JSX.Element {
+  const data: TreesitterData = props.data;
   // console.log(data);
 
   return (
     <span className="Array">
-      {data.children.map((e: any, index: number) => {
+      {data.children.map((e: TreesitterData, index: number) => {
         return (
           <span key={index}>
             <ChooseType info={e} />

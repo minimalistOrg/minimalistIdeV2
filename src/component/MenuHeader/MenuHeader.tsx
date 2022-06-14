@@ -2,7 +2,12 @@ import Dropdown from "rc-dropdown";
 import "./MenuHeader.css";
 import "rc-dropdown/assets/index.css";
 
-function MenuHeader(props: any) {
+interface MenuHeaderType {
+  fn: { gist: () => void };
+}
+
+function MenuHeader(props: MenuHeaderType) {
+  // console.log(props)
   const menuFile = (
     <ul className="Dropdown-Menu">
       <li className="Dropdown-Menu__item">

@@ -13,6 +13,7 @@ import MenuHeader from "../MenuHeader/MenuHeader";
 import LoadCode from "../MenuHeader/LoadCode/LoadCode";
 import { code as testCode } from "../Tree-Sitter/TreeSitter";
 import { add as callrender } from "../Root-file/slice/callTreeSlice";
+import {CodeBlockCodeType} from "../../types/interface";
 
 function Root(): JSX.Element {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ function Root(): JSX.Element {
   };
 
   async function setGistCode(data: any) {
-    // console.log(data)
+    console.log(data)
     setPlaceholderinput("Loading data...");
     resetTreeCall();
     dispatch(callrender(!reRender));
@@ -70,7 +71,8 @@ function Root(): JSX.Element {
     // console.log(result);
   }
 
-  function setDataCode(data: any) {
+  function setDataCode(data: CodeBlockCodeType[]) {
+  console.log(data)
     setPlaceholderinput("Loading data...");
     resetTreeCall();
     dispatch(callrender(!reRender));
@@ -118,7 +120,7 @@ function Root(): JSX.Element {
         <section className="BubbleArea">{BubbleLoad(wait)}</section>
         <LoadCode
           load={setGistCode}
-          setData={setDataCode}
+          setData={setDataCode as ()=>void}
           isOpen={opengist}
           event={fnlist}
         />

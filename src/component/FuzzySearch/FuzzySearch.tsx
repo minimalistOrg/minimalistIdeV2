@@ -5,30 +5,33 @@ import { TreeCall } from "../Root-file/CallTree";
 import { useDispatch, useSelector } from "react-redux";
 import { add } from "../Root-file/slice/callTreeSlice";
 import { v4 as uuidv4 } from "uuid";
+import {ObjTree,CodeBlockType,CodeBlockCodeType,TreesitterData} from "../../types/interface"
 
-function FuzzySearch(props:any): JSX.Element {
-  const listFn = useSelector((state: any) => state.addbubble.value);
-  const [li, setLi] = useState<[{ name: string }]>([{ name: "Loading..." }]);
+function FuzzySearch(props:{placeholder:string}): JSX.Element {
+  const listFn: ObjTree[] = useSelector((state: {addbubble:{value:ObjTree[]}}) => state.addbubble.value);
+  // console.log(listFn)
+  const [li, setLi] = useState([{ name: "Loading..." }]);
 
   const dispatch = useDispatch();
-  const reRender = useSelector((state: any) => state.callTree.value);
+  const reRender = useSelector((state: {callTree:{value:boolean}}) => state.callTree.value);
 
   useEffect(() => {
     setLi(listFn);
   }, [listFn]);
 
-  const handleOnSearch = (string: any, results: any) => {
+  const handleOnSearch = (string: string, results: CodeBlockType) => {
     // onSearch will have as the first callback parameter
     // the string searched and for the second the results.
     // console.log(string, results)
   };
 
-  const handleOnHover = (result: any) => {
+  const handleOnHover = (result: CodeBlockType) => {
     // the item hovered
     // console.log(result)
   };
 
-  const handleOnSelect = (item: any) => {
+  const handleOnSelect = (item: CodeBlockCodeType) => {
+  console.log(item)
     // {
     //   id: 0,
     //   name: "main",
@@ -43,7 +46,7 @@ function FuzzySearch(props:any): JSX.Element {
     //     return result;
     //   },
     // },
-    function checkFunctionType(item: any) {
+    function checkFunctionType(item: CodeBlockCodeType):{params:TreesitterData[]} {
       if (item.node.type === "function_declaration") {
         return { params: item.node.children[2].children };
       }
@@ -52,6 +55,7 @@ function FuzzySearch(props:any): JSX.Element {
           params: item.node.children[1].children[2].children[0].children,
         };
       }
+      return {params: []}
     }
     const gId = uuidv4();
     //
@@ -80,7 +84,7 @@ function FuzzySearch(props:any): JSX.Element {
     // console.log('Focused')
   };
 
-  const formatResult = (item: any) => {
+  const formatResult = (item: {name:string,from:string}) => {
     return (
       <>
         <span style={{ display: "block", textAlign: "left" }}>
@@ -95,9 +99,9 @@ function FuzzySearch(props:any): JSX.Element {
     <div className="FuzzySearch__input">
       <ReactSearchAutocomplete
         placeholder={props.placeholder}
-        items={li}
-        onSearch={handleOnSearch}
-        onHover={handleOnHover}
+        items={li as any} //important
+        onSearch={handleOnSearch as ()=>void}
+        onHover={handleOnHover as ()=>void}
         onSelect={handleOnSelect}
         resultStringKeyName={"nothing"}
         onFocus={handleOnFocus}

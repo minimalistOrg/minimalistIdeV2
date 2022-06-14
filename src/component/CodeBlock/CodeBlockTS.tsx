@@ -1,23 +1,39 @@
-import { useState, useEffect, useRef } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  MutableRefObject,
+  RefObject,
+} from "react";
 import { useSelector } from "react-redux";
 import ChooseType from "../RenderTreeSitter/ChooseType";
 import "./CodeBlock.css";
 import { BubbleCollapse } from "./Functions/BubbleCollapse";
-import IcoClose from "./IcoClose";
-import IcoCollapse from "./IcoCollapse";
+import IcoClose from "../../Icons/IcoClose";
+import IcoCollapse from "../../Icons/IcoCollapse";
 import Resize from "./CodeBlock__Resize";
+import {
+  CodeBlockType,
+  FnInfoType,
+  ObjTree,
+  TreesitterData,
+} from "../../types/interface";
 
-function CodeBlockTS(props: any): JSX.Element {
-  // console.log(props.code, "CodeBlockTS");
-  const dataBubbleTree = useSelector((state: any) => state.callTree.value);
-  const [title, setTitle] = useState("Loading...");
-  const [code, setCode] = useState({ type: "loading", text: "Loading" });
-  const [params, setParams] = useState([]);
-  const activeBubble = useRef<any>(null);
-  const CodeTxt = useRef<any>(null);
+function CodeBlockTS(props: CodeBlockType): JSX.Element {
+  // console.log(props, "CodeBlockTS");
+  const dataBubbleTree = useSelector(
+    (state: { callTree: { value: boolean } }) => state.callTree.value
+  );
+  const [title, setTitle] = useState<string>("Loading...");
+  const [code, setCode] = useState<
+    TreesitterData | { type: string; text: string }
+  >({ type: "loading", text: "Loading" });
+  const [params, setParams] = useState<TreesitterData[]>([]);
+  const activeBubble: RefObject<HTMLDivElement> = useRef(null);
+  const CodeTxt: MutableRefObject<null | HTMLElement> = useRef(null);
 
   useEffect(() => {
-    Resize(activeBubble.current, CodeTxt.current);
+    Resize(activeBubble.current as HTMLElement, CodeTxt?.current as HTMLElement);
 
     if (!(props.code === undefined)) {
       if (props.code.node.children[3] === undefined) {
@@ -48,65 +64,82 @@ function CodeBlockTS(props: any): JSX.Element {
   //   maxHeightBody(activeBubble.current);
   // },[])
 
-  function fnHover(event: any) {
-    let data = event.currentTarget.parentNode.fninfo;
+  function fnHover(event: { currentTarget: HTMLElement }) {
+    let data: ObjTree = (
+      event.currentTarget.parentNode as HTMLElement & FnInfoType
+    ).fninfo;
     // console.log(event.currentTarget.parentNode)
     if (!(data.element === null)) {
       data.element.classList.add("CallExpressionHover");
       if (!(data.Bubble() === null)) {
-        data.Bubble().classList.add("CodeBlockHover");
+        data.Bubble()?.classList.add("CodeBlockHover");
       }
     } else {
-      event.currentTarget.parentNode.classList.add("CodeBlockHover");
+      (
+        event.currentTarget.parentNode as HTMLElement & FnInfoType
+      ).classList.add("CodeBlockHover");
     }
     //identifier
     // maxHeightBody(activeBubble.current);
     // console.log("test")
   }
 
-  function fnHoverLeave(event: any) {
-    let data = event.currentTarget.parentNode.fninfo;
+  function fnHoverLeave(event: { currentTarget: HTMLElement }) {
+    let data: ObjTree = (
+      event.currentTarget.parentNode as HTMLElement & FnInfoType
+    ).fninfo;
     if (!(data.element === null)) {
       // console.log(data.element);
       data.element.classList.remove("CallExpressionHover");
       if (!(data.Bubble() === null)) {
-        data.Bubble().classList.remove("CodeBlockHover");
+        data.Bubble()?.classList.remove("CodeBlockHover");
       }
     } else {
-      event.currentTarget.parentNode.classList.remove("CodeBlockHover");
+      (event.currentTarget.parentNode as HTMLElement).classList.remove(
+        "CodeBlockHover"
+      );
     }
   }
 
-  function identifierHover(event: any) {
-    let elements = event.currentTarget.querySelectorAll(".Identifier");
-    elements.forEach((e: any) => {
+  function identifierHover(event: {
+    currentTarget: HTMLElement;
+    target: HTMLElement;
+  }) {
+    let elements: NodeListOf<HTMLElement> =
+      event.currentTarget.querySelectorAll(".Identifier");
+    elements.forEach((e: HTMLElement) => {
       e.classList.remove("IdentifierHover");
     });
     if (event.target.classList[0] === "Identifier") {
-      let elements = event.currentTarget.querySelectorAll(
-        `.Identifier[data-identifier=${event.target.dataset.identifier}]`
-      );
-      elements.forEach((e: any) => {
+      let elements: NodeListOf<HTMLElement> =
+        event.currentTarget.querySelectorAll(
+          `.Identifier[data-identifier=${event.target.dataset.identifier}]`
+        );
+      elements.forEach((e: HTMLElement) => {
         e.classList.add("IdentifierHover");
       });
       // console.log(elements);
     }
   }
 
-  function identifierHoverOut(event: any) {
+  function identifierHoverOut(event: { currentTarget: HTMLElement }) {
     // console.log(event.currentTarget)
-    let elements = event.currentTarget.querySelectorAll(".Identifier");
-    elements.forEach((e: any) => {
+    let elements: NodeListOf<HTMLElement> =
+      event.currentTarget.querySelectorAll(".Identifier");
+    elements.forEach((e: HTMLElement) => {
       e.classList.remove("IdentifierHover");
     });
   }
 
-  function paramsHoverOut(event: any) {
-    let CodeBlock =
-      event.currentTarget.parentNode.parentNode.parentNode.parentNode;
-    let body = event.currentTarget.parentNode.parentNode.parentNode.nextSibling;
-    let elements = body.querySelectorAll(".Identifier");
-    elements.forEach((e: any) => {
+  type LocalBlock = HTMLElement | null | undefined;
+  function paramsHoverOut(event: { currentTarget: HTMLElement }) {
+    let CodeBlock: HTMLElement & FnInfoType = event.currentTarget?.parentNode
+      ?.parentNode?.parentNode?.parentNode as HTMLElement & FnInfoType;
+    let body: HTMLElement = event.currentTarget?.parentNode?.parentNode
+      ?.parentNode?.nextSibling as HTMLElement;
+    let elements: NodeListOf<HTMLElement> =
+      body?.querySelectorAll(".Identifier");
+    elements.forEach((e: HTMLElement) => {
       e.classList.remove("IdentifierHover");
     });
 
@@ -114,35 +147,41 @@ function CodeBlockTS(props: any): JSX.Element {
       event.currentTarget.dataset.identifier &&
       !(CodeBlock.fninfo.element === null)
     ) {
-      let BubbleBack = CodeBlock.fninfo.element;
+      let BubbleBack: LocalBlock = CodeBlock.fninfo.element;
 
       do {
-        BubbleBack = BubbleBack.parentNode;
-      } while (!(BubbleBack.classList[0] === "CodeBlock"));
+        BubbleBack = BubbleBack?.parentNode as HTMLElement;
+      } while (!(BubbleBack?.classList[0] === "CodeBlock"));
 
-      let elements = BubbleBack.querySelectorAll(".Identifier");
-      elements.forEach((e: any) => {
+      let elements: NodeListOf<HTMLElement> =
+        BubbleBack.querySelectorAll(".Identifier");
+      elements.forEach((e: HTMLElement) => {
         e.classList.remove("IdentifierHover");
       });
       // console.log(BubbleBack);
     }
   }
 
-  function paramsHover(event: any) {
-    let CodeBlock =
-      event.currentTarget.parentNode.parentNode.parentNode.parentNode;
-    let body = event.currentTarget.parentNode.parentNode.parentNode.nextSibling;
-    let elements = body.querySelectorAll(".Identifier");
-    elements.forEach((e: any) => {
+  function paramsHover(event: {
+    currentTarget: HTMLElement;
+    target: HTMLElement;
+  }) {
+    let CodeBlock = event.currentTarget.parentNode?.parentNode?.parentNode
+      ?.parentNode as HTMLElement & FnInfoType;
+    let body = event.currentTarget.parentNode?.parentNode?.parentNode
+      ?.nextSibling as HTMLElement;
+    let elements: NodeListOf<HTMLElement> =
+      body.querySelectorAll(".Identifier");
+    elements.forEach((e: HTMLElement) => {
       e.classList.remove("IdentifierHover");
     });
     if (event.target.classList[0] === "Identifier") {
-      let body =
-        event.currentTarget.parentNode.parentNode.parentNode.nextSibling;
-      let elements = body.querySelectorAll(
+      let body = event.currentTarget.parentNode?.parentNode?.parentNode
+        ?.nextSibling as HTMLElement;
+      let elements: NodeListOf<HTMLElement> = body.querySelectorAll(
         `.Identifier[data-identifier=${event.target.dataset.identifier}]`
       );
-      elements.forEach((e: any) => {
+      elements.forEach((e: HTMLElement) => {
         e.classList.add("IdentifierHover");
       });
       //
@@ -150,16 +189,16 @@ function CodeBlockTS(props: any): JSX.Element {
         event.currentTarget.dataset.identifier &&
         !(CodeBlock.fninfo.element === null)
       ) {
-        let BubbleBack = CodeBlock.fninfo.element;
+        let BubbleBack: LocalBlock = CodeBlock.fninfo.element;
 
         do {
-          BubbleBack = BubbleBack.parentNode;
-        } while (!(BubbleBack.classList[0] === "CodeBlock"));
+          BubbleBack = BubbleBack?.parentNode as HTMLElement;
+        } while (!(BubbleBack?.classList[0] === "CodeBlock"));
 
-        let elements = BubbleBack.querySelectorAll(
+        let elements: NodeListOf<HTMLElement> = BubbleBack.querySelectorAll(
           `.Identifier[data-identifier=${event.currentTarget.dataset.identifier}]`
         );
-        elements.forEach((e: any) => {
+        elements.forEach((e: HTMLElement) => {
           e.classList.add("IdentifierHover");
         });
         // console.log(BubbleBack);
@@ -167,22 +206,26 @@ function CodeBlockTS(props: any): JSX.Element {
     }
   }
 
-  function checkParams(index: number) {
-    let txt: any = document.getElementById("id" + props.id);
+  function checkParams(index: number): string | void {
+    let txt: (HTMLElement & FnInfoType) | null = document.getElementById(
+      "id" + props.id
+    ) as HTMLElement & FnInfoType;
     // console.log(params.length, txt.fninfo.params.length);
-    if (txt.fninfo.params[index] === undefined) {
+    if (txt?.fninfo.params[index] === undefined) {
       return;
     }
-    let identifier = txt.fninfo.params[index].text;
+    let identifier: string = txt?.fninfo.params[index].text;
     // console.log(identifier)
     // eslint-disable-next-line
-    let check= (/^[^\"\s\d][^\s\"\(\)]*[^\"\(\)\s]$/gm).test(identifier)
+    let check: Boolean = /^[^\"\s\d][^\s\"\(\)]*[^\"\(\)\s]$/gm.test(
+      identifier
+    );
     // console.log(check)
-    if(check){
-        // console.log("here")
-        return identifier
-    }else{
-    return
+    if (check) {
+      // console.log("here")
+      return identifier;
+    } else {
+      return;
     }
   }
 
@@ -208,12 +251,12 @@ function CodeBlockTS(props: any): JSX.Element {
           {title}
           <span className="CodeBlock__arguments">
             {" "}
-            {params.map((e: any, index: number) => {
+            {params.map((e: TreesitterData, index: number) => {
               return (
                 <span
                   key={index}
                   onMouseLeave={paramsHoverOut}
-                  onMouseMove={paramsHover}
+                  onMouseMove={paramsHover as () => void}
                   data-identifier={checkParams(index)}
                 >
                   <ChooseType info={e} />
@@ -233,9 +276,9 @@ function CodeBlockTS(props: any): JSX.Element {
       </div>
       <div
         className="CodeBlock__body"
-        onMouseMove={identifierHover}
+        onMouseMove={identifierHover as () => void}
         onMouseLeave={identifierHoverOut}
-        onClick={props.openBubble}
+        onClick={props.openBubble as () => void}
       >
         <pre>
           <code ref={CodeTxt}>

@@ -88,7 +88,7 @@ function CallExpression(props: any) {
   }
 
   return (
-    <div
+    <span
       className={typeCall()}
       onMouseOver={fnHover}
       onMouseLeave={fnHoverClose}
@@ -98,7 +98,7 @@ function CallExpression(props: any) {
       <span>
         <ChooseType info={data.children[1]} />
       </span>
-    </div>
+    </span>
   );
 }
 

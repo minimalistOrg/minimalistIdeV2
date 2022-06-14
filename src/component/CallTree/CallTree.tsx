@@ -3,13 +3,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { add } from "../Root-file/slice/callTreeSlice";
 import "./CallTree.css";
 import React from "react";
-import ListNested from "./icons/ListNested";
-import IconEye from "./icons/IconEye";
-import IconEyeSlash from "./icons/IconEyeSlash";
+import ListNested from "../../Icons/ListNested";
+import IconEye from "../../Icons/IconEye";
+import IconEyeSlash from "../../Icons/IconEyeSlash";
+import { CallTreeType, ObjTree } from "../../types/interface";
 
-function CallTree(props: any) {
-  const dataBubbleTree = useSelector((state: any) => state.callTree.value);
-  const [opentree, setOpentree] = useState(true);
+function CallTree(props: CallTreeType) {
+  // console.log(props)
+  const dataBubbleTree: boolean = useSelector(
+    (state: { callTree: { value: boolean } }) => state.callTree.value
+  );
+  // console.log(dataBubbleTree)
+  const [opentree, setOpentree] = useState<boolean>(true);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -17,43 +22,43 @@ function CallTree(props: any) {
     // eslint-disable-next-line
   }, [dataBubbleTree]);
 
-  const style: any = {
+  const style: React.CSSProperties = {
     display: "flex",
     flexDirection: "column",
   };
 
-  function hoverBubbles(e: any) {
+  function hoverBubbles(e: ObjTree) {
     // console.log(e);
     if (e.element === null) {
-      e.Bubble().classList.add("CodeBlockHover");
-      e.Bubble().children[0].classList.add("CodeBlock__header--hover");
+      e.Bubble()?.classList.add("CodeBlockHover");
+      e.Bubble()?.children[0].classList.add("CodeBlock__header--hover");
     } else {
       e.element.classList.add("CallExpressionHover");
-      e.Bubble().classList.add("CodeBlockHover");
-      e.Bubble().children[0].classList.add("CodeBlock__header--hover");
+      e.Bubble()?.classList.add("CodeBlockHover");
+      e.Bubble()?.children[0].classList.add("CodeBlock__header--hover");
     }
   }
 
-  function hoverBubblesOut(e: any) {
+  function hoverBubblesOut(e: ObjTree) {
     if (e.element === null) {
-      e.Bubble().classList.remove("CodeBlockHover");
-      e.Bubble().children[0].classList.remove("CodeBlock__header--hover");
+      e.Bubble()?.classList.remove("CodeBlockHover");
+      e.Bubble()?.children[0].classList.remove("CodeBlock__header--hover");
     } else {
       e.element.classList.remove("CallExpressionHover");
-      e.Bubble().classList.remove("CodeBlockHover");
-      e.Bubble().children[0].classList.remove("CodeBlock__header--hover");
+      e.Bubble()?.classList.remove("CodeBlockHover");
+      e.Bubble()?.children[0].classList.remove("CodeBlock__header--hover");
     }
   }
 
-  function ToggleHidden(show: { visibility: boolean; Bubble: () => any }) {
+  function ToggleHidden(show: ObjTree): { element: JSX.Element; msj: string } {
     if (show.visibility) {
       // console.log(show)
       if (show.Bubble() === null) {
         setTimeout(() => {
-          show.Bubble().classList.remove("d-none");
+          show.Bubble()?.classList.remove("d-none");
         }, 100);
       } else {
-        show.Bubble().classList.remove("d-none");
+        show.Bubble()?.classList.remove("d-none");
       }
       return {
         element: <IconEye />,
@@ -62,10 +67,10 @@ function CallTree(props: any) {
     } else {
       if (show.Bubble() === null) {
         setTimeout(() => {
-          show.Bubble().classList.add("d-none");
+          show.Bubble()?.classList.add("d-none");
         }, 100);
       } else {
-        show.Bubble().classList.add("d-none");
+        show.Bubble()?.classList.add("d-none");
       }
       return {
         element: <IconEyeSlash />,
@@ -76,10 +81,10 @@ function CallTree(props: any) {
 
   // console.log(props.data)
 
-  const TreeLi = (input: any) => {
+  const TreeLi = (input: ObjTree[]): JSX.Element => {
     return (
       <ul style={style}>
-        {input.map((e: any, index: number) => {
+        {input.map((e: ObjTree, index: number) => {
           return (
             <React.Fragment key={index}>
               <li style={{ order: e.order }} data-testid="calltree">

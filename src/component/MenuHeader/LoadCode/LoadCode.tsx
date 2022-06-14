@@ -2,11 +2,13 @@ import { useRef, useState } from "react";
 import { useAlert } from "react-alert";
 import ReactModal from "react-modal";
 import ClockwiseIco from "../../../Icons/ClockwiseIco";
-import IcoClose from "../../CodeBlock/IcoClose";
+import IcoClose from "../../../Icons/IcoClose";
+import {CodeBlockCodeType, LoadCodeType, responseGithubType} from "../../../types/interface";
 import { test } from "../../Tree-Sitter/TreeSitter";
 import "./LoadCode.css";
 
-function LoadCode(props: any) {
+function LoadCode(props: LoadCodeType) {
+// console.log(props)
   const code = useRef<any>(null);
   const alert = useAlert();
 
@@ -36,18 +38,18 @@ function LoadCode(props: any) {
         </span>
       </>
     );
-    const urlrepo = url;
+    const urlrepo:string = url;
     let regex =
       /(https:\/\/github.com\/)([\w\d\-_]+)(\/)([\w\d\-_]+)(\/)?((tree)(\/)([\w\d\-_]+))?/g;
 
-    let validURL = regex.test(url);
+    let validURL:boolean = regex.test(url);
     if (!validURL) {
       console.error("url incorrect");
     }
 
-    const username = urlrepo.replace(regex, "$2");
-    const repo = urlrepo.replace(regex, "$4");
-    let rama = urlrepo.replace(regex, "$9");
+    const username:string = urlrepo.replace(regex, "$2");
+    const repo:string = urlrepo.replace(regex, "$4");
+    let rama:string = urlrepo.replace(regex, "$9");
     const urldata = {
       username: username,
       repo: repo,
@@ -71,9 +73,9 @@ function LoadCode(props: any) {
     // console.log(urldata);
   }
 
-  function searchJavascript(files: any) {
+  function searchJavascript(files: responseGithubType[]) {
     // console.log(files);
-    const JavaScriptFiles = files.filter((element: any) => {
+    const JavaScriptFiles:responseGithubType[]= files.filter((element: any) => {
       let regex_js = /\.js$|\.jsx$/g;
       return regex_js.test(element.path);
     });
@@ -89,14 +91,15 @@ function LoadCode(props: any) {
     }
   }
 
-  async function LoadAllFilesFromGithub(files: any) {
+  async function LoadAllFilesFromGithub(files: responseGithubType[]) {
+  // console.log(files)
     let files64 = await Promise.all(
-      files.map((element: any) => {
+      files.map((element: responseGithubType) => {
         return getrepo(element.url);
       })
     );
-    // console.log(files);
-    let datafile: any = [];
+    console.log(files64);
+    let datafile: {code:string,from:string}[] = [];
     files64.forEach((element: any, index: number) => {
       datafile.push({ code: atob(element.content), from: files[index].path });
     });
@@ -113,7 +116,7 @@ function LoadCode(props: any) {
       })
     );
 
-    let result = [].concat.apply([], TreeSitterAst);
+    let result: CodeBlockCodeType[] = [].concat.apply([], TreeSitterAst);
 
     result.forEach((e: any, index: number) => {
       e.id = index;

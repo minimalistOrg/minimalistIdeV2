@@ -3,26 +3,38 @@ import { useState, useRef } from "react";
 import CodeBlockTS from "../CodeBlock/CodeBlockTS";
 import { useDispatch, useSelector } from "react-redux";
 import { add } from "../Root-file/slice/callTreeSlice";
-import {BubbleProps, ObjTree, RenderType, StoreFn} from "../../interface"
+import {
+  BubbleProps,
+  ObjTree,
+  RenderType,
+  StoreFn,
+  FnInfoType,
+  CodeBlockType,
+  CodeBlockCodeType,
+} from "../../types/interface";
 
-let c:number= 0;
+let c: number = 0;
 
-function Bubble(props: BubbleProps):JSX.Element{
+function Bubble(props: BubbleProps): JSX.Element {
   // const [renderBubble, setRenderBubble] = useState([]);
   const dispatch = useDispatch();
-  const reRender:boolean = useSelector((state: RenderType) => state.callTree.value);
-  const listFn:ObjTree[] = useSelector((state: StoreFn) => state.addbubble.value);
+  const reRender: boolean = useSelector(
+    (state: RenderType) => state.callTree.value
+  );
+  const listFn: CodeBlockCodeType[] = useSelector(
+    (state: StoreFn) => state.addbubble.value
+  );
   // const currentBubble = useRef<any>(null);
-  const [fninfoData, setFninfoData] = useState<null|number>(null);
+  const [fninfoData, setFninfoData] = useState<
+    (HTMLElement & FnInfoType) | null
+  >(null);
 
-  // useEffect(() => {
-  // //   // setRenderBubble(props.tree);
-  // //   // console.log("test number of render")
-  // }, [props.tree]);
-
-  function handleAdd(event: {target:any}, dato: {value: ObjTree[]}):void {
-    let value:ObjTree[] = dato.value;
-    const readIndex:any = event.target.parentNode;
+  function handleAdd(
+    event: { target: HTMLElement },
+    dato: { value: ObjTree[] }
+  ): void {
+    let value: ObjTree[] = dato.value;
+    const readIndex = event.target.parentNode as HTMLElement & FnInfoType;
     if (!(readIndex.fninfo === undefined)) {
       if (readIndex.fninfo.event) {
         setFninfoData(readIndex);
@@ -34,9 +46,9 @@ function Bubble(props: BubbleProps):JSX.Element{
         dispatch(add(!reRender));
         setTimeout(() => {
           // console.log("test")
-          readIndex.fninfo.Bubble().classList.add("CodeBlockHover");
+          readIndex.fninfo.Bubble()!.classList.add("CodeBlockHover");
           readIndex.fninfo
-            .Bubble()
+            .Bubble()!
             .children[0].classList.add("CodeBlock__header--hover");
         }, 150);
         // let openBubble= document.getElementById("id" + readIndex.fninfo.id)
@@ -47,18 +59,21 @@ function Bubble(props: BubbleProps):JSX.Element{
     }
 
     //
-    //
+    type LocalBlock = HTMLElement | null | undefined;
     if (
       event.target.classList[0] === "Identifier" &&
-      !(event.target.parentNode.classList[0] === "CallExpression")
+      !(
+        (event.target.parentNode as HTMLElement).classList[0] ===
+        "CallExpression"
+      )
     ) {
-      let BubbleBack:any = event.target;
+      let BubbleBack: LocalBlock = event.target;
 
       do {
-        BubbleBack = BubbleBack.parentNode;
-      } while (!(BubbleBack.classList[0] === "CodeBlock"));
+        BubbleBack = BubbleBack?.parentElement;
+      } while (!(BubbleBack?.classList[0] === "CodeBlock"));
 
-      let identifiers:HTMLElement[] = BubbleBack.querySelectorAll(
+      let identifiers: NodeListOf<HTMLElement> = BubbleBack.querySelectorAll(
         `.Identifier[data-identifier=${event.target.dataset.identifier}]`
       );
       // console.log(identifiers);
@@ -66,14 +81,14 @@ function Bubble(props: BubbleProps):JSX.Element{
         c++;
         // console.log(c);
       }
-      identifiers.forEach((e: any) => {
+      identifiers.forEach((e: HTMLElement) => {
         e.classList.toggle(colorhash(e));
       });
       // event.target.classList.toggle("color-1");
     }
   }
 
-  function colorhash(data: HTMLElement):string {
+  function colorhash(data: HTMLElement): string {
     let list: string[] = [
       "color-1",
       "color-2",
@@ -94,35 +109,38 @@ function Bubble(props: BubbleProps):JSX.Element{
     }
   }
 
-  function closeBubble(parent: HTMLElement[], children: any) {
-    // console.log(children);
+  function closeBubble(parent: ObjTree[], children: ObjTree) {
+    // console.log(parent);
     if (!(children.element === null)) {
-      children.value= []
+      children.value = [];
       children.element.fninfo.event = true;
-      children.element.fninfo.element.classList.remove("CallExpressionHover");
+      children.element.fninfo.element!.classList.remove("CallExpressionHover");
       // children.element.fninfo.Bubble = null;
     }
 
-    document.querySelector<any>("html").style = "cursor:default";
-    const listParent:number = parent.indexOf(children);
+    // document.querySelectorAll("html")[0]!.style = "cursor:default";
+    const listParent: number = parent.indexOf(children);
     parent.splice(listParent, 1);
     dispatch(add(!reRender));
   }
 
   const Codebubble = (
-    children: any,
-    parent: any,
+    children: ObjTree,
+    parent: ObjTree[],
     fnindex: number,
-    fninfoData: any,
-    id: number
+    fninfoData: (HTMLElement & FnInfoType) | null | undefined,
+    id: string
   ): JSX.Element => {
+    // console.log(listFn[fnindex],"Bubble")
     return (
       <CodeBlockTS
         code={listFn[fnindex]}
         id={id}
         data={children}
         call={fninfoData}
-        openBubble={(event: any) => handleAdd(event, children)}
+        openBubble={(event: { target: HTMLElement }) =>
+          handleAdd(event, children)
+        }
         closeBubble={() => closeBubble(parent, children)}
       />
     );
@@ -130,14 +148,15 @@ function Bubble(props: BubbleProps):JSX.Element{
 
   return (
     <div className="BubbleContainer">
-      {props.tree.map((e: any, index: number) => {
+      {props.tree.map((e: ObjTree, index: number) => {
+        // console.log(e)
         return (
           <div key={index} style={{ order: e.order }} className="RowBubble">
             <div className="Bubble">
               {Codebubble(e, props.tree, e.index, props.call, e.id)}
             </div>
             {/*ref={currentBubble}*/}
-            <div className="ColBubbles" >
+            <div className="ColBubbles">
               <Bubble fnindex={e.index} tree={e.value} call={fninfoData} />
             </div>
           </div>

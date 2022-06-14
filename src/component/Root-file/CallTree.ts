@@ -1,4 +1,4 @@
-import { ObjTree } from "../../interface";
+import { ObjTree } from "../../types/interface";
 
 export let TreeCall: ObjTree[] = [
   // {
