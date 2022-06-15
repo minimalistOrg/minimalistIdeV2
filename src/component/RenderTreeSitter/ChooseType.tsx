@@ -54,9 +54,10 @@ import ForInStatement from "./TypeComponent/ForInStatement";
 import TryStatement from "./TypeComponent/TryStatement";
 import CatchClause from "./TypeComponent/CatchClause";
 import NestedIdentifier from "./TypeComponent/NestedIdentifier";
+import {TreesitterData} from "../../types/interface";
 
-function ChooseType(props: any): JSX.Element {
-  function choose(info: any) {
+function ChooseType(props: {info:TreesitterData|{type:string;text:string}}): JSX.Element {
+  function choose(info: TreesitterData) {
     //
     switch (info.type) {
       case "catch_clause":
@@ -282,7 +283,7 @@ function ChooseType(props: any): JSX.Element {
     //
   }
 
-  return choose(props.info);
+  return choose(props.info as TreesitterData);
 }
 
 export default ChooseType;

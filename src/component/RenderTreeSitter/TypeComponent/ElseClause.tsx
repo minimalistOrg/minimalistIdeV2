@@ -1,6 +1,7 @@
+import {TypeComponentProps} from "../../../types/interface";
 import ChooseType from "../ChooseType";
 
-function ElseClause(props: any) {
+function ElseClause(props: TypeComponentProps) {
   const data = props.data;
   // console.log(data);
 

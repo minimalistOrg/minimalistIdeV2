@@ -1,6 +1,8 @@
 // import ChooseType from "../ChooseType";
 
-function PropertyIdentifier(props: any) {
+import {TypeComponentProps} from "../../../types/interface";
+
+function PropertyIdentifier(props: TypeComponentProps) {
   const data = props.data;
   // console.log(data);
 

@@ -1,12 +1,13 @@
+import {TreesitterData, TypeComponentProps} from "../../../types/interface";
 import ChooseType from "../ChooseType";
 
-function StatementBlock(props: any) {
+function StatementBlock(props: TypeComponentProps) {
   const data = props.data;
   // console.log(data);
 
   return (
     <div className="StatementBlock">
-      {data.children.map((e: any, index: number) => {
+      {data.children.map((e: TreesitterData, index: number) => {
         return (
           <div key={index} className="StatementBlock__line">
             <ChooseType info={e} />

@@ -1,6 +1,7 @@
+import {TypeComponentProps} from "../../../types/interface";
 import ChooseType from "../ChooseType";
 
-function LexicalDeclaration(props: any) {
+function LexicalDeclaration(props: TypeComponentProps) {
   const data = props.data;
   // console.log(data);
 

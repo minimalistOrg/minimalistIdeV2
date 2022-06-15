@@ -1,4 +1,4 @@
-function ListNested(props: any) {
+function ListNested(props: {w:string,h:string}) {
   const style = {
     display: "flex",
     alignContent: "center",

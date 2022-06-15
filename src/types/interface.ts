@@ -65,11 +65,12 @@ export interface CodeBlockType {
 export interface LoadCodeType {
   isOpen: boolean;
   event: { gist: () => void };
-  load: (data: responseGistType) => void;
+  load: (data: responseGistType[]) => void;
   setData: (data: CodeBlockCodeType[]) => void;
 }
 
 export interface responseGistType {
+  content: string;
   filename: string;
   type: string;
   language: string;
@@ -78,20 +79,20 @@ export interface responseGistType {
   truncated: boolean;
 }
 
-export interface responseGithubType{
-    path: string;
-    mode: string;
-    type: string;
-    sha: string;
-    size: number;
-    url: string;
+export interface responseGithubType {
+  path: string;
+  mode: string;
+  type: string;
+  sha: string;
+  size: number;
+  url: string;
 }
 
-export interface codeGithubType{
-    sha: string
-    node_id: string;
-    size: number;
-    url: string;
-    content: string;
-    encoding: string;
+export interface codeGithubType {
+  sha: string;
+  node_id: string;
+  size: number;
+  url: string;
+  content: string;
+  encoding: string;
 }

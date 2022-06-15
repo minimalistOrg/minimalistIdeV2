@@ -3,34 +3,34 @@ import { useSelector } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 import { useGlobalCounter } from "../util/useGlobalCounter";
 import { v4 as uuidv4 } from "uuid";
+import {CodeBlockCodeType, FnInfoType, TypeComponentProps} from "../../../types/interface";
 
-function CallExpression(props: any) {
+function CallExpression(props: TypeComponentProps) {
   const data = props.data;
-  const [fnindex, setFnindex] = useState("");
+  const [fnindex, setFnindex] = useState<string|number>("");
   const [name, setName] = useState("");
   const [event, setEvent] = useState(false);
   const [params, setParams] = useState([]);
   const [id, setId] = useState("");
-  const expression = useRef<any>(null);
+  const expression = useRef<HTMLElement|null>(null);
   const fnOrder = useGlobalCounter();
 
-  const listFN = useSelector((state: any) => state.addbubble.value);
+  const listFN = useSelector((state: {addbubble:{value:CodeBlockCodeType[]}}) => state.addbubble.value);
 
   //
   function validifFnCall() {
     const expre_is = data.children[0].type;
-    // console.log(listFN);
 
     if (expre_is === "identifier") {
       setName(data.children[0].text);
       setId(uuidv4());
       setEvent(true);
-      setParams(data.children[1].children);
-      let position = listFN.find((e: any) => e.name === data.children[0].text);
+      setParams(data.children[1].children as []);
+      let position:CodeBlockCodeType|undefined = listFN.find((e: CodeBlockCodeType) => e.name === data.children[0].text);
       if(position === undefined){
       return -1
       }
-      setFnindex(position.id);
+      setFnindex(position.id);//type number
     }
   }
 
@@ -50,7 +50,6 @@ function CallExpression(props: any) {
       },
       visibility: true,
     };
-    // console.log(fndata);
     validifFnCall();
     Object.defineProperty(expression.current, "fninfo", {
       value: fndata,
@@ -59,23 +58,19 @@ function CallExpression(props: any) {
     //eslint-disable-next-line
   }, [name, fnindex]);
 
-  // console.log(data.walk());
-  function fnHover(data: any) {
-    // console.log(data.currentTarget,"here")
-    if (!(data.currentTarget.fninfo.Bubble() === null)) {
-      data.currentTarget.fninfo.Bubble().classList.add("CodeBlockHover");
-      data.currentTarget.fninfo
-        .Bubble()
-        .children[0].classList.add("CodeBlock__header--hover");
+  function fnHover(data: {currentTarget: HTMLElement & FnInfoType | null}) {
+    if (!(data.currentTarget?.fninfo?.Bubble() === null)) {
+      data.currentTarget?.fninfo?.Bubble()?.classList.add("CodeBlockHover");
+      data.currentTarget?.fninfo
+        .Bubble()?.children[0].classList.add("CodeBlock__header--hover");
     }
   }
 
-  function fnHoverClose(data: any) {
-    if (!(data.currentTarget.fninfo.Bubble() === null)) {
-      data.currentTarget.fninfo.Bubble().classList.remove("CodeBlockHover");
-      data.currentTarget.fninfo
-        .Bubble()
-        .children[0].classList.remove("CodeBlock__header--hover");
+  function fnHoverClose(data: {currentTarget:HTMLElement & FnInfoType | null}) {
+    if (!(data.currentTarget?.fninfo.Bubble() === null)) {
+      data.currentTarget?.fninfo.Bubble()?.classList.remove("CodeBlockHover");
+      data.currentTarget?.fninfo
+        .Bubble()?.children[0].classList.remove("CodeBlock__header--hover");
     }
   }
 
@@ -90,8 +85,8 @@ function CallExpression(props: any) {
   return (
     <span
       className={typeCall()}
-      onMouseOver={fnHover}
-      onMouseLeave={fnHoverClose}
+      onMouseOver={fnHover as ()=>void}
+      onMouseLeave={fnHoverClose as ()=>void}
       ref={expression}
     >
       <ChooseType info={data.children[0]} />

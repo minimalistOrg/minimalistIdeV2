@@ -1,4 +1,4 @@
-function ClockwiseIco(props: any) {
+function ClockwiseIco(props: {size:number}) {
   const style = {
     display: "flex",
     alignContent: "center",

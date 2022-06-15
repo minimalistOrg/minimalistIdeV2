@@ -1,6 +1,7 @@
+import {TypeComponentProps} from "../../../types/interface";
 import ChooseType from "../ChooseType";
 
-function ArrowFunction(props: any) {
+function ArrowFunction(props: TypeComponentProps) {
   const data = props.data;
   // console.log(data);
   function checkBlock() {

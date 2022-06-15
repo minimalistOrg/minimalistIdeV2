@@ -1,6 +1,7 @@
+import {TypeComponentProps} from "../../../types/interface";
 import ChooseType from "../ChooseType";
 
-function ReturnStatement(props: any) {
+function ReturnStatement(props: TypeComponentProps) {
   const data = props.data;
   // console.log(data);
   return (

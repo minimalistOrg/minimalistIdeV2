@@ -1,4 +1,4 @@
-function IconEye(props: any) {
+function IconEye() {
   const style = {
     display: "flex",
     alignContent: "center",

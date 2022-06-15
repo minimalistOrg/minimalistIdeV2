@@ -1,5 +1,6 @@
+import {TypeComponentProps} from "../../../types/interface";
 
-function Identifier(props: any) {
+function Identifier(props: TypeComponentProps) {
   const data = props.data;
   // console.log(data)
 

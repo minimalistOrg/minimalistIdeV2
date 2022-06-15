@@ -13,17 +13,17 @@ import MenuHeader from "../MenuHeader/MenuHeader";
 import LoadCode from "../MenuHeader/LoadCode/LoadCode";
 import { code as testCode } from "../Tree-Sitter/TreeSitter";
 import { add as callrender } from "../Root-file/slice/callTreeSlice";
-import {CodeBlockCodeType} from "../../types/interface";
+import {CodeBlockCodeType, codeGithubType, responseGistType} from "../../types/interface";
 
 function Root(): JSX.Element {
   const dispatch = useDispatch();
   const [wait, setWait] = useState(false);
-  const reRender = useSelector((state: any) => state.callTree.value);
+  const reRender = useSelector((state: {callTree:{value:boolean}}) => state.callTree.value);
   const [placeholderinput, setPlaceholderinput] = useState(
     "Search functions by name"
   );
 
-  const data = async (code: string, reset: any, from: string) => {
+  const data = async (code: string, reset: {reset:boolean}, from: string) => {
     if (reset.reset) {
       // resetTreeCall();
       // dispatch(callrender(!reRender));
@@ -42,29 +42,31 @@ function Root(): JSX.Element {
     }
   };
 
-  async function setGistCode(data: any) {
-    console.log(data)
+  async function setGistCode(data: responseGistType[]) {
+    // console.log(data)
     setPlaceholderinput("Loading data...");
     resetTreeCall();
     dispatch(callrender(!reRender));
     dispatch(add(""));
-    async function getCodeParse(e: any) {
+    async function getCodeParse(e: responseGistType) {
       let response = await test(e.content, e.filename);
       let result = await response;
+      // console.log(result)
       return result;
     }
-    let allfn: any = await Promise.all(
-      data.map(async (e: any) => {
+    let allfn: CodeBlockCodeType[] = await Promise.all(
+      data.map(async (e: responseGistType) => {
         let x = await getCodeParse(e);
         return x;
       })
     );
 
-    let result = [].concat.apply([], allfn);
-    result.forEach((e: any, index: number) => {
+    let result: CodeBlockCodeType[] = [].concat.apply([], allfn as []);
+    // console.log(result)
+    result.forEach((e: CodeBlockCodeType, index: number) => {
       e.id = index;
     });
-    console.log(result);
+    // console.log(result);
     dispatch(add(result));
     setPlaceholderinput("Search functions by name");
 
@@ -72,7 +74,7 @@ function Root(): JSX.Element {
   }
 
   function setDataCode(data: CodeBlockCodeType[]) {
-  console.log(data)
+  // console.log(data)
     setPlaceholderinput("Loading data...");
     resetTreeCall();
     dispatch(callrender(!reRender));

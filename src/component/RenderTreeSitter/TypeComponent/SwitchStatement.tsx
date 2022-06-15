@@ -1,12 +1,13 @@
+import {TreesitterData, TypeComponentProps} from "../../../types/interface";
 import ChooseType from "../ChooseType";
 
-function SwitchStatement(props: any) {
+function SwitchStatement(props: TypeComponentProps) {
   const data = props.data;
   // console.log(data);
 
   return (
     <span className="SwitchStatement">
-      {data.children.map((e: any, index: number) => {
+      {data.children.map((e: TreesitterData, index: number) => {
         return (
           <span key={index}>
             <ChooseType info={e} />

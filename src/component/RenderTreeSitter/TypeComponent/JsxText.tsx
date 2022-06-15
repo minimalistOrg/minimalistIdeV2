@@ -1,6 +1,8 @@
 // import ChooseType from "../ChooseType";
 
-function JsxText(props: any) {
+import {TypeComponentProps} from "../../../types/interface";
+
+function JsxText(props: TypeComponentProps) {
   const data = props.data;
   // console.log(data);
 

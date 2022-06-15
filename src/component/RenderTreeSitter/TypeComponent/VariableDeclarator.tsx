@@ -1,6 +1,7 @@
+import {TypeComponentProps} from "../../../types/interface";
 import ChooseType from "../ChooseType";
 
-function VariableDeclarator(props: any) {
+function VariableDeclarator(props: TypeComponentProps) {
   const data = props.data;
   // console.log(data);
 

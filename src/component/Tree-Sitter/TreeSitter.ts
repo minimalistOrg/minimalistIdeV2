@@ -1,7 +1,8 @@
+import {CodeBlockCodeType} from "../../types/interface";
 
 declare global {
   interface Window {
-    TreeSitter?: any;
+    TreeSitter?: {};
   }
 }
 
@@ -114,7 +115,7 @@ export function test(code: string, from: string) {
       listFunctionDeclaration = listFunctionDeclaration.concat(
         runSearchFnDeclarationArrow.captures(tree.rootNode)
       );
-      listFunctionDeclaration.forEach((item: any, index: number) => {
+      listFunctionDeclaration.forEach((item: CodeBlockCodeType, index: number) => {
         if (item.node.type === "lexical_declaration") {
           // console.log("here")
           item.name = item.node.children[1].children[0].text;

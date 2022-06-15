@@ -1,4 +1,4 @@
-function IconEyeSlash(props: any) {
+function IconEyeSlash() {
   const style = {
     display: "flex",
     alignContent: "center",

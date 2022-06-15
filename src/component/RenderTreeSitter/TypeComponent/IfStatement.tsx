@@ -1,6 +1,7 @@
+import {TypeComponentProps} from "../../../types/interface";
 import ChooseType from "../ChooseType";
 
-function IfStatement(props: any) {
+function IfStatement(props: TypeComponentProps) {
   const data = props.data;
   // console.log(data);
   //

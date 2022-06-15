@@ -3,25 +3,25 @@ import { useAlert } from "react-alert";
 import ReactModal from "react-modal";
 import ClockwiseIco from "../../../Icons/ClockwiseIco";
 import IcoClose from "../../../Icons/IcoClose";
-import {CodeBlockCodeType, LoadCodeType, responseGithubType} from "../../../types/interface";
+import {CodeBlockCodeType, LoadCodeType, codeGithubType, responseGithubType, responseGistType} from "../../../types/interface";
 import { test } from "../../Tree-Sitter/TreeSitter";
 import "./LoadCode.css";
 
 function LoadCode(props: LoadCodeType) {
 // console.log(props)
-  const code = useRef<any>(null);
+  const code = useRef<HTMLInputElement|null>(null);
   const alert = useAlert();
 
   const [textValidURL, setTextValidURL] = useState("");
   const [enablebtn, setEnablebtn] = useState(false);
   const [btnload, setBtnload] = useState("Load");
-  const [result, setResult] = useState<any>("");
+  const [result, setResult] = useState<string|JSX.Element>("");
 
   function selectURL() {
     const github = /https:\/\/github.com\//;
-    if (github.test(code.current.value)) {
+    if (github.test((code.current as HTMLInputElement).value as string)) {
       // console.log(code.current.value);
-      getDetailsURL(code.current.value);
+      getDetailsURL((code.current as HTMLInputElement).value as string);
     } else {
       loadCodeTreeSitter();
     }
@@ -75,7 +75,7 @@ function LoadCode(props: LoadCodeType) {
 
   function searchJavascript(files: responseGithubType[]) {
     // console.log(files);
-    const JavaScriptFiles:responseGithubType[]= files.filter((element: any) => {
+    const JavaScriptFiles:responseGithubType[]= files.filter((element: responseGithubType) => {
       let regex_js = /\.js$|\.jsx$/g;
       return regex_js.test(element.path);
     });
@@ -93,14 +93,14 @@ function LoadCode(props: LoadCodeType) {
 
   async function LoadAllFilesFromGithub(files: responseGithubType[]) {
   // console.log(files)
-    let files64 = await Promise.all(
+    let files64:codeGithubType[] = await Promise.all(
       files.map((element: responseGithubType) => {
         return getrepo(element.url);
       })
     );
-    console.log(files64);
+    // console.log(files64);
     let datafile: {code:string,from:string}[] = [];
-    files64.forEach((element: any, index: number) => {
+    files64.forEach((element: codeGithubType, index: number) => {
       datafile.push({ code: atob(element.content), from: files[index].path });
     });
 
@@ -108,17 +108,17 @@ function LoadCode(props: LoadCodeType) {
     getast(datafile);
   }
 
-  async function getast(data: any) {
+  async function getast(data: {code:string,from:string}[]) {
     let TreeSitterAst = await Promise.all(
-      data.map((element: any) => {
+      data.map((element: {code:string,from:string}) => {
         let ast = test(element.code, element.from);
         return ast;
       })
     );
 
     let result: CodeBlockCodeType[] = [].concat.apply([], TreeSitterAst);
-
-    result.forEach((e: any, index: number) => {
+// console.log(result)
+    result.forEach((e: CodeBlockCodeType, index: number) => {
       e.id = index;
     });
 
@@ -151,10 +151,10 @@ function LoadCode(props: LoadCodeType) {
 
   async function loadCodeTreeSitter() {
     // props.load(code.current.value, { reset: true });
-    const value = code.current.value;
+    const value = (code.current as HTMLInputElement).value as string;
     const regexid = /([\w\d]+)/g;
     const allvalues = value.match(regexid);
-    const id = allvalues[allvalues.length - 1];
+    const id:string = (allvalues as [])[(allvalues as []).length - 1];
     setBtnload("Wait...");
     setEnablebtn(false);
     setResult(
@@ -170,14 +170,15 @@ function LoadCode(props: LoadCodeType) {
     const readGist = await getCode(id);
     setBtnload("Load");
     setEnablebtn(true);
-    const files: any = Object.values(readGist.files);
+    const files: responseGistType[] = Object.values(readGist.files);
+    // console.log(files)
     const there_js =
-      files.filter((e: any) => e.language === "JavaScript").length > 0;
+      files.filter((e: responseGistType) => e.language === "JavaScript").length > 0;
 
     // console.log(there_js);
     if (there_js) {
       // props.load(files[0].content, { reset: true });
-      let onliJavascript = files.filter((element: any) => {
+      let onliJavascript:responseGistType[] = files.filter((element: responseGistType) => {
         return element.language === "JavaScript";
       });
       props.load(onliJavascript);
@@ -195,7 +196,7 @@ function LoadCode(props: LoadCodeType) {
     }
   }
 
-  const getCode = async (id: any) => {
+  const getCode = async (id: string) => {
     try {
       let response = await fetch(
         `https://api.github.com/gists/${id}?gist_id=${id}`
@@ -221,7 +222,7 @@ function LoadCode(props: LoadCodeType) {
     }
   };
 
-  function validURL(event: any) {
+  function validURL(event: {target:{value:string}}) {
     const regex = /(https:\/\/gist.github.com\/[\w\d-_]+\/[\w\d\-_]+\/?)/;
     const regex_git_branch =
       /(https:\/\/github.com\/)([\w\d\-_]+)(\/)([\w\d\-_]+)(\/)tree\/([\w\d\-_]+)\/?/;
@@ -247,11 +248,11 @@ function LoadCode(props: LoadCodeType) {
   }
 
   function focusInput() {
-    code.current.focus();
+    (code.current as HTMLInputElement).focus();
     // console.log("hi");
   }
 
-  const handleKeyDown = (event: any) => {
+  const handleKeyDown = (event: {key: string}) => {
     if (event.key === "Enter") {
       selectURL();
     }

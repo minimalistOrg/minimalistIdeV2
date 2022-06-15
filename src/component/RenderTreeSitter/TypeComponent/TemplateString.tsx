@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
+import {TreesitterData, TypeComponentProps} from "../../../types/interface";
 import ChooseType from "../ChooseType";
 
-function TemplateString(props: any) {
+function TemplateString(props: TypeComponentProps) {
   const data = props.data;
-  const [stringtxt, setStringtxt] = useState([]);
+  const [stringtxt, setStringtxt] = useState<string|string[]>([]);
   useEffect(() => {
-    let txt = data.text;
-    data.children.map((e: any, index: number) => {
+    let txt:string|string[] = data.text;
+    data.children.map((e: TreesitterData, index: number) => {
       if (index > 0 && index < data.children.length - 1) {
-        txt = txt.replace(e.text, ",");
+        txt = (txt as string).replace(e.text, ",");
       }
       return true
     });
@@ -21,7 +22,7 @@ function TemplateString(props: any) {
 
   return (
     <span className="TemplateString">
-      {data.children.map((e: any, index: number) => {
+      {data.children.map((e: TreesitterData, index: number) => {
         return (
           <span key={index}>
             <>

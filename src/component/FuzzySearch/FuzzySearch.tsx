@@ -9,7 +9,6 @@ import {ObjTree,CodeBlockType,CodeBlockCodeType,TreesitterData} from "../../type
 
 function FuzzySearch(props:{placeholder:string}): JSX.Element {
   const listFn: ObjTree[] = useSelector((state: {addbubble:{value:ObjTree[]}}) => state.addbubble.value);
-  // console.log(listFn)
   const [li, setLi] = useState([{ name: "Loading..." }]);
 
   const dispatch = useDispatch();
@@ -22,16 +21,13 @@ function FuzzySearch(props:{placeholder:string}): JSX.Element {
   const handleOnSearch = (string: string, results: CodeBlockType) => {
     // onSearch will have as the first callback parameter
     // the string searched and for the second the results.
-    // console.log(string, results)
   };
 
   const handleOnHover = (result: CodeBlockType) => {
     // the item hovered
-    // console.log(result)
   };
 
   const handleOnSelect = (item: CodeBlockCodeType) => {
-  console.log(item)
     // {
     //   id: 0,
     //   name: "main",
@@ -74,14 +70,12 @@ function FuzzySearch(props:{placeholder:string}): JSX.Element {
       },
       visibility: true,
     });
-    // console.log(item,TreeCall)
     dispatch(add(!reRender));
     //
     // the item selected
   };
 
   const handleOnFocus = () => {
-    // console.log('Focused')
   };
 
   const formatResult = (item: {name:string,from:string}) => {
