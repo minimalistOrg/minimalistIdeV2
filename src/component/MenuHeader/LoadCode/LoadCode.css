@@ -64,7 +64,7 @@
 .ReactModal__Overlay {
   display: flex;
   justify-content: center;
-  z-index: 1500;
+  z-index: 1000;
   background-color: #bbbbbbbf !important;
 }
 
@@ -95,14 +95,22 @@
   padding: 5px;
 }
 
-@keyframes rotate{
-    from{transform: rotate(0deg);}
-    to{transform: rotate(360deg);}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-.LoadCode__ico{
-    padding: 2px;
-    animation-name: rotate;
-    animation-duration: 0.7s;
-    animation-iteration-count: infinite;
+.LoadCode__ico {
+  padding: 2px;
+  animation-name: rotate;
+  animation-duration: 0.7s;
+  animation-iteration-count: infinite;
+}
+
+#__react-alert__ > div {
+  z-index: 1200 !important;
 }

@@ -13,17 +13,25 @@ import MenuHeader from "../MenuHeader/MenuHeader";
 import LoadCode from "../MenuHeader/LoadCode/LoadCode";
 import { code as testCode } from "../Tree-Sitter/TreeSitter";
 import { add as callrender } from "../Root-file/slice/callTreeSlice";
-import {CodeBlockCodeType, responseGistType} from "../../types/interface";
+import { CodeBlockCodeType, responseGistType } from "../../types/interface";
+import { urldata, urlvalid } from "../util/fuctions";
+import { useAlert } from "react-alert";
 
 function Root(): JSX.Element {
   const dispatch = useDispatch();
   const [wait, setWait] = useState(false);
-  const reRender = useSelector((state: {callTree:{value:boolean}}) => state.callTree.value);
+  const reRender = useSelector(
+    (state: { callTree: { value: boolean } }) => state.callTree.value
+  );
   const [placeholderinput, setPlaceholderinput] = useState(
     "Search functions by name"
   );
 
-  const data = async (code: string, reset: {reset:boolean}, from: string) => {
+  const data = async (
+    code: string,
+    reset: { reset: boolean },
+    from: string
+  ) => {
     if (reset.reset) {
       // resetTreeCall();
       // dispatch(callrender(!reRender));
@@ -31,28 +39,26 @@ function Root(): JSX.Element {
       // const codedata = await test(code,from);
       // //
       // //
-      // console.log(codedata)
       // // dispatch(add(codedata));
-      // console.log("load", json, codedata);
     } else {
-      const loadData = await getAstJsx(testCode, "Placeholder","JavaScript");
-      // console.log(loadData,testCode)
+      const loadData = await getAstJsx(testCode, "Placeholder", "JavaScript");
       dispatch(add(loadData));
       setWait(true);
     }
   };
 
   async function setGistCode(data: responseGistType[]) {
-    // console.log(data)
     setPlaceholderinput("Loading data...");
     resetTreeCall();
     dispatch(callrender(!reRender));
     dispatch(add(""));
     async function getCodeParse(e: responseGistType) {
-    console.log(e)
-      let response = await chooseLanguageGist(e.content, e.filename,e.language);
+      let response = await chooseLanguageGist(
+        e.content,
+        e.filename,
+        e.language
+      );
       let result = await response;
-      // console.log(result)
       return result;
     }
     let allfn: CodeBlockCodeType[] = await Promise.all(
@@ -63,19 +69,14 @@ function Root(): JSX.Element {
     );
 
     let result: CodeBlockCodeType[] = [].concat.apply([], allfn as []);
-    // console.log(result)
     result.forEach((e: CodeBlockCodeType, index: number) => {
       e.id = index;
     });
-    // console.log(result);
     dispatch(add(result));
     setPlaceholderinput("Search functions by name");
-
-    // console.log(result);
   }
 
   function setDataCode(data: CodeBlockCodeType[]) {
-  // console.log(data)
     setPlaceholderinput("Loading data...");
     resetTreeCall();
     dispatch(callrender(!reRender));
@@ -84,11 +85,26 @@ function Root(): JSX.Element {
     setPlaceholderinput("Search functions by name");
   }
 
+  let alert = useAlert();
+  const [opengist, setOpengist] = useState(true);
   useEffect(() => {
     data("", { reset: false }, "Placeholder");
-    // console.log("test");
     //eslint-disable-next-line
   }, [wait]);
+
+  useEffect(() => {
+  console.log("onli one")
+    let getrepourl = urldata();
+    let valid = urlvalid(getrepourl.repository);
+    if (valid) {
+      setOpengist(false);
+    } else {
+      if (getrepourl.repository !== "") {
+        alert.error("ERROR URL PARAMS");
+      }
+    }
+    //eslint-disable-next-line
+  }, []);
 
   function BubbleLoad(state: Boolean) {
     if (state) {
@@ -105,7 +121,6 @@ function Root(): JSX.Element {
     }
   }
 
-  const [opengist, setOpengist] = useState(true);
   function OpenModalGist() {
     setOpengist(!opengist);
   }
@@ -123,7 +138,7 @@ function Root(): JSX.Element {
         <section className="BubbleArea">{BubbleLoad(wait)}</section>
         <LoadCode
           load={setGistCode}
-          setData={setDataCode as ()=>void}
+          setData={setDataCode as () => void}
           isOpen={opengist}
           event={fnlist}
         />
