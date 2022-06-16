@@ -11,6 +11,8 @@ const options = {
 };
 
 function App(): JSX.Element {
+
+
   return (
     <Provider store={store}>
       <AlertProvider template={AlertTemplate} {...options}>

@@ -3,24 +3,28 @@ import { useAlert } from "react-alert";
 import ReactModal from "react-modal";
 import ClockwiseIco from "../../../Icons/ClockwiseIco";
 import IcoClose from "../../../Icons/IcoClose";
-import {CodeBlockCodeType, LoadCodeType, codeGithubType, responseGithubType, responseGistType} from "../../../types/interface";
-import { test } from "../../Tree-Sitter/TreeSitter";
+import {
+  CodeBlockCodeType,
+  LoadCodeType,
+  codeGithubType,
+  responseGithubType,
+  responseGistType,
+} from "../../../types/interface";
+import { chooseLanguageGist, test } from "../../Tree-Sitter/TreeSitter";
 import "./LoadCode.css";
 
 function LoadCode(props: LoadCodeType) {
-// console.log(props)
-  const code = useRef<HTMLInputElement|null>(null);
+  const code = useRef<HTMLInputElement | null>(null);
   const alert = useAlert();
 
   const [textValidURL, setTextValidURL] = useState("");
   const [enablebtn, setEnablebtn] = useState(false);
   const [btnload, setBtnload] = useState("Load");
-  const [result, setResult] = useState<string|JSX.Element>("");
+  const [result, setResult] = useState<string | JSX.Element>("");
 
   function selectURL() {
     const github = /https:\/\/github.com\//;
     if (github.test((code.current as HTMLInputElement).value as string)) {
-      // console.log(code.current.value);
       getDetailsURL((code.current as HTMLInputElement).value as string);
     } else {
       loadCodeTreeSitter();
@@ -38,18 +42,18 @@ function LoadCode(props: LoadCodeType) {
         </span>
       </>
     );
-    const urlrepo:string = url;
+    const urlrepo: string = url;
     let regex =
       /(https:\/\/github.com\/)([\w\d\-_]+)(\/)([\w\d\-_]+)(\/)?((tree)(\/)([\w\d\-_]+))?/g;
 
-    let validURL:boolean = regex.test(url);
+    let validURL: boolean = regex.test(url);
     if (!validURL) {
       console.error("url incorrect");
     }
 
-    const username:string = urlrepo.replace(regex, "$2");
-    const repo:string = urlrepo.replace(regex, "$4");
-    let rama:string = urlrepo.replace(regex, "$9");
+    const username: string = urlrepo.replace(regex, "$2");
+    const repo: string = urlrepo.replace(regex, "$4");
+    let rama: string = urlrepo.replace(regex, "$9");
     const urldata = {
       username: username,
       repo: repo,
@@ -70,15 +74,33 @@ function LoadCode(props: LoadCodeType) {
       );
       searchJavascript(files.tree);
     }
-    // console.log(urldata);
+  }
+
+  function detectLanguage(path: string) {
+    let patron: RegExpExecArray | string[] | null = /\.[a-z]{0,3}$/g.exec(path);
+    if (patron === null) {
+      patron = ["null"];
+    }
+    switch (patron[0]) {
+      case ".ts":
+        return "TypeScript";
+      case ".tsx":
+        return "TypeScript";
+      case ".js":
+        return "Javascript";
+      case ".jsx":
+        return "Javascript";
+    }
   }
 
   function searchJavascript(files: responseGithubType[]) {
-    // console.log(files);
-    const JavaScriptFiles:responseGithubType[]= files.filter((element: responseGithubType) => {
-      let regex_js = /\.js$|\.jsx$/g;
-      return regex_js.test(element.path);
-    });
+    const JavaScriptFiles: responseGithubType[] = files.filter(
+      (element: responseGithubType) => {
+        let regex_js = /\.js$|\.jsx$|\.ts$|\.tsx$/g;
+        element.language= detectLanguage(element.path);
+        return regex_js.test(element.path);
+      }
+    );
     if (JavaScriptFiles.length === 0) {
       setResult(
         <span className="LoadCode__msg">
@@ -86,43 +108,37 @@ function LoadCode(props: LoadCodeType) {
         </span>
       );
     } else {
-      // console.log(JavaScriptFiles);
       LoadAllFilesFromGithub(JavaScriptFiles);
     }
   }
 
   async function LoadAllFilesFromGithub(files: responseGithubType[]) {
-  // console.log(files)
-    let files64:codeGithubType[] = await Promise.all(
+    let files64: codeGithubType[] = await Promise.all(
       files.map((element: responseGithubType) => {
         return getrepo(element.url);
       })
     );
-    // console.log(files64);
-    let datafile: {code:string,from:string}[] = [];
+    let datafile: { code: string; from: string, language:string }[] = [];
     files64.forEach((element: codeGithubType, index: number) => {
-      datafile.push({ code: atob(element.content), from: files[index].path });
+      datafile.push({ code: atob(element.content), from: files[index].path, language:files[index].language as string });
     });
 
-    // console.log(datafile);
     getast(datafile);
   }
 
-  async function getast(data: {code:string,from:string}[]) {
+  async function getast(data: { code: string; from: string, language:string }[]) {
     let TreeSitterAst = await Promise.all(
-      data.map((element: {code:string,from:string}) => {
-        let ast = test(element.code, element.from);
+      data.map((element: { code: string; from: string, language: string }) => {
+        let ast = chooseLanguageGist(element.code, element.from,element.language);
         return ast;
       })
     );
 
     let result: CodeBlockCodeType[] = [].concat.apply([], TreeSitterAst);
-// console.log(result)
     result.forEach((e: CodeBlockCodeType, index: number) => {
       e.id = index;
     });
 
-    // console.log(result);
     props.setData(result);
     setResult("");
     resetValues();
@@ -154,7 +170,7 @@ function LoadCode(props: LoadCodeType) {
     const value = (code.current as HTMLInputElement).value as string;
     const regexid = /([\w\d]+)/g;
     const allvalues = value.match(regexid);
-    const id:string = (allvalues as [])[(allvalues as []).length - 1];
+    const id: string = (allvalues as [])[(allvalues as []).length - 1];
     setBtnload("Wait...");
     setEnablebtn(false);
     setResult(
@@ -171,18 +187,23 @@ function LoadCode(props: LoadCodeType) {
     setBtnload("Load");
     setEnablebtn(true);
     const files: responseGistType[] = Object.values(readGist.files);
-    // console.log(files)
     const there_js =
-      files.filter((e: responseGistType) => e.language === "JavaScript").length > 0;
+      files.filter(
+        (e: responseGistType) =>
+          e.language === "JavaScript" || e.language === "TypeScript"
+      ).length > 0;
 
-    // console.log(there_js);
     if (there_js) {
       // props.load(files[0].content, { reset: true });
-      let onliJavascript:responseGistType[] = files.filter((element: responseGistType) => {
-        return element.language === "JavaScript";
-      });
+      let onliJavascript: responseGistType[] = files.filter(
+        (element: responseGistType) => {
+          return (
+            element.language === "JavaScript" ||
+            element.language === "TypeScript"
+          );
+        }
+      );
       props.load(onliJavascript);
-      // console.log(onliJavascript);
       setResult("");
       resetValues();
       alert.success("Code loaded successfully");
@@ -202,7 +223,6 @@ function LoadCode(props: LoadCodeType) {
         `https://api.github.com/gists/${id}?gist_id=${id}`
       );
 
-      // console.log(response);
       if (response.status === 404) {
         setResult(
           <span className="LoadCode__msg">
@@ -222,7 +242,7 @@ function LoadCode(props: LoadCodeType) {
     }
   };
 
-  function validURL(event: {target:{value:string}}) {
+  function validURL(event: { target: { value: string } }) {
     const regex = /(https:\/\/gist.github.com\/[\w\d-_]+\/[\w\d\-_]+\/?)/;
     const regex_git_branch =
       /(https:\/\/github.com\/)([\w\d\-_]+)(\/)([\w\d\-_]+)(\/)tree\/([\w\d\-_]+)\/?/;
@@ -230,7 +250,6 @@ function LoadCode(props: LoadCodeType) {
     const evaluation = regex.test(event.target.value);
     const evaluation2 = regex_git_branch.test(event.target.value);
     const evaluation3 = regex_git.test(event.target.value);
-    // console.log(evaluation,evaluation2,evaluation3);
     if (evaluation || evaluation2 || evaluation3) {
       setTextValidURL("");
       setEnablebtn(true);
@@ -249,10 +268,9 @@ function LoadCode(props: LoadCodeType) {
 
   function focusInput() {
     (code.current as HTMLInputElement).focus();
-    // console.log("hi");
   }
 
-  const handleKeyDown = (event: {key: string}) => {
+  const handleKeyDown = (event: { key: string }) => {
     if (event.key === "Enter") {
       selectURL();
     }

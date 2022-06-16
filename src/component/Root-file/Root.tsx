@@ -4,7 +4,7 @@ import Bubble from "../Bubble/Bubble";
 import CallTree from "../CallTree/CallTree";
 // import CodeBlockTS from "../CodeBlock/CodeBlockTS";
 import FuzzySearch from "../FuzzySearch/FuzzySearch";
-import { test } from "../Tree-Sitter/TreeSitter";
+import { getAstJsx, chooseLanguageGist } from "../Tree-Sitter/TreeSitter";
 import { useEffect, useState } from "react";
 import { TreeCall as json, resetTreeCall } from "./CallTree";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,7 +35,7 @@ function Root(): JSX.Element {
       // // dispatch(add(codedata));
       // console.log("load", json, codedata);
     } else {
-      const loadData = await test(testCode, "Placeholder");
+      const loadData = await getAstJsx(testCode, "Placeholder","JavaScript");
       // console.log(loadData,testCode)
       dispatch(add(loadData));
       setWait(true);
@@ -49,7 +49,8 @@ function Root(): JSX.Element {
     dispatch(callrender(!reRender));
     dispatch(add(""));
     async function getCodeParse(e: responseGistType) {
-      let response = await test(e.content, e.filename);
+    console.log(e)
+      let response = await chooseLanguageGist(e.content, e.filename,e.language);
       let result = await response;
       // console.log(result)
       return result;

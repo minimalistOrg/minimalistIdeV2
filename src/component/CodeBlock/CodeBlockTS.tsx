@@ -18,9 +18,9 @@ import {
   ObjTree,
   TreesitterData,
 } from "../../types/interface";
+import {checkFunctionType} from "../util/fuctions"
 
 function CodeBlockTS(props: CodeBlockType): JSX.Element {
-  // console.log(props, "CodeBlockTS");
   const dataBubbleTree = useSelector(
     (state: { callTree: { value: boolean } }) => state.callTree.value
   );
@@ -37,15 +37,15 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
 
     if (!(props.code === undefined)) {
       if (props.code.node.children[3] === undefined) {
-        setCode(props.code.node.children[1].children[2].children[2]);
+        setCode(checkFunctionType(props.code).code);
         setTitle(props.code.node.children[1].children[0].text);
         // setID(props.code.node.children[1].children[0].id);
-        setParams(props.code.node.children[1].children[2].children[0].children);
+        setParams(checkFunctionType(props.code).params);
         // setParams("1");
       } else {
         setTitle(props.code.node.children[1].text);
-        setCode(props.code.node.children[3]);
-        setParams(props.code.node.children[2].children);
+        setCode(checkFunctionType(props.code).code);
+        setParams(checkFunctionType(props.code).params);
         // setID(props.code.node.children[1].id)
         // setID(props.call.fninfo.id)
       }
@@ -56,7 +56,6 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
       value: props.data,
       writable: true,
     });
-    // console.log("t")
     //eslint-disable-next-line
   }, [dataBubbleTree]);
 
@@ -68,7 +67,6 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
     let data: ObjTree = (
       event.currentTarget.parentNode as HTMLElement & FnInfoType
     ).fninfo;
-    // console.log(event.currentTarget.parentNode)
     if (!(data.element === null)) {
       data.element.classList.add("CallExpressionHover");
       if (!(data.Bubble() === null)) {
@@ -81,7 +79,6 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
     }
     //identifier
     // maxHeightBody(activeBubble.current);
-    // console.log("test")
   }
 
   function fnHoverLeave(event: { currentTarget: HTMLElement }) {
@@ -89,7 +86,6 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
       event.currentTarget.parentNode as HTMLElement & FnInfoType
     ).fninfo;
     if (!(data.element === null)) {
-      // console.log(data.element);
       data.element.classList.remove("CallExpressionHover");
       if (!(data.Bubble() === null)) {
         data.Bubble()?.classList.remove("CodeBlockHover");
@@ -118,12 +114,10 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
       elements.forEach((e: HTMLElement) => {
         e.classList.add("IdentifierHover");
       });
-      // console.log(elements);
     }
   }
 
   function identifierHoverOut(event: { currentTarget: HTMLElement }) {
-    // console.log(event.currentTarget)
     let elements: NodeListOf<HTMLElement> =
       event.currentTarget.querySelectorAll(".Identifier");
     elements.forEach((e: HTMLElement) => {
@@ -158,7 +152,6 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
       elements.forEach((e: HTMLElement) => {
         e.classList.remove("IdentifierHover");
       });
-      // console.log(BubbleBack);
     }
   }
 
@@ -201,7 +194,6 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
         elements.forEach((e: HTMLElement) => {
           e.classList.add("IdentifierHover");
         });
-        // console.log(BubbleBack);
       }
     }
   }
@@ -210,26 +202,21 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
     let txt: (HTMLElement & FnInfoType) | null = document.getElementById(
       "id" + props.id
     ) as HTMLElement & FnInfoType;
-    // console.log(params.length, txt.fninfo.params.length);
     if (txt?.fninfo.params[index] === undefined) {
       return;
     }
     let identifier: string = txt?.fninfo.params[index].text;
-    // console.log(identifier)
     // eslint-disable-next-line
     let check: Boolean = /^[^\"\s\d][^\s\"\(\)]*[^\"\(\)\s]$/gm.test(
       identifier
     );
-    // console.log(check)
     if (check) {
-      // console.log("here")
       return identifier;
     } else {
       return;
     }
   }
 
-  // console.log(params);
 
   return (
     <div

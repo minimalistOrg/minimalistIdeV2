@@ -51,6 +51,7 @@ export interface CodeBlockCodeType {
   id: number;
   nothing: string;
   from: string;
+  language?: string;
 }
 
 export interface CodeBlockType {
@@ -86,6 +87,7 @@ export interface responseGithubType {
   sha: string;
   size: number;
   url: string;
+  language?: string;
 }
 
 export interface codeGithubType {
