@@ -53,7 +53,7 @@ export function urldata() {
 
   function getRepoUrl() {
     if (getParamsUrl.length > 1) {
-      let repository = getParamsUrl[1].split("respository=")[1];
+      let repository = getParamsUrl[1].split("repository=")[1];
       return repository;
     } else {
       return "";
@@ -64,7 +64,7 @@ export function urldata() {
     let readurl = getRepoUrl();
     if (readurl === "") {
       let url = window.location;
-      let urlrepo = url.href + `?respository=${newUrl}`;
+      let urlrepo = url.href + `?repository=${newUrl}`;
       window.history.pushState({}, "repo", urlrepo);
     } else {
       let readurl = getRepoUrl();
