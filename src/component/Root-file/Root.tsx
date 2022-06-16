@@ -13,7 +13,7 @@ import MenuHeader from "../MenuHeader/MenuHeader";
 import LoadCode from "../MenuHeader/LoadCode/LoadCode";
 import { code as testCode } from "../Tree-Sitter/TreeSitter";
 import { add as callrender } from "../Root-file/slice/callTreeSlice";
-import {CodeBlockCodeType, codeGithubType, responseGistType} from "../../types/interface";
+import {CodeBlockCodeType, responseGistType} from "../../types/interface";
 
 function Root(): JSX.Element {
   const dispatch = useDispatch();

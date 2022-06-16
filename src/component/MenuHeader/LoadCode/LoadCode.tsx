@@ -10,7 +10,7 @@ import {
   responseGithubType,
   responseGistType,
 } from "../../../types/interface";
-import { chooseLanguageGist, test } from "../../Tree-Sitter/TreeSitter";
+import { chooseLanguageGist } from "../../Tree-Sitter/TreeSitter";
 import "./LoadCode.css";
 
 function LoadCode(props: LoadCodeType) {
