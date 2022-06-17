@@ -9,7 +9,7 @@
   --ReservedWords: #e91e63;
   --comment: #657e99;
   --boolean: #008d32;
-  --ShorthandPropertyIdentifierPattern: #8080e1;
+  --ShorthandPropertyidentifierPattern: #8080e1;
   --identifier: #444343;
   --property_identifier: #d2691e;
   /**/
@@ -46,13 +46,13 @@
 
 .CallExpression:hover,
 .CallExpressionHover,
-.Identifier:hover,
-.IdentifierHover {
+.identifier:hover,
+.identifierHover {
   background-color: var(--bg-highligth-function);
   transition: var(--bgt-bubble-header);
 }
 
-.CallExpression > .Identifier {
+.CallExpression > .identifier {
   background-color: transparent;
   transition: transparent;
   padding: 0px;
@@ -73,7 +73,7 @@
   padding: 3px;
 }
 
-.Identifier {
+.identifier {
   cursor: pointer;
   padding: 3px;
   color: var(--identifier);
@@ -83,22 +83,22 @@
   color: var(--variableType);
 }
 
-.LexicalDeclaration__variableName > .VariableDeclarator .Identifier {
+.LexicalDeclaration__variableName > .VariableDeclarator .identifier {
   color: var(--variableName);
   font-weight: 700;
 }
 
-.CallExpression > .Identifier {
+.CallExpression > .identifier {
   color: var(--fnDefinition) !important;
   font-weight: 700;
   cursor: pointer;
 }
 
-.CallExpression > .Identifier:hover {
+.CallExpression > .identifier:hover {
   text-decoration: underline;
 }
 
-.Arguments .Identifier {
+.Arguments .identifier {
   color: var(--FnParams) !important;
   font-style: italic;
   font-weight: normal !important;
@@ -139,12 +139,12 @@
   font-weight: bold;
 }
 
-.PropertyIdentifier{
+.Propertyidentifier{
     color: var(--property_identifier);
 }
 
-.TypeShorthandPropertyIdentifierPattern {
-  color: var(--ShorthandPropertyIdentifierPattern);
+.TypeShorthandPropertyidentifierPattern {
+  color: var(--ShorthandPropertyidentifierPattern);
 }
 
 .IfStatement > .StatementBlock .StatementBlock__line:first-child {
