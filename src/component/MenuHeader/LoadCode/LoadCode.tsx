@@ -24,7 +24,6 @@ function LoadCode(props: LoadCodeType) {
   const [result, setResult] = useState<string | JSX.Element>("");
 
   function selectURL(from:string) {
-    // console.log(urlrepo)
     urldata().setRepoUrl(from);
     let url= urldata().repository
     const github = /https:\/\/github.com\//;
@@ -37,7 +36,6 @@ function LoadCode(props: LoadCodeType) {
 
     useEffect(()=>{
     let state= urldata().repository
-    console.log(state)
     if(!(state === "")){
 
         selectURL(state)
@@ -62,7 +60,6 @@ function LoadCode(props: LoadCodeType) {
 
     let validURL: boolean = regex.test(url);
     if (!validURL) {
-      console.error("url incorrect");
     }
 
     const username: string = urlrepo.replace(regex, "$2");
@@ -185,7 +182,6 @@ function LoadCode(props: LoadCodeType) {
       const data = await response.json();
       return data;
     } catch (error) {
-      console.error(error);
     }
   }
 
@@ -237,7 +233,6 @@ function LoadCode(props: LoadCodeType) {
           The gist doesn't include any Javascript files
         </span>
       );
-      console.error("it is not a JavaScript file");
     }
   }
 
@@ -261,7 +256,6 @@ function LoadCode(props: LoadCodeType) {
       setResult(
         <span className="LoadCode__msg">Error Internet Disconnected</span>
       );
-      console.error(error);
       return {};
     }
   };

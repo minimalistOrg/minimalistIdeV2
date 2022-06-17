@@ -93,7 +93,6 @@ function Root(): JSX.Element {
   }, [wait]);
 
   useEffect(() => {
-  console.log("onli one")
     let getrepourl = urldata();
     let valid = urlvalid(getrepourl.repository);
     if (valid) {
