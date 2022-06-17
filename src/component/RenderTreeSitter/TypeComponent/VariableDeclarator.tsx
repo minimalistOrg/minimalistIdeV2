@@ -1,4 +1,4 @@
-import {TypeComponentProps} from "../../../types/interface";
+import { TreesitterData, TypeComponentProps } from "../../../types/interface";
 import ChooseType from "../ChooseType";
 
 function VariableDeclarator(props: TypeComponentProps) {
@@ -7,13 +7,13 @@ function VariableDeclarator(props: TypeComponentProps) {
 
   return (
     <span className="VariableDeclarator">
-      <span>
-        <ChooseType info={data.children[0]} />
-      </span>
-      <span> = </span>
-      <span>
-        <ChooseType info={data.children[2]} />
-      </span>
+      {data.children.map((e: TreesitterData, index: number) => {
+        return (
+          <span key={index}>
+            <ChooseType info={e} />
+          </span>
+        );
+      })}
     </span>
   );
 }

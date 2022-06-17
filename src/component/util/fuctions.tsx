@@ -10,10 +10,18 @@ export function checkFunctionType(item: CodeBlockCodeType): {
         code: item.node.children[3],
       };
     } else {
-      return {
-        params: item.node.children[2].children,
-        code: item.node.children[3],
-      };
+      // console.log(item.node.children.length, "test");
+      if (item.node.children.length > 4) {
+        return {
+          params: item.node.children[2].children,
+          code: item.node.children[4],
+        };
+      } else {
+        return {
+          params: item.node.children[2].children,
+          code: item.node.children[3],
+        };
+      }
     }
   }
   if (item.node.type === "lexical_declaration") {

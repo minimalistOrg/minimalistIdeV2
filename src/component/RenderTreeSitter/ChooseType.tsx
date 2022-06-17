@@ -54,12 +54,39 @@ import ForInStatement from "./TypeComponent/ForInStatement";
 import TryStatement from "./TypeComponent/TryStatement";
 import CatchClause from "./TypeComponent/CatchClause";
 import NestedIdentifier from "./TypeComponent/NestedIdentifier";
-import {TreesitterData} from "../../types/interface";
+import TypeAnnotation from "./TypeComponent/TypeAnnotation";
+import { TreesitterData, TypeComponentProps } from "../../types/interface";
 
-function ChooseType(props: {info:TreesitterData|{type:string;text:string}}): JSX.Element {
+function UniversalType(props: TypeComponentProps & { type: string }) {
+  const data = props.data;
+
+  if (data.children.length > 1) {
+    return (
+      <span className={props.type}>
+        {data.children.map((e: TreesitterData, index: number) => {
+          return (
+            <span key={index}>
+              <ChooseType info={e} />
+            </span>
+          );
+        })}
+      </span>
+    );
+  } else {
+   return <span className={props.type}> {data.text} </span>;
+  }
+}
+
+function ChooseType(props: {
+  info: TreesitterData | { type: string; text: string };
+}): JSX.Element {
   function choose(info: TreesitterData) {
     //
     switch (info.type) {
+      //ts
+      case "type_annotation":
+        return <TypeAnnotation data={info} />;
+      //js
       case "catch_clause":
         return <CatchClause data={info} />;
       case "nested_identifier":
@@ -139,7 +166,8 @@ function ChooseType(props: {info:TreesitterData|{type:string;text:string}}): JSX
       case "template_string":
         return <TemplateString data={info} />;
       case "formal_parameters":
-        return <FormalParameters data={info} />;
+      case "required_parameter":
+        return <FormalParameters type={info.type} data={info} />;
       case "arrow_function":
         return <ArrowFunction data={info} />;
       case "parenthesized_expression":
@@ -153,7 +181,8 @@ function ChooseType(props: {info:TreesitterData|{type:string;text:string}}): JSX
       case "binary_expression":
         return <BinaryExpression data={info} />;
       case "identifier":
-        return <Identifier data={info} />;
+      case "type_identifier":
+        return <Identifier type={info.type} data={info} />;
       case "number":
         return <NumberType data={info} />;
       case "variable_declarator":
@@ -277,8 +306,9 @@ function ChooseType(props: {info:TreesitterData|{type:string;text:string}}): JSX
       case "loading":
         return <p>Loading...</p>;
       default:
-        console.warn(`the type ${info.type} is not define`);
-        return <span style={{ color: "red" }}>{info.type}</span>;
+        return <UniversalType data={info} type={info.type} />;
+      // console.warn(`the type ${info.type} is not define`);
+      // return <span style={{ color: "red" }}>{info.type}</span>;
     }
     //
   }

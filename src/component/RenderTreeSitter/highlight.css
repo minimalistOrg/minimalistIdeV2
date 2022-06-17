@@ -215,3 +215,7 @@ code > .StatementBlock .StatementBlock__line:last-child {
 .TryStatement .StatementBlock .StatementBlock__line:last-child{
     display: flex;
 }
+
+.type_identifier{
+ color: #177a9b;
+}
