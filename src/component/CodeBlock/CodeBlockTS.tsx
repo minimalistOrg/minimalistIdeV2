@@ -102,26 +102,26 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
     target: HTMLElement;
   }) {
     let elements: NodeListOf<HTMLElement> =
-      event.currentTarget.querySelectorAll(".Identifier");
+      event.currentTarget.querySelectorAll(".identifier");
     elements.forEach((e: HTMLElement) => {
-      e.classList.remove("IdentifierHover");
+      e.classList.remove("identifierHover");
     });
-    if (event.target.classList[0] === "Identifier") {
+    if (event.target.classList[0] === "identifier") {
       let elements: NodeListOf<HTMLElement> =
         event.currentTarget.querySelectorAll(
-          `.Identifier[data-identifier=${event.target.dataset.identifier}]`
+          `.identifier[data-identifier=${event.target.dataset.identifier}]`
         );
       elements.forEach((e: HTMLElement) => {
-        e.classList.add("IdentifierHover");
+        e.classList.add("identifierHover");
       });
     }
   }
 
   function identifierHoverOut(event: { currentTarget: HTMLElement }) {
     let elements: NodeListOf<HTMLElement> =
-      event.currentTarget.querySelectorAll(".Identifier");
+      event.currentTarget.querySelectorAll(".identifier");
     elements.forEach((e: HTMLElement) => {
-      e.classList.remove("IdentifierHover");
+      e.classList.remove("identifierHover");
     });
   }
 
@@ -132,9 +132,9 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
     let body: HTMLElement = event.currentTarget?.parentNode?.parentNode
       ?.parentNode?.nextSibling as HTMLElement;
     let elements: NodeListOf<HTMLElement> =
-      body?.querySelectorAll(".Identifier");
+      body?.querySelectorAll(".identifier");
     elements.forEach((e: HTMLElement) => {
-      e.classList.remove("IdentifierHover");
+      e.classList.remove("identifierHover");
     });
 
     if (
@@ -148,9 +148,9 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
       } while (!(BubbleBack?.classList[0] === "CodeBlock"));
 
       let elements: NodeListOf<HTMLElement> =
-        BubbleBack.querySelectorAll(".Identifier");
+        BubbleBack.querySelectorAll(".identifier");
       elements.forEach((e: HTMLElement) => {
-        e.classList.remove("IdentifierHover");
+        e.classList.remove("identifierHover");
       });
     }
   }
@@ -164,18 +164,18 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
     let body = event.currentTarget.parentNode?.parentNode?.parentNode
       ?.nextSibling as HTMLElement;
     let elements: NodeListOf<HTMLElement> =
-      body.querySelectorAll(".Identifier");
+      body.querySelectorAll(".identifier");
     elements.forEach((e: HTMLElement) => {
-      e.classList.remove("IdentifierHover");
+      e.classList.remove("identifierHover");
     });
-    if (event.target.classList[0] === "Identifier") {
+    if (event.target.classList[0] === "identifier") {
       let body = event.currentTarget.parentNode?.parentNode?.parentNode
         ?.nextSibling as HTMLElement;
       let elements: NodeListOf<HTMLElement> = body.querySelectorAll(
-        `.Identifier[data-identifier=${event.target.dataset.identifier}]`
+        `.identifier[data-identifier=${event.target.dataset.identifier}]`
       );
       elements.forEach((e: HTMLElement) => {
-        e.classList.add("IdentifierHover");
+        e.classList.add("identifierHover");
       });
       //
       if (
@@ -189,10 +189,10 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
         } while (!(BubbleBack?.classList[0] === "CodeBlock"));
 
         let elements: NodeListOf<HTMLElement> = BubbleBack.querySelectorAll(
-          `.Identifier[data-identifier=${event.currentTarget.dataset.identifier}]`
+          `.identifier[data-identifier=${event.currentTarget.dataset.identifier}]`
         );
         elements.forEach((e: HTMLElement) => {
-          e.classList.add("IdentifierHover");
+          e.classList.add("identifierHover");
         });
       }
     }

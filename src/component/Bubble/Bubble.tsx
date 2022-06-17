@@ -60,7 +60,7 @@ function Bubble(props: BubbleProps): JSX.Element {
     //
     type LocalBlock = HTMLElement | null | undefined;
     if (
-      event.target.classList[0] === "Identifier" &&
+      event.target.classList[0] === "identifier" &&
       !(
         (event.target.parentNode as HTMLElement).classList[0] ===
         "CallExpression"
@@ -73,7 +73,7 @@ function Bubble(props: BubbleProps): JSX.Element {
       } while (!(BubbleBack?.classList[0] === "CodeBlock"));
 
       let identifiers: NodeListOf<HTMLElement> = BubbleBack.querySelectorAll(
-        `.Identifier[data-identifier=${event.target.dataset.identifier}]`
+        `.identifier[data-identifier=${event.target.dataset.identifier}]`
       );
       // console.log(identifiers);
       if (event.target.dataset.color === undefined) {
