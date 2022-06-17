@@ -90,7 +90,7 @@ function Root(): JSX.Element {
   useEffect(() => {
     data("", { reset: false }, "Placeholder");
     //eslint-disable-next-line
-  }, [wait]);
+  }, []);
 
   useEffect(() => {
     let getrepourl = urldata();
