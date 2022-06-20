@@ -21,11 +21,11 @@ export let TreeCall: ObjTree[] = [
     order: 0,
     visibility: true,
     element: () => {
-        let result = document.getElementById("id" + "x1");
+        let result = document.getElementById("idx1");
         return result;
       },
     Bubble: () => {
-      let result = document.getElementById("id" + "1");
+      let result = document.getElementById("id1");
       return result;
     },
   },
@@ -34,11 +34,11 @@ export let TreeCall: ObjTree[] = [
     order: 0,
     visibility: true,
     element: () => {
-        let result = document.getElementById("id" + "x0");
+        let result = document.getElementById("idx0");
         return result;
       },
     Bubble: () => {
-      let result = document.getElementById("id" + 0);
+      let result = document.getElementById("id0");
       return result;
     },
   },
