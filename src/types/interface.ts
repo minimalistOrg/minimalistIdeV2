@@ -4,6 +4,7 @@ export interface FnInfoType {
 
 export interface ObjTree {
   id: string;
+  ied?: string;
   name: string;
   params: TreesitterData[];
   index: number;

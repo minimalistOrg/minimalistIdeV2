@@ -1,21 +1,27 @@
 import ChooseType from "../ChooseType";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useGlobalCounter } from "../util/useGlobalCounter";
 import { v4 as uuidv4 } from "uuid";
-import {CodeBlockCodeType, FnInfoType, TypeComponentProps} from "../../../types/interface";
+import {
+  CodeBlockCodeType,
+  FnInfoType,
+  TypeComponentProps,
+} from "../../../types/interface";
 
 function CallExpression(props: TypeComponentProps) {
   const data = props.data;
-  const [fnindex, setFnindex] = useState<string|number>("");
+  const [fnindex, setFnindex] = useState<string | number>("");
   const [name, setName] = useState("");
   const [event, setEvent] = useState(false);
   const [params, setParams] = useState([]);
   const [id, setId] = useState("");
-  const [idelement, setIdelement] = useState("");
   const fnOrder = useGlobalCounter();
-
-  const listFN = useSelector((state: {addbubble:{value:CodeBlockCodeType[]}}) => state.addbubble.value);
+  const expression = useRef<HTMLElement | null>(null);
+  const listFN = useSelector(
+    (state: { addbubble: { value: CodeBlockCodeType[] } }) =>
+      state.addbubble.value
+  );
 
   //
   function validifFnCall() {
@@ -27,29 +33,34 @@ function CallExpression(props: TypeComponentProps) {
       // setIdelement(uuidv4())
       setEvent(true);
       setParams(data.children[1].children as []);
-      let position:CodeBlockCodeType|undefined = listFN.find((e: CodeBlockCodeType) => e.name === data.children[0].text);
-      if(position === undefined){
-      return -1
+      let position: CodeBlockCodeType | undefined = listFN.find(
+        (e: CodeBlockCodeType) => e.name === data.children[0].text
+      );
+      if (position === undefined) {
+        return -1;
       }
-      setFnindex(position.id);//type number
+      setFnindex(position.id); //type number
     }
   }
 
+  const [ied, setIed] = useState("");
+
   useEffect(() => {
-setIdelement(uuidv4())
-console.log(idelement)
+    if (ied === "") {
+      setIed(uuidv4());
+    }
 
     const fndata = {
       id: id,
-      eid: idelement,
+      ied: expression.current?.id,
       params: params,
       name: name,
       index: fnindex,
       value: [],
-      event: fnindex === ""? false : true,
+      event: fnindex === "" ? false : true,
       order: fnOrder,
-      element: ()=>{
-        let result = document.getElementById("id" + idelement);
+      element: () => {
+        let result = document.getElementById("id" + ied);
         return result;
       },
       Bubble: () => {
@@ -66,19 +77,23 @@ console.log(idelement)
     //eslint-disable-next-line
   }, [name, fnindex]);
 
-  function fnHover(data: {currentTarget: HTMLElement & FnInfoType | null}) {
+  function fnHover(data: { currentTarget: (HTMLElement & FnInfoType) | null }) {
     if (!(data.currentTarget?.fninfo?.Bubble() === null)) {
       data.currentTarget?.fninfo?.Bubble()?.classList.add("CodeBlockHover");
       data.currentTarget?.fninfo
-        .Bubble()?.children[0].classList.add("CodeBlock__header--hover");
+        .Bubble()
+        ?.children[0].classList.add("CodeBlock__header--hover");
     }
   }
 
-  function fnHoverClose(data: {currentTarget:HTMLElement & FnInfoType | null}) {
+  function fnHoverClose(data: {
+    currentTarget: (HTMLElement & FnInfoType) | null;
+  }) {
     if (!(data.currentTarget?.fninfo.Bubble() === null)) {
       data.currentTarget?.fninfo.Bubble()?.classList.remove("CodeBlockHover");
       data.currentTarget?.fninfo
-        .Bubble()?.children[0].classList.remove("CodeBlock__header--hover");
+        .Bubble()
+        ?.children[0].classList.remove("CodeBlock__header--hover");
     }
   }
 
@@ -93,9 +108,10 @@ console.log(idelement)
   return (
     <span
       className={typeCall()}
-      onMouseOver={fnHover as ()=>void}
-      onMouseLeave={fnHoverClose as ()=>void}
-      id={"id"+idelement}
+      onMouseOver={fnHover as () => void}
+      onMouseLeave={fnHoverClose as () => void}
+      ref={expression}
+      id={"id" + ied}
     >
       <ChooseType info={data.children[0]} />
       <span>
