@@ -1,5 +1,4 @@
 import { CodeBlockCodeType, TreesitterData } from "../../types/interface";
-import { useState } from "react";
 
 export function checkFunctionType(item: CodeBlockCodeType): {
   params: TreesitterData[];
