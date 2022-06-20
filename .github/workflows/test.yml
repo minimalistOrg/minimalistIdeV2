@@ -39,5 +39,5 @@
            yarn install
            yarn build
 
-       - name: test
+       #- name: test
          #         run: yarn test
