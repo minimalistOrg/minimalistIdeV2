@@ -35,6 +35,7 @@ export interface TreesitterData {
   type: string;
   typeId: number;
   id: number;
+  parent: TreesitterData;
 }
 
 export interface TypeComponentProps {

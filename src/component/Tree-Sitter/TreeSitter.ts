@@ -84,15 +84,22 @@ function fnArrowTwo() {
     return \`\${i + " test"} RESULT \${2 + 4} now \${i}\`;
   });
 }
+
 `;
 
-export function test(code: string, from: string, wasm: string,language:string) {
+export function test(
+  code: string,
+  from: string,
+  wasm: string,
+  language: string
+) {
   const Parser: any = window?.TreeSitter;
   // const {Query}= Parser
 
-  const querySearchFnDeclaration = "(function_declaration) @name";
+  const querySearchFnDeclaration =
+    "(function_declaration name:(identifier)) @name";
   const queryArrowFn =
-    "(lexical_declaration (variable_declarator value:(arrow_function)  ) ) @name";
+    "(lexical_declaration (variable_declarator name:(identifier) value:(arrow_function)  ) ) @name";
   // const querySearchCallExpression = "(call_expression function:(identifier) ) @name";
 
   let data = Parser.init().then(() => {
@@ -114,6 +121,7 @@ export function test(code: string, from: string, wasm: string,language:string) {
       listFunctionDeclaration = listFunctionDeclaration.concat(
         runSearchFnDeclarationArrow.captures(tree.rootNode)
       );
+      // let outside= []
       listFunctionDeclaration.forEach(
         (item: CodeBlockCodeType, index: number) => {
           if (item.node.type === "lexical_declaration") {
@@ -123,11 +131,15 @@ export function test(code: string, from: string, wasm: string,language:string) {
           if (item.node.type === "function_declaration") {
             item.name = item.node.children[1].text;
           }
+          if (item.node.parent.type === "statement_block") {
+            // console.log(true)
+            listFunctionDeclaration.splice(index, 1);
+          }
 
           item.id = index;
           item.nothing = "";
           item.from = from;
-          item.language= language;
+          item.language = language;
         }
       );
       // console.log(listFunctionDeclaration)
@@ -139,12 +151,17 @@ export function test(code: string, from: string, wasm: string,language:string) {
   return data;
 }
 
-export function getAstJsx(code: string, from: string,language:string) {
-  return test(code, from, "/assets/TreeSitter/tree-sitter-javascript.wasm",language);
+export function getAstJsx(code: string, from: string, language: string) {
+  return test(
+    code,
+    from,
+    "/assets/TreeSitter/tree-sitter-javascript.wasm",
+    language
+  );
 }
 
-export function getAstTsx(code: string, from: string,language:string) {
-  return test(code, from, "/assets/TreeSitter/tree-sitter-tsx.wasm",language);
+export function getAstTsx(code: string, from: string, language: string) {
+  return test(code, from, "/assets/TreeSitter/tree-sitter-tsx.wasm", language);
 }
 
 export function chooseLanguageGist(
@@ -154,12 +171,12 @@ export function chooseLanguageGist(
 ) {
   switch (language) {
     case "JavaScript":
-      return getAstJsx(code, from,"JavaScript");
+      return getAstJsx(code, from, "JavaScript");
     case "Javascript":
-      return getAstJsx(code, from,"JavaScript");
+      return getAstJsx(code, from, "JavaScript");
     case "TypeScript":
-      return getAstTsx(code, from,"TypeScript");
+      return getAstTsx(code, from, "TypeScript");
     case "Typescript":
-      return getAstTsx(code, from,"TypeScript");
+      return getAstTsx(code, from, "TypeScript");
   }
 }

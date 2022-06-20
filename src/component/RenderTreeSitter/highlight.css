@@ -216,6 +216,12 @@ code > .StatementBlock .StatementBlock__line:last-child {
     display: flex;
 }
 
+.function_declaration .StatementBlock .StatementBlock__line:first-child{
+    display: flex;
+}
+.function_declaration .StatementBlock .StatementBlock__line:last-child{
+    display: flex;
+}
 .type_identifier{
  color: #177a9b;
 }
