@@ -112,9 +112,13 @@ function Bubble(props: BubbleProps): JSX.Element {
     // console.log(parent);
     if (!(children.element === null)) {
       children.value = [];
-      children.element.fninfo.event = true;
-      children.element.fninfo.element!.classList.remove("CallExpressionHover");
-      // children.element.fninfo.Bubble = null;
+      (children.element() as HTMLElement & FnInfoType).fninfo.event = true;
+      (
+        (
+          children.element() as HTMLElement & FnInfoType
+        ).fninfo.element() as HTMLElement
+      ).classList.remove("CallExpressionHover");
+      // children.element().fninfo.Bubble = null;
     }
 
     // document.querySelectorAll("html")[0]!.style = "cursor:default";

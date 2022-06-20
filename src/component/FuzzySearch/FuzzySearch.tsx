@@ -52,6 +52,7 @@ function FuzzySearch(props: { placeholder: string }): JSX.Element {
     //   },
     // },
     const gId = uuidv4();
+    const eId = uuidv4();
     //
     TreeCall.push({
       id: gId, //item.node.id
@@ -61,7 +62,10 @@ function FuzzySearch(props: { placeholder: string }): JSX.Element {
       value: [],
       event: false,
       order: 0,
-      element: null,
+      element: ()=>{
+        let result = document.getElementById("id" + eId);
+        return result;
+      },
       Bubble: () => {
         let result = document.getElementById("id" + gId);
         return result;

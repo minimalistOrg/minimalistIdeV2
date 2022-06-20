@@ -12,7 +12,7 @@ function CallExpression(props: TypeComponentProps) {
   const [event, setEvent] = useState(false);
   const [params, setParams] = useState([]);
   const [id, setId] = useState("");
-  const expression = useRef<HTMLElement|null>(null);
+  const [idelement, setIdelement] = useState("");
   const fnOrder = useGlobalCounter();
 
   const listFN = useSelector((state: {addbubble:{value:CodeBlockCodeType[]}}) => state.addbubble.value);
@@ -24,6 +24,7 @@ function CallExpression(props: TypeComponentProps) {
     if (expre_is === "identifier") {
       setName(data.children[0].text);
       setId(uuidv4());
+      setIdelement(uuidv4())
       setEvent(true);
       setParams(data.children[1].children as []);
       let position:CodeBlockCodeType|undefined = listFN.find((e: CodeBlockCodeType) => e.name === data.children[0].text);
@@ -43,7 +44,10 @@ function CallExpression(props: TypeComponentProps) {
       value: [],
       event: fnindex === ""? false : true,
       order: fnOrder,
-      element: expression.current,
+      element: ()=>{
+        let result = document.getElementById("id" + idelement);
+        return result;
+      },
       Bubble: () => {
         let result = document.getElementById("id" + id);
         return result;
@@ -51,7 +55,7 @@ function CallExpression(props: TypeComponentProps) {
       visibility: true,
     };
     validifFnCall();
-    Object.defineProperty(expression.current, "fninfo", {
+    Object.defineProperty(fndata.element(), "fninfo", {
       value: fndata,
       writable: true,
     });
@@ -87,7 +91,7 @@ function CallExpression(props: TypeComponentProps) {
       className={typeCall()}
       onMouseOver={fnHover as ()=>void}
       onMouseLeave={fnHoverClose as ()=>void}
-      ref={expression}
+      id={"id"+idelement}
     >
       <ChooseType info={data.children[0]} />
       <span>

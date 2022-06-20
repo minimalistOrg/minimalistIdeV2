@@ -67,8 +67,8 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
     let data: ObjTree = (
       event.currentTarget.parentNode as HTMLElement & FnInfoType
     ).fninfo;
-    if (!(data.element === null)) {
-      data.element.classList.add("CallExpressionHover");
+    if (!(data.element() === null)) {
+      data.element()?.classList.add("CallExpressionHover");
       if (!(data.Bubble() === null)) {
         data.Bubble()?.classList.add("CodeBlockHover");
       }
@@ -85,8 +85,8 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
     let data: ObjTree = (
       event.currentTarget.parentNode as HTMLElement & FnInfoType
     ).fninfo;
-    if (!(data.element === null)) {
-      data.element.classList.remove("CallExpressionHover");
+    if (!(data.element() === null)) {
+      data.element()?.classList.remove("CallExpressionHover");
       if (!(data.Bubble() === null)) {
         data.Bubble()?.classList.remove("CodeBlockHover");
       }
@@ -139,9 +139,9 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
 
     if (
       event.currentTarget.dataset.identifier &&
-      !(CodeBlock.fninfo.element === null)
+      !(CodeBlock.fninfo.element() === null)
     ) {
-      let BubbleBack: LocalBlock = CodeBlock.fninfo.element;
+      let BubbleBack: LocalBlock = CodeBlock.fninfo.element();
 
       do {
         BubbleBack = BubbleBack?.parentNode as HTMLElement;
@@ -180,9 +180,9 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
       //
       if (
         event.currentTarget.dataset.identifier &&
-        !(CodeBlock.fninfo.element === null)
+        !(CodeBlock.fninfo.element() === null)
       ) {
-        let BubbleBack: LocalBlock = CodeBlock.fninfo.element;
+        let BubbleBack: LocalBlock = CodeBlock.fninfo.element();
 
         do {
           BubbleBack = BubbleBack?.parentNode as HTMLElement;

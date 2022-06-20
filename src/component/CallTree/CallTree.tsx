@@ -29,22 +29,22 @@ function CallTree(props: CallTreeType) {
 
   function hoverBubbles(e: ObjTree) {
     // console.log(e);
-    if (e.element === null) {
+    if (e.element() === null) {
       e.Bubble()?.classList.add("CodeBlockHover");
       e.Bubble()?.children[0].classList.add("CodeBlock__header--hover");
     } else {
-      e.element.classList.add("CallExpressionHover");
+      e.element()?.classList.add("CallExpressionHover");
       e.Bubble()?.classList.add("CodeBlockHover");
       e.Bubble()?.children[0].classList.add("CodeBlock__header--hover");
     }
   }
 
   function hoverBubblesOut(e: ObjTree) {
-    if (e.element === null) {
+    if (e.element() === null) {
       e.Bubble()?.classList.remove("CodeBlockHover");
       e.Bubble()?.children[0].classList.remove("CodeBlock__header--hover");
     } else {
-      e.element.classList.remove("CallExpressionHover");
+      e.element()?.classList.remove("CallExpressionHover");
       e.Bubble()?.classList.remove("CodeBlockHover");
       e.Bubble()?.children[0].classList.remove("CodeBlock__header--hover");
     }

@@ -7,10 +7,10 @@ export interface ObjTree {
   name: string;
   params: TreesitterData[];
   index: number;
-  value: [];
+  value: ObjTree[];
   event: boolean;
   order: number;
-  element: null | (HTMLElement & FnInfoType);
+  element: () => null | HTMLElement;
   Bubble: () => null | HTMLElement;
   visibility: boolean;
 }
