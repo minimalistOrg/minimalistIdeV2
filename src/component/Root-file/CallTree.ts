@@ -20,3 +20,16 @@ export let TreeCall: ObjTree[] = [
 export function resetTreeCall(): void {
   TreeCall = [];
 }
+
+Object.defineProperty(window, "UrlData", {value:()=>{
+    let obj= JSON.stringify(TreeCall,(key,value)=>{
+        if(key === "params"){
+            return [{text:"("},{text:")"}]
+        }else{
+            return value
+        }
+    })
+
+
+    return btoa(obj)
+}})

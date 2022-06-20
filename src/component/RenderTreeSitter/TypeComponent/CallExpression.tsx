@@ -1,6 +1,6 @@
 import ChooseType from "../ChooseType";
 import { useSelector } from "react-redux";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useGlobalCounter } from "../util/useGlobalCounter";
 import { v4 as uuidv4 } from "uuid";
 import {CodeBlockCodeType, FnInfoType, TypeComponentProps} from "../../../types/interface";
@@ -24,7 +24,7 @@ function CallExpression(props: TypeComponentProps) {
     if (expre_is === "identifier") {
       setName(data.children[0].text);
       setId(uuidv4());
-      setIdelement(uuidv4())
+      // setIdelement(uuidv4())
       setEvent(true);
       setParams(data.children[1].children as []);
       let position:CodeBlockCodeType|undefined = listFN.find((e: CodeBlockCodeType) => e.name === data.children[0].text);
@@ -36,8 +36,12 @@ function CallExpression(props: TypeComponentProps) {
   }
 
   useEffect(() => {
+setIdelement(uuidv4())
+console.log(idelement)
+
     const fndata = {
       id: id,
+      eid: idelement,
       params: params,
       name: name,
       index: fnindex,
