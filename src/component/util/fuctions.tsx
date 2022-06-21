@@ -1,5 +1,6 @@
 //import { url } from "inspector";
 import { CodeBlockCodeType, TreesitterData } from "../../types/interface";
+import { setTreeCall } from "../Root-file/CallTree";
 //import { useSelector } from "react-redux";
 
 export function checkFunctionType(item: CodeBlockCodeType): {
@@ -72,8 +73,15 @@ export function urldata(params: string) {
 
   function getRepoUrl(params: string) {
     if (getParamsUrl.length > 1) {
-      let repository = getParamsUrl[1].split(params + "=")[1];
-      return repository;
+      let search = getParamsUrl.filter((e: any) => {
+        let result = new RegExp(" ?" + params + "=", "g");
+        return result.test("?" + e + "=");
+      });
+      if (search.length === 0) {
+        return "";
+      } else {
+        return search[0].split(params + "=")[1];
+      }
     } else {
       return "";
     }
@@ -105,14 +113,19 @@ declare global {
   }
 }
 
+export function removeParams(params: string) {
+  urldata(params).setRepoUrl("");
+  let global_url = window.location.href;
+  let url_without_data = global_url.replace("?data=", "");
+  window.history.pushState({}, "repo", url_without_data);
+}
+
 export function setDataURL(data: any) {
+  // console.log(data)
   let url = urlcreate(data).toString();
   url = btoa(url);
   if (url === "") {
-    urldata("data").setRepoUrl(url);
-    let global_url = window.location.href;
-    let url_without_data = global_url.replace("?data=", "");
-    window.history.pushState({}, "repo", url_without_data);
+    removeParams("data");
   } else {
     urldata("data").setRepoUrl(url);
   }
@@ -120,7 +133,6 @@ export function setDataURL(data: any) {
 }
 
 export function urlcreate(data: any) {
-  // console.log(data,"test");
   if (data === []) {
     return "";
   } else {
@@ -139,12 +151,10 @@ export function urlcreate(data: any) {
 export function convertToObj(data: string) {
   let toString = atob(data);
   let obj = "[" + toString + "]";
-  // console.log(obj);
   obj = JSON.parse(obj);
 
   let result = Rebuild(obj);
 
-  console.log(result);
   return result;
 }
 
@@ -172,4 +182,17 @@ export function Rebuild(data: any) {
       },
     };
   });
+}
+
+export function userdata() {
+  let getdataurl = urldata("data");
+  if (getdataurl.repository === "") {
+    // console.log(getdataurl.repository)
+    return false;
+  } else {
+    let obj = convertToObj(getdataurl.repository);
+    // console.log(obj,"here")
+    setTreeCall(obj);
+    return true;
+  }
 }

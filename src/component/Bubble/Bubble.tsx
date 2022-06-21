@@ -1,5 +1,5 @@
 import "./Bubble.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CodeBlockTS from "../CodeBlock/CodeBlockTS";
 import { useDispatch, useSelector } from "react-redux";
 import { add } from "../Root-file/slice/callTreeSlice";
@@ -17,6 +17,8 @@ let c: number = 0;
 
 function Bubble(props: BubbleProps): JSX.Element {
   // const [renderBubble, setRenderBubble] = useState([]);
+  //
+  //
   const dispatch = useDispatch();
   const reRender: boolean = useSelector(
     (state: RenderType) => state.callTree.value
@@ -28,6 +30,9 @@ function Bubble(props: BubbleProps): JSX.Element {
   const [fninfoData, setFninfoData] = useState<
     (HTMLElement & FnInfoType) | null
   >(null);
+
+
+  useEffect(()=>{},[reRender])
 
   function handleAdd(
     event: { target: HTMLElement },

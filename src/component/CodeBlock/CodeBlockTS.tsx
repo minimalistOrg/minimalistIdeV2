@@ -17,6 +17,7 @@ import {
   FnInfoType,
   ObjTree,
   TreesitterData,
+  CodeBlockCodeType
 } from "../../types/interface";
 import {checkFunctionType,setDataURL} from "../util/fuctions"
 
@@ -31,6 +32,12 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
   const [params, setParams] = useState<TreesitterData[]>([]);
   const activeBubble: RefObject<HTMLDivElement> = useRef(null);
   const CodeTxt: MutableRefObject<null | HTMLElement> = useRef(null);
+
+
+  const listFN = useSelector(
+    (state: { addbubble: { value: CodeBlockCodeType[] } }) =>
+      state.addbubble.value
+  );
 
   useEffect(() => {
 
@@ -60,7 +67,7 @@ setDataURL(window.UrlData())
       writable: true,
     });
     //eslint-disable-next-line
-  }, [dataBubbleTree]);
+  }, [dataBubbleTree,listFN]);
 
   // useEffect(()=>{
   //   maxHeightBody(activeBubble.current);

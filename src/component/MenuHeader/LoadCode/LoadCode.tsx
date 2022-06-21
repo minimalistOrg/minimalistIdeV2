@@ -11,7 +11,7 @@ import {
   responseGistType,
 } from "../../../types/interface";
 import { chooseLanguageGist } from "../../Tree-Sitter/TreeSitter";
-import { urldata, urlvalid } from "../../util/fuctions";
+import { urldata, urlvalid, userdata, removeParams } from "../../util/fuctions";
 import "./LoadCode.css";
 
 function LoadCode(props: LoadCodeType) {
@@ -164,6 +164,7 @@ function LoadCode(props: LoadCodeType) {
     props.setData(result);
     setResult("");
     resetValues();
+    userdata();
     alert.success("Code loaded successfully");
   }
 
@@ -223,9 +224,11 @@ function LoadCode(props: LoadCodeType) {
           );
         }
       );
+
       props.load(onliJavascript);
       setResult("");
       resetValues();
+      userdata();
       alert.success("Code loaded successfully");
     } else {
       setResult(
@@ -285,6 +288,7 @@ function LoadCode(props: LoadCodeType) {
 
   const handleKeyDown = (event: { key: string }) => {
     if (event.key === "Enter") {
+      removeParams("data");
       selectURL((code.current as HTMLInputElement).value as string);
     }
   };
@@ -326,9 +330,10 @@ function LoadCode(props: LoadCodeType) {
         <div>
           <button
             className="LoadCode__btn"
-            onClick={() =>
-              selectURL((code.current as HTMLInputElement).value as string)
-            }
+            onClick={() => {
+              removeParams("data");
+              selectURL((code.current as HTMLInputElement).value as string);
+            }}
             disabled={!enablebtn}
           >
             {btnload}

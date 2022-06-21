@@ -6,7 +6,7 @@ import CallTree from "../CallTree/CallTree";
 import FuzzySearch from "../FuzzySearch/FuzzySearch";
 import { getAstJsx, chooseLanguageGist } from "../Tree-Sitter/TreeSitter";
 import { useEffect, useState } from "react";
-import { TreeCall as json, resetTreeCall, setTreeCall } from "./CallTree";
+import { TreeCall as json, resetTreeCall } from "./CallTree";
 import { useDispatch, useSelector } from "react-redux";
 import { add } from "../Root-file/slice/addBubbleSlice";
 import MenuHeader from "../MenuHeader/MenuHeader";
@@ -14,7 +14,7 @@ import LoadCode from "../MenuHeader/LoadCode/LoadCode";
 import { code as testCode } from "../Tree-Sitter/TreeSitter";
 import { add as callrender } from "../Root-file/slice/callTreeSlice";
 import { CodeBlockCodeType, responseGistType } from "../../types/interface";
-import { convertToObj, urldata, urlvalid } from "../util/fuctions";
+import { urldata, urlvalid } from "../util/fuctions";
 import { useAlert } from "react-alert";
 
 function Root(): JSX.Element {
@@ -106,17 +106,9 @@ function Root(): JSX.Element {
       }
     }
 
-    let getdataurl= urldata("data")
-    if(getdataurl.repository === ""){
-
-    console.log(getdataurl.repository)
-    }else{
-    let obj= convertToObj(getdataurl.repository)
-    console.log(obj,"here")
-    setTreeCall(obj)
-    setOpengist(false);
-    }
-
+// const LoadUserData= userdata() 
+// setWait(loa)
+// setOpengist(LoadUserData)
     //eslint-disable-next-line
   }, []);
 
