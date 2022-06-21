@@ -6,12 +6,21 @@ import React from "react";
 import ListNested from "../../Icons/ListNested";
 import IconEye from "../../Icons/IconEye";
 import IconEyeSlash from "../../Icons/IconEyeSlash";
-import { CallTreeType, ObjTree } from "../../types/interface";
+import {
+  CallTreeType,
+  ObjTree,
+  CodeBlockCodeType,
+} from "../../types/interface";
 
 function CallTree(props: CallTreeType) {
   // console.log(props)
   const dataBubbleTree: boolean = useSelector(
     (state: { callTree: { value: boolean } }) => state.callTree.value
+  );
+
+  const listFN = useSelector(
+    (state: { addbubble: { value: CodeBlockCodeType[] } }) =>
+      state.addbubble.value
   );
   // console.log(dataBubbleTree)
   const [opentree, setOpentree] = useState<boolean>(true);
@@ -20,7 +29,7 @@ function CallTree(props: CallTreeType) {
   useEffect(() => {
     // dispatch(add(!dataBubbleTree));
     // eslint-disable-next-line
-  }, [dataBubbleTree]);
+  }, [dataBubbleTree,listFN]);
 
   const style: React.CSSProperties = {
     display: "flex",
@@ -80,6 +89,15 @@ function CallTree(props: CallTreeType) {
   }
 
   // console.log(props.data)
+  function GetName(data: any) {
+    if(listFN[data.index] === undefined){
+    return ""
+    }else{
+    let fnName = listFN[data.index];
+    // console.log(fnName)
+     return fnName.name
+    }
+  }
 
   const TreeLi = (input: ObjTree[]): JSX.Element => {
     return (
@@ -94,7 +112,7 @@ function CallTree(props: CallTreeType) {
                     onMouseOver={() => hoverBubbles(e)}
                     onMouseLeave={() => hoverBubblesOut(e)}
                   >
-                    {e.name}
+                    {GetName(e)}
                   </span>
                   <button
                     className="btn-eye"

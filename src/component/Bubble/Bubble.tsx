@@ -11,6 +11,7 @@ import {
   FnInfoType,
   CodeBlockCodeType,
 } from "../../types/interface";
+import {setDataURL} from "../util/fuctions";
 
 let c: number = 0;
 
@@ -109,8 +110,8 @@ function Bubble(props: BubbleProps): JSX.Element {
   }
 
   function closeBubble(parent: ObjTree[], children: ObjTree) {
-    // console.log(parent);
-    if (!(children.element === null)) {
+    // console.log(children.element());
+    if (!(children.element() === null)) {
       children.value = [];
       (children.element() as HTMLElement & FnInfoType).fninfo.event = true;
       (
@@ -125,6 +126,8 @@ function Bubble(props: BubbleProps): JSX.Element {
     const listParent: number = parent.indexOf(children);
     parent.splice(listParent, 1);
     dispatch(add(!reRender));
+
+      setDataURL(window.UrlData())  
   }
 
   const Codebubble = (

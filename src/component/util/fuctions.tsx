@@ -1,4 +1,6 @@
+//import { url } from "inspector";
 import { CodeBlockCodeType, TreesitterData } from "../../types/interface";
+//import { useSelector } from "react-redux";
 
 export function checkFunctionType(item: CodeBlockCodeType): {
   params: TreesitterData[];
@@ -26,23 +28,21 @@ export function checkFunctionType(item: CodeBlockCodeType): {
   }
   if (item.node.type === "lexical_declaration") {
     if (item.language === "TypeScript") {
-        if(item.node.children[1].children[2].children.length > 3){
-
-      const pathJavascript: TreesitterData[] =
-        item.node.children[1].children[2].children[0].children;
-      return {
-        params: pathJavascript,
-        code: item.node.children[1].children[2].children[3],
-      };
-        }else{
-
-      const pathJavascript: TreesitterData[] =
-        item.node.children[1].children[2].children[0].children;
-      return {
-        params: pathJavascript,
-        code: item.node.children[1].children[2].children[2],
-      };
-        }
+      if (item.node.children[1].children[2].children.length > 3) {
+        const pathJavascript: TreesitterData[] =
+          item.node.children[1].children[2].children[0].children;
+        return {
+          params: pathJavascript,
+          code: item.node.children[1].children[2].children[3],
+        };
+      } else {
+        const pathJavascript: TreesitterData[] =
+          item.node.children[1].children[2].children[0].children;
+        return {
+          params: pathJavascript,
+          code: item.node.children[1].children[2].children[2],
+        };
+      }
     } else {
       const pathJavascript: TreesitterData[] =
         item.node.children[1].children[2].children[0].children;
@@ -66,13 +66,13 @@ export function urlvalid(url: string): boolean {
   return evaluation || evaluation2 || evaluation3;
 }
 
-export function urldata() {
+export function urldata(params: string) {
   let detectRepoUrl = window.location;
   let getParamsUrl = detectRepoUrl.href.split("?");
 
-  function getRepoUrl() {
+  function getRepoUrl(params: string) {
     if (getParamsUrl.length > 1) {
-      let repository = getParamsUrl[1].split("repository=")[1];
+      let repository = getParamsUrl[1].split(params + "=")[1];
       return repository;
     } else {
       return "";
@@ -80,13 +80,13 @@ export function urldata() {
   }
 
   function setRepoUrl(newUrl: string) {
-    let readurl = getRepoUrl();
+    let readurl = getRepoUrl(params);
     if (readurl === "") {
       let url = window.location;
-      let urlrepo = url.href + `?repository=${newUrl}`;
+      let urlrepo = url.href + `?${params}=${newUrl}`;
       window.history.pushState({}, "repo", urlrepo);
     } else {
-      let readurl = getRepoUrl();
+      let readurl = getRepoUrl(params);
       let url = window.location;
       let newurl = url.href.replace(readurl, newUrl);
       window.history.pushState({}, "repo", newurl);
@@ -95,10 +95,81 @@ export function urldata() {
 
   return {
     setRepoUrl: setRepoUrl,
-    repository: getRepoUrl(),
+    repository: getRepoUrl(params),
   };
 }
 
+declare global {
+  interface Window {
+    UrlData: any;
+  }
+}
 
+export function setDataURL(data: any) {
+  let url = urlcreate(data).toString();
+  url = btoa(url);
+  if (url === "") {
+    urldata("data").setRepoUrl(url);
+    let global_url = window.location.href;
+    let url_without_data = global_url.replace("?data=", "");
+    window.history.pushState({}, "repo", url_without_data);
+  } else {
+    urldata("data").setRepoUrl(url);
+  }
+  // convertToObj(urldata("data").repository);
+}
 
+export function urlcreate(data: any) {
+  // console.log(data,"test");
+  if (data === []) {
+    return "";
+  } else {
+    let url = data.map((e: any, index: number) => {
+      return `{ "i":${e.index},"o":${e.order},"e":${
+        e.event ? 1 : 0
+      },"v":[${urlcreate(e.value)}],"b":"${e.id}"${
+        e.ied === undefined ? "" : `,"l":"${e.ied}"`
+      } }`;
+    });
 
+    return url;
+  }
+}
+
+export function convertToObj(data: string) {
+  let toString = atob(data);
+  let obj = "[" + toString + "]";
+  // console.log(obj);
+  obj = JSON.parse(obj);
+
+  let result = Rebuild(obj);
+
+  console.log(result);
+  return result;
+}
+
+export function Rebuild(data: any) {
+  return data.map((e: any) => {
+    return {
+      id: e.b,
+      ied: e.l === undefined ? "" : e.l,
+      index: e.i,
+      order: e.o,
+      event: e.e ? true : false,
+      value: Rebuild(e.v),
+      visibility: true,
+      name: "",
+      params: [{ text: "(" }, { text: ")" }],
+      element: () => {
+        let result = document.getElementById(
+          "id" + e.l === undefined ? "" : e.l
+        );
+        return result;
+      },
+      Bubble: () => {
+        let result = document.getElementById("id" + e.b);
+        return result;
+      },
+    };
+  });
+}

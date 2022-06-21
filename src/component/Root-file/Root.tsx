@@ -6,7 +6,7 @@ import CallTree from "../CallTree/CallTree";
 import FuzzySearch from "../FuzzySearch/FuzzySearch";
 import { getAstJsx, chooseLanguageGist } from "../Tree-Sitter/TreeSitter";
 import { useEffect, useState } from "react";
-import { TreeCall as json, resetTreeCall } from "./CallTree";
+import { TreeCall as json, resetTreeCall, setTreeCall } from "./CallTree";
 import { useDispatch, useSelector } from "react-redux";
 import { add } from "../Root-file/slice/addBubbleSlice";
 import MenuHeader from "../MenuHeader/MenuHeader";
@@ -14,7 +14,7 @@ import LoadCode from "../MenuHeader/LoadCode/LoadCode";
 import { code as testCode } from "../Tree-Sitter/TreeSitter";
 import { add as callrender } from "../Root-file/slice/callTreeSlice";
 import { CodeBlockCodeType, responseGistType } from "../../types/interface";
-import { urldata, urlvalid } from "../util/fuctions";
+import { convertToObj, urldata, urlvalid } from "../util/fuctions";
 import { useAlert } from "react-alert";
 
 function Root(): JSX.Element {
@@ -42,6 +42,7 @@ function Root(): JSX.Element {
       // // dispatch(add(codedata));
     } else {
       const loadData = await getAstJsx(testCode, "Placeholder", "JavaScript");
+      // console.log(loadData)
       dispatch(add(loadData));
       setWait(true);
     }
@@ -93,15 +94,29 @@ function Root(): JSX.Element {
   }, []);
 
   useEffect(() => {
-    let getrepourl = urldata();
+    let getrepourl = urldata("repository");
     let valid = urlvalid(getrepourl.repository);
-    if (valid) {
-      setOpengist(false);
-    } else {
-      if (getrepourl.repository !== "") {
-        alert.error("ERROR URL PARAMS");
+    if (!(getrepourl.repository === undefined)) {
+      if (valid) {
+        setOpengist(false);
+      } else {
+        if (getrepourl.repository !== "") {
+          alert.error("ERROR URL PARAMS");
+        }
       }
     }
+
+    let getdataurl= urldata("data")
+    if(getdataurl.repository === ""){
+
+    console.log(getdataurl.repository)
+    }else{
+    let obj= convertToObj(getdataurl.repository)
+    console.log(obj,"here")
+    setTreeCall(obj)
+    setOpengist(false);
+    }
+
     //eslint-disable-next-line
   }, []);
 

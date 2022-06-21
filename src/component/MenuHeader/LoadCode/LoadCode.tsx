@@ -23,25 +23,26 @@ function LoadCode(props: LoadCodeType) {
   const [btnload, setBtnload] = useState("Load");
   const [result, setResult] = useState<string | JSX.Element>("");
 
-  function selectURL(from:string) {
-    urldata().setRepoUrl(from);
-    let url= urldata().repository
-    const github = /https:\/\/github.com\//;
-    if (github.test(url)) {
-      getDetailsURL(url);
-    } else {
-      loadCodeTreeSitter(url);
+  function selectURL(from: string) {
+    urldata("repository").setRepoUrl(from);
+    let url = urldata("repository").repository;
+    if (!(url === undefined)) {
+      const github = /https:\/\/github.com\//;
+      if (github.test(url)) {
+        getDetailsURL(url);
+      } else {
+        loadCodeTreeSitter(url);
+      }
     }
   }
 
-    useEffect(()=>{
-    let state= urldata().repository
-    if(!(state === "")){
-
-        selectURL(state)
+  useEffect(() => {
+    let state = urldata("repository").repository;
+    if (!(state === "")) {
+      selectURL(state);
     }
     //eslint-disable-next-line
-    },[])
+  }, []);
 
   async function getDetailsURL(url: string) {
     setResult(
@@ -181,11 +182,10 @@ function LoadCode(props: LoadCodeType) {
 
       const data = await response.json();
       return data;
-    } catch (error) {
-    }
+    } catch (error) {}
   }
 
-  async function loadCodeTreeSitter(url:string) {
+  async function loadCodeTreeSitter(url: string) {
     // props.load(code.current.value, { reset: true });
     const value = url;
     const regexid = /([\w\d]+)/g;
@@ -326,7 +326,9 @@ function LoadCode(props: LoadCodeType) {
         <div>
           <button
             className="LoadCode__btn"
-            onClick={()=>selectURL((code.current as HTMLInputElement).value as string)}
+            onClick={() =>
+              selectURL((code.current as HTMLInputElement).value as string)
+            }
             disabled={!enablebtn}
           >
             {btnload}

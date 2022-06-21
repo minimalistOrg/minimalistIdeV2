@@ -50,11 +50,11 @@ function CallExpression(props: TypeComponentProps) {
       setIed(uuidv4());
     }
 
-    const fndata = {
+    let fndata = {
       id: id,
       ied: expression.current?.id,
       params: params,
-      name: name,
+      name: fnindex === "" ? "" : listFN[fnindex as number].name,
       index: fnindex,
       value: [],
       event: fnindex === "" ? false : true,
@@ -69,6 +69,8 @@ function CallExpression(props: TypeComponentProps) {
       },
       visibility: true,
     };
+
+
     validifFnCall();
     Object.defineProperty(fndata.element(), "fninfo", {
       value: fndata,
