@@ -17,14 +17,15 @@ import {
   FnInfoType,
   ObjTree,
   TreesitterData,
-  CodeBlockCodeType
+  CodeBlockCodeType,
 } from "../../types/interface";
-import {checkFunctionType,setDataURL} from "../util/fuctions"
+import { checkFunctionType, setDataURL } from "../util/fuctions";
 
 function CodeBlockTS(props: CodeBlockType): JSX.Element {
   const dataBubbleTree = useSelector(
     (state: { callTree: { value: boolean } }) => state.callTree.value
   );
+  const [id,setId]= useState(props.id)
   const [title, setTitle] = useState<string>("Loading...");
   const [code, setCode] = useState<
     TreesitterData | { type: string; text: string }
@@ -33,17 +34,18 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
   const activeBubble: RefObject<HTMLDivElement> = useRef(null);
   const CodeTxt: MutableRefObject<null | HTMLElement> = useRef(null);
 
-
   const listFN = useSelector(
     (state: { addbubble: { value: CodeBlockCodeType[] } }) =>
       state.addbubble.value
   );
 
   useEffect(() => {
+    setDataURL(window.UrlData());
 
-setDataURL(window.UrlData())
-
-    Resize(activeBubble.current as HTMLElement, CodeTxt?.current as HTMLElement);
+    Resize(
+      activeBubble.current as HTMLElement,
+      CodeTxt?.current as HTMLElement
+    );
 
     if (!(props.code === undefined)) {
       if (props.code.node.children[3] === undefined) {
@@ -61,13 +63,45 @@ setDataURL(window.UrlData())
       }
     }
 
-    let BubbleById = document.getElementById("id" + props.id);
+    let BubbleById = document.getElementById("id" + id);
     Object.defineProperty(BubbleById, "fninfo", {
       value: props.data,
       writable: true,
     });
+
+    let Bubble = (activeBubble.current as HTMLElement).parentElement
+      ?.parentElement?.parentElement?.parentElement?.parentElement?.children[0];
+    let validParent = Bubble?.classList.contains("Bubble");
+    if (validParent) {
+      setTimeout(() => {
+        let findFncall = Bubble?.querySelector(
+          `.CallExpression[data-name=${
+            title === "Loading..." ? "nofound" : title
+          }]`
+        );
+        if (!(findFncall === null)) {
+          let fnInfo:any = (findFncall as HTMLElement & FnInfoType).fninfo ;
+          // if("ied" in fnInfo){
+
+          fnInfo.event= false
+          fnInfo.element= () => findFncall
+          setId(fnInfo.id)
+          console.log(fnInfo,"new")
+          console.log(props.data,"g")
+          Object.defineProperty(BubbleById,"fninfo",{value:{},writable:true})
+          Object.defineProperty(BubbleById,"fninfo",{value:fnInfo,writable:true})
+          // }
+        }
+      }, 100);
+    }
+
     //eslint-disable-next-line
-  }, [dataBubbleTree,listFN]);
+  }, [dataBubbleTree, listFN, code]);
+
+  useEffect(()=>{
+
+  },[])
+
 
   // useEffect(()=>{
   //   maxHeightBody(activeBubble.current);
@@ -227,13 +261,13 @@ setDataURL(window.UrlData())
     }
   }
 
-
   return (
     <div
-      id={"id" + props.id}
+      id={"id" + id}
       className="CodeBlock"
       data-testid="Bubble"
       ref={activeBubble}
+      data-title={title}
     >
       <div
         className="CodeBlock__header"

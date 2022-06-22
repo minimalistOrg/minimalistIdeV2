@@ -39,6 +39,7 @@ function CallTree(props: CallTreeType) {
   function hoverBubbles(e: ObjTree) {
     // console.log(e);
     if (e.element() === null) {
+    // console.log(e.Bubble)
       e.Bubble()?.classList.add("CodeBlockHover");
       e.Bubble()?.children[0].classList.add("CodeBlock__header--hover");
     } else {

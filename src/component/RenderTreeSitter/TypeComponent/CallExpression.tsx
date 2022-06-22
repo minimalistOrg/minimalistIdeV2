@@ -49,12 +49,26 @@ function CallExpression(props: TypeComponentProps) {
     if (ied === "") {
       setIed(uuidv4());
     }
+    let getName = fnindex === "" ? "" : listFN[fnindex as number].name;
+
+    // let codeblock: any = expression.current;
+    // for (let i = 0; !codeblock.classList.contains("CodeBlock"); i++) {
+    //   codeblock = codeblock.parentNode;
+    // }
+    // // console.log(codeblock);
+    // let searchChild =
+    //   codeblock.parentElement.parentElement.children[1].children[0];
+    //   console.log(searchChild)
+    // let element = searchChild.querySelectorAll(
+    //   (getName === "" ? null : `CodeBlock[data-title=${getName}]`)
+    // );
+    // console.log(element,(getName === "" ? null : `.CodeBlock`));
 
     let fndata = {
       id: id,
       ied: expression.current?.id,
       params: params,
-      name: fnindex === "" ? "" : listFN[fnindex as number].name,
+      name: getName,
       index: fnindex,
       value: [],
       event: fnindex === "" ? false : true,
@@ -69,7 +83,6 @@ function CallExpression(props: TypeComponentProps) {
       },
       visibility: true,
     };
-
 
     validifFnCall();
     Object.defineProperty(fndata.element(), "fninfo", {
@@ -114,6 +127,7 @@ function CallExpression(props: TypeComponentProps) {
       onMouseLeave={fnHoverClose as () => void}
       ref={expression}
       id={"id" + ied}
+      data-name={name}
     >
       <ChooseType info={data.children[0]} />
       <span>
