@@ -115,7 +115,7 @@ function Bubble(props: BubbleProps): JSX.Element {
   }
 
   function closeBubble(parent: ObjTree[], children: ObjTree) {
-    // console.log(children.element());
+    // console.log(children);
     if (!(children.element() === null)) {
       children.value = [];
       (children.element() as HTMLElement & FnInfoType).fninfo.event = true;

@@ -27,9 +27,10 @@ function CallTree(props: CallTreeType) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+  // console.log(props.data,"test")
     // dispatch(add(!dataBubbleTree));
     // eslint-disable-next-line
-  }, [dataBubbleTree,listFN]);
+  }, [dataBubbleTree,listFN,props.data]);
 
   const style: React.CSSProperties = {
     display: "flex",

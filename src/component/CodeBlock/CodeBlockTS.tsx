@@ -86,8 +86,14 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
           fnInfo.event= false
           fnInfo.element= () => findFncall
           setId(fnInfo.id)
-          console.log(fnInfo,"new")
-          console.log(props.data,"g")
+          // console.log(fnInfo,"new")
+          props.data.id= fnInfo.id
+          props.data.ied= fnInfo.ied
+          props.data.order= fnInfo.order
+          // props.data.event= fnInfo.event
+          props.data.Bubble= ()=> activeBubble.current
+          props.data.element= ()=> findFncall as HTMLElement
+          // console.log(findFncall)
           Object.defineProperty(BubbleById,"fninfo",{value:{},writable:true})
           Object.defineProperty(BubbleById,"fninfo",{value:fnInfo,writable:true})
           // }
@@ -98,9 +104,9 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
     //eslint-disable-next-line
   }, [dataBubbleTree, listFN, code]);
 
-  useEffect(()=>{
-
-  },[])
+  // useEffect(()=>{
+  //
+  // },[])
 
 
   // useEffect(()=>{

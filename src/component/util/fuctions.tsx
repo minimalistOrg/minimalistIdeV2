@@ -172,7 +172,7 @@ export function Rebuild(data: any) {
       params: [{ text: "(" }, { text: ")" }],
       element: () => {
         let result = document.getElementById(
-          "id" + e.b
+          "id" + e.l
         );
         return result;
       },
