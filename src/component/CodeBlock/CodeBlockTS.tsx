@@ -80,11 +80,11 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
           }]`
         );
         if (!(findFncall === null)) {
-          let fnInfo:any = (findFncall as HTMLElement & FnInfoType).fninfo ;
+          let fnInfo:ObjTree = (findFncall as HTMLElement & FnInfoType).fninfo ;
           // if("ied" in fnInfo){
 
           fnInfo.event= false
-          fnInfo.element= () => findFncall
+          fnInfo.element= () => findFncall as HTMLElement
           setId(fnInfo.id)
           // console.log(fnInfo,"new")
           props.data.id= fnInfo.id

@@ -11,7 +11,8 @@ import {
   responseGistType,
 } from "../../../types/interface";
 import { chooseLanguageGist } from "../../Tree-Sitter/TreeSitter";
-import { urldata, urlvalid, userdata, removeParams } from "../../util/fuctions";
+import { urlvalid, userdata } from "../../util/fuctions";
+import EasyUrlParams from "../../util/EasyUrlParams"
 import "./LoadCode.css";
 
 function LoadCode(props: LoadCodeType) {
@@ -24,8 +25,16 @@ function LoadCode(props: LoadCodeType) {
   const [result, setResult] = useState<string | JSX.Element>("");
 
   function selectURL(from: string) {
-    urldata("repository").setRepoUrl(from);
-    let url = urldata("repository").repository;
+    //urldata("repository").setRepoUrl(from);
+    // console.log(from)
+    let repository= new EasyUrlParams("repository")
+    if(from === undefined){
+
+    }else{
+
+    repository.set(from)
+    }
+    let url = repository.get()?.value
     if (!(url === undefined)) {
       const github = /https:\/\/github.com\//;
       if (github.test(url)) {
@@ -37,9 +46,9 @@ function LoadCode(props: LoadCodeType) {
   }
 
   useEffect(() => {
-    let state = urldata("repository").repository;
+    let state = new EasyUrlParams("repository").get()?.value;
     if (!(state === "")) {
-      selectURL(state);
+      selectURL(state as string);
     }
     //eslint-disable-next-line
   }, []);
@@ -288,7 +297,7 @@ function LoadCode(props: LoadCodeType) {
 
   const handleKeyDown = (event: { key: string }) => {
     if (event.key === "Enter") {
-      removeParams("data");
+      new EasyUrlParams("data").remove()
       selectURL((code.current as HTMLInputElement).value as string);
     }
   };
@@ -331,7 +340,7 @@ function LoadCode(props: LoadCodeType) {
           <button
             className="LoadCode__btn"
             onClick={() => {
-              removeParams("data");
+              new EasyUrlParams("data").remove()
               selectURL((code.current as HTMLInputElement).value as string);
             }}
             disabled={!enablebtn}

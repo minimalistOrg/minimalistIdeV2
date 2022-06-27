@@ -145,6 +145,7 @@ export function test(
       // console.log(listFunctionDeclaration)
       return listFunctionDeclaration;
     };
+    console.log(testing())
     return testing();
   });
 

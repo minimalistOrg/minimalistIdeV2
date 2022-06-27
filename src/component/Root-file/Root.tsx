@@ -14,8 +14,9 @@ import LoadCode from "../MenuHeader/LoadCode/LoadCode";
 import { code as testCode } from "../Tree-Sitter/TreeSitter";
 import { add as callrender } from "../Root-file/slice/callTreeSlice";
 import { CodeBlockCodeType, responseGistType } from "../../types/interface";
-import { urldata, urlvalid } from "../util/fuctions";
+import { urlvalid } from "../util/fuctions";
 import { useAlert } from "react-alert";
+import EasyUrlParams from "../util/EasyUrlParams";
 
 function Root(): JSX.Element {
   const dispatch = useDispatch();
@@ -94,13 +95,14 @@ function Root(): JSX.Element {
   }, []);
 
   useEffect(() => {
-    let getrepourl = urldata("repository");
-    let valid = urlvalid(getrepourl.repository);
-    if (!(getrepourl.repository === undefined)) {
+    let getrepourl = new EasyUrlParams("repository");
+    console.log(getrepourl.get())
+    let valid = urlvalid(getrepourl.get()?.value as string);
+    if (!(getrepourl.get() === undefined)) {
       if (valid) {
         setOpengist(false);
       } else {
-        if (getrepourl.repository !== "") {
+        if (getrepourl.get()?.value !== "") {
           alert.error("ERROR URL PARAMS");
         }
       }

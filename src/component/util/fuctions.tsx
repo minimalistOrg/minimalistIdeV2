@@ -1,6 +1,7 @@
 //import { url } from "inspector";
 import { CodeBlockCodeType, TreesitterData } from "../../types/interface";
 import { setTreeCall } from "../Root-file/CallTree";
+import EasyUrlParams from "./EasyUrlParams";
 //import { useSelector } from "react-redux";
 
 export function checkFunctionType(item: CodeBlockCodeType): {
@@ -67,45 +68,6 @@ export function urlvalid(url: string): boolean {
   return evaluation || evaluation2 || evaluation3;
 }
 
-export function urldata(params: string) {
-  let detectRepoUrl = window.location;
-  let getParamsUrl = detectRepoUrl.href.split("?");
-
-  function getRepoUrl(params: string) {
-    if (getParamsUrl.length > 1) {
-      let search = getParamsUrl.filter((e: any) => {
-        let result = new RegExp(" ?" + params + "=", "g");
-        return result.test("?" + e + "=");
-      });
-      if (search.length === 0) {
-        return "";
-      } else {
-        return search[0].split(params + "=")[1];
-      }
-    } else {
-      return "";
-    }
-  }
-
-  function setRepoUrl(newUrl: string) {
-    let readurl = getRepoUrl(params);
-    if (readurl === "") {
-      let url = window.location;
-      let urlrepo = url.href + `?${params}=${newUrl}`;
-      window.history.pushState({}, "repo", urlrepo);
-    } else {
-      let readurl = getRepoUrl(params);
-      let url = window.location;
-      let newurl = url.href.replace(readurl, newUrl);
-      window.history.pushState({}, "repo", newurl);
-    }
-  }
-
-  return {
-    setRepoUrl: setRepoUrl,
-    repository: getRepoUrl(params),
-  };
-}
 
 declare global {
   interface Window {
@@ -113,21 +75,15 @@ declare global {
   }
 }
 
-export function removeParams(params: string) {
-  urldata(params).setRepoUrl("");
-  let global_url = window.location.href;
-  let url_without_data = global_url.replace("?data=", "");
-  window.history.pushState({}, "repo", url_without_data);
-}
-
 export function setDataURL(data: any) {
   // console.log(data)
   let url = urlcreate(data).toString();
   url = btoa(url);
+  let dataParam= new EasyUrlParams("data")
   if (url === "") {
-    removeParams("data");
+    dataParam.remove()
   } else {
-    urldata("data").setRepoUrl(url);
+    dataParam.set(url)
   }
   // convertToObj(urldata("data").repository);
 }
@@ -139,9 +95,7 @@ export function urlcreate(data: any) {
     let url = data.map((e: any, index: number) => {
       return `{ "i":${e.index},"o":${e.order},"e":${
         e.event ? 1 : 0
-      },"v":[${urlcreate(e.value)}],"b":"${e.id}"${
-        e.ied === undefined ? "" : `,"l":"${e.ied}"`
-      } }`;
+      },"v":[${urlcreate(e.value)}],"b":"${e.id}" }`;
     });
 
     return url;
@@ -185,12 +139,13 @@ export function Rebuild(data: any) {
 }
 
 export function userdata() {
-  let getdataurl = urldata("data");
-  if (getdataurl.repository === "") {
+  let getdataurl = new EasyUrlParams("data")
+  // console.log(getdataurl.value)
+  if (getdataurl.get()?.value === undefined) {
     // console.log(getdataurl.repository)
     return false;
   } else {
-    let obj = convertToObj(getdataurl.repository);
+    let obj = convertToObj(getdataurl.get()?.value as string);
     // console.log(obj,"here")
     setTreeCall(obj);
     return true;
