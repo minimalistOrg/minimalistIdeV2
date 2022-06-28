@@ -68,7 +68,6 @@ export function urlvalid(url: string): boolean {
   return evaluation || evaluation2 || evaluation3;
 }
 
-
 declare global {
   interface Window {
     UrlData: any;
@@ -79,11 +78,11 @@ export function setDataURL(data: any) {
   // console.log(data)
   let url = urlcreate(data).toString();
   url = btoa(url);
-  let dataParam= new EasyUrlParams("data")
+  let dataParam = new EasyUrlParams("data");
   if (url === "") {
-    dataParam.remove()
+    dataParam.remove();
   } else {
-    dataParam.set(url)
+    dataParam.set(url);
   }
   // convertToObj(urldata("data").repository);
 }
@@ -125,9 +124,7 @@ export function Rebuild(data: any) {
       name: "",
       params: [{ text: "(" }, { text: ")" }],
       element: () => {
-        let result = document.getElementById(
-          "id" + e.l
-        );
+        let result = document.getElementById("id" + e.l);
         return result;
       },
       Bubble: () => {
@@ -139,8 +136,7 @@ export function Rebuild(data: any) {
 }
 
 export function userdata() {
-  let getdataurl = new EasyUrlParams("data")
-  // console.log(getdataurl.value)
+  let getdataurl = new EasyUrlParams("data");
   if (getdataurl.get()?.value === undefined) {
     // console.log(getdataurl.repository)
     return false;
@@ -149,5 +145,49 @@ export function userdata() {
     // console.log(obj,"here")
     setTreeCall(obj);
     return true;
+  }
+}
+
+export function startParams(list: CodeBlockCodeType[]) {
+  let stacktraceData = new EasyUrlParams("stacktrace");
+  if (stacktraceData.get() !== undefined) {
+    stacktrace(stacktraceData, list);
+  }
+}
+
+function stacktrace(data: any, fn: CodeBlockCodeType[]) {
+  let value = data.get().value;
+  value = value.replace(/\[|\]/g, "");
+  let list = value.split(",");
+  let listObj = list.map((e: string) => {
+    let parts = e.split(":");
+    return {
+      file: parts[0],
+      row: parts[1],
+      colum: parts.length > 2 ? parts[2] : "",
+    };
+  });
+  // console.log(listObj.reverse(),fn);
+  // console.log(fn)
+  if (fn.length > 0) {
+    // console.log(fn, listObj.reverse());
+
+    let result = fn.filter((e: any) => {
+      let start = e.node.startPosition;
+      let end = e.node.endPosition;
+      let data = listObj.reverse();
+      // console.log(start, end, data);
+      let r = data.filter((e: any) => {
+        let valid =
+          parseInt(e.row) >= start.row + 1 && parseInt(e.row) <= end.row + 1;
+        // console.log(valid)
+        return valid;
+      });
+
+      return (
+        parseInt(r[0].row) >= start.row + 1 && parseInt(r[0].row) <= end.row + 1
+      );
+    });
+    console.log(result, "out");
   }
 }

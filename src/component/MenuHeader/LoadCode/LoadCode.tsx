@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
 import { useAlert } from "react-alert";
+import { useSelector } from "react-redux";
+import { useEffect, useRef, useState } from "react";
 import ReactModal from "react-modal";
 import ClockwiseIco from "../../../Icons/ClockwiseIco";
 import IcoClose from "../../../Icons/IcoClose";
@@ -11,7 +12,7 @@ import {
   responseGistType,
 } from "../../../types/interface";
 import { chooseLanguageGist } from "../../Tree-Sitter/TreeSitter";
-import { urlvalid, userdata } from "../../util/fuctions";
+import { urlvalid, userdata, startParams } from "../../util/fuctions";
 import EasyUrlParams from "../../util/EasyUrlParams"
 import "./LoadCode.css";
 
@@ -23,6 +24,15 @@ function LoadCode(props: LoadCodeType) {
   const [enablebtn, setEnablebtn] = useState(false);
   const [btnload, setBtnload] = useState("Load");
   const [result, setResult] = useState<string | JSX.Element>("");
+  const [list,setList]= useState(true)
+
+  const listFn = useSelector(
+    (state: { addbubble: { value: CodeBlockCodeType[] } }) =>
+      state.addbubble.value
+  );
+  // const listFn: CodeBlockCodeType[] = useSelector(
+  //   (state: StoreFn) => state.addbubble.value
+  // );
 
   function selectURL(from: string) {
     //urldata("repository").setRepoUrl(from);
@@ -52,6 +62,11 @@ function LoadCode(props: LoadCodeType) {
     }
     //eslint-disable-next-line
   }, []);
+
+  useEffect(()=>{
+  startParams(listFn)
+  // console.log(fn,listFn)
+  },[listFn])
 
   async function getDetailsURL(url: string) {
     setResult(
@@ -174,6 +189,7 @@ function LoadCode(props: LoadCodeType) {
     setResult("");
     resetValues();
     userdata();
+    setList(! list)
     alert.success("Code loaded successfully");
   }
 
@@ -238,6 +254,7 @@ function LoadCode(props: LoadCodeType) {
       setResult("");
       resetValues();
       userdata();
+    setList(! list)
       alert.success("Code loaded successfully");
     } else {
       setResult(

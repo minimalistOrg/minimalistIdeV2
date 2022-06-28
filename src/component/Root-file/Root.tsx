@@ -4,14 +4,14 @@ import Bubble from "../Bubble/Bubble";
 import CallTree from "../CallTree/CallTree";
 // import CodeBlockTS from "../CodeBlock/CodeBlockTS";
 import FuzzySearch from "../FuzzySearch/FuzzySearch";
-import { getAstJsx, chooseLanguageGist } from "../Tree-Sitter/TreeSitter";
+import { chooseLanguageGist } from "../Tree-Sitter/TreeSitter";
 import { useEffect, useState } from "react";
 import { TreeCall as json, resetTreeCall } from "./CallTree";
 import { useDispatch, useSelector } from "react-redux";
 import { add } from "../Root-file/slice/addBubbleSlice";
 import MenuHeader from "../MenuHeader/MenuHeader";
 import LoadCode from "../MenuHeader/LoadCode/LoadCode";
-import { code as testCode } from "../Tree-Sitter/TreeSitter";
+// import { code as testCode } from "../Tree-Sitter/TreeSitter";
 import { add as callrender } from "../Root-file/slice/callTreeSlice";
 import { CodeBlockCodeType, responseGistType } from "../../types/interface";
 import { urlvalid } from "../util/fuctions";
@@ -42,18 +42,19 @@ function Root(): JSX.Element {
       // //
       // // dispatch(add(codedata));
     } else {
-      const loadData = await getAstJsx(testCode, "Placeholder", "JavaScript");
-      // console.log(loadData)
-      dispatch(add(loadData));
+      // const loadData = await getAstJsx(testCode, "Placeholder", "JavaScript");
+      // // console.log(loadData)
+      // dispatch(add(loadData));
       setWait(true);
     }
   };
 
   async function setGistCode(data: responseGistType[]) {
+  // console.trace()
     setPlaceholderinput("Loading data...");
     resetTreeCall();
     dispatch(callrender(!reRender));
-    dispatch(add(""));
+    dispatch(add([]));
     async function getCodeParse(e: responseGistType) {
       let response = await chooseLanguageGist(
         e.content,
@@ -82,7 +83,7 @@ function Root(): JSX.Element {
     setPlaceholderinput("Loading data...");
     resetTreeCall();
     dispatch(callrender(!reRender));
-    dispatch(add(""));
+    dispatch(add([]));
     dispatch(add(data));
     setPlaceholderinput("Search functions by name");
   }
@@ -96,7 +97,6 @@ function Root(): JSX.Element {
 
   useEffect(() => {
     let getrepourl = new EasyUrlParams("repository");
-    console.log(getrepourl.get())
     let valid = urlvalid(getrepourl.get()?.value as string);
     if (!(getrepourl.get() === undefined)) {
       if (valid) {
