@@ -1,5 +1,5 @@
 import { useAlert } from "react-alert";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import ReactModal from "react-modal";
 import ClockwiseIco from "../../../Icons/ClockwiseIco";
@@ -14,6 +14,7 @@ import {
 import { chooseLanguageGist } from "../../Tree-Sitter/TreeSitter";
 import { urlvalid, userdata, startParams } from "../../util/fuctions";
 import EasyUrlParams from "../../util/EasyUrlParams"
+import {add} from "../../Root-file/slice/callTreeSlice"
 import "./LoadCode.css";
 
 function LoadCode(props: LoadCodeType) {
@@ -30,6 +31,12 @@ function LoadCode(props: LoadCodeType) {
     (state: { addbubble: { value: CodeBlockCodeType[] } }) =>
       state.addbubble.value
   );
+
+  const dataBubbleTree: boolean = useSelector(
+    (state: { callTree: { value: boolean } }) => state.callTree.value
+  );
+
+  const dispatch= useDispatch()
   // const listFn: CodeBlockCodeType[] = useSelector(
   //   (state: StoreFn) => state.addbubble.value
   // );
@@ -65,7 +72,8 @@ function LoadCode(props: LoadCodeType) {
 
   useEffect(()=>{
   startParams(listFn)
-  // console.log(fn,listFn)
+  dispatch(add(!dataBubbleTree))
+  // eslint-disable-next-line
   },[listFn])
 
   async function getDetailsURL(url: string) {

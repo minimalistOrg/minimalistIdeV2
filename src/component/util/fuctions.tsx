@@ -169,6 +169,7 @@ function stacktrace(data: any, fn: CodeBlockCodeType[]) {
   });
   // console.log(listObj.reverse(),fn);
   // console.log(fn)
+  let st= false
   if (fn.length > 0) {
     // console.log(fn, listObj.reverse());
 
@@ -180,14 +181,73 @@ function stacktrace(data: any, fn: CodeBlockCodeType[]) {
       let r = data.filter((e: any) => {
         let valid =
           parseInt(e.row) >= start.row + 1 && parseInt(e.row) <= end.row + 1;
+          if(!valid){
+            console.warn(`stacktrace error ${e.file}:${e.row}:${e.colum}`)
+          }
         // console.log(valid)
         return valid;
       });
-
-      return (
-        parseInt(r[0].row) >= start.row + 1 && parseInt(r[0].row) <= end.row + 1
-      );
+      let row = r.length;
+      if (row > 0) {
+        row = r[0].row;
+        st= true
+      }
+      return parseInt(row) >= start.row + 1 && parseInt(row) <= end.row + 1;
     });
-    console.log(result, "out");
+    // console.log(result, "out");
+    buildObj(result,st);
   }
+}
+
+function buildObj(data: CodeBlockCodeType[],st:boolean) {
+  const fn: any = data;
+
+  //     id: e.b,
+  //     ied: e.l === undefined ? "" : e.l,
+  //     index: e.i,
+  //     order: e.o,
+  //     event: e.e ? true : false,
+  //     value: Rebuild(e.v),
+  //     visibility: true,
+  //     name: "",
+  //     params: [{ text: "(" }, { text: ")" }],
+  //     element: () => {
+  //       let result = document.getElementById("id" + e.l);
+  //       return result;
+  //     },
+  //     Bubble: () => {
+  //       let result = document.getElementById("id" + e.b);
+  //       return result;
+  //     },
+  //   };
+  // });
+  //
+  const nested = fn.reduceRight(
+    (acc: any, curr: any, index: number) => [
+      {
+        id: "x" + index,
+        index: index,
+        ied: "",
+        order: 0,
+        event: false,
+        params: [{ text: "(" }, { text: ")" }],
+        name: curr.name,
+        value: acc,
+        visibility: true,
+        element: () => {
+          let result = document.getElementById("id");
+          return result;
+        },
+        Bubble: () => {
+          let result = document.getElementById("idx" + index.toString());
+          return result;
+        },
+      },
+    ],
+    []
+  );
+
+  // console.log(nested);
+  setTreeCall(nested);
+  return st;
 }

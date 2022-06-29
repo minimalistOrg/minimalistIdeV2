@@ -100,6 +100,7 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
         }
       }, 100);
     }
+    // console.log(listFN,"hh")
 
     //eslint-disable-next-line
   }, [dataBubbleTree, listFN, code]);

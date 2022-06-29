@@ -157,6 +157,8 @@ function Bubble(props: BubbleProps): JSX.Element {
     );
   };
 
+  // console.log(props.tree,"arbol")
+
   return (
     <div className="BubbleContainer">
       {props.tree.map((e: ObjTree, index: number) => {
