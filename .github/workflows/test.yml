@@ -39,5 +39,5 @@
            yarn install
            yarn build
 
-       #- name: test
-         #         run: yarn test
+       - name: test
+                  run: yarn playwright
