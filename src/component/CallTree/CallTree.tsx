@@ -91,7 +91,7 @@ function CallTree(props: CallTreeType) {
   }
 
   // console.log(props.data)
-  function GetName(data: any) {
+  function GetName(data: ObjTree) {
     if(listFN[data.index] === undefined){
     return ""
     }else{

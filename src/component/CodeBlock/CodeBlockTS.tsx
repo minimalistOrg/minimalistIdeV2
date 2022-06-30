@@ -25,10 +25,10 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
   const dataBubbleTree = useSelector(
     (state: { callTree: { value: boolean } }) => state.callTree.value
   );
-  const [id,setId]= useState(props.id)
+  const [id, setId] = useState(props.id);
   const [title, setTitle] = useState<string>("Loading...");
   const [code, setCode] = useState<
-    TreesitterData | { type: string; text: string }
+    TreesitterData | { type: string; text: string } | undefined
   >({ type: "loading", text: "Loading" });
   const [params, setParams] = useState<TreesitterData[]>([]);
   const activeBubble: RefObject<HTMLDivElement> = useRef(null);
@@ -63,7 +63,7 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
       }
     }
 
-    let BubbleById = document.getElementById("id" + id);
+    let BubbleById = activeBubble.current;
     Object.defineProperty(BubbleById, "fninfo", {
       value: props.data,
       writable: true,
@@ -80,27 +80,29 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
           }]`
         );
         if (!(findFncall === null)) {
-          let fnInfo:ObjTree = (findFncall as HTMLElement & FnInfoType).fninfo ;
+          let fnInfo: ObjTree = (findFncall as HTMLElement & FnInfoType).fninfo;
           // if("ied" in fnInfo){
 
-          fnInfo.event= false
-          fnInfo.element= () => findFncall as HTMLElement
-          setId(fnInfo.id)
+          fnInfo.event = false;
+          fnInfo.element = () => findFncall as HTMLElement;
+          setId(fnInfo.id);
           // console.log(fnInfo,"new")
-          props.data.id= fnInfo.id
-          props.data.ied= fnInfo.ied
-          props.data.order= fnInfo.order
+          props.data.id = fnInfo.id;
+          props.data.ied = fnInfo.ied;
+          props.data.order = fnInfo.order;
           // props.data.event= fnInfo.event
-          props.data.Bubble= ()=> activeBubble.current
-          props.data.element= ()=> findFncall as HTMLElement
-          // console.log(findFncall)
-          Object.defineProperty(BubbleById,"fninfo",{value:{},writable:true})
-          Object.defineProperty(BubbleById,"fninfo",{value:fnInfo,writable:true})
+          props.data.Bubble = () => activeBubble.current;
+          props.data.element = () => findFncall as HTMLElement;
+          // console.log(findFncall, activeBubble.current)
+          // Object.defineProperty(BubbleById,"fninfo",{value:{},writable:true})
+          Object.defineProperty(BubbleById, "fninfo", {
+            value: fnInfo,
+            writable: true,
+          });
           // }
         }
       }, 100);
     }
-    // console.log(listFN,"hh")
 
     //eslint-disable-next-line
   }, [dataBubbleTree, listFN, code]);
@@ -108,7 +110,6 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
   // useEffect(()=>{
   //
   // },[])
-
 
   // useEffect(()=>{
   //   maxHeightBody(activeBubble.current);

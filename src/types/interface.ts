@@ -37,6 +37,8 @@ export interface TreesitterData {
   typeId: number;
   id: number;
   parent: TreesitterData;
+  startPosition: {row:number, colum: number};
+ endPosition: {row:number, colum:number}
 }
 
 export interface TypeComponentProps {
@@ -99,4 +101,17 @@ export interface codeGithubType {
   url: string;
   content: string;
   encoding: string;
+}
+
+
+export interface EasyUrlParams{
+get: ()=> {params: string, value:string};
+set: (value:string) => void;
+}
+
+
+export interface stacktraceType{
+file: string;
+row: string;
+colum:string;
 }

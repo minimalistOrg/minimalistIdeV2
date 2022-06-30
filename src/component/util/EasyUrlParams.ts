@@ -1,4 +1,5 @@
-export default class EasyUrlParams {
+
+export default class EasyUrlParams{
   param: string;
 
   constructor(param: string) {

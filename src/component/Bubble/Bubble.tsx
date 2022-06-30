@@ -1,5 +1,5 @@
 import "./Bubble.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CodeBlockTS from "../CodeBlock/CodeBlockTS";
 import { useDispatch, useSelector } from "react-redux";
 import { add } from "../Root-file/slice/callTreeSlice";
@@ -14,6 +14,8 @@ import {
 import {setDataURL} from "../util/fuctions";
 
 let c: number = 0;
+
+
 
 function Bubble(props: BubbleProps): JSX.Element {
   // const [renderBubble, setRenderBubble] = useState([]);
@@ -32,7 +34,7 @@ function Bubble(props: BubbleProps): JSX.Element {
   >(null);
 
 
-  useEffect(()=>{},[reRender])
+  // useEffect(()=>{},[reRender])
 
   function handleAdd(
     event: { target: HTMLElement },
@@ -130,10 +132,12 @@ function Bubble(props: BubbleProps): JSX.Element {
     // document.querySelectorAll("html")[0]!.style = "cursor:default";
     const listParent: number = parent.indexOf(children);
     parent.splice(listParent, 1);
-    dispatch(add(!reRender));
 
       setDataURL(window.UrlData())  
+    dispatch(add(!reRender));
+    // dispatch(add(!reRender));
   }
+
 
   const Codebubble = (
     children: ObjTree,

@@ -78,7 +78,7 @@ function UniversalType(props: TypeComponentProps & { type: string }) {
 }
 
 function ChooseType(props: {
-  info: TreesitterData | { type: string; text: string };
+  info: TreesitterData | { type: string; text: string } | undefined;
 }): JSX.Element {
   function choose(info: TreesitterData) {
     //
