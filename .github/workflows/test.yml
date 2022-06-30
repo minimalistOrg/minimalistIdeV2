@@ -40,4 +40,5 @@
            yarn build
 
        - name: test
-                  run: yarn playwright
+         run: |
+           yarn playwright
