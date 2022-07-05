@@ -90,7 +90,10 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
           props.data.id = fnInfo.id;
           props.data.ied = fnInfo.ied;
           props.data.order = fnInfo.order;
-          // props.data.event= fnInfo.event
+          props.data.name = fnInfo.name;
+          // console.log(fnInfo.name,props.data.name,"here")
+          props.data.params = fnInfo.params; 
+          props.data.event= fnInfo.event
           props.data.Bubble = () => activeBubble.current;
           props.data.element = () => findFncall as HTMLElement;
           // console.log(findFncall, activeBubble.current)
