@@ -3,7 +3,7 @@ import { SyntaxNode } from "web-tree-sitter";
 export interface SimplifiedSyntaxNode {
   type: 'call_expression' | 'member_expression' | 'identifier' | 'property_identifier' | '.' | '(' | ')' | 'number'
   text: string
-  children: Array<SimplifiedSyntaxNode>
+  children: SimplifiedSyntaxNode[]
 }
 
 export type ResponsiveSyntaxNode = SimplifiedSyntaxNode | SyntaxNode
@@ -21,12 +21,26 @@ const memberExpressionNumberOfCharacters = (node: ResponsiveSyntaxNode) => {
 }
 
 const argumentsNumberOfCharacters = (node: ResponsiveSyntaxNode) => {
-  const [openParenthesis, argument, closeParenthesis] = node.children
+  const [openParenthesis, ...children] = node.children
+  const closeParenthesis = children.pop()
 
-  return numberOfCharacters(openParenthesis) + numberOfCharacters(argument) + numberOfCharacters(closeParenthesis)
+  if(closeParenthesis) {
+    return numberOfCharacters(openParenthesis) + numberOfCharacters(closeParenthesis) + numberOfCharactersArray(children, { separator: ', ' })
+  } else {
+    throw new Error("Less than 2 children for arguments node");
+  }
 }
 
 const textCharacterCount = (node: ResponsiveSyntaxNode) => node.text.length
+
+const numberOfCharactersArray = (nodes: ResponsiveSyntaxNode[], settings: { separator: string }) => {
+  const separators = settings.separator.length * Math.max(nodes.length - 1, 0)
+
+  return nodes.reduce(
+    (accumulator, node) => accumulator + numberOfCharacters(node),
+    0
+  ) + separators
+}
 
 const characterCountMap: any = {
   'call_expression': callExpressionNumberOfCharacters,
