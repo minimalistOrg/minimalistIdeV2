@@ -41,5 +41,5 @@
 
        - name: testing with playwright
          run: |
-           npm i serve
+           npm i serve -g
            yarn playwright
