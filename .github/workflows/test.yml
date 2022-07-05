@@ -39,6 +39,7 @@
            yarn install
            yarn build
 
-       - name: test
+       - name: testing with playwright
          run: |
+           npm i serve
            yarn playwright
