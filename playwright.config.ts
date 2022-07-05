@@ -1,8 +1,8 @@
 const config = {
   webServer: {
-    command: 'yarn run start',
+    command: 'serve -s build',
     port: 3000,
-    timeout: 120 * 2000,
+    timeout: 120 * 1000,
   },
 };
 
