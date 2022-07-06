@@ -18,16 +18,12 @@ test.describe("Testing basic functions by loading data by URL", () => {
 
   test("Testing bubble rendering via data params", async ({ page }) => {
     await page.goto(url_with_data, { waitUntil: "domcontentloaded" });
-    await test.step("The first bubble to render", async () => {
-      const bubble = await page
-        .locator("#idhashxd0")
-        .evaluate((node) => node.classList);
-      expect(bubble[0]).toContain("CodeBlock");
-    });
     await test.step("testing obj primary", async () => {
+      await page.locator(".CodeBlock").nth(0).waitFor()
       const Bubbles = await page
         .locator(".CodeBlock")
         .evaluateAll((list) => list);
+     // console.log(firstBubble)
       const BubbleMain = await page.evaluate(() =>
         window.UrlData()[0].Bubble()
       );
