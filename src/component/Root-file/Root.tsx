@@ -45,7 +45,6 @@ function Root(): JSX.Element {
       // const loadData = await getAstJsx(testCode, "Placeholder", "JavaScript");
       // // console.log(loadData)
       // dispatch(add(loadData));
-      setWait(true);
     }
   };
 
@@ -76,6 +75,7 @@ function Root(): JSX.Element {
       e.id = index;
     });
     dispatch(add(result));
+      setWait(true);
     setPlaceholderinput("Search functions by name");
   }
 
@@ -85,6 +85,8 @@ function Root(): JSX.Element {
     dispatch(callrender(!reRender));
     dispatch(add([]));
     dispatch(add(data));
+    console.log(data)
+    Object.defineProperty(window, "fnlist", {value:data})
     setPlaceholderinput("Search functions by name");
   }
 

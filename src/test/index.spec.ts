@@ -70,27 +70,26 @@ test.describe("Testing basic functions by loading data by URL", () => {
       }
     );
 
-    await test.step("testing primary obj with fninfo bubble", async () => {
-      const BubbleMain = await page
-        .locator('.CodeBlock[data-title="main"]')
-        .evaluate((node) => node);
-      const BubbleMultiplication = await page
-        .locator('.CodeBlock[data-title="multiplication"]')
-        .evaluate((node) => node);
+    await test.step("Close bubble from top to bottom", async () => {
+      const Bubblesclose = page.locator(".CodeBlock__menu");
+      await Bubblesclose.nth(1).click();
+      const count = await Bubblesclose.count();
+      console.log(count);
 
-      const BubbleDivision = await page
-        .locator('.CodeBlock[data-title="division"]')
-        .evaluate((node) => node);
+      const Bubbles = await page
+        .locator(".CodeBlock")
+        .evaluateAll((list) => list);
 
-      const rootMain = await page.evaluate(() => window.UrlData()[0]);
-      const rootMultiplication = await page.evaluate(
-        () => window.UrlData()[0].value[0]
+      const BubbleMain = await page.evaluate(() =>
+        window.UrlData()[0].Bubble()
       );
-      const rootDivision = await page.evaluate(
-        () => window.UrlData()[0].value[1]
+      const BubbleDivision = await page.evaluate(() =>
+        window.UrlData()[0].value[0].Bubble()
       );
-
-      expect(true).toEqual(true);
+      const MainIsCorrect = BubbleMain === Bubbles[0];
+      const DivisionIsCorrect = BubbleDivision === Bubbles[1];
+      expect(true).toEqual(MainIsCorrect);
+      expect(true).toEqual(DivisionIsCorrect);
     });
   });
 });

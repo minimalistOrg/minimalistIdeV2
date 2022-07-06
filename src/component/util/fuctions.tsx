@@ -1,5 +1,10 @@
 //import { url } from "inspector";
-import { CodeBlockCodeType, ObjTree, TreesitterData, stacktraceType } from "../../types/interface";
+import {
+  CodeBlockCodeType,
+  ObjTree,
+  TreesitterData,
+  stacktraceType,
+} from "../../types/interface";
 import { setTreeCall } from "../Root-file/CallTree";
 import EasyUrlParams from "./EasyUrlParams";
 //import { useSelector } from "react-redux";
@@ -7,23 +12,27 @@ import EasyUrlParams from "./EasyUrlParams";
 export function checkFunctionType(item: CodeBlockCodeType): {
   params: TreesitterData[];
   code?: TreesitterData;
+  title?: string;
 } {
   if (item.node.type === "function_declaration") {
     if (item.language === "JavaScript") {
       return {
         params: item.node.children[2].children,
         code: item.node.children[3],
+        title: item.node.children[1].text,
       };
     } else {
       if (item.node.children.length > 4) {
         return {
           params: item.node.children[2].children,
           code: item.node.children[4],
+          title: item.node.children[1].children[0].text,
         };
       } else {
         return {
           params: item.node.children[2].children,
           code: item.node.children[3],
+          title: item.node.children[1].text,
         };
       }
     }
@@ -70,7 +79,7 @@ export function urlvalid(url: string): boolean {
 
 declare global {
   interface Window {
-    UrlData: ()=> ObjTree[];
+    UrlData: () => ObjTree[];
   }
 }
 
@@ -87,7 +96,7 @@ export function setDataURL(data: ObjTree[]) {
   // convertToObj(urldata("data").repository);
 }
 
-export function urlcreate(data: ObjTree[]):string[]{
+export function urlcreate(data: ObjTree[]): string[] {
   if (data === []) {
     return [];
   } else {
@@ -99,12 +108,12 @@ export function urlcreate(data: ObjTree[]):string[]{
   }
 }
 
-interface miniObjTree{
-i:string;
-v:miniObjTree[]
+interface miniObjTree {
+  i: string;
+  v: miniObjTree[];
 }
 
-export function convertToObj(data: string):miniObjTree[] {
+export function convertToObj(data: string): miniObjTree[] {
   const toString = atob(data);
   const obj = "[" + toString + "]";
   const objparse = JSON.parse(obj);
@@ -113,7 +122,8 @@ export function convertToObj(data: string):miniObjTree[] {
   return result;
 }
 
-export function Rebuild(data: miniObjTree[]):any {
+export function Rebuild(data: miniObjTree[]): any {
+  // console.log((window as any).fnlist)
   return data.map((e: miniObjTree) => {
     return {
       id: "hashxd" + e.i,
@@ -125,14 +135,8 @@ export function Rebuild(data: miniObjTree[]):any {
       visibility: true,
       name: "",
       params: [{ text: "(" }, { text: ")" }],
-      element: () => {
-        const result = document.getElementById("id");
-        return result;
-      },
-      Bubble: () => {
-        const result = document.getElementById("idhashxd" + e.i);
-        return result;
-      },
+      element: () => null,
+      Bubble: () => null,
     };
   });
 }
@@ -151,19 +155,17 @@ export function userdata() {
 }
 
 export function startParams(list: CodeBlockCodeType[]) {
-  const stacktraceData= new EasyUrlParams("stacktrace");
+  const stacktraceData = new EasyUrlParams("stacktrace");
   if (stacktraceData.get() !== undefined) {
     stacktrace(stacktraceData, list);
   }
 }
 
-
-
 function stacktrace(data: EasyUrlParams, fn: CodeBlockCodeType[]) {
   let value = data.get()?.value as string;
   value = value.replace(/\[|\]/g, "");
   const list = value.split(",");
-  let listObj = list.map((e: string):stacktraceType => {
+  let listObj = list.map((e: string): stacktraceType => {
     const parts = e.split(":");
     return {
       file: parts[0],
@@ -173,7 +175,7 @@ function stacktrace(data: EasyUrlParams, fn: CodeBlockCodeType[]) {
   });
   // console.log(listObj.reverse(),fn);
   // console.log(fn)
-  let st= false
+  let st = false;
   if (fn.length > 0) {
     // console.log(fn, listObj.reverse());
 
@@ -182,29 +184,32 @@ function stacktrace(data: EasyUrlParams, fn: CodeBlockCodeType[]) {
       const end = e.node.endPosition;
       const data = listObj.reverse();
       // console.log(start, end, data);
-      let r:stacktraceType[] = data.filter((e: stacktraceType) => {
+      let r: stacktraceType[] = data.filter((e: stacktraceType) => {
         const valid =
           parseInt(e.row) >= start.row + 1 && parseInt(e.row) <= end.row + 1;
-          if(!valid){
-            console.warn(`stacktrace error ${e.file}:${e.row}:${e.colum}`)
-          }
+        if (!valid) {
+          console.warn(`stacktrace error ${e.file}:${e.row}:${e.colum}`);
+        }
         // console.log(valid)
         return valid;
       });
-      let row: string|number = r.length;
+      let row: string | number = r.length;
       if (row > 0) {
         row = r[0].row;
-        st= true
+        st = true;
       }
-      return parseInt(row as string) >= start.row + 1 && parseInt(row as string) <= end.row + 1;
+      return (
+        parseInt(row as string) >= start.row + 1 &&
+        parseInt(row as string) <= end.row + 1
+      );
     });
     // console.log(result, "out");
-    buildObj(result,st);
+    buildObj(result, st);
   }
 }
 
-function buildObj(data: CodeBlockCodeType[],st:boolean) {
-  const fn:CodeBlockCodeType[] = data;
+function buildObj(data: CodeBlockCodeType[], st: boolean) {
+  const fn: CodeBlockCodeType[] = data;
 
   //     id: e.b,
   //     ied: e.l === undefined ? "" : e.l,
@@ -227,7 +232,7 @@ function buildObj(data: CodeBlockCodeType[],st:boolean) {
   // });
   //
   const nested = fn.reduceRight(
-    (acc: CodeBlockCodeType[], curr: CodeBlockCodeType, index: number):any => [
+    (acc: CodeBlockCodeType[], curr: CodeBlockCodeType, index: number): any => [
       {
         id: "x" + index,
         index: index,

@@ -13,8 +13,8 @@ import {
 } from "../../../types/interface";
 import { chooseLanguageGist } from "../../Tree-Sitter/TreeSitter";
 import { urlvalid, userdata, startParams } from "../../util/fuctions";
-import EasyUrlParams from "../../util/EasyUrlParams"
-import {add} from "../../Root-file/slice/callTreeSlice"
+import EasyUrlParams from "../../util/EasyUrlParams";
+import { add } from "../../Root-file/slice/callTreeSlice";
 import "./LoadCode.css";
 
 function LoadCode(props: LoadCodeType) {
@@ -25,7 +25,7 @@ function LoadCode(props: LoadCodeType) {
   const [enablebtn, setEnablebtn] = useState(false);
   const [btnload, setBtnload] = useState("Load");
   const [result, setResult] = useState<string | JSX.Element>("");
-  const [list,setList]= useState(true)
+  const [list, setList] = useState(true);
 
   const listFn = useSelector(
     (state: { addbubble: { value: CodeBlockCodeType[] } }) =>
@@ -36,22 +36,19 @@ function LoadCode(props: LoadCodeType) {
     (state: { callTree: { value: boolean } }) => state.callTree.value
   );
 
-  const dispatch= useDispatch()
+  const dispatch = useDispatch();
   // const listFn: CodeBlockCodeType[] = useSelector(
   //   (state: StoreFn) => state.addbubble.value
   // );
 
   function selectURL(from: string) {
     //urldata("repository").setRepoUrl(from);
-    // console.log(from)
-    let repository= new EasyUrlParams("repository")
-    if(from === undefined){
-
-    }else{
-
-    repository.set(from)
+    let repository = new EasyUrlParams("repository");
+    if (from === undefined) {
+    } else {
+      repository.set(from);
     }
-    let url = repository.get()?.value
+    let url = repository.get()?.value;
     if (!(url === undefined)) {
       const github = /https:\/\/github.com\//;
       if (github.test(url)) {
@@ -70,11 +67,13 @@ function LoadCode(props: LoadCodeType) {
     //eslint-disable-next-line
   }, []);
 
-  useEffect(()=>{
-  startParams(listFn)
-  dispatch(add(!dataBubbleTree))
-  // eslint-disable-next-line
-  },[listFn])
+  useEffect(() => {
+    startParams(listFn);
+    // Object.defineProperty(window, "fnlist", {value: listFn})
+    // console.log(listFn)
+    dispatch(add(!dataBubbleTree));
+    // eslint-disable-next-line
+  }, [listFn]);
 
   async function getDetailsURL(url: string) {
     setResult(
@@ -197,7 +196,7 @@ function LoadCode(props: LoadCodeType) {
     setResult("");
     resetValues();
     userdata();
-    setList(! list)
+    setList(!list);
     alert.success("Code loaded successfully");
   }
 
@@ -262,7 +261,7 @@ function LoadCode(props: LoadCodeType) {
       setResult("");
       resetValues();
       userdata();
-    setList(! list)
+      setList(!list);
       alert.success("Code loaded successfully");
     } else {
       setResult(
@@ -322,7 +321,7 @@ function LoadCode(props: LoadCodeType) {
 
   const handleKeyDown = (event: { key: string }) => {
     if (event.key === "Enter") {
-      new EasyUrlParams("data").remove()
+      new EasyUrlParams("data").remove();
       selectURL((code.current as HTMLInputElement).value as string);
     }
   };
@@ -365,7 +364,7 @@ function LoadCode(props: LoadCodeType) {
           <button
             className="LoadCode__btn"
             onClick={() => {
-              new EasyUrlParams("data").remove()
+              new EasyUrlParams("data").remove();
               selectURL((code.current as HTMLInputElement).value as string);
             }}
             disabled={!enablebtn}

@@ -34,7 +34,7 @@ function Bubble(props: BubbleProps): JSX.Element {
   >(null);
 
 
-  // useEffect(()=>{},[reRender])
+  // useEffect(()=>{},[reRender,props.tree])
 
   function handleAdd(
     event: { target: HTMLElement },
@@ -45,21 +45,18 @@ function Bubble(props: BubbleProps): JSX.Element {
     if (!(readIndex.fninfo === undefined)) {
       if (readIndex.fninfo.event) {
         setFninfoData(readIndex);
-        // console.log(readIndex.fninfo,"here")
 
         value.push(readIndex.fninfo);
         readIndex.fninfo.event = false;
         // let dataBubble= readIndex.fninfo;
         dispatch(add(!reRender));
         setTimeout(() => {
-          // console.log("test")
           readIndex.fninfo.Bubble()!.classList.add("CodeBlockHover");
           readIndex.fninfo
             .Bubble()!
             .children[0].classList.add("CodeBlock__header--hover");
         }, 150);
         // let openBubble= document.getElementById("id" + readIndex.fninfo.id)
-        // console.log(openBubble,readIndex.fninfo.id)
         // let BubbleRender= readIndex.fninfo.Bubble;
         // Object.defineProperty(BubbleRender, "fninfo", {value: readIndex.fninfo})
       }
@@ -83,10 +80,8 @@ function Bubble(props: BubbleProps): JSX.Element {
       let identifiers: NodeListOf<HTMLElement> = BubbleBack.querySelectorAll(
         `.identifier[data-identifier=${event.target.dataset.identifier}]`
       );
-      // console.log(identifiers);
       if (event.target.dataset.color === undefined) {
         c++;
-        // console.log(c);
       }
       identifiers.forEach((e: HTMLElement) => {
         e.classList.toggle(colorhash(e));
@@ -117,10 +112,11 @@ function Bubble(props: BubbleProps): JSX.Element {
   }
 
   function closeBubble(parent: ObjTree[], children: ObjTree) {
-    // console.log(children);
+  // console.log( children.element() )
     if (!(children.element() === null)) {
       children.value = [];
       (children.element() as HTMLElement & FnInfoType).fninfo.event = true;
+      (children.element() as HTMLElement & FnInfoType).fninfo.Bubble = ()=> null;
       (
         (
           children.element() as HTMLElement & FnInfoType
@@ -146,7 +142,6 @@ function Bubble(props: BubbleProps): JSX.Element {
     fninfoData: (HTMLElement & FnInfoType) | null | undefined,
     id: string
   ): JSX.Element => {
-    // console.log(listFn[fnindex],"Bubble")
     return (
       <CodeBlockTS
         code={listFn[fnindex]}
@@ -161,12 +156,10 @@ function Bubble(props: BubbleProps): JSX.Element {
     );
   };
 
-  // console.log(props.tree,"arbol")
 
   return (
     <div className="BubbleContainer">
       {props.tree.map((e: ObjTree, index: number) => {
-        // console.log(e)
         return (
           <div key={index} style={{ order: e.order }} className="RowBubble">
             <div className="Bubble">
