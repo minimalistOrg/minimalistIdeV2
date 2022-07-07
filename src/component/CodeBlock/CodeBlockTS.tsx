@@ -19,7 +19,7 @@ import {
   TreesitterData,
   CodeBlockCodeType,
 } from "../../types/interface";
-import { checkFunctionType, setDataURL } from "../util/fuctions";
+import { checkFunctionType } from "../util/fuctions";
 
 function CodeBlockTS(props: CodeBlockType): JSX.Element {
   // const dataBubbleTree = useSelector(
@@ -41,7 +41,7 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
   );
 
   useEffect(() => {
-    setDataURL(window.UrlData());
+    // setDataURL(window.UrlData());
 
     Resize(
       activeBubble.current as HTMLElement,

@@ -92,6 +92,11 @@ export function setDataURL(data: ObjTree[]) {
     dataParam.remove();
   } else {
     dataParam.set(url);
+    const stacktrace= new EasyUrlParams("stacktrace")
+    if(stacktrace.get()?.param === "stacktrace"){
+     stacktrace.remove()
+    // console.log(stacktrace)
+    }
   }
   // convertToObj(urldata("data").repository);
 }

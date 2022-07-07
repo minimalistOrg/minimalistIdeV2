@@ -1,5 +1,4 @@
-
-export default class EasyUrlParams{
+export default class EasyUrlParams {
   param: string;
 
   constructor(param: string) {
@@ -66,14 +65,17 @@ export default class EasyUrlParams{
 
   remove() {
     let url = this.url();
+    url = encodeURI(url);
     let get = this.get();
     if (get === undefined) {
       // console.error("param not exist");
     } else {
-      let reorder = url.replace(
-        new RegExp(`(${"\\?"}|${"\\&"})${get.param}=${get.value}`, "g"),
-        ""
+      const evaluation = new RegExp(
+        `(${"\\?"}|${"\\&"})${encodeURI(get.param)}=${encodeURI(get.value)}`,
+        "g"
       );
+
+      let reorder = url.replace(evaluation, "");
       // eslint-disable-next-line
       let regex = /\?|\&/g;
       let fragment: string | string[] = reorder.split(regex);
