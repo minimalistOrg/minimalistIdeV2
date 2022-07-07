@@ -10,7 +10,7 @@ import {
   CodeBlockType,
   CodeBlockCodeType,
 } from "../../types/interface";
-import { checkFunctionType } from "../util/fuctions";
+import { checkFunctionType,setDataURL } from "../util/fuctions";
 
 function FuzzySearch(props: { placeholder: string }): JSX.Element {
   const listFn: ObjTree[] = useSelector(
@@ -74,6 +74,7 @@ function FuzzySearch(props: { placeholder: string }): JSX.Element {
       visibility: true,
     });
     dispatch(add(!reRender));
+    setDataURL(window.UrlData())
     //
     // the item selected
   };

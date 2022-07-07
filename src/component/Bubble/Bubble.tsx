@@ -59,6 +59,7 @@ function Bubble(props: BubbleProps): JSX.Element {
         // let openBubble= document.getElementById("id" + readIndex.fninfo.id)
         // let BubbleRender= readIndex.fninfo.Bubble;
         // Object.defineProperty(BubbleRender, "fninfo", {value: readIndex.fninfo})
+        setDataURL(window.UrlData())
       }
     }
 
