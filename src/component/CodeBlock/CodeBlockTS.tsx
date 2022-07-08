@@ -96,6 +96,7 @@ const dispatch = useDispatch()
           writable: true,
         });
         const row= (activeBubble.current as HTMLElement).parentElement?.parentElement
+    //eslint-disable-next-line
         if(row != undefined){
             row.style.order= props.data.order.toString()
             dispatch(add(!dataBubbleTree))
