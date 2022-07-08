@@ -94,9 +94,9 @@ test.describe("order bubble", () => {
   test("from input search function", async ({ page }) => {
     await page.goto(url_with_repo);
     //
-    await test.step("Testing input search", async ()=>{
-        await inputSearchTest(page)
-    })
+    await test.step("Testing input search", async () => {
+      await inputSearchTest(page);
+    });
     //
     await test.step("Buble order", async () => {
       await BubbleOrder(page);
@@ -144,9 +144,28 @@ test.describe("order bubble", () => {
         // await HoverParamsIdentifier("division", page)
       }
     );
+    await test.step("refresh, reload page", async () => {
+      await page.evaluate(() => window.location.reload());
+      const loading = await page.locator(".BubbleArea > p").count();
+      expect(1).toEqual(loading);
+    });
+    // await test.step("order bubble retesting", async ()=>{
+    //     const row= await page.locator('.RowBubble').evaluateAll(node => node.map(e => e.style.order))
+    //     console.log(row)
+    //     await OrderBubble("multiplication", "3", page)
+    // })
   });
 });
 
+//
+async function OrderBubble(fn: string, order: string, page: any) {
+  const Bubble = page.locator(`.CodeBlock[data-title="${fn}"]`);
+  const getOrder = await Bubble.evaluate(
+    (node: HTMLElement) => node.parentElement?.parentElement?.style.order
+  );
+  expect(order).toEqual(getOrder);
+}
+//
 //
 async function HoverTree(
   hover: boolean,
