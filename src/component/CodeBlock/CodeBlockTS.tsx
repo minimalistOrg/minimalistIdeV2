@@ -5,7 +5,7 @@ import {
   MutableRefObject,
   RefObject,
 } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ChooseType from "../RenderTreeSitter/ChooseType";
 import "./CodeBlock.css";
 import { BubbleCollapse } from "./Functions/BubbleCollapse";
@@ -20,11 +20,14 @@ import {
   CodeBlockCodeType,
 } from "../../types/interface";
 import { checkFunctionType } from "../util/fuctions";
+import {add} from "../Root-file/slice/callTreeSlice"
 
 function CodeBlockTS(props: CodeBlockType): JSX.Element {
-  // const dataBubbleTree = useSelector(
-  //   (state: { callTree: { value: boolean } }) => state.callTree.value
-  // );
+
+const dispatch = useDispatch()
+  const dataBubbleTree = useSelector(
+    (state: { callTree: { value: boolean } }) => state.callTree.value
+  );
   // const [id, setId] = useState(props.id);
   const [title, setTitle] = useState<string>("Loading...");
   const [code, setCode] = useState<
@@ -92,6 +95,11 @@ function CodeBlockTS(props: CodeBlockType): JSX.Element {
           value: props.data,
           writable: true,
         });
+        const row= (activeBubble.current as HTMLElement).parentElement?.parentElement
+        if(row != undefined){
+            row.style.order= props.data.order.toString()
+            dispatch(add(!dataBubbleTree))
+        }
         setParamok(true);
         // console.log("re")
       }

@@ -1,5 +1,5 @@
 import "./Bubble.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CodeBlockTS from "../CodeBlock/CodeBlockTS";
 import { useDispatch, useSelector } from "react-redux";
 import { add } from "../Root-file/slice/callTreeSlice";
@@ -34,7 +34,9 @@ function Bubble(props: BubbleProps): JSX.Element {
   >(null);
 
 
-  // useEffect(()=>{},[reRender,props.tree])
+  // useEffect(()=>{
+  // window.UrlData()
+  // },[window.UrlData()])
 
   function handleAdd(
     event: { target: HTMLElement },
