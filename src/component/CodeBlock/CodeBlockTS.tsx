@@ -263,7 +263,7 @@ const dispatch = useDispatch()
   return (
     <div
       className="CodeBlock"
-      data-testid="Bubble"
+      data-test-id="Bubble"
       ref={activeBubble}
       data-title={title}
     >
@@ -296,7 +296,7 @@ const dispatch = useDispatch()
         </div>
         <button
           className="CodeBlock__menu"
-          data-testid="closeBubble"
+          data-test-id="closeBubble"
           title="Close"
           onClick={props.closeBubble}
         >

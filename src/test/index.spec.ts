@@ -4,10 +4,10 @@ import { FnInfoType } from "../types/interface";
 test.describe.configure({ mode: "parallel" });
 
 const url_with_repo =
-  "http://localhost:3000/?repository=https://gist.github.com/Usielrivas/467dea6f02b843258f724f781dfc18b1";
+  "http://localhost:5000/?repository=https://gist.github.com/Usielrivas/467dea6f02b843258f724f781dfc18b1";
 
 const url_with_data =
-  "http://localhost:3000/?repository=https://gist.github.com/Usielrivas/467dea6f02b843258f724f781dfc18b1&data=eyJpIjowLCJ2IjpbeyJpIjo1LCJ2IjpbXX0seyJpIjo2LCJ2IjpbXX1dfQ==";
+  "http://localhost:5000/?repository=https://gist.github.com/Usielrivas/467dea6f02b843258f724f781dfc18b1&data=eyJpIjowLCJ2IjpbeyJpIjo1LCJ2IjpbXX0seyJpIjo2LCJ2IjpbXX1dfQ==";
 
 test.describe("Testing basic functions by loading data by URL", () => {
   test("Testing the repo upload", async ({ page }) => {
@@ -149,11 +149,11 @@ test.describe("order bubble", () => {
       const loading = await page.locator(".BubbleArea > p").count();
       expect(1).toEqual(loading);
     });
-    // await test.step("order bubble retesting", async ()=>{
-    //     const row= await page.locator('.RowBubble').evaluateAll(node => node.map(e => e.style.order))
-    //     console.log(row)
-    //     await OrderBubble("multiplication", "3", page)
-    // })
+    await test.step("order bubble retesting", async ()=>{
+        const row= await page.locator('.RowBubble').evaluateAll(node => node.map(e => e.style.order))
+        console.log(row)
+        await OrderBubble("multiplication", "3", page)
+    })
   });
 });
 

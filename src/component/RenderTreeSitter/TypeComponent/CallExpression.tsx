@@ -128,6 +128,7 @@ function CallExpression(props: TypeComponentProps) {
       ref={expression}
       id={"id" + ied}
       data-name={name}
+      data-test-id="fncall"
     >
       <ChooseType info={data.children[0]} />
       <span>

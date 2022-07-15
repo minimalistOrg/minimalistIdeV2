@@ -85,7 +85,8 @@ function Root(): JSX.Element {
     dispatch(callrender(!reRender));
     dispatch(add([]));
     dispatch(add(data));
-    console.log(data)
+    // console.log(data)
+      setWait(true);
     Object.defineProperty(window, "fnlist", {value:data})
     setPlaceholderinput("Search functions by name");
   }
