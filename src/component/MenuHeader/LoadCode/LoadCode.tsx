@@ -236,7 +236,18 @@ function LoadCode(props: LoadCodeType) {
         </span>
       </>
     );
-    const readGist = await getCode(id);
+
+    let readGist;
+
+    if (allvalues!.length > 6) {
+      // console.log(allvalues)
+      readGist = await getCodeGistRevision(
+        allvalues![5],
+        allvalues![6] as string
+      );
+    } else {
+      readGist = await getCode(id);
+    }
     setBtnload("Load");
     setEnablebtn(true);
     const files: responseGistType[] = Object.values(readGist.files);
@@ -277,6 +288,28 @@ function LoadCode(props: LoadCodeType) {
       let response = await fetch(
         `https://api.github.com/gists/${id}?gist_id=${id}`
       );
+
+      if (response.status === 404) {
+        setResult(
+          <span className="LoadCode__msg">
+            The gist doesn't exist. Check the URL and try again
+          </span>
+        );
+        return {};
+      }
+      let data = response.json();
+      return data;
+    } catch (error) {
+      setResult(
+        <span className="LoadCode__msg">Error Internet Disconnected</span>
+      );
+      return {};
+    }
+  };
+
+  const getCodeGistRevision = async (id: string, sha: string) => {
+    try {
+      let response = await fetch(`https://api.github.com/gists/${id}/${sha}`);
 
       if (response.status === 404) {
         setResult(

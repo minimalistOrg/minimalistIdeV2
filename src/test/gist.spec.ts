@@ -14,10 +14,10 @@ import {
 } from "./util/function";
 
 const url_with_repo =
-  "http://localhost:5000/?repository=https://github.com/Usielrivas/CodeTest/tree/main";
+  "http://localhost:5000/?repository=https://gist.github.com/Usielrivas/467dea6f02b843258f724f781dfc18b1/bc89106683ae185a0c9de92d5360afe863a971da";
 
 test.describe.configure({ mode: "parallel" });
-test.describe("General test for code load repo", () => {
+test.describe("General test for code load gist", () => {
   test("test load repo", async ({ page }) => {
     await page.goto(url_with_repo);
     //
