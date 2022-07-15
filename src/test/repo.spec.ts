@@ -14,7 +14,7 @@ import {
 } from "./util/function";
 
 const url_with_repo =
-  "http://localhost:5000/?repository=https://github.com/Usielrivas/CodeTest/tree/main";
+  "http://localhost:5000/?repository=https://github.com/Usielrivas/CodeTest/tree/dbe5c82f601b73fe1dad662ef27bcb54c4d46100";
 
 test.describe.configure({ mode: "parallel" });
 test.describe("General test for code load repo", () => {

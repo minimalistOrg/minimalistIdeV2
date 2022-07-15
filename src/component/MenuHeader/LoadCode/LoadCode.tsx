@@ -103,6 +103,7 @@ function LoadCode(props: LoadCodeType) {
       url: urlrepo,
       rama: rama,
     };
+    // console.log(urldata)
     if (urldata.rama === "") {
       let info = await getrepo(
         `https://api.github.com/repos/${urldata.username}/${urldata.repo}/branches`
