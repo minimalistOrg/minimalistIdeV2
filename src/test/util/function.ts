@@ -78,70 +78,77 @@ export async function HoverTree(
   }
 }
 
+export async function HoverParamsIdentifier(
+  fn: string,
+  param: { n1: string; n2: string; i1: string; i2: string; parent: string },
+  page: any
+) {
+  let params = param;
 
-export async function HoverParamsIdentifier(fn: string, page: any) {
   await page
     .locator(
-      `.CodeBlock[data-title="${fn}"] .CodeBlock__arguments span[data-identifier="a"]`
+      `.CodeBlock[data-title="${fn}"] .CodeBlock__arguments span[data-identifier="${params.n1}"]`
     )
     .hover();
   const n1 = await page
-    .locator('.CodeBlock[data-title="main"]')
-    .evaluate((node: HTMLElement) => {
-      const listN1 = node.querySelectorAll('span[data-identifier="n1"]');
+    .locator(`.CodeBlock[data-title="${params.parent}"]`)
+    .evaluate((node: HTMLElement,params:any) => {
+      const listN1 = node.querySelectorAll(
+        `span[data-identifier="${params.i1}"]`
+      );
       const result = Array.from(listN1).map((node) =>
         node.classList.contains("identifierHover")
       );
       return result;
-    });
+    },params);
   expect(5).toEqual(n1.length);
   expect(false).toEqual(n1.includes(false));
   // console.log(n1)
 
   await page
     .locator(
-      `.CodeBlock[data-title="${fn}"] .CodeBlock__arguments span[data-identifier="b"]`
+      `.CodeBlock[data-title="${fn}"] .CodeBlock__arguments span[data-identifier="${params.n2}"]`
     )
     .hover();
   const n2 = await page
-    .locator('.CodeBlock[data-title="main"]')
-    .evaluate((node: HTMLElement) => {
-      const listN1 = node.querySelectorAll('span[data-identifier="n2"]');
+    .locator(`.CodeBlock[data-title="${params.parent}"]`)
+    .evaluate((node: HTMLElement,params:any) => {
+      const listN1 = node.querySelectorAll(`span[data-identifier="${params.i2}"]`);
       const result = Array.from(listN1).map((node) =>
         node.classList.contains("identifierHover")
       );
       return result;
-    });
+    },params);
   expect(5).toEqual(n2.length);
   expect(false).toEqual(n2.includes(false));
   // console.log(n2)
 }
 //without hover
-export async function ParamsIdentifier(fn: string, page: any) {
+export async function ParamsIdentifier(fn: string,Param:{parent:string,i1:string,i2:string,expect:number}, page: any) {
   await page.locator(".MenuHeader__btn").hover();
   const n1 = await page
-    .locator('.CodeBlock[data-title="main"]')
-    .evaluate((node: HTMLElement) => {
-      const listN1 = node.querySelectorAll('span[data-identifier="n1"]');
+    .locator(`.CodeBlock[data-title="${Param.parent}"]`)
+    .evaluate((node: HTMLElement,Param:any) => {
+      const listN1 = node.querySelectorAll(`span[data-identifier="${Param.i1}"]`);
       const result = Array.from(listN1).map((node) =>
         node.classList.contains("identifierHover")
       );
       return result;
-    });
-  expect(5).toEqual(n1.length);
+    },Param);
+  expect(Param.expect).toEqual(n1.length);
   expect(false).not.toEqual(n1.includes(false));
   // console.log(n1)
 
   const n2 = await page
-    .locator('.CodeBlock[data-title="main"]')
-    .evaluate((node: HTMLElement) => {
-      const listN1 = node.querySelectorAll('span[data-identifier="n2"]');
+    .locator(`.CodeBlock[data-title="${Param.parent}"]`)
+    .evaluate((node: HTMLElement,Param:any) => {
+      const listN1 = node.querySelectorAll(`span[data-identifier="${Param.i2}"]`);
       const result = Array.from(listN1).map((node) =>
         node.classList.contains("identifierHover")
       );
       return result;
-    });
-  expect(5).toEqual(n2.length);
+    },Param);
+  expect(Param.expect).toEqual(n2.length);
   expect(false).not.toEqual(n2.includes(false));
   // console.log(n2)
 }

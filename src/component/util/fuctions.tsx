@@ -240,7 +240,7 @@ function buildObj(data: CodeBlockCodeType[], st: boolean) {
     (acc: CodeBlockCodeType[], curr: CodeBlockCodeType, index: number): any => [
       {
         id: "x" + index,
-        index: index,
+        index: curr.id,
         ied: "",
         order: 0,
         event: false,

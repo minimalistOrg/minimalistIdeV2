@@ -96,8 +96,16 @@ test.describe("General test for code load repo", () => {
     await test.step(
       "testing hover from params to identifier (b <=> b )",
       async () => {
-        await HoverParamsIdentifier("multiplication", page);
-        await ParamsIdentifier("multiplication", page);
+        await HoverParamsIdentifier(
+          "multiplication",
+          { n1: "a", n2: "b", i1: "n1", i2: "n2", parent: "main" },
+          page
+        );
+        await ParamsIdentifier(
+          "multiplication",
+          { parent: "main", i1: "n1", i2:"n2",expect:5},
+          page
+        );
         // await HoverParamsIdentifier("division", page)
       }
     );
@@ -145,8 +153,16 @@ test.describe("General test for code load repo", () => {
     await test.step(
       "testing hover from params to identifier (b <=> b )",
       async () => {
-        await HoverParamsIdentifier("multiplication", page);
-        await ParamsIdentifier("multiplication", page);
+        await HoverParamsIdentifier(
+          "multiplication",
+          { n1: "a", n2: "b", i1: "n1", i2: "n2", parent: "main" },
+          page
+        );
+        await ParamsIdentifier(
+          "multiplication",
+          { parent: "main", i1: "n1", i2:"n2",expect:5},
+          page
+        );
         // await HoverParamsIdentifier("division", page)
       }
     );
@@ -216,8 +232,16 @@ test.describe("General test for code load repo", () => {
     await test.step(
       "testing hover from params to identifier (b <=> b )",
       async () => {
-        await HoverParamsIdentifier("multiplication", page);
-        await ParamsIdentifier("multiplication", page);
+        await HoverParamsIdentifier(
+          "multiplication",
+          { n1: "a", n2: "b", i1: "n1", i2: "n2", parent: "main" },
+          page
+        );
+        await ParamsIdentifier(
+          "multiplication",
+          { parent: "main", i1: "n1", i2:"n2",expect:5},
+          page
+        );
         // await HoverParamsIdentifier("division", page)
       }
     );
