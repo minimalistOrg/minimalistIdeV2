@@ -85,9 +85,12 @@ const dispatch = useDispatch()
         const newRef = (findFncall as HTMLElement & FnInfoType).fninfo;
         newRef.element = () => findFncall as HTMLElement;
         newRef.Bubble = () => activeBubble.current;
+        newRef.event= false
 
         props.data.element = () => findFncall as HTMLElement;
         props.data.Bubble = () => activeBubble.current;
+
+        props.data.event= newRef.event
         props.data.params = newRef.params;
         props.data.order = newRef.order;
 
