@@ -24,8 +24,8 @@ test.describe("check to open bubbles when they are already open", () => {
     await page.locator('[data-test-id="Bubble"]').nth(0).focus()
     const bubbles = await page.locator('[data-test-id="Bubble"]').count();
     expect(2).toEqual(bubbles);
-    await page.locator('[data-test-id="fncall"]').nth(1).focus()
-    OpenBubble(1, page);
+    await page.locator('[data-test-id="fncall"]').nth(1).hover()
+    await OpenBubble(1, page);
     const bubbles2 = await page.locator('[data-test-id="Bubble"]').count();
     expect(2).toEqual(bubbles2);
   });
