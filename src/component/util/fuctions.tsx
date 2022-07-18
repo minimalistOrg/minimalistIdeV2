@@ -92,10 +92,10 @@ export function setDataURL(data: ObjTree[]) {
     dataParam.remove();
   } else {
     dataParam.set(url);
-    const stacktrace= new EasyUrlParams("stacktrace")
-    if(stacktrace.get()?.param === "stacktrace"){
-     stacktrace.remove()
-    // console.log(stacktrace)
+    const stacktrace = new EasyUrlParams("stacktrace");
+    if (stacktrace.get()?.param === "stacktrace") {
+      stacktrace.remove();
+      // console.log(stacktrace)
     }
   }
   // convertToObj(urldata("data").repository);
@@ -106,7 +106,9 @@ export function urlcreate(data: ObjTree[]): string[] {
     return [];
   } else {
     const url = data.map((e: ObjTree, index: number) => {
-      return `{"i":${e.index},"v":[${urlcreate(e.value)}]}`;
+      const position = parseInt(e.position as string) > 0 ? "." + e.position : "";
+      console.log(position);
+      return `{"i":${e.index}${position},"v":[${urlcreate(e.value)}]}`;
     });
 
     return url;
@@ -128,12 +130,14 @@ export function convertToObj(data: string): miniObjTree[] {
 }
 
 export function Rebuild(data: miniObjTree[]): any {
-  // console.log((window as any).fnlist)
+  // console.log(data);
   return data.map((e: miniObjTree) => {
+    let position: string | string[] = e.i.toString().split(".");
+    position = position.length > 1 ? position[1] : "0";
     return {
       id: "hashxd" + e.i,
       ied: "",
-      index: e.i,
+      index: parseInt(e.i.toString().split(".")[0]),
       order: 0,
       event: false,
       value: Rebuild(e.v),
@@ -142,6 +146,7 @@ export function Rebuild(data: miniObjTree[]): any {
       params: [{ text: "(" }, { text: ")" }],
       element: () => null,
       Bubble: () => null,
+      position: position
     };
   });
 }

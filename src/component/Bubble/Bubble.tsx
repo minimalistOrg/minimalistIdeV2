@@ -11,11 +11,9 @@ import {
   FnInfoType,
   CodeBlockCodeType,
 } from "../../types/interface";
-import {setDataURL} from "../util/fuctions";
+import { setDataURL } from "../util/fuctions";
 
 let c: number = 0;
-
-
 
 function Bubble(props: BubbleProps): JSX.Element {
   // const [renderBubble, setRenderBubble] = useState([]);
@@ -33,7 +31,6 @@ function Bubble(props: BubbleProps): JSX.Element {
     (HTMLElement & FnInfoType) | null
   >(null);
 
-
   // useEffect(()=>{
   // window.UrlData()
   // },[window.UrlData()])
@@ -44,6 +41,12 @@ function Bubble(props: BubbleProps): JSX.Element {
   ): void {
     let value: ObjTree[] = dato.value;
     const readIndex = event.target.parentNode as HTMLElement & FnInfoType;
+    // console.log(readIndex)
+    const list = document.querySelectorAll(
+      `.CallExpression[data-name="${readIndex.dataset.name}"]`
+    );
+    const position = Array.from(list).indexOf(readIndex);
+    readIndex.fninfo.position= position.toString()
     if (!(readIndex.fninfo === undefined)) {
       if (readIndex.fninfo.event) {
         setFninfoData(readIndex);
@@ -61,7 +64,7 @@ function Bubble(props: BubbleProps): JSX.Element {
         // let openBubble= document.getElementById("id" + readIndex.fninfo.id)
         // let BubbleRender= readIndex.fninfo.Bubble;
         // Object.defineProperty(BubbleRender, "fninfo", {value: readIndex.fninfo})
-        setDataURL(window.UrlData())
+        setDataURL(window.UrlData());
       }
     }
 
@@ -115,11 +118,12 @@ function Bubble(props: BubbleProps): JSX.Element {
   }
 
   function closeBubble(parent: ObjTree[], children: ObjTree) {
-  // console.log( children.element() )
+    // console.log( children.element() )
     if (!(children.element() === null)) {
       children.value = [];
       (children.element() as HTMLElement & FnInfoType).fninfo.event = true;
-      (children.element() as HTMLElement & FnInfoType).fninfo.Bubble = ()=> null;
+      (children.element() as HTMLElement & FnInfoType).fninfo.Bubble = () =>
+        null;
       (
         (
           children.element() as HTMLElement & FnInfoType
@@ -132,11 +136,10 @@ function Bubble(props: BubbleProps): JSX.Element {
     const listParent: number = parent.indexOf(children);
     parent.splice(listParent, 1);
 
-      setDataURL(window.UrlData())  
+    setDataURL(window.UrlData());
     dispatch(add(!reRender));
     // dispatch(add(!reRender));
   }
-
 
   const Codebubble = (
     children: ObjTree,
@@ -158,7 +161,6 @@ function Bubble(props: BubbleProps): JSX.Element {
       />
     );
   };
-
 
   return (
     <div className="BubbleContainer">

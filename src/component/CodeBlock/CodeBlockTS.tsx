@@ -78,9 +78,12 @@ const dispatch = useDispatch()
       ?.parentElement?.parentElement?.parentElement?.parentElement?.children[0];
     let validParent = Bubble?.classList.contains("Bubble");
     if (validParent) {
-      let findFncall = Bubble?.querySelector(
+      let findFncall:any = Bubble?.querySelectorAll(
         `.CallExpression[data-name="${listFN[props.data.index].name}"]`
       );
+      const position= parseInt(props.data.position as string)
+      console.log(position,"hey")
+      findFncall= findFncall![position]
       if (findFncall != null) {
         const newRef = (findFncall as HTMLElement & FnInfoType).fninfo;
         newRef.element = () => findFncall as HTMLElement;
