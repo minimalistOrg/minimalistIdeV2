@@ -42,12 +42,13 @@ function Bubble(props: BubbleProps): JSX.Element {
     let value: ObjTree[] = dato.value;
     const readIndex = event.target.parentNode as HTMLElement & FnInfoType;
     // console.log(readIndex)
-    const list = document.querySelectorAll(
-      `.CallExpression[data-name="${readIndex.dataset.name}"]`
-    );
-    const position = Array.from(list).indexOf(readIndex);
-    readIndex.fninfo.position= position.toString()
     if (!(readIndex.fninfo === undefined)) {
+      const list = document.querySelectorAll(
+        `.CallExpression[data-name="${readIndex.dataset.name}"]`
+      );
+      const position = Array.from(list).indexOf(readIndex);
+      readIndex.fninfo.position = position.toString();
+
       if (readIndex.fninfo.event) {
         setFninfoData(readIndex);
 

@@ -81,7 +81,7 @@ const dispatch = useDispatch()
       let findFncall:any = Bubble?.querySelectorAll(
         `.CallExpression[data-name="${listFN[props.data.index].name}"]`
       );
-      const position= parseInt(props.data.position != undefined ? props.data.position as string : "0")
+      const position= parseInt(props.data.position !== undefined ? props.data.position as string : "0")
       findFncall= findFncall![position]
       if (findFncall != null) {
         const newRef = (findFncall as HTMLElement & FnInfoType).fninfo;
