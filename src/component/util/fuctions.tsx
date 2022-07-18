@@ -107,7 +107,7 @@ export function urlcreate(data: ObjTree[]): string[] {
   } else {
     const url = data.map((e: ObjTree, index: number) => {
       const position = parseInt(e.position as string) > 0 ? "." + e.position : "";
-      console.log(position);
+      // console.log(position);
       return `{"i":${e.index}${position},"v":[${urlcreate(e.value)}]}`;
     });
 

@@ -93,7 +93,7 @@ function CallExpression(props: TypeComponentProps) {
   }, [name, fnindex]);
 
   function fnHover(data: { currentTarget: (HTMLElement & FnInfoType) | null }) {
-    if (!(data.currentTarget?.fninfo?.Bubble() === null)) {
+    if (!(data.currentTarget?.fninfo?.Bubble() === (null || undefined))) {
       data.currentTarget?.fninfo?.Bubble()?.classList.add("CodeBlockHover");
       data.currentTarget?.fninfo
         .Bubble()
@@ -104,7 +104,10 @@ function CallExpression(props: TypeComponentProps) {
   function fnHoverClose(data: {
     currentTarget: (HTMLElement & FnInfoType) | null;
   }) {
-    if (!(data.currentTarget?.fninfo.Bubble() === null)) {
+    if (data.currentTarget?.fninfo === undefined) {
+      return;
+    }
+    if (!(data.currentTarget?.fninfo.Bubble() === (null || undefined))) {
       data.currentTarget?.fninfo.Bubble()?.classList.remove("CodeBlockHover");
       data.currentTarget?.fninfo
         .Bubble()
