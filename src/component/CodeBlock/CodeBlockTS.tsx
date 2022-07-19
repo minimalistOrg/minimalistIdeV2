@@ -83,7 +83,8 @@ const dispatch = useDispatch()
       );
       const position= parseInt(props.data.position !== undefined ? props.data.position as string : "0")
       findFncall= findFncall![position]
-      if (findFncall != null) {
+      // console.log(findFncall)
+      if (findFncall !== (null || undefined)) {
         const newRef = (findFncall as HTMLElement & FnInfoType).fninfo;
         newRef.element = () => findFncall as HTMLElement;
         newRef.Bubble = () => activeBubble.current;
