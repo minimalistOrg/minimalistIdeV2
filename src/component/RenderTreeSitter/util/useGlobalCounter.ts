@@ -1,4 +1,3 @@
-import { useState } from "react";
 
 export let global_counter: number = 1;
 
