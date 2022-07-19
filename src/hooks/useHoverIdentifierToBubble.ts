@@ -1,5 +1,3 @@
-import { useEffect, useRef } from "react";
-import { FnInfoType } from "../types/interface";
 
 export function useHoverIdentifierToBubble() {
   function inside(event: any) {

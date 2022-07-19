@@ -56,6 +56,7 @@ export function useOpenDefinition(data:string,option:{tag: string[]}) {
         writable: true,
       });
     }
+//eslint-disable-next-line
   }, [fnindex]);
 
   return element
