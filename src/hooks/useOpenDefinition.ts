@@ -1,12 +1,12 @@
 import { CodeBlockCodeType } from "../types/interface";
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import {useGlobalCounter} from "../component/RenderTreeSitter/util/useGlobalCounter";
+import {GlobalCounter} from "../component/RenderTreeSitter/util/useGlobalCounter";
 
 export function useOpenDefinition(data:string,option:{tag: string[]}) {
   const element = useRef<HTMLElement>(null);
   const [fnindex, setFnindex] = useState(-1);
-  const fnorder= useGlobalCounter()
+  const fnorder= GlobalCounter
 
   const listFN = useSelector(
     (state: { addbubble: { value: CodeBlockCodeType[] } }) =>
@@ -44,7 +44,7 @@ export function useOpenDefinition(data:string,option:{tag: string[]}) {
         index: fnindex,
         value: [],
         event: true,
-        order: fnorder,
+        order: fnorder(),
         element: () => null,
         Bubble: () => null,
         visibility: true,

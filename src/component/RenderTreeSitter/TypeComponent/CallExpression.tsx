@@ -1,7 +1,7 @@
 import ChooseType from "../ChooseType";
 import { useSelector } from "react-redux";
 import { useEffect, useState, useRef } from "react";
-import { useGlobalCounter } from "../util/useGlobalCounter";
+import { GlobalCounter } from "../util/useGlobalCounter";
 import { v4 as uuidv4 } from "uuid";
 import {
   CodeBlockCodeType,
@@ -16,7 +16,7 @@ function CallExpression(props: TypeComponentProps) {
   const [event, setEvent] = useState(false);
   const [params, setParams] = useState([]);
   const [id, setId] = useState("");
-  const fnOrder = useGlobalCounter();
+  const fnOrder = GlobalCounter();
   const expression = useRef<HTMLElement | null>(null);
   const listFN = useSelector(
     (state: { addbubble: { value: CodeBlockCodeType[] } }) =>
@@ -44,6 +44,8 @@ function CallExpression(props: TypeComponentProps) {
   }
 
   const [ied, setIed] = useState("");
+
+
 
   useEffect(() => {
     if (ied === "") {
@@ -90,7 +92,7 @@ function CallExpression(props: TypeComponentProps) {
       writable: true,
     });
     //eslint-disable-next-line
-  }, [name, fnindex]);
+  }, [fnindex]);
 
   function fnHover(data: { currentTarget: (HTMLElement & FnInfoType) | null }) {
     if (!(data.currentTarget?.fninfo?.Bubble() === (null || undefined))) {

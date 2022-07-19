@@ -21,6 +21,7 @@ import {
 } from "../../types/interface";
 import { checkFunctionType } from "../util/fuctions";
 import {add} from "../Root-file/slice/callTreeSlice"
+import {resetGlobal} from "../RenderTreeSitter/util/useGlobalCounter";
 
 function CodeBlockTS(props: CodeBlockType): JSX.Element {
 
@@ -111,6 +112,7 @@ const dispatch = useDispatch()
         // console.log("re")
       }
     }
+    resetGlobal(1)
     //eslint-disable-next-line
   }, [props.data, title, paramok]);
 
