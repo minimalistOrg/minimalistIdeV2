@@ -73,7 +73,7 @@ function CallExpression(props: TypeComponentProps) {
       name: getName,
       index: fnindex,
       value: [],
-      event: fnindex === "" ? false : true,
+      event: fnindex > -1 ? true : false,
       order: fnOrder,
       element: () => {
         let result = document.getElementById("id" + ied);

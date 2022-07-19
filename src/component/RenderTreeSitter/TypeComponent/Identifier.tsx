@@ -5,7 +5,7 @@ import { useHoverIdentifierToBubble } from "../../../hooks/useHoverIdentifierToB
 function Identifier(props: TypeComponentProps & { type: string }) {
   const data = props.data;
   const element = useOpenDefinition(data.text, {
-    tag: ["JsxSelfClosingElement"],
+    tag: ["JsxSelfClosingElement","JsxOpeningElement","JsxClosingElement"],
   });
   const hover = useHoverIdentifierToBubble();
 
