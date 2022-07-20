@@ -11,7 +11,7 @@ import {
 
 function CallExpression(props: TypeComponentProps) {
   const data = props.data;
-  const [fnindex, setFnindex] = useState<string | number>("");
+  const [fnindex, setFnindex] = useState<number>(-1);
   const [name, setName] = useState("");
   const [event, setEvent] = useState(false);
   const [params, setParams] = useState([]);
@@ -51,7 +51,8 @@ function CallExpression(props: TypeComponentProps) {
     if (ied === "") {
       setIed(uuidv4());
     }
-    let getName = fnindex === "" ? "" : listFN[fnindex as number].name;
+    console.log(fnindex > -1)
+    let getName = fnindex > -1 ? listFN[fnindex as number].name : "";
 
     // let codeblock: any = expression.current;
     // for (let i = 0; !codeblock.classList.contains("CodeBlock"); i++) {
@@ -65,6 +66,7 @@ function CallExpression(props: TypeComponentProps) {
     //   (getName === "" ? null : `CodeBlock[data-title=${getName}]`)
     // );
     // console.log(element,(getName === "" ? null : `.CodeBlock`));
+    console.log(fnindex)
 
     let fndata = {
       id: id,
@@ -87,10 +89,13 @@ function CallExpression(props: TypeComponentProps) {
     };
 
     validifFnCall();
+    if(fnindex > -1){
+
     Object.defineProperty(fndata.element(), "fninfo", {
       value: fndata,
       writable: true,
     });
+    }
     //eslint-disable-next-line
   }, [fnindex]);
 
@@ -118,7 +123,7 @@ function CallExpression(props: TypeComponentProps) {
   }
 
   function typeCall() {
-    if (event) {
+    if (fnindex > -1) {
       return "CallExpression";
     } else {
       return "CallExpression--member_expression";
