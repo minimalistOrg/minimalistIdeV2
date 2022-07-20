@@ -13,7 +13,6 @@ function CallExpression(props: TypeComponentProps) {
   const data = props.data;
   const [fnindex, setFnindex] = useState<number>(-1);
   const [name, setName] = useState("");
-  const [event, setEvent] = useState(false);
   const [params, setParams] = useState([]);
   const [id, setId] = useState("");
   const fnOrder = GlobalCounter();
@@ -31,7 +30,6 @@ function CallExpression(props: TypeComponentProps) {
       setName(data.children[0].text);
       setId(uuidv4());
       // setIdelement(uuidv4())
-      setEvent(true);
       setParams(data.children[1].children as []);
       let position: CodeBlockCodeType | undefined = listFN.find(
         (e: CodeBlockCodeType) => e.name === data.children[0].text
