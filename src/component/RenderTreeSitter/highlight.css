@@ -53,7 +53,7 @@
 }
 
 .CallExpression > .identifier {
-  background-color: transparent;
+  background-color: transparent !important;
   transition: transparent;
   padding: 0px;
 }
@@ -88,7 +88,7 @@
   font-weight: 700;
 }
 
-.CallExpression > .identifier {
+.CallExpression > .identifier, .TagExpression > .identifier {
   color: var(--fnDefinition) !important;
   font-weight: 700;
   cursor: pointer;
