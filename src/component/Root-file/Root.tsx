@@ -27,7 +27,7 @@ function Root(): JSX.Element {
   const leftArea = useSelector(
     (state: { callTree: { sidebar: number } }) => state.callTree.sidebar
   );
-  console.log(leftArea)
+  // console.log(leftArea)
   const [placeholderinput, setPlaceholderinput] = useState(
     "Search functions by name"
   );

@@ -49,7 +49,7 @@ function CallExpression(props: TypeComponentProps) {
     if (ied === "") {
       setIed(uuidv4());
     }
-    console.log(fnindex > -1)
+    // console.log(fnindex > -1)
     let getName = fnindex > -1 ? listFN[fnindex as number].name : "";
 
     // let codeblock: any = expression.current;
@@ -64,7 +64,7 @@ function CallExpression(props: TypeComponentProps) {
     //   (getName === "" ? null : `CodeBlock[data-title=${getName}]`)
     // );
     // console.log(element,(getName === "" ? null : `.CodeBlock`));
-    console.log(fnindex)
+    // console.log(fnindex)
 
     let fndata = {
       id: id,

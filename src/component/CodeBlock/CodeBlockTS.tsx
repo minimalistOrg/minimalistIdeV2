@@ -83,6 +83,7 @@ const dispatch = useDispatch()
         `.CallExpression[data-name="${listFN[props.data.index].name}"]`
       );
       const position= parseInt(props.data.position !== undefined ? props.data.position as string : "0")
+      // console.log(findFncall[position],findFncall,position)
       findFncall= findFncall![position]
       // console.log(findFncall)
       if (findFncall !== (null || undefined)) {
@@ -102,6 +103,7 @@ const dispatch = useDispatch()
           value: props.data,
           writable: true,
         });
+        console.log("here")
         const row= (activeBubble.current as HTMLElement).parentElement?.parentElement
     //eslint-disable-next-line
         if(row != undefined){
@@ -114,7 +116,7 @@ const dispatch = useDispatch()
     }
     resetGlobal(1)
     //eslint-disable-next-line
-  }, [props.data, title, paramok]);
+  }, [props.data, title, paramok,code]);
 
   function fnHover(event: { currentTarget: HTMLElement }) {
     let data: ObjTree = (

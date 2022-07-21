@@ -1,5 +1,5 @@
 import "./Bubble.css";
-import { useState } from "react";
+import { useState,useRef } from "react";
 import CodeBlockTS from "../CodeBlock/CodeBlockTS";
 import { useDispatch, useSelector } from "react-redux";
 import { add } from "../Root-file/slice/callTreeSlice";
@@ -31,6 +31,8 @@ function Bubble(props: BubbleProps): JSX.Element {
     (HTMLElement & FnInfoType) | null
   >(null);
 
+  const element= useRef<any>(null)
+
   // useEffect(()=>{
   // window.UrlData()
   // },[window.UrlData()])
@@ -43,7 +45,8 @@ function Bubble(props: BubbleProps): JSX.Element {
     const readIndex = event.target.parentNode as HTMLElement & FnInfoType;
     // console.log(readIndex)
     if (!(readIndex.fninfo === undefined)) {
-      const list = document.querySelectorAll(
+    console.log(element.current)
+      const list = (element.current as HTMLElement).querySelectorAll(
         `.CallExpression[data-name="${readIndex.dataset.name}"]`
       );
       const position = Array.from(list).indexOf(readIndex);
@@ -168,7 +171,7 @@ function Bubble(props: BubbleProps): JSX.Element {
       {props.tree.map((e: ObjTree, index: number) => {
         return (
           <div key={index} style={{ order: e.order }} className="RowBubble">
-            <div className="Bubble">
+            <div ref={element} className="Bubble">
               {Codebubble(e, props.tree, e.index, props.call, e.id)}
             </div>
             {/*ref={currentBubble}*/}
