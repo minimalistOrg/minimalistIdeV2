@@ -4,6 +4,7 @@
   --sidebarColor: rgba(88, 76, 39, 0.4);
   --sidebarColorActive: rgb(88, 76, 39);
   --calltreeHeader: rgba(128, 128, 128, 0.2);
+  --text-primary: #616161;
 }
 
 .bar {
@@ -21,6 +22,7 @@
 .text {
   white-space: pre;
   font-size: 13px;
+  color: var(--text-primary);
 }
 
 .title {
@@ -34,6 +36,7 @@
   text-transform: uppercase;
   line-height: 35px;
   padding-left: 20px;
+  color: rgb(88, 110, 117);;
 }
 
 .header {
@@ -67,3 +70,45 @@
   color: var(--sidebarColor);
 }
 
+.ul{
+    display: flex;
+    flex-direction: column;
+}
+
+.list{
+    overflow-y: auto;
+    height: calc(100vh - 85px);
+}
+
+/* Estilos para motores Webkit y blink (Chrome, Safari, Opera... )*/
+
+.list::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.list::-webkit-scrollbar:vertical {
+    width:10px;
+}
+
+.list::-webkit-scrollbar-button:increment,.list::-webkit-scrollbar-button {
+    display: none;
+} 
+
+.list::-webkit-scrollbar:horizontal {
+    height: 10px;
+}
+
+.list::-webkit-scrollbar-thumb {
+    background: rgba(100, 100, 100, 0.4);
+    display: none;
+    transition: .8s linear;;
+}
+
+
+.list:hover::-webkit-scrollbar-thumb {
+    display: block;
+}
+
+/* .list::-webkit-scrollbar-track { */
+/*     opacity: 0;  */
+/* } */

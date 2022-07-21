@@ -67,6 +67,7 @@ ul {
 
 .btn-eye{
     margin: 0px 5px;
+    color: var(--text-primary);
 }
 
 button{

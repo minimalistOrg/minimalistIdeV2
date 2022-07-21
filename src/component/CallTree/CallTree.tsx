@@ -38,10 +38,10 @@ function CallTree(props: CallTreeType) {
     // eslint-disable-next-line
   }, [dataBubbleTree, listFN, props.data, opentree]);
 
-  const style: React.CSSProperties = {
-    display: "flex",
-    flexDirection: "column",
-  };
+  // const style: React.CSSProperties = {
+  //   display: "flex",
+  //   flexDirection: "column",
+  // };
 
   function hoverBubbles(e: ObjTree) {
     // console.log(e);
@@ -109,7 +109,7 @@ function CallTree(props: CallTreeType) {
 
   const TreeLi = (input: ObjTree[]): JSX.Element => {
     return (
-      <ul style={style}>
+      <ul className={calltree.ul}>
         {input.map((e: ObjTree, index: number) => {
           return (
             <React.Fragment key={index}>
@@ -175,7 +175,7 @@ function CallTree(props: CallTreeType) {
           <h2 className={calltree.title}>Call tree</h2>
         </div>
         <div className={calltree.header}></div>
-        {TreeLi(props.data)}
+        <div className={calltree.list}>{TreeLi(props.data)}</div>
       </div>
     </section>
   );
