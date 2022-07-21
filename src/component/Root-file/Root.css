@@ -90,7 +90,7 @@ button {
     width: 100%;
     /* height: 48px; */
     /* border-bottom: solid 1px grey; */
-    background: white;
+    background: var(--header);
 }
 .BubbleArea{
     padding-top: 35px;

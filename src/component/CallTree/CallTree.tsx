@@ -116,6 +116,7 @@ function CallTree(props: CallTreeType) {
               <li style={{ order: e.order }} data-testid="calltree">
                 <span className="li-container">
                   <span
+                    style={{paddingLeft: index * 2 + "px"}}
                     data-test-id="treefn"
                     className={`${calltree.text} pointer liBubble`}
                     onMouseOver={() => hoverBubbles(e)}

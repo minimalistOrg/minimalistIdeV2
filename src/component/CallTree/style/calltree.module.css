@@ -5,6 +5,10 @@
   --sidebarColorActive: rgb(88, 76, 39);
   --calltreeHeader: rgba(128, 128, 128, 0.2);
   --text-primary: #616161;
+  --header: rgb(238, 232, 213);
+  --headerText: #666666;
+  --scroll: rgba(100, 100, 100, 0.4);
+
 }
 
 .bar {
@@ -75,9 +79,14 @@
     flex-direction: column;
 }
 
+.li:hover{
+    background: red;
+}
+
 .list{
     overflow-y: auto;
     height: calc(100vh - 85px);
+    /* padding-right: 0px; */
 }
 
 /* Estilos para motores Webkit y blink (Chrome, Safari, Opera... )*/
@@ -99,7 +108,7 @@
 }
 
 .list::-webkit-scrollbar-thumb {
-    background: rgba(100, 100, 100, 0.4);
+    background: var(--scroll);
     display: none;
     transition: .8s linear;;
 }
