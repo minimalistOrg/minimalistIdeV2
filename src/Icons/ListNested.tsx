@@ -2,7 +2,7 @@ function ListNested(props: {w:string,h:string}) {
   const style = {
     display: "flex",
     alignContent: "center",
-    marginTop: "3px",
+    marginTop: "3px"
   };
 
   return (

@@ -9,8 +9,8 @@ function IconEyeSlash() {
     <div style={style}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
+        width="12"
+        height="12"
         fill="currentColor"
         className="bi bi-eye-slash"
         viewBox="0 0 16 16"

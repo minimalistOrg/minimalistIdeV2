@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { add } from "../Root-file/slice/callTreeSlice";
+import { add, setsidebar } from "../Root-file/slice/callTreeSlice";
 import "./CallTree.css";
 import React from "react";
 import ListNested from "../../Icons/ListNested";
@@ -11,6 +11,7 @@ import {
   ObjTree,
   CodeBlockCodeType,
 } from "../../types/interface";
+import calltree from "./style/calltree.module.css";
 
 function CallTree(props: CallTreeType) {
   // console.log(props)
@@ -27,10 +28,15 @@ function CallTree(props: CallTreeType) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-  // console.log(props.data,"test")
+    if (opentree) {
+      dispatch(setsidebar(250));
+    } else {
+      dispatch(setsidebar(60));
+    }
+    // console.log(props.data,"test")
     // dispatch(add(!dataBubbleTree));
     // eslint-disable-next-line
-  }, [dataBubbleTree,listFN,props.data]);
+  }, [dataBubbleTree, listFN, props.data, opentree]);
 
   const style: React.CSSProperties = {
     display: "flex",
@@ -40,7 +46,7 @@ function CallTree(props: CallTreeType) {
   function hoverBubbles(e: ObjTree) {
     // console.log(e);
     if (e.element() === null) {
-    // console.log(e.Bubble)
+      // console.log(e.Bubble)
       e.Bubble()?.classList.add("CodeBlockHover");
       e.Bubble()?.children[0].classList.add("CodeBlock__header--hover");
     } else {
@@ -92,12 +98,12 @@ function CallTree(props: CallTreeType) {
 
   // console.log(props.data)
   function GetName(data: ObjTree) {
-    if(listFN[data.index] === undefined){
-    return ""
-    }else{
-    let fnName = listFN[data.index];
-    // console.log(fnName)
-     return fnName.name
+    if (listFN[data.index] === undefined) {
+      return "";
+    } else {
+      let fnName = listFN[data.index];
+      // console.log(fnName)
+      return fnName.name;
     }
   }
 
@@ -111,7 +117,7 @@ function CallTree(props: CallTreeType) {
                 <span className="li-container">
                   <span
                     data-test-id="treefn"
-                    className="pointer liBubble"
+                    className={`${calltree.text} pointer liBubble`}
                     onMouseOver={() => hoverBubbles(e)}
                     onMouseLeave={() => hoverBubblesOut(e)}
                   >
@@ -140,7 +146,7 @@ function CallTree(props: CallTreeType) {
 
   function toogleBtntree(state: boolean) {
     if (state) {
-      return "CallTree--active";
+      return calltree.active;
     } else {
       return "";
     }
@@ -148,13 +154,10 @@ function CallTree(props: CallTreeType) {
 
   return (
     <section className="CallTree">
-      <div
-        data-testid="calltreeBar"
-        className={`CallTree__bar ${toogleBtntree(opentree)}`}
-      >
+      <div data-testid="calltreeBar" className={calltree.bar}>
         <div className="CallTree__listToggle">
           <button
-            className="CallTree__listToggle-btn"
+            className={`${calltree.btn} ${opentree ? calltree.btnActive : ""}`}
             data-testid="calltreeBtn"
             onClick={() => {
               setOpentree(!opentree);
@@ -166,8 +169,12 @@ function CallTree(props: CallTreeType) {
       </div>
       <div
         data-testid="calltreeContainer"
-        className={`CallTree__list ${toogleBtntree(opentree)}`}
+        className={`${calltree.container} ${toogleBtntree(opentree)}`}
       >
+        <div>
+          <h2 className={calltree.title}>Call tree</h2>
+        </div>
+        <div className={calltree.header}></div>
         {TreeLi(props.data)}
       </div>
     </section>

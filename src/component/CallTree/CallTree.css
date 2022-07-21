@@ -1,13 +1,10 @@
-/*.CallTree {
-  width: 200px;
-  margin: 0.5rem;
-  font-size: 0.9rem;
-}*/
 
 .CallTree {
   display: flex;
   z-index:  -1;
   margin-top: 27px;
+  height: 100vh;
+  position: fixed;
 }
 
 .CallTree__bar {

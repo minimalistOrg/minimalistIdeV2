@@ -1,0 +1,69 @@
+:root {
+  --Base2: #eee8d5;
+  --sidebar: rgb(221, 214, 193);
+  --sidebarColor: rgba(88, 76, 39, 0.4);
+  --sidebarColorActive: rgb(88, 76, 39);
+  --calltreeHeader: rgba(128, 128, 128, 0.2);
+}
+
+.bar {
+  width: 48px;
+  background-color: var(--sidebar);
+}
+
+.container {
+  background: var(--Base2);
+  width: 182px;
+  font-size: 0.9rem;
+  display: none;
+}
+
+.text {
+  white-space: pre;
+  font-size: 13px;
+}
+
+.title {
+  font-size: 11px;
+  cursor: default;
+  font-weight: 400;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  line-height: 35px;
+  padding-left: 20px;
+}
+
+.header {
+  height: 22px;
+  background: var(--calltreeHeader);
+}
+
+.btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--sidebarColor);
+}
+
+.btnActive {
+  border-left: solid var(--sidebarColorActive) 2px;
+  color: var(--sidebarColorActive);
+}
+
+.btn:hover {
+  color: rgba(88, 76, 39);
+}
+
+.active {
+  display: block;
+}
+
+.inactive-color {
+  color: var(--sidebarColor);
+}
+

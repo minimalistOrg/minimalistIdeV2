@@ -24,6 +24,10 @@ function Root(): JSX.Element {
   const reRender = useSelector(
     (state: { callTree: { value: boolean } }) => state.callTree.value
   );
+  const leftArea = useSelector(
+    (state: { callTree: { sidebar: number } }) => state.callTree.sidebar
+  );
+  console.log(leftArea)
   const [placeholderinput, setPlaceholderinput] = useState(
     "Search functions by name"
   );
@@ -142,7 +146,7 @@ function Root(): JSX.Element {
       <section>
         <CallTree data={json} />
       </section>
-      <section className="code-area">
+      <section className="code-area" style={{left: leftArea + "px"}}>
         <section className="MenuHeader-container">
           <MenuHeader fn={fnlist} />
         </section>
