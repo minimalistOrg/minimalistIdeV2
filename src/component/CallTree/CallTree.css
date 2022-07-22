@@ -2,7 +2,7 @@
 .CallTree {
   display: flex;
   z-index:  -1;
-  margin-top: 27px;
+  margin-top: 30px;
   height: 100vh;
   position: fixed;
 }
@@ -54,9 +54,9 @@ ul {
   padding: 3px;
 }
 
-.liBubble:hover {
-  background-color: var(--bg-highligth-function);
-}
+/* .liBubble:hover { */
+/*   background-color: var(--bg-highligth-function); */
+/* } */
 
 .pointer{
   cursor: pointer;
@@ -68,7 +68,7 @@ ul {
 }
 
 .li-container:hover{
-    background-color: var(--bg-highligth-function);
+    background-color: var(--bg-hover);
 }
 
 .btn-eye{

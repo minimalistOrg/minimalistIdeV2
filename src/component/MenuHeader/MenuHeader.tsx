@@ -1,5 +1,5 @@
 import Dropdown from "rc-dropdown";
-import "./MenuHeader.css";
+import style from "./MenuHeader.module.css";
 import "rc-dropdown/assets/index.css";
 
 interface MenuHeaderType {
@@ -9,19 +9,23 @@ interface MenuHeaderType {
 function MenuHeader(props: MenuHeaderType) {
   // console.log(props)
   const menuFile = (
-    <ul className="Dropdown-Menu">
-      <li className="Dropdown-Menu__item">
-        <button onClick={() => props.fn.gist()}>Load Code</button>
+    <ul className={style.DropdownMenu}>
+      <li className={style.item} onClick={() => props.fn.gist()}>
+        <button>
+        <div className={style.textContainer}>
+        <span className={style.text}>Load Code</span>
+        </div>
+        </button>
       </li>
     </ul>
   );
 
   return (
-    <div className="MenuHeader">
-      <ul>
+    <div className={style.MenuHeader}>
+      <ul className={style.ul}>
         <li>
-          <Dropdown overlay={menuFile} trigger={["click"]} animation="slide-up">
-            <button className="MenuHeader__btn">File</button>
+          <Dropdown overlay={menuFile} trigger={["click"]}>
+            <button className={style.btn}>File</button>
           </Dropdown>
         </li>
       </ul>

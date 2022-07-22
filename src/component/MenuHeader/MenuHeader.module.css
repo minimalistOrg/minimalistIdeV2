@@ -1,0 +1,47 @@
+.btn {
+  padding: 6px 5px;
+  font-size: 13px;
+  color: var(--headerText);
+}
+
+.DropdownMenu {
+  width: 287px;
+  padding: 0px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  overflow: hidden;
+  border-radius: 5px;
+  color: rgb(97, 97, 97);
+  background-color: rgb(238, 232, 213);
+  box-shadow: rgb(0 0 0 / 16%) 0px 2px 8px;
+}
+
+.Dropdown-Menu__item {
+  padding: 4px 6px;
+}
+
+.ul{
+    display: flex;
+    align-items:center;
+}
+
+.MenuHeader{
+    display: flex;
+    height: 100%;
+}
+
+.text{
+    padding: 0px 26px 0px 26px;
+    color: rgb(97, 97, 97);
+}
+
+.textContainer{
+    height: 26px;
+    display: flex;
+    align-items: center;
+}
+
+.item:hover{
+    color: rgb(108, 108, 108);
+    background-color: rgb(223, 202, 136);
+}
