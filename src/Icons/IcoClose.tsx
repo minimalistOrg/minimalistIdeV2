@@ -1,4 +1,4 @@
-function IcoClose() {
+function IcoClose(props:{size:number}) {
   const style = {
     display: "flex",
     alignContent: "center",
@@ -9,8 +9,8 @@ function IcoClose() {
     <div style={style}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
+        width={props.size}
+        height={props.size}
         fill="currentColor"
         className="bi bi-x"
         viewBox="0 0 16 16"

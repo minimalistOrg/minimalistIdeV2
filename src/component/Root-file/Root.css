@@ -95,3 +95,11 @@ button {
 .BubbleArea{
     padding-top: 35px;
 }
+
+
+.ReactModal__Overlay {
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+  background-color: #fdf6e391 !important;
+}

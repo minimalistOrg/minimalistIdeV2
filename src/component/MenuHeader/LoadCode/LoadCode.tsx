@@ -15,7 +15,7 @@ import { chooseLanguageGist } from "../../Tree-Sitter/TreeSitter";
 import { urlvalid, userdata, startParams } from "../../util/fuctions";
 import EasyUrlParams from "../../util/EasyUrlParams";
 import { add } from "../../Root-file/slice/callTreeSlice";
-import "./LoadCode.css";
+import style from "./LoadCode.module.css";
 
 function LoadCode(props: LoadCodeType) {
   const code = useRef<HTMLInputElement | null>(null);
@@ -363,7 +363,7 @@ function LoadCode(props: LoadCodeType) {
   return (
     <ReactModal
       isOpen={props.isOpen}
-      className="LoadCode__Modal"
+      className={style.modal}
       shouldCloseOnOverlayClick={true}
       shouldFocusAfterRender={true}
       shouldCloseOnEsc={true}
@@ -371,26 +371,28 @@ function LoadCode(props: LoadCodeType) {
       onAfterOpen={focusInput}
       ariaHideApp={false}
     >
-      <div className="LoadCode__header">
-        <div>
+      <div className={style.header}>
+        <div className={style.headerContainer}>
           <span>Load Code from a Gist</span>
         </div>
         <div>
-          <button title="Close" onClick={resetValues}>
-            <IcoClose />
+          <button className={style.close} title="Close" onClick={resetValues}>
+            <IcoClose size={16} />
           </button>
         </div>
       </div>
-      <div className="LoadCode">
+      <div className={style.body}>
         <h3 style={{ textAlign: "center", margin: "0px" }}>{result}</h3>
-        <input
-          ref={code}
-          type="text"
-          className="LoadCode__input"
-          placeholder="https://gist.github.com/.../..."
-          onChange={validURL}
-          onKeyDown={handleKeyDown}
-        />
+        <div className={style.inputContent}>
+          <input
+            ref={code}
+            type="text"
+            className={style.input}
+            placeholder="https://gist.github.com/.../..."
+            onChange={validURL}
+            onKeyDown={handleKeyDown}
+          />
+        </div>
         <div>
           <span className="text-error">{textValidURL}</span>
         </div>

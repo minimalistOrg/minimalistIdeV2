@@ -310,7 +310,7 @@ const dispatch = useDispatch()
           title="Close"
           onClick={props.closeBubble}
         >
-          <IcoClose />{" "}
+          <IcoClose size={20} />{" "}
         </button>
       </div>
       <div
