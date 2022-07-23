@@ -75,17 +75,19 @@ function LoadCode(props: LoadCodeType) {
     // eslint-disable-next-line
   }, [listFn]);
 
-  async function getDetailsURL(url: string) {
-    setResult(
-      <>
-        <span className="LoadCode__textloading">
-          <span className="LoadCode__ico">
-            <ClockwiseIco size={20} />
-          </span>
-          Loading...
+  const loadingElement = (
+    <>
+      <span className={style.textloading}>
+        <span className={style.ico}>
+          <ClockwiseIco size={16} />
         </span>
-      </>
-    );
+        Loading...
+      </span>
+    </>
+  );
+
+  async function getDetailsURL(url: string) {
+    setResult(loadingElement);
     const urlrepo: string = url;
     let regex =
       /(https:\/\/github.com\/)([\w\d\-_]+)(\/)([\w\d\-_]+)(\/)?((tree)(\/)([\w\d\-_]+))?/g;
@@ -227,16 +229,7 @@ function LoadCode(props: LoadCodeType) {
     const id: string = (allvalues as [])[(allvalues as []).length - 1];
     setBtnload("Wait...");
     setEnablebtn(false);
-    setResult(
-      <>
-        <span className="LoadCode__textloading">
-          <span className="LoadCode__ico">
-            <ClockwiseIco size={20} />
-          </span>
-          Loading...
-        </span>
-      </>
-    );
+    setResult(loadingElement);
 
     let readGist;
 
@@ -394,11 +387,11 @@ function LoadCode(props: LoadCodeType) {
           />
         </div>
         <div>
-          <span className="text-error">{textValidURL}</span>
+          <span className={style.error}>{textValidURL}</span>
         </div>
         <div>
           <button
-            className="LoadCode__btn"
+            className={style.btn}
             onClick={() => {
               new EasyUrlParams("data").remove();
               selectURL((code.current as HTMLInputElement).value as string);

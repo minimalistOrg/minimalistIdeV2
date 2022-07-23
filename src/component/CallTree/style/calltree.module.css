@@ -5,11 +5,21 @@
   --sidebarColorActive: rgb(88, 76, 39);
   --calltreeHeader: rgba(128, 128, 128, 0.2);
   --text-primary: #616161;
+  --text-secondary: rgb(97, 97, 97);
   --header: rgb(238, 232, 213);
   --headerText: #666666;
   --scroll: rgba(100, 100, 100, 0.4);
   --bg-hover: rgba(223, 202, 136, 0.27);
+  --item-hover: rgb(223, 202, 136);
   --bg-input: #ddd6c1;
+  --btn-color: rgb(255, 255, 255);
+  --btn-bg:  rgb(172, 157, 87);
+  --btn-bg-hover: rgb(139, 126, 68);
+  --placeholder-color-input: #84918e;
+  --border-focus: #d3af86;
+  --error: #a1260d;
+  --header-color: rgb(231, 223, 197);
+  --modal-shadow: rgb(0 0 0 / 16%);
   /* --btn-hover: rgba(88, 76, 39) */
 
 }
