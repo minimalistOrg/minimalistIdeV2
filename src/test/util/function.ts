@@ -40,7 +40,7 @@ export async function HoverTree(
   if (hover) {
     await listTreefn.nth(index).hover();
   } else {
-    await page.locator(".MenuHeader__btn").hover();
+    await page.locator('[data-test-id="MenuHeader__btn"]').hover();
   }
   const printOneBubble = page.locator(`.CodeBlock[data-title="${fn}"]`);
   const printOneBubbleHover = await printOneBubble.evaluate(
@@ -125,7 +125,7 @@ export async function HoverParamsIdentifier(
 }
 //without hover
 export async function ParamsIdentifier(fn: string,Param:{parent:string,i1:string,i2:string,expect:number}, page: any) {
-  await page.locator(".MenuHeader__btn").hover();
+  await page.locator('[data-test-id="MenuHeader__btn"]').hover();
   const n1 = await page
     .locator(`.CodeBlock[data-title="${Param.parent}"]`)
     .evaluate((node: HTMLElement,Param:any) => {
@@ -155,7 +155,7 @@ export async function ParamsIdentifier(fn: string,Param:{parent:string,i1:string
 
 //without hover
 export async function BubbleHeader(fn: string, page: any) {
-  await page.locator(".MenuHeader__btn").hover();
+  await page.locator('[data-test-id="MenuHeader__btn"]').hover();
   const HoverBuble = await page
     .locator(`.CodeBlock[data-title="${fn}"]`)
     .evaluate((node: HTMLElement) => node.classList.contains("CodeBlockHover"));
@@ -202,7 +202,7 @@ export async function HoverCallTree(fn: string, page: any) {
 }
 
 export async function WithoutHoverCallTree(fn: string, page: any) {
-  await page.locator(".MenuHeader__btn").hover();
+  await page.locator('[data-test-id="MenuHeader__btn"]').hover();
   const multiplicationBubbleWithOutHover = await page
     .locator(`.CodeBlock[data-title="${fn}"]`)
     .evaluate((node: HTMLElement) => node.classList.contains("CodeBlockHover"));

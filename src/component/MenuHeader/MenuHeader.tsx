@@ -25,7 +25,7 @@ function MenuHeader(props: MenuHeaderType) {
       <ul className={style.ul}>
         <li>
           <Dropdown overlay={menuFile} trigger={["click"]}>
-            <button className={style.btn}>File</button>
+            <button data-test-id="MenuHeader__btn" className={style.btn}>File</button>
           </Dropdown>
         </li>
       </ul>
