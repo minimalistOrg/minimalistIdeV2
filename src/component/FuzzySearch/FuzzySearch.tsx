@@ -1,4 +1,4 @@
-import "./FuzzySearch.css";
+import style from "./FuzzySearch.module.css";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { useEffect, useState } from "react";
 import { TreeCall } from "../Root-file/CallTree";
@@ -10,7 +10,7 @@ import {
   CodeBlockType,
   CodeBlockCodeType,
 } from "../../types/interface";
-import { checkFunctionType,setDataURL } from "../util/fuctions";
+import { checkFunctionType, setDataURL } from "../util/fuctions";
 
 function FuzzySearch(props: { placeholder: string }): JSX.Element {
   const listFn: ObjTree[] = useSelector(
@@ -63,7 +63,7 @@ function FuzzySearch(props: { placeholder: string }): JSX.Element {
       value: [],
       event: false,
       order: 0,
-      element: ()=>{
+      element: () => {
         let result = document.getElementById("id" + eId);
         return result;
       },
@@ -74,7 +74,7 @@ function FuzzySearch(props: { placeholder: string }): JSX.Element {
       visibility: true,
     });
     dispatch(add(!reRender));
-    setDataURL(window.UrlData())
+    setDataURL(window.UrlData());
     //
     // the item selected
   };
@@ -84,16 +84,16 @@ function FuzzySearch(props: { placeholder: string }): JSX.Element {
   const formatResult = (item: { name: string; from: string }) => {
     return (
       <>
-        <span style={{ display: "block", textAlign: "left" }}>
-          fn: {item.name} <br />
-          <span>/{item.from}</span>
+        <span className={style.item}>
+          <span>{item.name}</span>
+          <span className={style.file}>/{item.from}</span>
         </span>
       </>
     );
   };
 
   return (
-    <div className="FuzzySearch__input">
+    <div className={style.input}>
       <ReactSearchAutocomplete
         placeholder={props.placeholder}
         items={li as any} //important
@@ -103,12 +103,15 @@ function FuzzySearch(props: { placeholder: string }): JSX.Element {
         resultStringKeyName={"nothing"}
         onFocus={handleOnFocus}
         formatResult={formatResult}
+        showIcon={false}
+        showClear={false}
         styling={{
-          backgroundColor: "inherit",
-          height: "30px",
-          borderRadius: "inherit",
+          borderRadius: "none",
+          fontSize: "13px",
+          height: "17px",
           boxShadow: "none",
           fontFamily: "inherit",
+          hoverBackgroundColor: "var(--bg-hover)"
         }}
       />
     </div>
