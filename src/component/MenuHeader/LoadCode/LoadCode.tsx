@@ -224,7 +224,7 @@ function LoadCode(props: LoadCodeType) {
   async function loadCodeTreeSitter(url: string) {
     // props.load(code.current.value, { reset: true });
     const value = url;
-    const regexid = /([\w\d]+)/g;
+    const regexid = /([\w\d-_]+)/g;
     const allvalues = value.match(regexid);
     const id: string = (allvalues as [])[(allvalues as []).length - 1];
     setBtnload("Wait...");
