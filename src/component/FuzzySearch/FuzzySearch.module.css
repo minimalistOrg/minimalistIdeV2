@@ -38,6 +38,15 @@
     color: var(--color-muted);
 }
 
+.item{
+    display: flex;
+    align-items: center;
+}
+
+.icon{
+    padding-right: 6px;
+}
+
 /* .item{ */
 /*     display: flex; */
 /*     color: var(--text-primary); */

@@ -11,6 +11,8 @@ import {
   CodeBlockCodeType,
 } from "../../types/interface";
 import { checkFunctionType, setDataURL } from "../util/fuctions";
+import JavaScriptIcon from "../../Icons/LanguageIcons/JavaScriptIcon";
+import TypeScriptIcon from "../../Icons/LanguageIcons/TypeScriptIcon";
 
 function FuzzySearch(props: { placeholder: string }): JSX.Element {
   const listFn: ObjTree[] = useSelector(
@@ -34,6 +36,7 @@ function FuzzySearch(props: { placeholder: string }): JSX.Element {
 
   const handleOnHover = (result: CodeBlockType) => {
     // the item hovered
+    // console.log(result)
   };
 
   const handleOnSelect = (item: CodeBlockCodeType) => {
@@ -81,10 +84,22 @@ function FuzzySearch(props: { placeholder: string }): JSX.Element {
 
   const handleOnFocus = () => {};
 
-  const formatResult = (item: { name: string; from: string }) => {
+  const formatResult = (item: {
+    name: string;
+    from: string;
+    language: string;
+  }) => {
     return (
       <>
         <span className={style.item}>
+          <span className={style.icon}>
+            {item.language === "JavaScript" && (
+              <JavaScriptIcon width={16} height={16} />
+            )}
+            {item.language === "TypeScript" && (
+              <TypeScriptIcon width={16} height={16} />
+            )}
+          </span>
           <span>{item.name}</span>
           <span className={style.file}>/{item.from}</span>
         </span>
@@ -111,7 +126,7 @@ function FuzzySearch(props: { placeholder: string }): JSX.Element {
           height: "17px",
           boxShadow: "none",
           fontFamily: "inherit",
-          hoverBackgroundColor: "var(--bg-hover)"
+          hoverBackgroundColor: "var(--bg-hover)",
         }}
       />
     </div>
