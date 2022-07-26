@@ -245,10 +245,11 @@ function LoadCode(props: LoadCodeType) {
     setBtnload("Load");
     setEnablebtn(true);
     const files: responseGistType[] = Object.values(readGist.files);
+    // console.log(files)
     const there_js =
       files.filter(
         (e: responseGistType) =>
-          e.language === "JavaScript" || e.language === "TypeScript"
+          e.language === "JavaScript" || e.language === "TypeScript" || e.language === "TSX"
       ).length > 0;
 
     if (there_js) {
@@ -257,7 +258,7 @@ function LoadCode(props: LoadCodeType) {
         (element: responseGistType) => {
           return (
             element.language === "JavaScript" ||
-            element.language === "TypeScript"
+            element.language === "TypeScript" || element.language === "TSX"
           );
         }
       );
