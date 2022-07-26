@@ -115,11 +115,12 @@ function FuzzySearch(props: { placeholder: string }): JSX.Element {
         onSearch={handleOnSearch as () => void}
         onHover={handleOnHover as () => void}
         onSelect={handleOnSelect}
-        resultStringKeyName={"nothing"}
         onFocus={handleOnFocus}
         formatResult={formatResult}
         showIcon={false}
         showClear={false}
+        fuseOptions={{keys:["name","from"]}}
+        resultStringKeyName="name"
         styling={{
           borderRadius: "none",
           fontSize: "13px",
