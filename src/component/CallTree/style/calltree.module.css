@@ -21,6 +21,9 @@
   --header-color: rgb(231, 223, 197);
   --modal-shadow: rgb(0 0 0 / 16%);
   --color-muted: #6c6c6c;
+  --color-error: var(--error);
+  --color-success: #388a34;
+  --color-info: var(--text-primary);
   /* --btn-hover: rgba(88, 76, 39) */
 
 }

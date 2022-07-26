@@ -11,8 +11,14 @@
     padding: 0px 8px 0px 8px;
     font-size: 13px;
     text-transform: uppercase;
+    margin-bottom: 25px;
 }
 
 .ContainerMsg{
     display: flex;
+    align-items: center;
+}
+
+.icon{
+    padding: 0px 6px;
 }
