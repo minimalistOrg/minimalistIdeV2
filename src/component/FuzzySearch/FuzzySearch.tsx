@@ -120,7 +120,7 @@ function FuzzySearch(props: { placeholder: string }): JSX.Element {
         showIcon={false}
         showClear={false}
         fuseOptions={{keys:["name","from"]}}
-        resultStringKeyName="name"
+        resultStringKeyName={"nothing"}
         styling={{
           borderRadius: "none",
           fontSize: "13px",
