@@ -75,6 +75,8 @@ function LoadCode(props: LoadCodeType) {
     return `-> ${hour}:${minute}`;
   }
 
+  let memori_token = "";
+
   async function login() {
     const token = await fetch(`${api_url}/api/v1/github/login`, {
       method: "post",
@@ -85,6 +87,7 @@ function LoadCode(props: LoadCodeType) {
     if (result === 200) {
       console.log("login successfully " + getTime());
       dispatch(setKey(key));
+      memori_token = key;
       setInterval(login, 14 * (60 * 1000)); //Refresh token each 14 min
       return true;
     } else {
@@ -106,14 +109,15 @@ function LoadCode(props: LoadCodeType) {
   useEffect(() => {
     const seccion = async () => {
       await serverState();
-      login();
+      await login();
+      // console.log(memori_token)
+      let state = new EasyUrlParams("repository").get()?.value;
+      // console.log(state);
+      if (!(state === "")) {
+        selectURL(state as string);
+      }
     };
     seccion();
-    let state = new EasyUrlParams("repository").get()?.value;
-    // console.log(state);
-    if (!(state === "")) {
-      selectURL(state as string);
-    }
     //eslint-disable-next-line
   }, []);
 
@@ -159,12 +163,12 @@ function LoadCode(props: LoadCodeType) {
     };
 
     url_data = urldata;
-    // console.log(urldata)
     if (urldata.rama === "") {
       let info = await getrepo(
         `${urldata.username}/${urldata.repo}`,
         "branches=true"
       );
+      // console.log(info);
       let files = await getrepo(
         `${urldata.username}/${urldata.repo}`,
         `tree=${info[0].name}`
@@ -269,11 +273,13 @@ function LoadCode(props: LoadCodeType) {
       const apiurl = `${api_url}/api/v1/github/repo?id=${repo}&${get}`;
       const sendToken = {
         headers: {
-          Authorization: `Bearer ${valid_token}`,
+          Authorization: `Bearer ${
+            memori_token === "" ? valid_token : memori_token
+          }`,
         },
       };
-
-      const token = valid_token === "" ? {} : sendToken;
+      // console.log(memori_token, valid_token);
+      const token = memori_token === "" && valid_token === "" ? {} : sendToken;
 
       const response = await fetch(apiurl, token);
 
@@ -353,11 +359,13 @@ function LoadCode(props: LoadCodeType) {
       // const apiurl = `${api}/api/v1/github/repo?id=${repo}&${get}`;
       const sendToken = {
         headers: {
-          Authorization: `Bearer ${valid_token}`,
+          Authorization: `Bearer ${
+            memori_token === "" ? valid_token : memori_token
+          }`,
         },
       };
-
-      const token = valid_token === "" ? {} : sendToken;
+      // console.log(memori_token, valid_token);
+      const token = memori_token === "" && valid_token === "" ? {} : sendToken;
       let response = await fetch(
         `${api_url}/api/v1/github/gist?id=${id}`,
         token

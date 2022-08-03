@@ -103,7 +103,7 @@ const dispatch = useDispatch()
           value: props.data,
           writable: true,
         });
-        console.log("here")
+        // console.log("here")
         const row= (activeBubble.current as HTMLElement).parentElement?.parentElement
     //eslint-disable-next-line
         if(row != undefined){
