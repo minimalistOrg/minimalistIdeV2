@@ -41,7 +41,6 @@ function LoadCode(props: LoadCodeType) {
     (state: { jwt: { key: string } }) => state.jwt.key
   );
 
-
   const api_url: string = useSelector(
     (state: { jwt: { url_api: string } }) => state.jwt.url_api
   );
@@ -94,14 +93,27 @@ function LoadCode(props: LoadCodeType) {
     }
   }
 
+  async function serverState() {
+    const get = await fetch(`${api_url}/api/v1/server-state`, {
+      method: "get",
+      credentials: "include",
+    });
+    const { state } = await get.json();
+    console.log("Ok server");
+    return state;
+  }
 
   useEffect(() => {
+    const seccion = async () => {
+      await serverState();
       login();
-      let state = new EasyUrlParams("repository").get()?.value;
-      console.log(state);
-      if (!(state === "")) {
-        selectURL(state as string);
-      }
+    };
+    seccion();
+    let state = new EasyUrlParams("repository").get()?.value;
+    // console.log(state);
+    if (!(state === "")) {
+      selectURL(state as string);
+    }
     //eslint-disable-next-line
   }, []);
 
@@ -252,7 +264,6 @@ function LoadCode(props: LoadCodeType) {
     alert.success("Code loaded successfully");
   }
 
-
   async function getrepo(repo: string, get: string) {
     try {
       const apiurl = `${api_url}/api/v1/github/repo?id=${repo}&${get}`;
@@ -347,7 +358,10 @@ function LoadCode(props: LoadCodeType) {
       };
 
       const token = valid_token === "" ? {} : sendToken;
-      let response = await fetch(`${api_url}/api/v1/github/gist?id=${id}`, token);
+      let response = await fetch(
+        `${api_url}/api/v1/github/gist?id=${id}`,
+        token
+      );
 
       if (response.status === 404) {
         setResult(
