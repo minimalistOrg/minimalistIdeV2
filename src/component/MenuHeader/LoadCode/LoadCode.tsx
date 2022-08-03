@@ -15,6 +15,7 @@ import { chooseLanguageGist } from "../../Tree-Sitter/TreeSitter";
 import { urlvalid, userdata, startParams } from "../../util/fuctions";
 import EasyUrlParams from "../../util/EasyUrlParams";
 import { add } from "../../Root-file/slice/callTreeSlice";
+import { setKey } from "../../Root-file/slice/jwtSlice";
 import style from "./LoadCode.module.css";
 
 function LoadCode(props: LoadCodeType) {
@@ -34,6 +35,15 @@ function LoadCode(props: LoadCodeType) {
 
   const dataBubbleTree: boolean = useSelector(
     (state: { callTree: { value: boolean } }) => state.callTree.value
+  );
+
+  const valid_token: string = useSelector(
+    (state: { jwt: { key: string } }) => state.jwt.key
+  );
+
+
+  const api_url: string = useSelector(
+    (state: { jwt: { url_api: string } }) => state.jwt.url_api
   );
 
   const dispatch = useDispatch();
@@ -59,11 +69,39 @@ function LoadCode(props: LoadCodeType) {
     }
   }
 
-  useEffect(() => {
-    let state = new EasyUrlParams("repository").get()?.value;
-    if (!(state === "")) {
-      selectURL(state as string);
+  function getTime() {
+    const time = new Date();
+    const hour = time.getHours();
+    const minute = time.getMinutes();
+    return `-> ${hour}:${minute}`;
+  }
+
+  async function login() {
+    const token = await fetch(`${api_url}/api/v1/github/login`, {
+      method: "post",
+      credentials: "include",
+    });
+    const result = token.status;
+    const { key } = await token.json();
+    if (result === 200) {
+      console.log("login successfully " + getTime());
+      dispatch(setKey(key));
+      setInterval(login, 14 * (60 * 1000)); //Refresh token each 14 min
+      return true;
+    } else {
+      console.log("no login");
+      return false;
     }
+  }
+
+
+  useEffect(() => {
+      login();
+      let state = new EasyUrlParams("repository").get()?.value;
+      console.log(state);
+      if (!(state === "")) {
+        selectURL(state as string);
+      }
     //eslint-disable-next-line
   }, []);
 
@@ -86,6 +124,8 @@ function LoadCode(props: LoadCodeType) {
     </>
   );
 
+  let url_data: any = {};
+
   async function getDetailsURL(url: string) {
     setResult(loadingElement);
     const urlrepo: string = url;
@@ -105,18 +145,23 @@ function LoadCode(props: LoadCodeType) {
       url: urlrepo,
       rama: rama,
     };
+
+    url_data = urldata;
     // console.log(urldata)
     if (urldata.rama === "") {
       let info = await getrepo(
-        `https://api.github.com/repos/${urldata.username}/${urldata.repo}/branches`
+        `${urldata.username}/${urldata.repo}`,
+        "branches=true"
       );
       let files = await getrepo(
-        `https://api.github.com/repos/${urldata.username}/${urldata.repo}/git/trees/${info[0].name}?recursive=1`
+        `${urldata.username}/${urldata.repo}`,
+        `tree=${info[0].name}`
       );
       searchJavascript(files.tree);
     } else {
       let files = await getrepo(
-        `https://api.github.com/repos/${urldata.username}/${urldata.repo}/git/trees/${urldata.rama}?recursive=1`
+        `${urldata.username}/${urldata.repo}`,
+        `tree=${urldata.rama}`
       );
       searchJavascript(files.tree);
     }
@@ -161,9 +206,13 @@ function LoadCode(props: LoadCodeType) {
   async function LoadAllFilesFromGithub(files: responseGithubType[]) {
     let files64: codeGithubType[] = await Promise.all(
       files.map((element: responseGithubType) => {
-        return getrepo(element.url);
+        return getrepo(
+          `${url_data.username}/${url_data.repo}`,
+          `blob=${element.sha}`
+        );
       })
     );
+
     let datafile: { code: string; from: string; language: string }[] = [];
     files64.forEach((element: codeGithubType, index: number) => {
       datafile.push({
@@ -203,9 +252,19 @@ function LoadCode(props: LoadCodeType) {
     alert.success("Code loaded successfully");
   }
 
-  async function getrepo(url: string) {
+
+  async function getrepo(repo: string, get: string) {
     try {
-      const response = await fetch(url);
+      const apiurl = `${api_url}/api/v1/github/repo?id=${repo}&${get}`;
+      const sendToken = {
+        headers: {
+          Authorization: `Bearer ${valid_token}`,
+        },
+      };
+
+      const token = valid_token === "" ? {} : sendToken;
+
+      const response = await fetch(apiurl, token);
 
       if (response.status === 404) {
         setResult(
@@ -235,10 +294,7 @@ function LoadCode(props: LoadCodeType) {
 
     if (allvalues!.length > 6) {
       // console.log(allvalues)
-      readGist = await getCodeGistRevision(
-        allvalues![5],
-        allvalues![6] as string
-      );
+      readGist = await getCode(`${allvalues![5]}/${allvalues![6] as string}`);
     } else {
       readGist = await getCode(id);
     }
@@ -249,7 +305,9 @@ function LoadCode(props: LoadCodeType) {
     const there_js =
       files.filter(
         (e: responseGistType) =>
-          e.language === "JavaScript" || e.language === "TypeScript" || e.language === "TSX"
+          e.language === "JavaScript" ||
+          e.language === "TypeScript" ||
+          e.language === "TSX"
       ).length > 0;
 
     if (there_js) {
@@ -258,7 +316,8 @@ function LoadCode(props: LoadCodeType) {
         (element: responseGistType) => {
           return (
             element.language === "JavaScript" ||
-            element.language === "TypeScript" || element.language === "TSX"
+            element.language === "TypeScript" ||
+            element.language === "TSX"
           );
         }
       );
@@ -280,31 +339,15 @@ function LoadCode(props: LoadCodeType) {
 
   const getCode = async (id: string) => {
     try {
-      let response = await fetch(
-        `https://api.github.com/gists/${id}?gist_id=${id}`
-      );
+      // const apiurl = `${api}/api/v1/github/repo?id=${repo}&${get}`;
+      const sendToken = {
+        headers: {
+          Authorization: `Bearer ${valid_token}`,
+        },
+      };
 
-      if (response.status === 404) {
-        setResult(
-          <span className="LoadCode__msg">
-            The gist doesn't exist. Check the URL and try again
-          </span>
-        );
-        return {};
-      }
-      let data = response.json();
-      return data;
-    } catch (error) {
-      setResult(
-        <span className="LoadCode__msg">Error Internet Disconnected</span>
-      );
-      return {};
-    }
-  };
-
-  const getCodeGistRevision = async (id: string, sha: string) => {
-    try {
-      let response = await fetch(`https://api.github.com/gists/${id}/${sha}`);
+      const token = valid_token === "" ? {} : sendToken;
+      let response = await fetch(`${api_url}/api/v1/github/gist?id=${id}`, token);
 
       if (response.status === 404) {
         setResult(

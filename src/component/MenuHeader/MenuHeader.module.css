@@ -45,3 +45,8 @@
     color: rgb(108, 108, 108);
     background-color: var(--item-hover);
 }
+
+.link{
+    font-size: 13px;
+    text-decoration: none;
+}
