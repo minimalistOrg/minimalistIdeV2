@@ -4,7 +4,7 @@ export const jwtSlice = createSlice({
   name: "jwt",
   initialState: {
     key: "",
-    url_api: "http://localhost:5000",//"https://minimalistide.herokuapp.com" 
+    url_api: "https://minimalistide.herokuapp.com",// "http://localhost:5000",
   },
   reducers: {
     setKey: (state, action) => {
