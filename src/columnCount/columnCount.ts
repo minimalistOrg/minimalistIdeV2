@@ -1,12 +1,27 @@
-import { SyntaxNode } from "web-tree-sitter";
+// import { SyntaxNode } from "web-tree-sitter";
+
+const SYNTAX_NODE_TYPES = [
+  'arguments',
+  'call_expression',
+  'identifier',
+  'member_expression',
+  'number',
+  'property_identifier',
+  'string',
+  '.',
+  '(',
+  ')',
+] as const
+
+type SyntaxNodeType = typeof SYNTAX_NODE_TYPES[number]
 
 export interface SimplifiedSyntaxNode {
-  type: 'call_expression' | 'member_expression' | 'identifier' | 'property_identifier' | '.' | '(' | ')' | 'number'
+  type: SyntaxNodeType
   text: string
   children: SimplifiedSyntaxNode[]
 }
 
-export type ResponsiveSyntaxNode = SimplifiedSyntaxNode | SyntaxNode
+export type ResponsiveSyntaxNode = SimplifiedSyntaxNode
 
 const callExpressionNumberOfCharacters = (node: ResponsiveSyntaxNode) => {
   const [memberExpression, nodeArguments] = node.children
@@ -42,7 +57,7 @@ const numberOfCharactersArray = (nodes: ResponsiveSyntaxNode[], settings: { sepa
   ) + separators
 }
 
-const characterCountMap: any = {
+const characterCountMap: Record<SyntaxNodeType, ((node: ResponsiveSyntaxNode) => number)> = {
   'call_expression': callExpressionNumberOfCharacters,
   'member_expression': memberExpressionNumberOfCharacters,
   'arguments': argumentsNumberOfCharacters,
