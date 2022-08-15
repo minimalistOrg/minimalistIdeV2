@@ -46,12 +46,8 @@ function LoadCode(props: LoadCodeType) {
   );
 
   const dispatch = useDispatch();
-  // const listFn: CodeBlockCodeType[] = useSelector(
-  //   (state: StoreFn) => state.addbubble.value
-  // );
 
   function selectURL(from: string) {
-    //urldata("repository").setRepoUrl(from);
     let repository = new EasyUrlParams("repository");
     if (from === undefined) {
     } else {
@@ -110,9 +106,8 @@ function LoadCode(props: LoadCodeType) {
     const seccion = async () => {
       await serverState();
       await login();
-      // console.log(memori_token)
       let state = new EasyUrlParams("repository").get()?.value;
-      // console.log(state);
+
       if (!(state === "")) {
         selectURL(state as string);
       }
@@ -123,8 +118,6 @@ function LoadCode(props: LoadCodeType) {
 
   useEffect(() => {
     startParams(listFn);
-    // Object.defineProperty(window, "fnlist", {value: listFn})
-    // console.log(listFn)
     dispatch(add(!dataBubbleTree));
     // eslint-disable-next-line
   }, [listFn]);
@@ -168,7 +161,6 @@ function LoadCode(props: LoadCodeType) {
         `${urldata.username}/${urldata.repo}`,
         "branches=true"
       );
-      // console.log(info);
       let files = await getrepo(
         `${urldata.username}/${urldata.repo}`,
         `tree=${info[0].name}`
@@ -278,7 +270,6 @@ function LoadCode(props: LoadCodeType) {
           }`,
         },
       };
-      // console.log(memori_token, valid_token);
       const token = memoryToken === "" && validToken === "" ? {} : sendToken;
 
       const response = await fetch(apiurl, token);
@@ -298,7 +289,6 @@ function LoadCode(props: LoadCodeType) {
   }
 
   async function loadCodeTreeSitter(url: string) {
-    // props.load(code.current.value, { reset: true });
     const value = url;
     const regexid = /([\w\d-_]+)/g;
     const allvalues = value.match(regexid);
@@ -310,7 +300,6 @@ function LoadCode(props: LoadCodeType) {
     let readGist;
 
     if (allvalues!.length > 6) {
-      // console.log(allvalues)
       readGist = await getCode(`${allvalues![5]}/${allvalues![6] as string}`);
     } else {
       readGist = await getCode(id);
@@ -318,7 +307,6 @@ function LoadCode(props: LoadCodeType) {
     setBtnload("Load");
     setEnablebtn(true);
     const files: responseGistType[] = Object.values(readGist.files);
-    // console.log(files)
     const thereJs =
       files.filter(
         (e: responseGistType) =>
@@ -328,7 +316,6 @@ function LoadCode(props: LoadCodeType) {
       ).length > 0;
 
     if (thereJs) {
-      // props.load(files[0].content, { reset: true });
       let onliJavascript: responseGistType[] = files.filter(
         (element: responseGistType) => {
           return (
@@ -356,7 +343,6 @@ function LoadCode(props: LoadCodeType) {
 
   const getCode = async (id: string) => {
     try {
-      // const apiurl = `${api}/api/v1/github/repo?id=${repo}&${get}`;
       const sendToken = {
         headers: {
           Authorization: `Bearer ${
@@ -364,7 +350,6 @@ function LoadCode(props: LoadCodeType) {
           }`,
         },
       };
-      // console.log(memori_token, valid_token);
       const token = memoryToken === "" && validToken === "" ? {} : sendToken;
       let response = await fetch(
         `${apiUrl}/api/v1/github/gist?id=${id}`,
