@@ -11,8 +11,8 @@ import {
   CodeBlockCodeType,
 } from "../../types/interface";
 import { checkFunctionType, setDataURL } from "../util/fuctions";
-import JavaScriptIcon from "../../Icons/LanguageIcons/JavaScriptIcon";
-import TypeScriptIcon from "../../Icons/LanguageIcons/TypeScriptIcon";
+import JavaScriptIcon from "../../icons/languageIcons/JavaScriptIcon";
+import TypeScriptIcon from "../../icons/languageIcons/TypeScriptIcon";
 
 function FuzzySearch(props: { placeholder: string }): JSX.Element {
   const listFn: ObjTree[] = useSelector(

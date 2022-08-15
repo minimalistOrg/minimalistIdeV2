@@ -9,8 +9,8 @@ import { useSelector, useDispatch } from "react-redux";
 import ChooseType from "../RenderTreeSitter/ChooseType";
 import "./CodeBlock.css";
 import { BubbleCollapse } from "./Functions/BubbleCollapse";
-import IcoClose from "../../Icons/IcoClose";
-import IcoCollapse from "../../Icons/IcoCollapse";
+import IcoClose from "../../icons/IcoClose";
+import IcoCollapse from "../../icons/IcoCollapse";
 import Resize from "./CodeBlock__Resize";
 import {
   CodeBlockType,
