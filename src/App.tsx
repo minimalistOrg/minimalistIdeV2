@@ -1,9 +1,9 @@
 import { Provider } from "react-redux";
 import { positions, Provider as AlertProvider } from "react-alert";
 import styleAlert from "./component/Root-file/root.module.css";
-import store from "./component/Root-file/Redux/store";
+import store from "./components/Root-file/Redux/store";
 
-import Root from "./component/Root-file/Root";
+import Root from "./components/Root-file/Root";
 import IcoClose from "./Icons/IcoClose";
 import IconInfo from "./Icons/IconInfo";
 import IconSuccess from "./Icons/IconSuccess";

@@ -1,7 +1,7 @@
 import { CodeBlockCodeType } from "../types/interface";
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { GlobalCounter } from "../component/RenderTreeSitter/util/useGlobalCounter";
+import { GlobalCounter } from "../components/RenderTreeSitter/util/useGlobalCounter";
 
 export function useOpenDefinition(data: string, option: { tag: string[] }) {
   const element = useRef<HTMLElement>(null);
