@@ -37,11 +37,11 @@ function LoadCode(props: LoadCodeType) {
     (state: { callTree: { value: boolean } }) => state.callTree.value
   );
 
-  const valid_token: string = useSelector(
+  const validToken: string = useSelector(
     (state: { jwt: { key: string } }) => state.jwt.key
   );
 
-  const api_url: string = useSelector(
+  const apiUrl: string = useSelector(
     (state: { jwt: { url_api: string } }) => state.jwt.url_api
   );
 
@@ -75,10 +75,10 @@ function LoadCode(props: LoadCodeType) {
     return `-> ${hour}:${minute}`;
   }
 
-  let memori_token = "";
+  let memoryToken = "";
 
   async function login() {
-    const token = await fetch(`${api_url}/api/v1/github/login`, {
+    const token = await fetch(`${apiUrl}/api/v1/github/login`, {
       method: "post",
       credentials: "include",
     });
@@ -87,7 +87,7 @@ function LoadCode(props: LoadCodeType) {
     if (result === 200) {
       console.log("login successfully " + getTime());
       dispatch(setKey(key));
-      memori_token = key;
+      memoryToken = key;
       setInterval(login, 14 * (60 * 1000)); //Refresh token each 14 min
       return true;
     } else {
@@ -97,7 +97,7 @@ function LoadCode(props: LoadCodeType) {
   }
 
   async function serverState() {
-    const get = await fetch(`${api_url}/api/v1/server-state`, {
+    const get = await fetch(`${apiUrl}/api/v1/server-state`, {
       method: "get",
       credentials: "include",
     });
@@ -140,7 +140,7 @@ function LoadCode(props: LoadCodeType) {
     </>
   );
 
-  let url_data: any = {};
+  let urlData: any = {};
 
   async function getDetailsURL(url: string) {
     setResult(loadingElement);
@@ -162,7 +162,7 @@ function LoadCode(props: LoadCodeType) {
       rama: rama,
     };
 
-    url_data = urldata;
+    urlData = urldata;
     if (urldata.rama === "") {
       let info = await getrepo(
         `${urldata.username}/${urldata.repo}`,
@@ -203,9 +203,9 @@ function LoadCode(props: LoadCodeType) {
   function searchJavascript(files: responseGithubType[]) {
     const JavaScriptFiles: responseGithubType[] = files.filter(
       (element: responseGithubType) => {
-        let regex_js = /\.js$|\.jsx$|\.ts$|\.tsx$/g;
+        let regexJs = /\.js$|\.jsx$|\.ts$|\.tsx$/g;
         element.language = detectLanguage(element.path);
-        return regex_js.test(element.path);
+        return regexJs.test(element.path);
       }
     );
     if (JavaScriptFiles.length === 0) {
@@ -223,7 +223,7 @@ function LoadCode(props: LoadCodeType) {
     let files64: codeGithubType[] = await Promise.all(
       files.map((element: responseGithubType) => {
         return getrepo(
-          `${url_data.username}/${url_data.repo}`,
+          `${urlData.username}/${urlData.repo}`,
           `blob=${element.sha}`
         );
       })
@@ -270,16 +270,16 @@ function LoadCode(props: LoadCodeType) {
 
   async function getrepo(repo: string, get: string) {
     try {
-      const apiurl = `${api_url}/api/v1/github/repo?id=${repo}&${get}`;
+      const apiurl = `${apiUrl}/api/v1/github/repo?id=${repo}&${get}`;
       const sendToken = {
         headers: {
           Authorization: `Bearer ${
-            memori_token === "" ? valid_token : memori_token
+            memoryToken === "" ? validToken : memoryToken
           }`,
         },
       };
       // console.log(memori_token, valid_token);
-      const token = memori_token === "" && valid_token === "" ? {} : sendToken;
+      const token = memoryToken === "" && validToken === "" ? {} : sendToken;
 
       const response = await fetch(apiurl, token);
 
@@ -319,7 +319,7 @@ function LoadCode(props: LoadCodeType) {
     setEnablebtn(true);
     const files: responseGistType[] = Object.values(readGist.files);
     // console.log(files)
-    const there_js =
+    const thereJs =
       files.filter(
         (e: responseGistType) =>
           e.language === "JavaScript" ||
@@ -327,7 +327,7 @@ function LoadCode(props: LoadCodeType) {
           e.language === "TSX"
       ).length > 0;
 
-    if (there_js) {
+    if (thereJs) {
       // props.load(files[0].content, { reset: true });
       let onliJavascript: responseGistType[] = files.filter(
         (element: responseGistType) => {
@@ -360,14 +360,14 @@ function LoadCode(props: LoadCodeType) {
       const sendToken = {
         headers: {
           Authorization: `Bearer ${
-            memori_token === "" ? valid_token : memori_token
+            memoryToken === "" ? validToken : memoryToken
           }`,
         },
       };
       // console.log(memori_token, valid_token);
-      const token = memori_token === "" && valid_token === "" ? {} : sendToken;
+      const token = memoryToken === "" && validToken === "" ? {} : sendToken;
       let response = await fetch(
-        `${api_url}/api/v1/github/gist?id=${id}`,
+        `${apiUrl}/api/v1/github/gist?id=${id}`,
         token
       );
 
