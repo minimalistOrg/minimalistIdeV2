@@ -64,13 +64,6 @@ function LoadCode(props: LoadCodeType) {
     }
   }
 
-  function getTime() {
-    const time = new Date();
-    const hour = time.getHours();
-    const minute = time.getMinutes();
-    return `-> ${hour}:${minute}`;
-  }
-
   let memoryToken = "";
 
   async function login() {
@@ -81,7 +74,6 @@ function LoadCode(props: LoadCodeType) {
     const result = token.status;
     const { key } = await token.json();
     if (result === 200) {
-      console.log("login successfully " + getTime());
       dispatch(setKey(key));
       memoryToken = key;
       setInterval(login, 14 * (60 * 1000)); //Refresh token each 14 min
@@ -92,19 +84,8 @@ function LoadCode(props: LoadCodeType) {
     }
   }
 
-  async function serverState() {
-    const get = await fetch(`${apiUrl}/api/v1/server-state`, {
-      method: "get",
-      credentials: "include",
-    });
-    const { state } = await get.json();
-    console.log("Ok server");
-    return state;
-  }
-
   useEffect(() => {
     const seccion = async () => {
-      await serverState();
       await login();
       let state = new EasyUrlParams("repository").get()?.value;
 
