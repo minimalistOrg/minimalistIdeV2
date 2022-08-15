@@ -45,25 +45,25 @@ const method = (methodArguments: {
 )
 
 describe('numberOfCharacters', () => {
-  test('console.log()', () => {
+  test('function with no arguments "console.log()"', () => {
     const methodColumns = numberOfCharacters(method([]))
 
     expect(methodColumns).toBe(13)
   })
 
-  test('console.log(1)', () => {
+  test('function with 1 number argument "console.log(1)"', () => {
     const methodColumns = numberOfCharacters(method([{ type: 'number', text: '1' }]))
 
     expect(methodColumns).toBe(14)
   })
 
-  test('console.log("Hello world!")', () => {
+  test('function with 1 string argument "console.log("Hello world!")"', () => {
     const methodColumns = numberOfCharacters(method([{ type: 'string', text: '"Hello world!"' }]))
 
     expect(methodColumns).toBe(27)
   })
 
-  test('console.log(1, 2)', () => {
+  test('function with 2 arguments "console.log(1, 2)"', () => {
     const methodColumns = numberOfCharacters(
       method(
         [
