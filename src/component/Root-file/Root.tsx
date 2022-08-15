@@ -2,7 +2,6 @@ import "./Root.css";
 import "../RenderTreeSitter/highlight.css";
 import Bubble from "../Bubble/Bubble";
 import CallTree from "../CallTree/CallTree";
-// import CodeBlockTS from "../CodeBlock/CodeBlockTS";
 import FuzzySearch from "../FuzzySearch/FuzzySearch";
 import { chooseLanguageGist } from "../Tree-Sitter/TreeSitter";
 import { useEffect, useState } from "react";
@@ -11,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { add } from "../Root-file/slice/addBubbleSlice";
 import MenuHeader from "../MenuHeader/MenuHeader";
 import LoadCode from "../MenuHeader/LoadCode/LoadCode";
-// import { code as testCode } from "../Tree-Sitter/TreeSitter";
 import { add as callrender } from "../Root-file/slice/callTreeSlice";
 import { CodeBlockCodeType, responseGistType } from "../../types/interface";
 import { urlvalid } from "../util/fuctions";
@@ -27,33 +25,13 @@ function Root(): JSX.Element {
   const leftArea = useSelector(
     (state: { callTree: { sidebar: number } }) => state.callTree.sidebar
   );
-  // console.log(leftArea)
   const [placeholderinput, setPlaceholderinput] = useState(
     "Search functions by name"
   );
-
-  const data = async (
-    code: string,
-    reset: { reset: boolean },
-    from: string
-  ) => {
-    if (reset.reset) {
-      // resetTreeCall();
-      // dispatch(callrender(!reRender));
-      // dispatch(add(""));
-      // const codedata = await test(code,from);
-      // //
-      // //
-      // // dispatch(add(codedata));
-    } else {
-      // const loadData = await getAstJsx(testCode, "Placeholder", "JavaScript");
-      // // console.log(loadData)
-      // dispatch(add(loadData));
-    }
-  };
+  const [opengist, setOpengist] = useState(true);
+  const alert = useAlert();
 
   async function setGistCode(data: responseGistType[]) {
-  // console.trace()
     setPlaceholderinput("Loading data...");
     resetTreeCall();
     dispatch(callrender(!reRender));
@@ -89,18 +67,10 @@ function Root(): JSX.Element {
     dispatch(callrender(!reRender));
     dispatch(add([]));
     dispatch(add(data));
-    // console.log(data)
       setWait(true);
     Object.defineProperty(window, "fnlist", {value:data,writable:true})
     setPlaceholderinput("Search functions by name");
   }
-
-  let alert = useAlert();
-  const [opengist, setOpengist] = useState(true);
-  useEffect(() => {
-    data("", { reset: false }, "Placeholder");
-    //eslint-disable-next-line
-  }, []);
 
   useEffect(() => {
     let getrepourl = new EasyUrlParams("repository");
@@ -114,11 +84,6 @@ function Root(): JSX.Element {
         }
       }
     }
-
-// const LoadUserData= userdata() 
-// setWait(loa)
-// setOpengist(LoadUserData)
-    //eslint-disable-next-line
   }, []);
 
   function BubbleLoad(state: Boolean) {
@@ -157,7 +122,6 @@ function Root(): JSX.Element {
           isOpen={opengist}
           event={fnlist}
         />
-        {/*<CodeBlockTS code={load} />*/}
       </section>
     </div>
   );
