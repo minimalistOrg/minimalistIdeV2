@@ -15,8 +15,8 @@ import { chooseLanguageGist } from "../../Tree-Sitter/TreeSitter";
 import { urlvalid, userdata, startParams } from "../../util/fuctions";
 import EasyUrlParams from "../../util/EasyUrlParams";
 import { add } from "../../Root-file/slice/callTreeSlice";
-import { setKey } from "../../Root-file/slice/jwtSlice";
 import style from "./LoadCode.module.css";
+import { apiService } from "../../../services/apiService";
 
 function LoadCode(props: LoadCodeType) {
   const code = useRef<HTMLInputElement | null>(null);
@@ -66,27 +66,9 @@ function LoadCode(props: LoadCodeType) {
 
   let memoryToken = "";
 
-  async function login() {
-    const token = await fetch(`${apiUrl}/api/v1/github/login`, {
-      method: "post",
-      credentials: "include",
-    });
-    const result = token.status;
-    const { key } = await token.json();
-    if (result === 200) {
-      dispatch(setKey(key));
-      memoryToken = key;
-      setInterval(login, 14 * (60 * 1000)); //Refresh token each 14 min
-      return true;
-    } else {
-      console.log("no login");
-      return false;
-    }
-  }
-
   useEffect(() => {
     const seccion = async () => {
-      await login();
+      await apiService.login(apiUrl, dispatch, memoryToken)();
       let state = new EasyUrlParams("repository").get()?.value;
 
       if (!(state === "")) {
