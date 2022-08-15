@@ -33,15 +33,15 @@ function LoadCode(props: LoadCodeType) {
       state.addbubble.value
   );
 
-  const dataBubbleTree: boolean = useSelector(
+  const dataBubbleTree = useSelector(
     (state: { callTree: { value: boolean } }) => state.callTree.value
   );
 
-  const validToken: string = useSelector(
+  const validToken = useSelector(
     (state: { jwt: { key: string } }) => state.jwt.key
   );
 
-  const apiUrl: string = useSelector(
+  const apiUrl = useSelector(
     (state: { jwt: { url_api: string } }) => state.jwt.url_api
   );
 
