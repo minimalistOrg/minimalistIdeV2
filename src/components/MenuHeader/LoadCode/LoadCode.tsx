@@ -43,7 +43,7 @@ export const LoadCode = (props: LoadCodeType) => {
 
   const getRepo = apiService.getRepo(setResult, validToken)
 
-  function selectURL(from: string) {
+  const selectURL = (from: string) => {
     const repository = new EasyUrlParams("repository")
     if (from !== undefined) {
       repository.set(from)
@@ -63,15 +63,15 @@ export const LoadCode = (props: LoadCodeType) => {
   }
 
   useEffect(() => {
-    const seccion = async () => {
+    const section = async () => {
       await apiService.login(dispatch)()
       let state = new EasyUrlParams("repository").get()?.value
 
-      if (!(state === "")) {
-        selectURL(state as string)
+      if (state && state !== "") {
+        selectURL(state)
       }
     }
-    seccion()
+    section()
     //eslint-disable-next-line
   }, [])
 
@@ -94,7 +94,7 @@ export const LoadCode = (props: LoadCodeType) => {
 
   let urlData: any = {}
 
-  async function getDetailsURL(url: string) {
+  const getDetailsURL = async (url: string) => {
     const urlrepo: string = url
     let regex =
       /(https:\/\/github.com\/)([\w\d\-_]+)(\/)([\w\d\-_]+)(\/)?((tree)(\/)([\w\d\-_]+))?/g
@@ -133,7 +133,7 @@ export const LoadCode = (props: LoadCodeType) => {
     }
   }
 
-  function detectLanguage(path: string) {
+  const detectLanguage = (path: string) => {
     let patron: RegExpExecArray | string[] | null = /\.[a-z]{0,3}$/g.exec(path)
     if (patron === null) {
       patron = ["null"]
@@ -150,7 +150,7 @@ export const LoadCode = (props: LoadCodeType) => {
     }
   }
 
-  async function searchJavascript(files: responseGithubType[]) {
+  const searchJavascript = async (files: responseGithubType[]) => {
     const jsFiles: responseGithubType[] = files.filter(
       (element: responseGithubType) => {
         let regexJs = /\.js$|\.jsx$|\.ts$|\.tsx$/g
@@ -177,7 +177,7 @@ export const LoadCode = (props: LoadCodeType) => {
     }
   }
 
-  async function loadCodeTreeSitter(url: string) {
+  const loadCodeTreeSitter = async (url: string) => {
     const value = url
     const regexid = /([\w\d-_]+)/g
     const allvalues = value.match(regexid)
@@ -230,7 +230,7 @@ export const LoadCode = (props: LoadCodeType) => {
     }
   }
 
-  function validURL(event: { target: { value: string } }) {
+  const validURL = (event: { target: { value: string } }) => {
     let valid = urlvalid(event.target.value)
 
     if (valid) {
@@ -242,14 +242,14 @@ export const LoadCode = (props: LoadCodeType) => {
     }
   }
 
-  function resetValues() {
+  const resetValues = () => {
     props.event.gist()
     setResult("")
     setTextValidURL("")
     setEnablebtn(false)
   }
 
-  function focusInput() {
+  const focusInput = () => {
     (code.current as HTMLInputElement).focus()
   }
 
