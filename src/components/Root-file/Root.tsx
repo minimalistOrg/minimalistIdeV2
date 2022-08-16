@@ -9,7 +9,7 @@ import { TreeCall as json, resetTreeCall } from "./CallTree";
 import { useDispatch, useSelector } from "react-redux";
 import { add } from "./slice/addBubbleSlice";
 import MenuHeader from "../MenuHeader/MenuHeader";
-import LoadCode from "../MenuHeader/LoadCode/LoadCode";
+import { LoadCode } from "../MenuHeader/LoadCode/LoadCode";
 import { add as callrender } from "./slice/callTreeSlice";
 import { CodeBlockCodeType, responseGistType } from "../../types/interface";
 import { urlvalid } from "../util/fuctions";

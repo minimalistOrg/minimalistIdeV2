@@ -17,7 +17,7 @@ import style from "./LoadCode.module.css"
 import { apiService } from "../../../services/apiService"
 import { parser } from "../../../services/parser"
 
-function LoadCode(props: LoadCodeType) {
+export const LoadCode = (props: LoadCodeType) => {
   const code = useRef<HTMLInputElement | null>(null)
   const alert = useAlert()
 
@@ -312,5 +312,3 @@ function LoadCode(props: LoadCodeType) {
     </ReactModal>
   )
 }
-
-export default LoadCode
