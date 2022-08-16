@@ -76,5 +76,39 @@ export const apiService = {
 
       getAst(datafile);
     }
-  }
+  },
+  getCode: (apiUrl: string, setResult: Dispatch<SetStateAction<string | JSX.Element>>, memoryToken: string, validToken: string) => {
+    return async (id: string) => {
+      try {
+        const sendToken = {
+          headers: {
+            Authorization: `Bearer ${
+              memoryToken === "" ? validToken : memoryToken
+            }`,
+          },
+        };
+        const token = memoryToken === "" && validToken === "" ? {} : sendToken;
+        let response = await fetch(
+          `${apiUrl}/api/v1/github/gist?id=${id}`,
+          token
+        );
+
+        if (response.status === 404) {
+          setResult(
+            <span className="LoadCode__msg">
+              The gist doesn't exist. Check the URL and try again
+            </span>
+          );
+          return {};
+        }
+        let data = response.json();
+        return data;
+      } catch (error) {
+        setResult(
+          <span className="LoadCode__msg">Error Internet Disconnected</span>
+        );
+        return {};
+      }
+    }
+  },
 }
