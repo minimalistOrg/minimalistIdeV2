@@ -27,6 +27,7 @@ function LoadCode(props: LoadCodeType) {
   const [btnload, setBtnload] = useState("Load");
   const [result, setResult] = useState<string | JSX.Element>("");
   const [list, setList] = useState(true);
+  const dispatch = useDispatch();
 
   const listFn = useSelector(
     (state: { addbubble: { value: CodeBlockCodeType[] } }) =>
@@ -45,7 +46,8 @@ function LoadCode(props: LoadCodeType) {
     (state: { jwt: { url_api: string } }) => state.jwt.url_api
   );
 
-  const dispatch = useDispatch();
+  let memoryToken = "";
+  const getRepo = apiService.getRepo(apiUrl, setResult, memoryToken, validToken)
 
   function selectURL(from: string) {
     let repository = new EasyUrlParams("repository");
@@ -63,8 +65,6 @@ function LoadCode(props: LoadCodeType) {
       }
     }
   }
-
-  let memoryToken = "";
 
   useEffect(() => {
     const seccion = async () => {
@@ -120,17 +120,17 @@ function LoadCode(props: LoadCodeType) {
 
     urlData = urldata;
     if (urldata.rama === "") {
-      let info = await getrepo(
+      let info = await getRepo(
         `${urldata.username}/${urldata.repo}`,
         "branches=true"
       );
-      let files = await getrepo(
+      let files = await getRepo(
         `${urldata.username}/${urldata.repo}`,
         `tree=${info[0].name}`
       );
       searchJavascript(files.tree);
     } else {
-      let files = await getrepo(
+      let files = await getRepo(
         `${urldata.username}/${urldata.repo}`,
         `tree=${urldata.rama}`
       );
@@ -177,7 +177,7 @@ function LoadCode(props: LoadCodeType) {
   async function LoadAllFilesFromGithub(files: responseGithubType[]) {
     let files64: codeGithubType[] = await Promise.all(
       files.map((element: responseGithubType) => {
-        return getrepo(
+        return getRepo(
           `${urlData.username}/${urlData.repo}`,
           `blob=${element.sha}`
         );
@@ -221,34 +221,6 @@ function LoadCode(props: LoadCodeType) {
     userdata();
     setList(!list);
     alert.success("Code loaded successfully");
-  }
-
-  async function getrepo(repo: string, get: string) {
-    try {
-      const apiurl = `${apiUrl}/api/v1/github/repo?id=${repo}&${get}`;
-      const sendToken = {
-        headers: {
-          Authorization: `Bearer ${
-            memoryToken === "" ? validToken : memoryToken
-          }`,
-        },
-      };
-      const token = memoryToken === "" && validToken === "" ? {} : sendToken;
-
-      const response = await fetch(apiurl, token);
-
-      if (response.status === 404) {
-        setResult(
-          <span className="LoadCode__msg">
-            The gist doesn't exist. Check the URL and try again
-          </span>
-        );
-        return [];
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {}
   }
 
   async function loadCodeTreeSitter(url: string) {
