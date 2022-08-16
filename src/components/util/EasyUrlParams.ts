@@ -74,7 +74,7 @@ export default class EasyUrlParams {
       // eslint-disable-next-line
       const regex = /\?|\&/g
       const fragment: string | string[] = reorder.split(regex)
-      window.history.pushState({}, "repo", fragment.join("&").replace(/\&/, "?"))
+      window.history.pushState({}, "repo", fragment.join("&").replace(/&/, "?"))
     }
   }
 
