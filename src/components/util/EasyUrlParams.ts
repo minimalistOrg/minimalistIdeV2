@@ -1,92 +1,84 @@
 export default class EasyUrlParams {
-  param: string;
+  param: string
 
   constructor(param: string) {
-    this.param = param;
+    this.param = param
   }
 
   set(value: string) {
-    let url = this.url();
-    let get = this.get();
-    let getAll = this.getAll();
+    const url = this.url()
+    let get = this.get()
+    let getAll = this.getAll()
     if (get === undefined) {
       //no existe el parametro
       if (getAll.length > 0) {
-        let add = url + "&" + this.param + "=" + value;
-        window.history.pushState({}, "repo", add);
+        const newUrl = url + "&" + this.param + "=" + value
+        window.history.pushState({}, "repo", newUrl)
       } else {
-        let add = url + "?" + this.param + "=" + value;
-        window.history.pushState({}, "repo", add);
+        const newUrl = url + "?" + this.param + "=" + value
+        window.history.pushState({}, "repo", newUrl)
       }
     } else {
       //el parametro existe
-      let set = url.replace(
+      const newUrl = url.replace(
         new RegExp(`${get.param}=${get.value}`, "g"),
         `${get.param}=${value}`
-      );
-      window.history.pushState({}, "repo", set);
+      )
+      window.history.pushState({}, "repo", newUrl)
     }
-    //}
   }
 
   getAll() {
-    let url = this.url();
+    const url = this.url()
     // eslint-disable-next-line
-    let regex = /\?|\&/g;
-    let fragment = url.split(regex);
+    let regex = /\?|\&/g
+    let fragment = url.split(regex)
     if (fragment.length === 1) {
-      // No hay Parametros
-      return [];
+      return []
     } else {
-      //hay uno o mas Parametros
-      let All = fragment.map((e) => {
+      let urlParams = fragment.map((e) => {
         // eslint-disable-next-line
-        let param_value: string | string[] = e.replace(/\=/, "...###...");
-        param_value = param_value.split("...###...");
-        return { param: param_value[0], value: param_value[1] };
-      });
-      All.shift();
-      return All;
+        let param_value: string | string[] = e.replace(/\=/, "...###...")
+        param_value = param_value.split("...###...")
+        return { param: param_value[0], value: param_value[1] }
+      })
+      urlParams.shift()
+      return urlParams
       //si el parametro ya existe y tiene el mismo valor
       // let exist= (new RegExp(this.param + "=")).test(url)
     }
   }
 
   get() {
-    let All = this.getAll();
-    if (All === undefined) {
+    const urlParams = this.getAll()
+    if (urlParams === undefined) {
     } else {
-      let result = All.find((e) => {
-        return e.param === this.param;
-      });
-      return result;
+      let result = urlParams.find((e) => {
+        return e.param === this.param
+      })
+      return result
     }
   }
 
   remove() {
-    let url = this.url();
-    url = encodeURI(url);
-    let get = this.get();
-    if (get === undefined) {
-      // console.error("param not exist");
-    } else {
+    let url = encodeURI(this.url())
+    let get = this.get()
+
+    if (get !== undefined) {
       const evaluation = new RegExp(
         `(${"\\?"}|${"\\&"})${encodeURI(get.param)}=${encodeURI(get.value)}`,
         "g"
-      );
+      )
 
-      let reorder = url.replace(evaluation, "");
+      const reorder = url.replace(evaluation, "")
       // eslint-disable-next-line
-      let regex = /\?|\&/g;
-      let fragment: string | string[] = reorder.split(regex);
-      fragment = fragment.join("&");
-      // eslint-disable-next-line
-      fragment = fragment.replace(/\&/, "?");
-      window.history.pushState({}, "repo", fragment);
+      const regex = /\?|\&/g
+      const fragment: string | string[] = reorder.split(regex)
+      window.history.pushState({}, "repo", fragment.join("&").replace(/\&/, "?"))
     }
   }
 
   url() {
-    return window.location.href;
+    return window.location.href
   }
 }
