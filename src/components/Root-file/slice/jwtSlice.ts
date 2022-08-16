@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit"
 
 export const jwtSlice = createSlice({
   name: "jwt",
@@ -7,12 +7,12 @@ export const jwtSlice = createSlice({
   },
   reducers: {
     setKey: (state, action) => {
-      state.key = action.payload;
+      state.key = action.payload
     },
   },
-});
+})
 
 // Action creators are generated for each case reducer function
-export const { setKey } = jwtSlice.actions;
+export const { setKey } = jwtSlice.actions
 
-export default jwtSlice.reducer;
+export default jwtSlice.reducer
