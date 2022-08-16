@@ -10,12 +10,12 @@ import {
   responseGithubType,
   responseGistType,
 } from "../../../types/interface";
-import { chooseLanguageGist } from "../../Tree-Sitter/TreeSitter";
 import { urlvalid, userdata, startParams } from "../../util/fuctions";
 import EasyUrlParams from "../../util/EasyUrlParams";
 import { add } from "../../Root-file/slice/callTreeSlice";
 import style from "./LoadCode.module.css";
 import { apiService } from "../../../services/apiService";
+import { parser } from "../../../services/parser";
 
 function LoadCode(props: LoadCodeType) {
   const code = useRef<HTMLInputElement | null>(null);
@@ -153,7 +153,7 @@ function LoadCode(props: LoadCodeType) {
     }
   }
 
-  function searchJavascript(files: responseGithubType[]) {
+  async function searchJavascript(files: responseGithubType[]) {
     const JavaScriptFiles: responseGithubType[] = files.filter(
       (element: responseGithubType) => {
         let regexJs = /\.js$|\.jsx$|\.ts$|\.tsx$/g;
@@ -168,35 +168,16 @@ function LoadCode(props: LoadCodeType) {
         </span>
       );
     } else {
-      apiService.loadAllFiles(apiUrl, setResult, validToken)(JavaScriptFiles, urlData, getAst);
+      const dataFiles = await apiService.loadAllFiles(apiUrl, setResult, validToken)(JavaScriptFiles, urlData);
+      const ast = await parser.getAst(dataFiles)
+
+      props.setData(ast);
+      setResult("");
+      resetValues();
+      userdata();
+      setList(!list);
+      alert.success("Code loaded successfully");
     }
-  }
-
-  async function getAst(
-    data: { code: string; from: string; language: string }[]
-  ) {
-    let TreeSitterAst = await Promise.all(
-      data.map((element: { code: string; from: string; language: string }) => {
-        let ast = chooseLanguageGist(
-          element.code,
-          element.from,
-          element.language
-        );
-        return ast;
-      })
-    );
-
-    let result: CodeBlockCodeType[] = [].concat.apply([], TreeSitterAst);
-    result.forEach((e: CodeBlockCodeType, index: number) => {
-      e.id = index;
-    });
-
-    props.setData(result);
-    setResult("");
-    resetValues();
-    userdata();
-    setList(!list);
-    alert.success("Code loaded successfully");
   }
 
   async function loadCodeTreeSitter(url: string) {

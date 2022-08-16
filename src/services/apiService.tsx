@@ -55,7 +55,7 @@ export const apiService = {
     }
   },
   loadAllFiles: (apiUrl: string, setResult: Dispatch<SetStateAction<string | JSX.Element>>, validToken: string) => {
-    return async (files: responseGithubType[], urlData: any, getAst: any) => {
+    return async (files: responseGithubType[], urlData: any) => {
       let files64: codeGithubType[] = await Promise.all(
         files.map((element: responseGithubType) => {
           return apiService.getRepo(apiUrl, setResult, validToken)(
@@ -65,16 +65,16 @@ export const apiService = {
         })
       );
 
-      let datafile: { code: string; from: string; language: string }[] = [];
+      let dataFiles: { code: string; from: string; language: string }[] = [];
       files64.forEach((element: codeGithubType, index: number) => {
-        datafile.push({
+        dataFiles.push({
           code: atob(element.content),
           from: files[index].path,
           language: files[index].language as string,
         });
       });
 
-      getAst(datafile);
+      return dataFiles
     }
   },
   getCode: (apiUrl: string, setResult: Dispatch<SetStateAction<string | JSX.Element>>, validToken: string) => {
