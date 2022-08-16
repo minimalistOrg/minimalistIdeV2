@@ -16,7 +16,7 @@ import { urlvalid } from "../util/fuctions"
 import { useAlert } from "react-alert"
 import EasyUrlParams from "../util/EasyUrlParams"
 
-const Root = () => {
+export const Root = () => {
   const dispatch = useDispatch()
   const [wait, setWait] = useState(false)
   const reRender = useSelector(
@@ -126,5 +126,3 @@ const Root = () => {
     </div>
   )
 }
-
-export default Root
