@@ -4,29 +4,27 @@ import { codeGithubType, responseGithubType } from "../types/interface";
 
 let memoryToken = "";
 
-const login = (apiUrl: string, dispatch: Dispatch<any>) => {
-  return async () => {
-    const token = await fetch(`${apiUrl}/api/v1/github/login`, {
-      method: "post",
-      credentials: "include",
-    });
-    const result = token.status;
-    const { key } = await token.json();
-
-    if (result === 200) {
-      dispatch(setKey(key));
-      memoryToken = key;
-      setInterval(login, 14 * (60 * 1000)); //Refresh token each 14 min
-      return true;
-    } else {
-      console.log("no login");
-      return false;
-    }
-  }
-}
-
 export const apiService = {
-  login,
+  login: (apiUrl: string, dispatch: Dispatch<any>) => {
+    return async () => {
+      const token = await fetch(`${apiUrl}/api/v1/github/login`, {
+        method: "post",
+        credentials: "include",
+      });
+      const result = token.status;
+      const { key } = await token.json();
+
+      if (result === 200) {
+        dispatch(setKey(key));
+        memoryToken = key;
+        setInterval(apiService.login, 14 * (60 * 1000)); //Refresh token each 14 min
+        return true;
+      } else {
+        console.log("no login");
+        return false;
+      }
+    }
+  },
   getRepo: (apiUrl: string, setResult: Dispatch<SetStateAction<string | JSX.Element>>, validToken: string) => {
     return async (repo: string, get: string) => {
       try {
