@@ -10,7 +10,7 @@ const options = {
   position: positions.BOTTOM_CENTER,
 }
 
-const App = () => {
+export const App = () => {
   return (
     <Provider store={store}>
       <AlertProvider template={AlertTemplate} {...options}>
@@ -19,5 +19,3 @@ const App = () => {
     </Provider>
   )
 }
-
-export default App
