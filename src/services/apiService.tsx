@@ -3,11 +3,12 @@ import { setKey } from "../components/Root-file/slice/jwtSlice";
 import { codeGithubType, responseGithubType } from "../types/interface";
 
 let memoryToken = "";
+const backendUrl = process.env.REACT_APP_BACKEND_URL
 
 export const apiService = {
-  login: (apiUrl: string, dispatch: Dispatch<any>) => {
+  login: (dispatch: Dispatch<any>) => {
     return async () => {
-      const token = await fetch(`${apiUrl}/api/v1/github/login`, {
+      const token = await fetch(`${backendUrl}/api/v1/github/login`, {
         method: "post",
         credentials: "include",
       });
@@ -25,10 +26,10 @@ export const apiService = {
       }
     }
   },
-  getRepo: (apiUrl: string, setResult: Dispatch<SetStateAction<string | JSX.Element>>, validToken: string) => {
+  getRepo: (setResult: Dispatch<SetStateAction<string | JSX.Element>>, validToken: string) => {
     return async (repo: string, get: string) => {
       try {
-        const apiurl = `${apiUrl}/api/v1/github/repo?id=${repo}&${get}`;
+        const url = `${backendUrl}/api/v1/github/repo?id=${repo}&${get}`;
         const sendToken = {
           headers: {
             Authorization: `Bearer ${
@@ -38,7 +39,7 @@ export const apiService = {
         };
         const token = memoryToken === "" && validToken === "" ? {} : sendToken;
 
-        const response = await fetch(apiurl, token);
+        const response = await fetch(url, token);
 
         if (response.status === 404) {
           setResult(
@@ -54,11 +55,11 @@ export const apiService = {
       } catch (error) {}
     }
   },
-  loadAllFiles: (apiUrl: string, setResult: Dispatch<SetStateAction<string | JSX.Element>>, validToken: string) => {
+  loadAllFiles: (setResult: Dispatch<SetStateAction<string | JSX.Element>>, validToken: string) => {
     return async (files: responseGithubType[], urlData: any) => {
       let files64: codeGithubType[] = await Promise.all(
         files.map((element: responseGithubType) => {
-          return apiService.getRepo(apiUrl, setResult, validToken)(
+          return apiService.getRepo(setResult, validToken)(
             `${urlData.username}/${urlData.repo}`,
             `blob=${element.sha}`
           );
@@ -77,7 +78,7 @@ export const apiService = {
       return dataFiles
     }
   },
-  getCode: (apiUrl: string, setResult: Dispatch<SetStateAction<string | JSX.Element>>, validToken: string) => {
+  getCode: (setResult: Dispatch<SetStateAction<string | JSX.Element>>, validToken: string) => {
     return async (id: string) => {
       try {
         const sendToken = {
@@ -89,7 +90,7 @@ export const apiService = {
         };
         const token = memoryToken === "" && validToken === "" ? {} : sendToken;
         let response = await fetch(
-          `${apiUrl}/api/v1/github/gist?id=${id}`,
+          `${backendUrl}/api/v1/github/gist?id=${id}`,
           token
         );
 

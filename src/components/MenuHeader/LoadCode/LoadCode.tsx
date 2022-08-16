@@ -41,22 +41,20 @@ function LoadCode(props: LoadCodeType) {
     (state: { jwt: { key: string } }) => state.jwt.key
   );
 
-  const apiUrl = useSelector(
-    (state: { jwt: { url_api: string } }) => state.jwt.url_api
-  );
-
-  const getRepo = apiService.getRepo(apiUrl, setResult, validToken)
+  const getRepo = apiService.getRepo(setResult, validToken)
 
   function selectURL(from: string) {
-    let repository = new EasyUrlParams("repository");
-    if (from === undefined) {
-    } else {
+    const repository = new EasyUrlParams("repository");
+    if (from !== undefined) {
       repository.set(from);
     }
-    let url = repository.get()?.value;
-    if (!(url === undefined)) {
+
+    const url = repository.get()?.value;
+    if (url !== undefined) {
       const github = /https:\/\/github.com\//;
+
       if (github.test(url)) {
+        setResult(loadingElement);
         getDetailsURL(url);
       } else {
         loadCodeTreeSitter(url);
@@ -66,7 +64,7 @@ function LoadCode(props: LoadCodeType) {
 
   useEffect(() => {
     const seccion = async () => {
-      await apiService.login(apiUrl, dispatch)();
+      await apiService.login(dispatch)();
       let state = new EasyUrlParams("repository").get()?.value;
 
       if (!(state === "")) {
@@ -97,7 +95,6 @@ function LoadCode(props: LoadCodeType) {
   let urlData: any = {};
 
   async function getDetailsURL(url: string) {
-    setResult(loadingElement);
     const urlrepo: string = url;
     let regex =
       /(https:\/\/github.com\/)([\w\d\-_]+)(\/)([\w\d\-_]+)(\/)?((tree)(\/)([\w\d\-_]+))?/g;
@@ -154,21 +151,21 @@ function LoadCode(props: LoadCodeType) {
   }
 
   async function searchJavascript(files: responseGithubType[]) {
-    const JavaScriptFiles: responseGithubType[] = files.filter(
+    const jsFiles: responseGithubType[] = files.filter(
       (element: responseGithubType) => {
         let regexJs = /\.js$|\.jsx$|\.ts$|\.tsx$/g;
         element.language = detectLanguage(element.path);
         return regexJs.test(element.path);
       }
     );
-    if (JavaScriptFiles.length === 0) {
+    if (jsFiles.length === 0) {
       setResult(
         <span className="LoadCode__msg">
           The github repo doesn't include any Javascript files
         </span>
       );
     } else {
-      const dataFiles = await apiService.loadAllFiles(apiUrl, setResult, validToken)(JavaScriptFiles, urlData);
+      const dataFiles = await apiService.loadAllFiles(setResult, validToken)(jsFiles, urlData);
       const ast = await parser.getAst(dataFiles)
 
       props.setData(ast);
@@ -192,9 +189,9 @@ function LoadCode(props: LoadCodeType) {
     let readGist;
 
     if (allvalues!.length > 6) {
-      readGist = await apiService.getCode(apiUrl, setResult, validToken)(`${allvalues![5]}/${allvalues![6] as string}`);
+      readGist = await apiService.getCode(setResult, validToken)(`${allvalues![5]}/${allvalues![6] as string}`);
     } else {
-      readGist = await apiService.getCode(apiUrl, setResult, validToken)(id);
+      readGist = await apiService.getCode(setResult, validToken)(id);
     }
     setBtnload("Load");
     setEnablebtn(true);
