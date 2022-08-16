@@ -45,8 +45,7 @@ function LoadCode(props: LoadCodeType) {
     (state: { jwt: { url_api: string } }) => state.jwt.url_api
   );
 
-  let memoryToken = "";
-  const getRepo = apiService.getRepo(apiUrl, setResult, memoryToken, validToken)
+  const getRepo = apiService.getRepo(apiUrl, setResult, validToken)
 
   function selectURL(from: string) {
     let repository = new EasyUrlParams("repository");
@@ -67,7 +66,7 @@ function LoadCode(props: LoadCodeType) {
 
   useEffect(() => {
     const seccion = async () => {
-      await apiService.login(apiUrl, dispatch, memoryToken)();
+      await apiService.login(apiUrl, dispatch)();
       let state = new EasyUrlParams("repository").get()?.value;
 
       if (!(state === "")) {
@@ -169,7 +168,7 @@ function LoadCode(props: LoadCodeType) {
         </span>
       );
     } else {
-      apiService.loadAllFiles(apiUrl, setResult, memoryToken, validToken)(JavaScriptFiles, urlData, getAst);
+      apiService.loadAllFiles(apiUrl, setResult, validToken)(JavaScriptFiles, urlData, getAst);
     }
   }
 
@@ -212,9 +211,9 @@ function LoadCode(props: LoadCodeType) {
     let readGist;
 
     if (allvalues!.length > 6) {
-      readGist = await apiService.getCode(apiUrl, setResult, memoryToken, validToken)(`${allvalues![5]}/${allvalues![6] as string}`);
+      readGist = await apiService.getCode(apiUrl, setResult, validToken)(`${allvalues![5]}/${allvalues![6] as string}`);
     } else {
-      readGist = await apiService.getCode(apiUrl, setResult, memoryToken, validToken)(id);
+      readGist = await apiService.getCode(apiUrl, setResult, validToken)(id);
     }
     setBtnload("Load");
     setEnablebtn(true);

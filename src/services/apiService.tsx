@@ -2,7 +2,9 @@ import { Dispatch, SetStateAction } from "react";
 import { setKey } from "../components/Root-file/slice/jwtSlice";
 import { codeGithubType, responseGithubType } from "../types/interface";
 
-const login = (apiUrl: string, dispatch: Dispatch<any>, memoryToken: string) => {
+let memoryToken = "";
+
+const login = (apiUrl: string, dispatch: Dispatch<any>) => {
   return async () => {
     const token = await fetch(`${apiUrl}/api/v1/github/login`, {
       method: "post",
@@ -25,7 +27,7 @@ const login = (apiUrl: string, dispatch: Dispatch<any>, memoryToken: string) => 
 
 export const apiService = {
   login,
-  getRepo: (apiUrl: string, setResult: Dispatch<SetStateAction<string | JSX.Element>>, memoryToken: string, validToken: string) => {
+  getRepo: (apiUrl: string, setResult: Dispatch<SetStateAction<string | JSX.Element>>, validToken: string) => {
     return async (repo: string, get: string) => {
       try {
         const apiurl = `${apiUrl}/api/v1/github/repo?id=${repo}&${get}`;
@@ -54,11 +56,11 @@ export const apiService = {
       } catch (error) {}
     }
   },
-  loadAllFiles: (apiUrl: string, setResult: Dispatch<SetStateAction<string | JSX.Element>>, memoryToken: string, validToken: string) => {
+  loadAllFiles: (apiUrl: string, setResult: Dispatch<SetStateAction<string | JSX.Element>>, validToken: string) => {
     return async (files: responseGithubType[], urlData: any, getAst: any) => {
       let files64: codeGithubType[] = await Promise.all(
         files.map((element: responseGithubType) => {
-          return apiService.getRepo(apiUrl, setResult, memoryToken, validToken)(
+          return apiService.getRepo(apiUrl, setResult, validToken)(
             `${urlData.username}/${urlData.repo}`,
             `blob=${element.sha}`
           );
@@ -77,7 +79,7 @@ export const apiService = {
       getAst(datafile);
     }
   },
-  getCode: (apiUrl: string, setResult: Dispatch<SetStateAction<string | JSX.Element>>, memoryToken: string, validToken: string) => {
+  getCode: (apiUrl: string, setResult: Dispatch<SetStateAction<string | JSX.Element>>, validToken: string) => {
     return async (id: string) => {
       try {
         const sendToken = {
