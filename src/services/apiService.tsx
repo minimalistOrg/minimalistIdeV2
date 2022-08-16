@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { setKey } from "../components/Root-file/slice/jwtSlice";
+import { codeGithubType, responseGithubType } from "../types/interface";
 
 const login = (apiUrl: string, dispatch: Dispatch<any>, memoryToken: string) => {
   return async () => {
@@ -51,6 +52,29 @@ export const apiService = {
         const data = await response.json();
         return data;
       } catch (error) {}
+    }
+  },
+  loadAllFiles: (apiUrl: string, setResult: Dispatch<SetStateAction<string | JSX.Element>>, memoryToken: string, validToken: string) => {
+    return async (files: responseGithubType[], urlData: any, getAst: any) => {
+      let files64: codeGithubType[] = await Promise.all(
+        files.map((element: responseGithubType) => {
+          return apiService.getRepo(apiUrl, setResult, memoryToken, validToken)(
+            `${urlData.username}/${urlData.repo}`,
+            `blob=${element.sha}`
+          );
+        })
+      );
+
+      let datafile: { code: string; from: string; language: string }[] = [];
+      files64.forEach((element: codeGithubType, index: number) => {
+        datafile.push({
+          code: atob(element.content),
+          from: files[index].path,
+          language: files[index].language as string,
+        });
+      });
+
+      getAst(datafile);
     }
   }
 }

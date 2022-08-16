@@ -7,7 +7,6 @@ import IcoClose from "../../../icons/IcoClose";
 import {
   CodeBlockCodeType,
   LoadCodeType,
-  codeGithubType,
   responseGithubType,
   responseGistType,
 } from "../../../types/interface";
@@ -170,33 +169,11 @@ function LoadCode(props: LoadCodeType) {
         </span>
       );
     } else {
-      LoadAllFilesFromGithub(JavaScriptFiles);
+      apiService.loadAllFiles(apiUrl, setResult, memoryToken, validToken)(JavaScriptFiles, urlData, getAst);
     }
   }
 
-  async function LoadAllFilesFromGithub(files: responseGithubType[]) {
-    let files64: codeGithubType[] = await Promise.all(
-      files.map((element: responseGithubType) => {
-        return getRepo(
-          `${urlData.username}/${urlData.repo}`,
-          `blob=${element.sha}`
-        );
-      })
-    );
-
-    let datafile: { code: string; from: string; language: string }[] = [];
-    files64.forEach((element: codeGithubType, index: number) => {
-      datafile.push({
-        code: atob(element.content),
-        from: files[index].path,
-        language: files[index].language as string,
-      });
-    });
-
-    getast(datafile);
-  }
-
-  async function getast(
+  async function getAst(
     data: { code: string; from: string; language: string }[]
   ) {
     let TreeSitterAst = await Promise.all(
