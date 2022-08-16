@@ -84,7 +84,7 @@ function Root(): JSX.Element {
         }
       }
     }
-  }, []);
+  }, [alert]);
 
   function BubbleLoad(state: Boolean) {
     if (state) {
