@@ -64,10 +64,10 @@ export const LoadCode = (props: LoadCodeType) => {
   useEffect(() => {
     const section = async () => {
       await apiService.login(dispatch)()
-      let state = new EasyUrlParams("repository").get()?.value
+      let repository = new EasyUrlParams("repository").get()?.value
 
-      if (state && state !== "") {
-        selectURL(state)
+      if (repository && repository !== "") {
+        selectURL(repository)
       }
     }
     section()

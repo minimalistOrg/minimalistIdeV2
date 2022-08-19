@@ -169,8 +169,6 @@ export function chooseLanguageGist(
   from: string,
   language: string
 ) {
-
-    // console.log(code,from,language)
   switch (language) {
     case "JavaScript":
       return getAstJsx(code, from, "JavaScript");

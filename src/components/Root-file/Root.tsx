@@ -36,7 +36,8 @@ export const Root = () => {
     resetTreeCall()
     dispatch(callrender(!reRender))
     dispatch(add([]))
-    async function getCodeParse(e: responseGistType) {
+
+    const getCodeParse = async (e: responseGistType) => {
       let response = await chooseLanguageGist(
         e.content,
         e.filename,
@@ -45,6 +46,7 @@ export const Root = () => {
       let result = await response
       return result
     }
+
     let allfn: CodeBlockCodeType[] = await Promise.all(
       data.map(async (e: responseGistType) => {
         let x = await getCodeParse(e)
@@ -101,10 +103,10 @@ export const Root = () => {
     }
   }
 
-  const OpenModalGist = () => {
+  const openModalGist = () => {
     setOpengist(!opengist)
   }
-  const fnlist = { gist: OpenModalGist }
+  const fnlist = { gist: openModalGist }
 
   return (
     <div className="d-flex">
@@ -118,6 +120,7 @@ export const Root = () => {
         </section>
 
         <section className="BubbleArea">{BubbleLoad(wait)}</section>
+
         <LoadCode
           load={setGistCode}
           setData={setDataCode as () => void}
