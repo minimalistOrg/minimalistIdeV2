@@ -2,8 +2,8 @@ import { useAlert } from "react-alert"
 import { useSelector, useDispatch } from "react-redux"
 import { useEffect, useRef, useState } from "react"
 import ReactModal from "react-modal"
-import ClockwiseIco from "../../../Icons/ClockwiseIco"
-import IcoClose from "../../../Icons/IcoClose"
+import ClockwiseIco from "../../../icons/ClockwiseIco"
+import IcoClose from "../../../icons/IcoClose"
 import {
   CodeBlockCodeType,
   LoadCodeType,
