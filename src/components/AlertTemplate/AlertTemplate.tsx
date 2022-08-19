@@ -1,7 +1,7 @@
-import IcoClose from "../../icons/IcoClose";
-import IconInfo from "../../icons/IconInfo";
-import IconSuccess from "../../icons/IconSuccess";
-import IconError from "../../icons/IconError";
+import IcoClose from "../../Icons/IcoClose";
+import IconInfo from "../../Icons/IconInfo";
+import IconSuccess from "../../Icons/IconSuccess";
+import IconError from "../../Icons/IconError";
 
 import styleAlert from "./AlertTemplate.module.css";
 

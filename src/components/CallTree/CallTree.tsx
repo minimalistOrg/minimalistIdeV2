@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { add, setsidebar } from "../Root-file/slice/callTreeSlice";
 import "./CallTree.css";
 import React from "react";
-import ListNested from "../../icons/ListNested";
-import IconEye from "../../icons/IconEye";
-import IconEyeSlash from "../../icons/IconEyeSlash";
+import ListNested from "../../Icons/ListNested";
+import IconEye from "../../Icons/IconEye";
+import IconEyeSlash from "../../Icons/IconEyeSlash";
 import {
   CallTreeType,
   ObjTree,
