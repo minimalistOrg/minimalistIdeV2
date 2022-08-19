@@ -8,7 +8,6 @@ import {
   CodeBlockCodeType,
   LoadCodeType,
   responseGithubType,
-  responseGistType,
 } from "../../../types/interface"
 import { urlvalid, userdata, startParams } from "../../util/fuctions"
 import EasyUrlParams from "../../util/EasyUrlParams"
