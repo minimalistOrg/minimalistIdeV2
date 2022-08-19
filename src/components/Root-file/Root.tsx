@@ -31,7 +31,7 @@ export const Root = () => {
   const [opengist, setOpengist] = useState(true)
   const alert = useAlert()
 
-  async function setGistCode(data: responseGistType[]) {
+  const setGistCode = async (data: responseGistType[]) => {
     setPlaceholderinput("Loading data...")
     resetTreeCall()
     dispatch(callrender(!reRender))
@@ -61,7 +61,7 @@ export const Root = () => {
     setPlaceholderinput("Search functions by name")
   }
 
-  function setDataCode(data: CodeBlockCodeType[]) {
+  const setDataCode = (data: CodeBlockCodeType[]) => {
     setPlaceholderinput("Loading data...")
     resetTreeCall()
     dispatch(callrender(!reRender))
@@ -86,7 +86,7 @@ export const Root = () => {
     }
   }, [alert])
 
-  function BubbleLoad(state: Boolean) {
+  const BubbleLoad = (state: Boolean) => {
     if (state) {
       return (
         <>
@@ -101,7 +101,7 @@ export const Root = () => {
     }
   }
 
-  function OpenModalGist() {
+  const OpenModalGist = () => {
     setOpengist(!opengist)
   }
   const fnlist = { gist: OpenModalGist }
@@ -111,10 +111,12 @@ export const Root = () => {
       <section>
         <CallTree data={json} />
       </section>
+
       <section className="code-area" style={{left: leftArea + "px"}}>
         <section className="MenuHeader-container">
           <MenuHeader fn={fnlist} />
         </section>
+
         <section className="BubbleArea">{BubbleLoad(wait)}</section>
         <LoadCode
           load={setGistCode}
