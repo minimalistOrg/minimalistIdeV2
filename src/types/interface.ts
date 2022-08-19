@@ -104,15 +104,21 @@ export interface codeGithubType {
   encoding: string;
 }
 
-
-export interface EasyUrlParams{
-get: ()=> {params: string, value:string};
-set: (value:string) => void;
+export interface stacktraceType {
+  file: string;
+  row: string;
+  colum:string;
 }
 
-
-export interface stacktraceType{
-file: string;
-row: string;
-colum:string;
+export interface SuccessProjectResponse {
+  success: true
+  jsFiles: responseGistType[]
 }
+
+export interface ErrorProjectResponse {
+  success: false
+  errorString?: string
+  code?: number
+}
+
+export type ProjectResponse = SuccessProjectResponse | ErrorProjectResponse

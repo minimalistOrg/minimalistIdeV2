@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { setKey } from "../components/Root-file/slice/jwtSlice";
-import { codeGithubType, responseGithubType } from "../types/interface";
+import { codeGithubType, ProjectResponse, responseGistType, responseGithubType } from "../types/interface";
 
 let memoryToken = "";
 const backendUrl = process.env.REACT_APP_BACKEND_URL
@@ -50,8 +50,7 @@ export const apiService = {
           return [];
         }
 
-        const data = await response.json();
-        return data;
+        return await response.json();
       } catch (error) {}
     }
   },
@@ -78,38 +77,39 @@ export const apiService = {
       return dataFiles
     }
   },
-  getCode: (setResult: Dispatch<SetStateAction<string | JSX.Element>>, validToken: string) => {
-    return async (id: string) => {
-      try {
-        const sendToken = {
-          headers: {
-            Authorization: `Bearer ${
-              memoryToken === "" ? validToken : memoryToken
-            }`,
-          },
-        };
-        const token = memoryToken === "" && validToken === "" ? {} : sendToken;
-        let response = await fetch(
-          `${backendUrl}/api/v1/github/gist?id=${id}`,
-          token
-        );
-
-        if (response.status === 404) {
-          setResult(
-            <span className="LoadCode__msg">
-              The gist doesn't exist. Check the URL and try again
-            </span>
-          );
-          return {};
-        }
-        let data = response.json();
-        return data;
-      } catch (error) {
-        setResult(
-          <span className="LoadCode__msg">Error Internet Disconnected</span>
-        );
-        return {};
-      }
+  getProject: async (validToken: string, url: string): Promise<ProjectResponse> => {
+    const sendToken = {
+      headers: {
+        Authorization: `Bearer ${
+          memoryToken === "" ? validToken : memoryToken
+        }`,
+      },
     }
+    const token = memoryToken === "" && validToken === "" ? {} : sendToken
+
+    const response = await fetch(`${backendUrl}/api/v1/project?url=${url}`, token)
+
+    if (response.status !== 200) {
+      return { success: false, code: response.status }
+    }
+
+    const jsonResponse = await response.json()
+
+    if (!jsonResponse.files) {
+      return { success: false, errorString: 'No files' }
+    }
+
+    const files: responseGistType[] = Object.values(jsonResponse.files)
+    const jsFiles = files.filter((file: responseGistType) =>
+        file.language === "JavaScript" ||
+        file.language === "TypeScript" ||
+        file.language === "TSX"
+    )
+
+    if (jsFiles.length === 0) {
+      return { success: false, errorString: "The gist doesn't include any Javascript files" }
+    }
+
+    return { success: true, jsFiles }
   },
 }

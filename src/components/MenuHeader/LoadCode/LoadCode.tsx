@@ -25,7 +25,6 @@ export const LoadCode = (props: LoadCodeType) => {
   const [enablebtn, setEnablebtn] = useState(false)
   const [btnload, setBtnload] = useState("Load")
   const [result, setResult] = useState<string | JSX.Element>("")
-  const [list, setList] = useState(true)
   const dispatch = useDispatch()
 
   const listFn = useSelector(
@@ -57,7 +56,8 @@ export const LoadCode = (props: LoadCodeType) => {
         setResult(loadingElement)
         getDetailsURL(url)
       } else {
-        loadCodeTreeSitter(url)
+        setResult(loadingElement)
+        loadProject(url)
       }
     }
   }
@@ -172,62 +172,32 @@ export const LoadCode = (props: LoadCodeType) => {
       setResult("")
       resetValues()
       userdata()
-      setList(!list)
       alert.success("Code loaded successfully")
     }
   }
 
-  const loadCodeTreeSitter = async (url: string) => {
-    const value = url
-    const regexid = /([\w\d-_]+)/g
-    const allvalues = value.match(regexid)
-    const id: string = (allvalues as [])[(allvalues as []).length - 1]
+  const loadProject = async (url: string) => {
     setBtnload("Wait...")
     setEnablebtn(false)
     setResult(loadingElement)
 
-    let readGist
+    const response = await apiService.getProject(validToken, url)
 
-    if (allvalues!.length > 6) {
-      readGist = await apiService.getCode(setResult, validToken)(`${allvalues![5]}/${allvalues![6] as string}`)
-    } else {
-      readGist = await apiService.getCode(setResult, validToken)(id)
-    }
-    setBtnload("Load")
-    setEnablebtn(true)
-    const files: responseGistType[] = Object.values(readGist.files)
-    const thereJs =
-      files.filter(
-        (e: responseGistType) =>
-          e.language === "JavaScript" ||
-          e.language === "TypeScript" ||
-          e.language === "TSX"
-      ).length > 0
-
-    if (thereJs) {
-      let onliJavascript: responseGistType[] = files.filter(
-        (element: responseGistType) => {
-          return (
-            element.language === "JavaScript" ||
-            element.language === "TypeScript" ||
-            element.language === "TSX"
-          )
-        }
-      )
-
-      props.load(onliJavascript)
-      setResult("")
-      resetValues()
-      userdata()
-      setList(!list)
-      alert.success("Code loaded successfully")
-    } else {
+    if (!response.success) {
       setResult(
         <span className="LoadCode__msg">
-          The gist doesn't include any Javascript files
+          {response.errorString || response.code}
         </span>
-      )
+      );
+      return
     }
+
+    setEnablebtn(true)
+    props.load(response.jsFiles)
+    setResult("")
+    resetValues()
+    userdata()
+    alert.success("Code loaded successfully")
   }
 
   const validURL = (event: { target: { value: string } }) => {
