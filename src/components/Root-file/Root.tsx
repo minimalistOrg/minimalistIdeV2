@@ -3,18 +3,18 @@ import "../RenderTreeSitter/highlight.css"
 import Bubble from "../Bubble/Bubble"
 import CallTree from "../CallTree/CallTree"
 import FuzzySearch from "../FuzzySearch/FuzzySearch"
-import { chooseLanguageGist } from "../Tree-Sitter/TreeSitter"
 import { useEffect, useState } from "react"
 import { TreeCall as json, resetTreeCall } from "./CallTree"
 import { useDispatch, useSelector } from "react-redux"
-import { add } from "./slice/addBubbleSlice"
+import { addBubbles } from "./slice/addBubbleSlice"
 import MenuHeader from "../MenuHeader/MenuHeader"
 import { LoadCode } from "../MenuHeader/LoadCode/LoadCode"
 import { add as callrender } from "./slice/callTreeSlice"
-import { CodeBlockCodeType, responseGistType } from "../../types/interface"
+import { CodeBlockCodeType, Gist } from "../../types/interface"
 import { urlvalid } from "../util/fuctions"
 import { useAlert } from "react-alert"
 import EasyUrlParams from "../util/EasyUrlParams"
+import { parser } from "../../services/parser"
 
 export const Root = () => {
   const dispatch = useDispatch()
@@ -31,34 +31,21 @@ export const Root = () => {
   const [opengist, setOpengist] = useState(true)
   const alert = useAlert()
 
-  const setGistCode = async (data: responseGistType[]) => {
+  const setGistCode = async (data: Gist[]) => {
     setPlaceholderinput("Loading data...")
     resetTreeCall()
     dispatch(callrender(!reRender))
-    dispatch(add([]))
+    dispatch(addBubbles([]))
 
-    const getCodeParse = async (e: responseGistType) => {
-      let response = await chooseLanguageGist(
-        e.content,
-        e.filename,
-        e.language
-      )
-      let result = await response
-      return result
-    }
+    const ast = await parser.getAst(data.map((gist) =>
+      ({ code: gist.content, from: gist.filename, language: gist.language })
+    ))
 
-    let allfn: CodeBlockCodeType[] = await Promise.all(
-      data.map(async (e: responseGistType) => {
-        let x = await getCodeParse(e)
-        return x
-      })
-    )
-
-    let result: CodeBlockCodeType[] = [].concat.apply([], allfn as [])
-    result.forEach((e: CodeBlockCodeType, index: number) => {
-      e.id = index
+    ast.forEach((codeBlock: CodeBlockCodeType, index: number) => {
+      codeBlock.id = index
     })
-    dispatch(add(result))
+
+    dispatch(addBubbles(ast))
     setWait(true)
     setPlaceholderinput("Search functions by name")
   }
@@ -67,8 +54,8 @@ export const Root = () => {
     setPlaceholderinput("Loading data...")
     resetTreeCall()
     dispatch(callrender(!reRender))
-    dispatch(add([]))
-    dispatch(add(data))
+    dispatch(addBubbles([]))
+    dispatch(addBubbles(data))
     setWait(true)
     Object.defineProperty(window, "fnlist", {value:data,writable:true})
     setPlaceholderinput("Search functions by name")

@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { setKey } from "../components/Root-file/slice/jwtSlice";
-import { codeGithubType, ProjectResponse, responseGistType, responseGithubType } from "../types/interface";
+import { codeGithubType, ProjectResponse, Gist, responseGithubType } from "../types/interface";
 
 let memoryToken = "";
 const backendUrl = process.env.REACT_APP_BACKEND_URL
@@ -99,8 +99,8 @@ export const apiService = {
       return { success: false, errorString: 'No files' }
     }
 
-    const files: responseGistType[] = Object.values(jsonResponse.files)
-    const jsFiles = files.filter((file: responseGistType) =>
+    const files: Gist[] = Object.values(jsonResponse.files)
+    const jsFiles = files.filter((file: Gist) =>
         file.language === "JavaScript" ||
         file.language === "TypeScript" ||
         file.language === "TSX"

@@ -71,11 +71,11 @@ export interface CodeBlockType {
 export interface LoadCodeType {
   isOpen: boolean;
   event: { gist: () => void };
-  load: (data: responseGistType[]) => void;
+  load: (data: Gist[]) => void;
   setData: (data: CodeBlockCodeType[]) => void;
 }
 
-export interface responseGistType {
+export interface Gist {
   content: string;
   filename: string;
   type: string;
@@ -112,7 +112,7 @@ export interface stacktraceType {
 
 export interface SuccessProjectResponse {
   success: true
-  jsFiles: responseGistType[]
+  jsFiles: Gist[]
 }
 
 export interface ErrorProjectResponse {

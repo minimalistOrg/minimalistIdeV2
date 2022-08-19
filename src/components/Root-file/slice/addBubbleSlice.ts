@@ -7,7 +7,7 @@ export const addBubbleSlice = createSlice({
     order: 0,
   },
   reducers: {
-    add: (state, action) => {
+    addBubbles: (state, action) => {
       state.value = action.payload;
     },
     setOrder: (state) => {
@@ -17,6 +17,6 @@ export const addBubbleSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { add, setOrder } = addBubbleSlice.actions;
+export const { addBubbles, setOrder } = addBubbleSlice.actions;
 
 export default addBubbleSlice.reducer;
