@@ -1,3 +1,4 @@
+import { SUPPORTED_LANGUAGES } from "../constants"
 import { CodeBlockCodeType } from "../types/interface"
 
 declare global {
@@ -6,7 +7,6 @@ declare global {
   }
 }
 
-const SUPPORTED_LANGUAGES = ['javascript', 'typescript'] as const
 type Language = typeof SUPPORTED_LANGUAGES[number]
 
 const getWasmFile = (language: Language) => {
@@ -76,8 +76,8 @@ export const parser = {
       data.map((element: { code: string; from: string; language: string }) => {
         const lowerCaseLanguage = element.language.toLowerCase()
 
-        if (lowerCaseLanguage === 'javascript' || lowerCaseLanguage === 'typescript') {
-          return parse(element.code, element.from, lowerCaseLanguage)
+        if (SUPPORTED_LANGUAGES.includes(lowerCaseLanguage as Language)) {
+          return parse(element.code, element.from, lowerCaseLanguage as Language)
         }
 
         throw new Error(`Language not supported: ${element.language}`)
