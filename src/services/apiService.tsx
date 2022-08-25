@@ -1,9 +1,21 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch } from "react";
 import { setKey } from "../components/Root-file/slice/jwtSlice";
-import { codeGithubType, ProjectResponse, Gist, responseGithubType } from "../types/interface";
+import { ProjectResponse } from "../types/interface";
 
 let memoryToken = "";
 const backendUrl = process.env.REACT_APP_BACKEND_URL
+
+const token = (validToken: string) => {
+  if (memoryToken === '' && validToken === '') {
+    return {}
+  }
+
+  return {
+    headers: {
+      Authorization: `Bearer ${memoryToken === "" ? validToken : memoryToken}`,
+    }
+  }
+}
 
 export const apiService = {
   login: (dispatch: Dispatch<any>) => {
@@ -26,68 +38,8 @@ export const apiService = {
       }
     }
   },
-  getRepo: (setResult: Dispatch<SetStateAction<string | JSX.Element>>, validToken: string) => {
-    return async (repo: string, get: string) => {
-      try {
-        const url = `${backendUrl}/api/v1/github/repo?id=${repo}&${get}`;
-        const sendToken = {
-          headers: {
-            Authorization: `Bearer ${
-              memoryToken === "" ? validToken : memoryToken
-            }`,
-          },
-        };
-        const token = memoryToken === "" && validToken === "" ? {} : sendToken;
-
-        const response = await fetch(url, token);
-
-        if (response.status === 404) {
-          setResult(
-            <span className="LoadCode__msg">
-              The gist doesn't exist. Check the URL and try again
-            </span>
-          );
-          return [];
-        }
-
-        return await response.json();
-      } catch (error) {}
-    }
-  },
-  loadAllFiles: (setResult: Dispatch<SetStateAction<string | JSX.Element>>, validToken: string) => {
-    return async (files: responseGithubType[], urlData: any) => {
-      let files64: codeGithubType[] = await Promise.all(
-        files.map((element: responseGithubType) => {
-          return apiService.getRepo(setResult, validToken)(
-            `${urlData.username}/${urlData.repo}`,
-            `blob=${element.sha}`
-          );
-        })
-      );
-
-      let dataFiles: { code: string; from: string; language: string }[] = [];
-      files64.forEach((element: codeGithubType, index: number) => {
-        dataFiles.push({
-          code: atob(element.content),
-          from: files[index].path,
-          language: files[index].language as string,
-        });
-      });
-
-      return dataFiles
-    }
-  },
   getProject: async (validToken: string, url: string): Promise<ProjectResponse> => {
-    const sendToken = {
-      headers: {
-        Authorization: `Bearer ${
-          memoryToken === "" ? validToken : memoryToken
-        }`,
-      },
-    }
-    const token = memoryToken === "" && validToken === "" ? {} : sendToken
-
-    const response = await fetch(`${backendUrl}/api/v1/project?url=${url}`, token)
+    const response = await fetch(`${backendUrl}/api/v1/project?url=${url}`, token(validToken))
 
     if (response.status !== 200) {
       return { success: false, code: response.status }
@@ -99,17 +51,13 @@ export const apiService = {
       return { success: false, errorString: 'No files' }
     }
 
-    const files: Gist[] = Object.values(jsonResponse.files)
-    const jsFiles = files.filter((file: Gist) =>
-        file.language === "JavaScript" ||
-        file.language === "TypeScript" ||
-        file.language === "TSX"
-    )
-
-    if (jsFiles.length === 0) {
-      return { success: false, errorString: "The gist doesn't include any Javascript files" }
+    if (jsonResponse.files.length === 0) {
+      return { success: false, errorString: "The project doesn't include any Javascript files" }
     }
 
-    return { success: true, jsFiles }
+    return {
+      success: true,
+      files: jsonResponse.files
+    }
   },
 }

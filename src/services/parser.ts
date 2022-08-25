@@ -1,13 +1,11 @@
 import { SUPPORTED_LANGUAGES } from "../constants"
-import { CodeBlockCodeType } from "../types/interface"
+import { CodeBlockCodeType, Language } from "../types/interface"
 
 declare global {
   interface Window {
     TreeSitter?: {}
   }
 }
-
-type Language = typeof SUPPORTED_LANGUAGES[number]
 
 const getWasmFile = (language: Language) => {
   if (language === 'javascript') {

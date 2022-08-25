@@ -10,7 +10,7 @@ import { addBubbles } from "./slice/addBubbleSlice"
 import MenuHeader from "../MenuHeader/MenuHeader"
 import { LoadCode } from "../MenuHeader/LoadCode/LoadCode"
 import { add as callrender } from "./slice/callTreeSlice"
-import { CodeBlockCodeType, Gist } from "../../types/interface"
+import { CodeBlockCodeType, File } from "../../types/interface"
 import { urlvalid } from "../util/fuctions"
 import { useAlert } from "react-alert"
 import EasyUrlParams from "../util/EasyUrlParams"
@@ -31,14 +31,14 @@ export const Root = () => {
   const [opengist, setOpengist] = useState(true)
   const alert = useAlert()
 
-  const setGistCode = async (data: Gist[]) => {
+  const setGistCode = async (data: File[]) => {
     setPlaceholderinput("Loading data...")
     resetTreeCall()
     dispatch(callrender(!reRender))
     dispatch(addBubbles([]))
 
     const ast = await parser.getAst(data.map((gist) =>
-      ({ code: gist.content, from: gist.filename, language: gist.language })
+      ({ code: gist.content, from: gist.fullname, language: gist.language })
     ))
 
     ast.forEach((codeBlock: CodeBlockCodeType, index: number) => {
@@ -51,10 +51,11 @@ export const Root = () => {
   }
 
   const setDataCode = (data: CodeBlockCodeType[]) => {
-    setPlaceholderinput("Loading data...")
-    resetTreeCall()
-    dispatch(callrender(!reRender))
-    dispatch(addBubbles([]))
+    // setPlaceholderinput("Loading data...")
+    // resetTreeCall()
+    // dispatch(callrender(!reRender))
+    // dispatch(addBubbles([]))
+
     dispatch(addBubbles(data))
     setWait(true)
     Object.defineProperty(window, "fnlist", {value:data,writable:true})

@@ -1,3 +1,5 @@
+import { SUPPORTED_LANGUAGES } from "../constants";
+
 export interface FnInfoType {
   fninfo: ObjTree;
 }
@@ -71,18 +73,15 @@ export interface CodeBlockType {
 export interface LoadCodeType {
   isOpen: boolean;
   event: { gist: () => void };
-  load: (data: Gist[]) => void;
+  load: (data: File[]) => void;
   setData: (data: CodeBlockCodeType[]) => void;
 }
 
-export interface Gist {
+export interface File {
   content: string;
-  filename: string;
-  type: string;
   language: string;
-  raw_url: string;
-  size: number;
-  truncated: boolean;
+  // truncated: boolean;
+  fullname: string
 }
 
 export interface responseGithubType {
@@ -96,9 +95,7 @@ export interface responseGithubType {
 }
 
 export interface codeGithubType {
-  sha: string;
-  node_id: string;
-  size: number;
+  sha?: string;
   url: string;
   content: string;
   encoding: string;
@@ -112,7 +109,7 @@ export interface stacktraceType {
 
 export interface SuccessProjectResponse {
   success: true
-  jsFiles: Gist[]
+  files: File[]
 }
 
 export interface ErrorProjectResponse {
@@ -122,3 +119,5 @@ export interface ErrorProjectResponse {
 }
 
 export type ProjectResponse = SuccessProjectResponse | ErrorProjectResponse
+
+export type Language = typeof SUPPORTED_LANGUAGES[number]
