@@ -74,31 +74,12 @@ export interface LoadCodeType {
   isOpen: boolean;
   event: { gist: () => void };
   load: (data: File[]) => void;
-  setData: (data: CodeBlockCodeType[]) => void;
 }
 
 export interface File {
   content: string;
   language: string;
-  // truncated: boolean;
   fullname: string
-}
-
-export interface responseGithubType {
-  path: string;
-  mode: string;
-  type: string;
-  sha: string;
-  size: number;
-  url: string;
-  language?: string;
-}
-
-export interface codeGithubType {
-  sha?: string;
-  url: string;
-  content: string;
-  encoding: string;
 }
 
 export interface stacktraceType {

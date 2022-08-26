@@ -31,7 +31,7 @@ export const Root = () => {
   const [opengist, setOpengist] = useState(true)
   const alert = useAlert()
 
-  const setGistCode = async (data: File[]) => {
+  const loadProject = async (data: File[]) => {
     setPlaceholderinput("Loading data...")
     resetTreeCall()
     dispatch(callrender(!reRender))
@@ -47,18 +47,6 @@ export const Root = () => {
 
     dispatch(addBubbles(ast))
     setWait(true)
-    setPlaceholderinput("Search functions by name")
-  }
-
-  const setDataCode = (data: CodeBlockCodeType[]) => {
-    // setPlaceholderinput("Loading data...")
-    // resetTreeCall()
-    // dispatch(callrender(!reRender))
-    // dispatch(addBubbles([]))
-
-    dispatch(addBubbles(data))
-    setWait(true)
-    Object.defineProperty(window, "fnlist", {value:data,writable:true})
     setPlaceholderinput("Search functions by name")
   }
 
@@ -110,8 +98,7 @@ export const Root = () => {
         <section className="BubbleArea">{BubbleLoad(wait)}</section>
 
         <LoadCode
-          load={setGistCode}
-          setData={setDataCode as () => void}
+          load={loadProject}
           isOpen={opengist}
           event={fnlist}
         />
