@@ -113,6 +113,7 @@ export const CallExpression = ({ data }: TypeComponentProps) => {
       data-test-id="fncall"
     >
       <ChooseType info={data.children[0]} />
+
       <span>
         <ChooseType info={data.children[1]} />
       </span>

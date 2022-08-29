@@ -1,25 +1,23 @@
-import { TypeComponentProps } from "../../../types/interface";
-import { useOpenDefinition } from "../../../hooks/useOpenDefinition";
-import { useHoverIdentifierToBubble } from "../../../hooks/useHoverIdentifierToBubble";
+import { TypeComponentProps } from "../../../types/interface"
+import { useOpenDefinition } from "../../../hooks/useOpenDefinition"
+import { useHoverIdentifierToBubble } from "../../../hooks/useHoverIdentifierToBubble"
 
-function Identifier(props: TypeComponentProps & { type: string }) {
-  const data = props.data;
-  const element = useOpenDefinition(data.text, {
-    tag: ["JsxSelfClosingElement","JsxOpeningElement"],
-  });
-  const hover = useHoverIdentifierToBubble();
+export const Identifier = ({ data, type }: TypeComponentProps & { type: string }) => {
+  const { text } = data
+  const element = useOpenDefinition(text, {
+    tag: ["JsxSelfClosingElement", "JsxOpeningElement"],
+  })
+  const { inside, outside } = useHoverIdentifierToBubble()
 
   return (
     <span
-      onMouseOver={hover.inside}
-      onMouseLeave={hover.outside}
+      onMouseOver={inside}
+      onMouseLeave={outside}
       ref={element}
-      data-identifier={data.text}
-      className={props.type}
+      data-identifier={text}
+      className={type}
     >
-      {data.text}
+      {text}
     </span>
-  );
+  )
 }
-
-export default Identifier;

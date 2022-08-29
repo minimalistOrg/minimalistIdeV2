@@ -1,64 +1,61 @@
-import { CodeBlockCodeType } from "../types/interface";
-import { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
-import { globalCounter } from "../components/RenderTreeSitter/util/useGlobalCounter";
+import { CodeBlockCodeType } from "../types/interface"
+import { useState, useEffect, useRef } from "react"
+import { useSelector } from "react-redux"
+import { globalCounter } from "../components/RenderTreeSitter/util/useGlobalCounter"
 
-export function useOpenDefinition(data: string, option: { tag: string[] }) {
-  const element = useRef<HTMLElement>(null);
-  const [fnindex, setFnindex] = useState(-1);
-  const fnorder = globalCounter;
+export const useOpenDefinition = (data: string, option: { tag: string[] }) => {
+  const element = useRef<HTMLElement>(null)
+  const [functionIndex, setFunctionIndex] = useState(-1)
+  const functionOrder = globalCounter
 
-  const listFN = useSelector(
+  const functions = useSelector(
     (state: { addbubble: { value: CodeBlockCodeType[] } }) =>
       state.addbubble.value
-  );
+  )
 
-  function validifFnCall() {
-    let position: CodeBlockCodeType | undefined = listFN.find(
-      (e: CodeBlockCodeType) => e.name === data
-    );
-    if (position === undefined) {
-      return -1;
+  const validifFnCall = () => {
+    const position = functions.find((e) => e.name === data)
+
+    if (position) {
+      setFunctionIndex(position.id)
     }
-    setFnindex(position.id); //type number
   }
 
   useEffect(() => {
-    const detectTag: HTMLElement = (element.current as HTMLElement).parentNode
-      ?.parentNode as HTMLElement;
-    const state: boolean[] = option.tag.map((e: string) => {
-      return detectTag.classList.contains(e);
-    });
-    // console.log(state)
-    const verification = state.includes(true);
-    if (verification) {
-      // console.log(detectTag);
-      const fncall = element.current?.parentNode as HTMLElement;
-      validifFnCall();
-      if (fnindex > -1) {
-        fncall.classList.add("CallExpression");
-        fncall.dataset.name = data;
+    const detectTag = (element.current as HTMLElement).parentNode?.parentNode as HTMLElement
+    const state = option.tag.map((e: string) => {
+      return detectTag.classList.contains(e)
+    })
+    const verification = state.includes(true)
 
-        let fndata = {
+    if (verification) {
+      const functionCall = element.current?.parentNode as HTMLElement
+      validifFnCall()
+
+      if (functionIndex > -1) {
+        functionCall.classList.add("CallExpression")
+        functionCall.dataset.name = data
+
+        const functionData = {
           params: [],
           name: data,
-          index: fnindex,
+          index: functionIndex,
           value: [],
-          event: fnindex > -1 ? true : false,
-          order: fnorder(),
+          event: functionIndex > -1 ? true : false,
+          order: functionOrder(),
           element: () => null,
           Bubble: () => null,
           visibility: true,
-        };
+        }
 
-        Object.defineProperty(fncall, "fninfo", {
-          value: fndata,
+        Object.defineProperty(functionCall, "fninfo", {
+          value: functionData,
           writable: true,
-        });
+        })
       }
     }
     //eslint-disable-next-line
-  }, [fnindex]);
+  }, [functionIndex])
 
-  return element;
+  return element
 }

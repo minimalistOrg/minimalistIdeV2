@@ -1,20 +1,18 @@
-import {TreesitterData, TypeComponentProps} from "../../../types/interface";
-import ChooseType from "../ChooseType";
+import { TypeComponentProps } from "../../../types/interface"
+import ChooseType from "../ChooseType"
 
-function MemberExpression(props: TypeComponentProps) {
-  const data = props.data;
-  // console.log(data);
+export const MemberExpression = ({ data }: TypeComponentProps) => {
   return (
-    <span className="MemberExpression">
-      {data.children.map((e: TreesitterData, index: number) => {
-        return (
-          <span key={index}>
-            <ChooseType info={e} />
-          </span>
-        );
-      })}
+    <span className={data.type}>
+      {
+        data.children.map((child, index) => {
+          return (
+            <span key={index}>
+              <ChooseType info={child} />
+            </span>
+          )
+        })
+      }
     </span>
-  );
+  )
 }
-
-export default MemberExpression;
