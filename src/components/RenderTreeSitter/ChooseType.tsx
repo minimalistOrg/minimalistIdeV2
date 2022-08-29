@@ -1,5 +1,5 @@
 import Arguments from "./TypeComponent/Arguments";
-import CallExpression from "./TypeComponent/CallExpression";
+import { CallExpression } from "./TypeComponent/CallExpression";
 import ExpressionStatement from "./TypeComponent/ExpressionStatement";
 import MemberExpression from "./TypeComponent/MemberExpression";
 import StatementBlock from "./TypeComponent/StatementBlock";

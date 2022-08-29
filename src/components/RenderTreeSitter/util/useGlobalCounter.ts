@@ -1,13 +1,11 @@
+let _globalCounter: number = 1
 
-export let global_counter: number = 1;
-
-export function resetGlobal(n: number): void {
-  global_counter = n;
-  // console.log("here")
+export function resetGlobal(n: number) {
+  _globalCounter = n
 }
 
-export function GlobalCounter(): number {
-  const count =  global_counter++
+export function globalCounter() {
+  const count =  _globalCounter++
 
-  return count;
+  return count
 }

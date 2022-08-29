@@ -1,138 +1,112 @@
-import ChooseType from "../ChooseType";
-import { useSelector } from "react-redux";
-import { useEffect, useState, useRef } from "react";
-import { GlobalCounter } from "../util/useGlobalCounter";
-import { v4 as uuidv4 } from "uuid";
+import ChooseType from "../ChooseType"
+import { useSelector } from "react-redux"
+import { useEffect, useState, useRef } from "react"
+import { globalCounter } from "../util/useGlobalCounter"
+import { v4 as uuidv4 } from "uuid"
 import {
   CodeBlockCodeType,
   FnInfoType,
   TypeComponentProps,
-} from "../../../types/interface";
+} from "../../../types/interface"
 
-function CallExpression(props: TypeComponentProps) {
-  const data = props.data;
-  const [fnindex, setFnindex] = useState<number>(-1);
-  const [name, setName] = useState("");
-  const [params, setParams] = useState([]);
-  const [id, setId] = useState("");
-  const fnOrder = GlobalCounter();
-  const expression = useRef<HTMLElement | null>(null);
-  const listFN = useSelector(
+export const CallExpression = ({ data }: TypeComponentProps) => {
+  const [functionIndex, setFunctionIndex] = useState<number>(-1)
+  const [name, setName] = useState("")
+  const [params, setParams] = useState([])
+  const [id, setId] = useState("")
+  const [ied, setIed] = useState("")
+  const fnOrder = globalCounter()
+  const expression = useRef<HTMLElement | null>(null)
+  const listOfFunctions = useSelector(
     (state: { addbubble: { value: CodeBlockCodeType[] } }) =>
       state.addbubble.value
-  );
+  )
 
-  //
   function validifFnCall() {
-    const expre_is = data.children[0].type;
+    const expressionType = data.children[0].type
 
-    if (expre_is === "identifier") {
-      setName(data.children[0].text);
-      setId(uuidv4());
-      // setIdelement(uuidv4())
-      setParams(data.children[1].children as []);
-      let position: CodeBlockCodeType | undefined = listFN.find(
-        (e: CodeBlockCodeType) => e.name === data.children[0].text
-      );
-      if (position === undefined) {
-        return -1;
+    if (expressionType === "identifier") {
+      setName(data.children[0].text)
+      setId(uuidv4())
+      setParams(data.children[1].children as [])
+
+      const position = listOfFunctions.find((element) => element.name === data.children[0].text)
+
+      if (position) {
+        setFunctionIndex(position.id)
       }
-      setFnindex(position.id); //type number
     }
   }
 
-  const [ied, setIed] = useState("");
-
-
-
   useEffect(() => {
     if (ied === "") {
-      setIed(uuidv4());
+      setIed(uuidv4())
     }
-    // console.log(fnindex > -1)
-    let getName = fnindex > -1 ? listFN[fnindex as number].name : "";
 
-    // let codeblock: any = expression.current;
-    // for (let i = 0; !codeblock.classList.contains("CodeBlock"); i++) {
-    //   codeblock = codeblock.parentNode;
-    // }
-    // // console.log(codeblock);
-    // let searchChild =
-    //   codeblock.parentElement.parentElement.children[1].children[0];
-    //   console.log(searchChild)
-    // let element = searchChild.querySelectorAll(
-    //   (getName === "" ? null : `CodeBlock[data-title=${getName}]`)
-    // );
-    // console.log(element,(getName === "" ? null : `.CodeBlock`));
-    // console.log(fnindex)
-
-    let fndata = {
+    const getName = functionIndex > -1 ? listOfFunctions[functionIndex as number].name : ""
+    const functionData = {
       id: id,
       ied: expression.current?.id,
       params: params,
       name: getName,
-      index: fnindex,
+      index: functionIndex,
       value: [],
-      event: fnindex > -1 ? true : false,
+      event: functionIndex > -1 ? true : false,
       order: fnOrder,
       element: () => {
-        let result = document.getElementById("id" + ied);
-        return result;
+        return document.getElementById("id" + ied)
       },
       Bubble: () => {
-        let result = document.getElementById("id" + id);
-        return result;
+        let result = document.getElementById("id" + id)
+        return result
       },
       visibility: true,
-    };
+    }
 
-    validifFnCall();
-    if(fnindex > -1){
+    validifFnCall()
 
-    Object.defineProperty(fndata.element(), "fninfo", {
-      value: fndata,
-      writable: true,
-    });
+    if (functionIndex > -1) {
+      Object.defineProperty(functionData.element(), "fninfo", {
+        value: functionData,
+        writable: true,
+      })
     }
     //eslint-disable-next-line
-  }, [fnindex]);
+  }, [functionIndex])
 
-  function fnHover(data: { currentTarget: (HTMLElement & FnInfoType) | null }) {
-    if (!(data.currentTarget?.fninfo?.Bubble() === (null || undefined))) {
-      data.currentTarget?.fninfo?.Bubble()?.classList.add("CodeBlockHover");
-      data.currentTarget?.fninfo
-        .Bubble()
-        ?.children[0].classList.add("CodeBlock__header--hover");
+  const handleMouseOver = (data: { currentTarget: (HTMLElement & FnInfoType) | null }) => {
+    if (data.currentTarget?.fninfo?.Bubble() !== undefined) {
+      data.currentTarget?.fninfo?.Bubble()?.classList.add("CodeBlockHover")
+      data.currentTarget?.fninfo.Bubble()?.children[0].classList.add("CodeBlock__header--hover")
     }
   }
 
-  function fnHoverClose(data: {
-    currentTarget: (HTMLElement & FnInfoType) | null;
-  }) {
+  const handleMouseLeave = (data: {
+    currentTarget: (HTMLElement & FnInfoType) | null
+  }) => {
     if (data.currentTarget?.fninfo === undefined) {
-      return;
+      return
     }
-    if (!(data.currentTarget?.fninfo.Bubble() === (null || undefined))) {
-      data.currentTarget?.fninfo.Bubble()?.classList.remove("CodeBlockHover");
-      data.currentTarget?.fninfo
-        .Bubble()
-        ?.children[0].classList.remove("CodeBlock__header--hover");
+
+    if (data.currentTarget?.fninfo.Bubble() !== undefined) {
+      data.currentTarget?.fninfo.Bubble()?.classList.remove("CodeBlockHover")
+      data.currentTarget?.fninfo.Bubble()?.children[0].classList.remove("CodeBlock__header--hover")
     }
   }
 
-  function typeCall() {
-    if (fnindex > -1) {
-      return "CallExpression";
+  const typeCall = () => {
+    if (functionIndex > -1) {
+      return "CallExpression"
     } else {
-      return "CallExpression--member_expression";
+      return "CallExpression--member_expression"
     }
   }
 
   return (
     <span
       className={typeCall()}
-      onMouseOver={fnHover as () => void}
-      onMouseLeave={fnHoverClose as () => void}
+      onMouseOver={handleMouseOver as () => void}
+      onMouseLeave={handleMouseLeave as () => void}
       ref={expression}
       id={"id" + ied}
       data-name={name}
@@ -143,7 +117,5 @@ function CallExpression(props: TypeComponentProps) {
         <ChooseType info={data.children[1]} />
       </span>
     </span>
-  );
+  )
 }
-
-export default CallExpression;
