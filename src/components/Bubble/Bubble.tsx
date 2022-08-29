@@ -1,6 +1,6 @@
 import "./Bubble.css"
 import { useState,useRef } from "react"
-import CodeBlockTS from "../CodeBlock/CodeBlockTS"
+import CodeBlockTS from "../CodeBlock/CodeBlock"
 import { useDispatch, useSelector } from "react-redux"
 import { add } from "../Root-file/slice/callTreeSlice"
 import {
