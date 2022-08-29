@@ -1,6 +1,6 @@
 import "./Root.css"
 import "../RenderTreeSitter/highlight.css"
-import Bubble from "../Bubble/Bubble"
+import { Bubble } from "../Bubble/Bubble"
 import CallTree from "../CallTree/CallTree"
 import { FuzzySearch } from "../FuzzySearch/FuzzySearch"
 import { useEffect, useState } from "react"
