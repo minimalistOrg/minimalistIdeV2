@@ -1,4 +1,4 @@
-import ChooseType from "../ChooseType";
+import { ChooseType } from "../ChooseType";
 import { TreesitterData, TypeComponentProps } from "../../../types/interface";
 
 function Array(props: TypeComponentProps): JSX.Element {

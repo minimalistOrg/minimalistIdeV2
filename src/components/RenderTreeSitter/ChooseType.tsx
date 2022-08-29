@@ -57,7 +57,7 @@ import NestedIdentifier from "./TypeComponent/NestedIdentifier"
 import TypeAnnotation from "./TypeComponent/TypeAnnotation"
 import { TreesitterData, TypeComponentProps } from "../../types/interface"
 
-function UniversalType(props: TypeComponentProps & { type: string }) {
+const UniversalType = (props: TypeComponentProps & { type: string }) => {
   const data = props.data
 
   if (data.children.length > 1) {
@@ -77,11 +77,10 @@ function UniversalType(props: TypeComponentProps & { type: string }) {
   }
 }
 
-const ChooseType = (props: {
+export const ChooseType = (props: {
   info: TreesitterData | { type: string; text: string } | undefined
 }) => {
-  function choose(info: TreesitterData) {
-    //
+  const choose = (info: TreesitterData) => {
     switch (info.type) {
       // Types
       case "type_annotation":
@@ -316,5 +315,3 @@ const ChooseType = (props: {
 
   return choose(props.info as TreesitterData)
 }
-
-export default ChooseType

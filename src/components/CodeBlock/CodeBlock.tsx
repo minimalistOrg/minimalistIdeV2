@@ -6,7 +6,7 @@ import {
   RefObject,
 } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import ChooseType from "../RenderTreeSitter/ChooseType"
+import { ChooseType } from "../RenderTreeSitter/ChooseType"
 import "./CodeBlock.css"
 import { BubbleCollapse } from "./Functions/BubbleCollapse"
 import IcoClose from "../../icons/IcoClose"

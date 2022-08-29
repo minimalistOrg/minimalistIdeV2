@@ -1,5 +1,5 @@
 import { TypeComponentProps, TreesitterData } from "../../../types/interface";
-import ChooseType from "../ChooseType"
+import { ChooseType } from "../ChooseType"
 
 function TypeAnnotation(props: TypeComponentProps) {
   const data = props.data;

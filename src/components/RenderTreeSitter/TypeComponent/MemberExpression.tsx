@@ -1,5 +1,5 @@
 import { TypeComponentProps } from "../../../types/interface"
-import ChooseType from "../ChooseType"
+import { ChooseType } from "../ChooseType"
 
 export const MemberExpression = ({ data }: TypeComponentProps) => {
   return (

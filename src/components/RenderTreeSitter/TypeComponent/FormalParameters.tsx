@@ -1,5 +1,5 @@
 import {TreesitterData, TypeComponentProps} from "../../../types/interface";
-import ChooseType from "../ChooseType";
+import { ChooseType } from "../ChooseType";
 
 function FormalParameters(props: TypeComponentProps & {type:string}) {
   const data = props.data;

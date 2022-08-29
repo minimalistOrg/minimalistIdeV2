@@ -1,6 +1,6 @@
 
 import {TreesitterData, TypeComponentProps} from "../../../types/interface";
-import ChooseType from "../ChooseType";
+import { ChooseType } from "../ChooseType";
 
 function JsxExpression(props: TypeComponentProps) {
   const data = props.data;

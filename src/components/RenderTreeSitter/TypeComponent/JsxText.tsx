@@ -1,4 +1,4 @@
-// import ChooseType from "../ChooseType";
+// import { ChooseType } from "../ChooseType";
 
 import {TypeComponentProps} from "../../../types/interface";
 

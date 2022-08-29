@@ -1,7 +1,7 @@
 
 
 import {TreesitterData, TypeComponentProps} from "../../../types/interface";
-import ChooseType from "../ChooseType";
+import { ChooseType } from "../ChooseType";
 
 function DoStatement(props: TypeComponentProps) {
   const data = props.data;

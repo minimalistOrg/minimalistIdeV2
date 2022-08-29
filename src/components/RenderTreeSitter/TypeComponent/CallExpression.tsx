@@ -1,4 +1,4 @@
-import ChooseType from "../ChooseType"
+import { ChooseType } from "../ChooseType"
 import { useSelector } from "react-redux"
 import { useEffect, useState, useRef } from "react"
 import { globalCounter } from "../util/useGlobalCounter"
