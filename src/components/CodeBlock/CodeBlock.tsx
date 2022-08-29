@@ -4,269 +4,256 @@ import {
   useRef,
   MutableRefObject,
   RefObject,
-} from "react";
-import { useSelector, useDispatch } from "react-redux";
-import ChooseType from "../RenderTreeSitter/ChooseType";
-import "./CodeBlock.css";
-import { BubbleCollapse } from "./Functions/BubbleCollapse";
-import IcoClose from "../../icons/IcoClose";
-import IcoCollapse from "../../icons/IcoCollapse";
-import Resize from "./CodeBlock__Resize";
+} from "react"
+import { useSelector, useDispatch } from "react-redux"
+import ChooseType from "../RenderTreeSitter/ChooseType"
+import "./CodeBlock.css"
+import { BubbleCollapse } from "./Functions/BubbleCollapse"
+import IcoClose from "../../icons/IcoClose"
+import IcoCollapse from "../../icons/IcoCollapse"
+import Resize from "./CodeBlock__Resize"
 import {
   CodeBlockType,
   FnInfoType,
-  ObjTree,
   TreesitterData,
   CodeBlockCodeType,
-} from "../../types/interface";
-import { checkFunctionType } from "../util/fuctions";
-import {add} from "../Root-file/slice/callTreeSlice"
-import {resetGlobal} from "../RenderTreeSitter/util/useGlobalCounter";
+} from "../../types/interface"
+import { checkFunctionType } from "../util/fuctions"
+import { add } from "../Root-file/slice/callTreeSlice"
+import { resetGlobal } from "../RenderTreeSitter/util/useGlobalCounter"
 
-function CodeBlockTS(props: CodeBlockType): JSX.Element {
-
-const dispatch = useDispatch()
+export const CodeBlock = (props: CodeBlockType) => {
+  const dispatch = useDispatch()
   const dataBubbleTree = useSelector(
     (state: { callTree: { value: boolean } }) => state.callTree.value
-  );
-  // const [id, setId] = useState(props.id);
-  const [title, setTitle] = useState<string>("Loading...");
+  )
+  const [title, setTitle] = useState<string>("Loading...")
   const [code, setCode] = useState<
     TreesitterData | { type: string; text: string } | undefined
-  >(checkFunctionType(props.code).code);
-  const [params, setParams] = useState<TreesitterData[]>([]);
-  const activeBubble: RefObject<HTMLDivElement> = useRef(null);
-  const CodeTxt: MutableRefObject<null | HTMLElement> = useRef(null);
-        const [paramok, setParamok] = useState(false);
+  >(checkFunctionType(props.code).code)
+  const [params, setParams] = useState<TreesitterData[]>([])
+  const activeBubble: RefObject<HTMLDivElement> = useRef(null)
+  const codeAsText: MutableRefObject<null | HTMLElement> = useRef(null)
+  const [paramok, setParamok] = useState(false)
 
-  const listFN = useSelector(
+  const listOfFunctions = useSelector(
     (state: { addbubble: { value: CodeBlockCodeType[] } }) =>
       state.addbubble.value
-  );
+  )
 
   useEffect(() => {
-    // setDataURL(window.UrlData());
-
     Resize(
       activeBubble.current as HTMLElement,
-      CodeTxt?.current as HTMLElement
-    );
+      codeAsText?.current as HTMLElement
+    )
 
     if (!(props.code === undefined)) {
       if (props.code.node.children[3] === undefined) {
-        setCode(checkFunctionType(props.code).code);
-        setTitle(props.code.node.children[1].children[0].text);
-        // setID(props.code.node.children[1].children[0].id);
-        setParams(checkFunctionType(props.code).params);
-        // setParams("1");
+        setCode(checkFunctionType(props.code).code)
+        setTitle(props.code.node.children[1].children[0].text)
+        setParams(checkFunctionType(props.code).params)
       } else {
-        setTitle(props.code.node.children[1].text);
-        setCode(checkFunctionType(props.code).code);
-        setParams(checkFunctionType(props.code).params);
-        // setID(props.code.node.children[1].id)
-        // setID(props.call.fninfo.id)
+        setTitle(props.code.node.children[1].text)
+        setCode(checkFunctionType(props.code).code)
+        setParams(checkFunctionType(props.code).params)
       }
     }
 
-    let BubbleById = activeBubble.current;
-    props.data.Bubble = () => activeBubble.current;
-    Object.defineProperty(BubbleById, "fninfo", {
+    const bubbleById = activeBubble.current
+    props.data.Bubble = () => activeBubble.current
+    Object.defineProperty(bubbleById, "fninfo", {
       value: props.data,
       writable: true,
-    });
+    })
 
-    let Bubble = (activeBubble.current as HTMLElement).parentElement
-      ?.parentElement?.parentElement?.parentElement?.parentElement?.children[0];
-    let validParent = Bubble?.classList.contains("Bubble");
+    const bubble = (activeBubble.current as HTMLElement).parentElement
+      ?.parentElement?.parentElement?.parentElement?.parentElement?.children[0]
+    const validParent = bubble?.classList.contains("Bubble")
+
     if (validParent) {
-      let findFncall:any = Bubble?.querySelectorAll(
-        `.CallExpression[data-name="${listFN[props.data.index].name}"]`
-      );
+      let findFncall:any = bubble?.querySelectorAll(
+        `.CallExpression[data-name="${listOfFunctions[props.data.index].name}"]`
+      )
       const position= parseInt(props.data.position !== undefined ? props.data.position as string : "0")
-      // console.log(findFncall[position],findFncall,position)
+
       findFncall= findFncall![position]
-      // console.log(findFncall)
+
       if (findFncall !== (null || undefined)) {
-        const newRef = (findFncall as HTMLElement & FnInfoType).fninfo;
-        newRef.element = () => findFncall as HTMLElement;
-        newRef.Bubble = () => activeBubble.current;
+        const newRef = (findFncall as HTMLElement & FnInfoType).fninfo
+        newRef.element = () => findFncall as HTMLElement
+        newRef.Bubble = () => activeBubble.current
         newRef.event= false
 
-        props.data.element = () => findFncall as HTMLElement;
-        props.data.Bubble = () => activeBubble.current;
+        props.data.element = () => findFncall as HTMLElement
+        props.data.Bubble = () => activeBubble.current
 
         props.data.event= newRef.event
-        props.data.params = newRef.params;
-        props.data.order = newRef.order;
+        props.data.params = newRef.params
+        props.data.order = newRef.order
 
-        Object.defineProperty(BubbleById, "fninfo", {
+        Object.defineProperty(bubbleById, "fninfo", {
           value: props.data,
           writable: true,
-        });
-        // console.log("here")
-        const row= (activeBubble.current as HTMLElement).parentElement?.parentElement
-    //eslint-disable-next-line
-        if(row != undefined){
+        })
+
+        const row = (activeBubble.current as HTMLElement).parentElement?.parentElement
+
+        //eslint-disable-next-line
+        if (row != undefined){
             row.style.order= props.data.order.toString()
             dispatch(add(!dataBubbleTree))
         }
-        setParamok(true);
-        // console.log("re")
+        setParamok(true)
       }
     }
     resetGlobal(1)
     //eslint-disable-next-line
-  }, [props.data, title, paramok,code]);
+  }, [props.data, title, paramok, code])
 
-  function fnHover(event: { currentTarget: HTMLElement }) {
-    let data: ObjTree = (
-      event.currentTarget.parentNode as HTMLElement & FnInfoType
-    ).fninfo;
+  const handleMouseOver = (event: { currentTarget: HTMLElement }) => {
+    const data = (event.currentTarget.parentNode as HTMLElement & FnInfoType).fninfo
+
     if (!(data.element() === null)) {
-      data.element()?.classList.add("CallExpressionHover");
+      data.element()?.classList.add("CallExpressionHover")
+
       if (!(data.Bubble() === null)) {
-        data.Bubble()?.classList.add("CodeBlockHover");
+        data.Bubble()?.classList.add("CodeBlockHover")
       }
     } else {
-      (
-        event.currentTarget.parentNode as HTMLElement & FnInfoType
-      ).classList.add("CodeBlockHover");
-    }
-    //identifier
-    // maxHeightBody(activeBubble.current);
-  }
-
-  function fnHoverLeave(event: { currentTarget: HTMLElement }) {
-    let data: ObjTree = (
-      event.currentTarget.parentNode as HTMLElement & FnInfoType
-    ).fninfo;
-    if (!(data.element() === null)) {
-      data.element()?.classList.remove("CallExpressionHover");
-      if (!(data.Bubble() === null)) {
-        data.Bubble()?.classList.remove("CodeBlockHover");
-      }
-    } else {
-      (event.currentTarget.parentNode as HTMLElement).classList.remove(
-        "CodeBlockHover"
-      );
+      (event.currentTarget.parentNode as HTMLElement & FnInfoType).classList.add("CodeBlockHover")
     }
   }
 
-  function identifierHover(event: {
-    currentTarget: HTMLElement;
-    target: HTMLElement;
-  }) {
-    let elements: NodeListOf<HTMLElement> =
-      event.currentTarget.querySelectorAll(".identifier");
+  const handleMouseLeave = (event: { currentTarget: HTMLElement }) => {
+    const data = (event.currentTarget.parentNode as HTMLElement & FnInfoType).fninfo
+
+    if (!(data.element() === null)) {
+      data.element()?.classList.remove("CallExpressionHover")
+
+      if (!(data.Bubble() === null)) {
+        data.Bubble()?.classList.remove("CodeBlockHover")
+      }
+    } else {
+      (event.currentTarget.parentNode as HTMLElement).classList.remove("CodeBlockHover")
+    }
+  }
+
+  const identifierHover = (event: {
+    currentTarget: HTMLElement
+    target: HTMLElement
+  }) => {
+    const elements: NodeListOf<HTMLElement> =
+      event.currentTarget.querySelectorAll(".identifier")
+
     elements.forEach((e: HTMLElement) => {
-      e.classList.remove("identifierHover");
-    });
+      e.classList.remove("identifierHover")
+    })
     if (event.target.classList[0] === "identifier") {
-      let elements: NodeListOf<HTMLElement> =
+      const elements: NodeListOf<HTMLElement> =
         event.currentTarget.querySelectorAll(
           `.identifier[data-identifier=${event.target.dataset.identifier}]`
-        );
+        )
       elements.forEach((e: HTMLElement) => {
-        e.classList.add("identifierHover");
-      });
+        e.classList.add("identifierHover")
+      })
     }
   }
 
-  function identifierHoverOut(event: { currentTarget: HTMLElement }) {
+  const identifierHoverOut = (event: { currentTarget: HTMLElement }) => {
     let elements: NodeListOf<HTMLElement> =
-      event.currentTarget.querySelectorAll(".identifier");
+      event.currentTarget.querySelectorAll(".identifier")
     elements.forEach((e: HTMLElement) => {
-      e.classList.remove("identifierHover");
-    });
+      e.classList.remove("identifierHover")
+    })
   }
 
-  type LocalBlock = HTMLElement | null | undefined;
-  function paramsHoverOut(event: { currentTarget: HTMLElement }) {
-    let CodeBlock: HTMLElement & FnInfoType = event.currentTarget?.parentNode
-      ?.parentNode?.parentNode?.parentNode as HTMLElement & FnInfoType;
-    let body: HTMLElement = event.currentTarget?.parentNode?.parentNode
-      ?.parentNode?.nextSibling as HTMLElement;
-    let elements: NodeListOf<HTMLElement> =
-      body?.querySelectorAll(".identifier");
-    elements.forEach((e: HTMLElement) => {
-      e.classList.remove("identifierHover");
-    });
+  const paramsHoverOut = (event: { currentTarget: HTMLElement }) => {
+    const CodeBlock = event.currentTarget?.parentNode?.parentNode?.parentNode?.parentNode as HTMLElement & FnInfoType
+    const body = event.currentTarget?.parentNode?.parentNode?.parentNode?.nextSibling as HTMLElement
+    const elements: NodeListOf<HTMLElement> = body?.querySelectorAll(".identifier")
+
+    elements.forEach((element) => {
+      element.classList.remove("identifierHover")
+    })
 
     if (
       event.currentTarget.dataset.identifier &&
       !(CodeBlock.fninfo.element() === null)
     ) {
-      let BubbleBack: LocalBlock = CodeBlock.fninfo.element();
+      let BubbleBack = CodeBlock.fninfo.element()
 
       do {
-        BubbleBack = BubbleBack?.parentNode as HTMLElement;
-      } while (!(BubbleBack?.classList[0] === "CodeBlock"));
+        BubbleBack = BubbleBack?.parentNode as HTMLElement
+      } while (!(BubbleBack?.classList[0] === "CodeBlock"))
 
-      let elements: NodeListOf<HTMLElement> =
-        BubbleBack.querySelectorAll(".identifier");
-      elements.forEach((e: HTMLElement) => {
-        e.classList.remove("identifierHover");
-      });
+      const elements: NodeListOf<HTMLElement> = BubbleBack.querySelectorAll(".identifier")
+
+      elements.forEach((element) => {
+        element.classList.remove("identifierHover")
+      })
     }
   }
 
-  function paramsHover(event: {
-    currentTarget: HTMLElement;
-    target: HTMLElement;
-  }) {
-    let CodeBlock = event.currentTarget.parentNode?.parentNode?.parentNode
-      ?.parentNode as HTMLElement & FnInfoType;
-    let body = event.currentTarget.parentNode?.parentNode?.parentNode
-      ?.nextSibling as HTMLElement;
-    let elements: NodeListOf<HTMLElement> =
-      body.querySelectorAll(".identifier");
-    elements.forEach((e: HTMLElement) => {
-      e.classList.remove("identifierHover");
-    });
+  const paramsHover = (event: {
+    currentTarget: HTMLElement
+    target: HTMLElement
+  }) => {
+    const CodeBlock = event.currentTarget.parentNode?.parentNode?.parentNode
+      ?.parentNode as HTMLElement & FnInfoType
+    let body = event.currentTarget.parentNode?.parentNode?.parentNode?.nextSibling as HTMLElement
+    const elements: NodeListOf<HTMLElement> = body.querySelectorAll(".identifier")
+
+    elements.forEach((element) => {
+      element.classList.remove("identifierHover")
+    })
+
     if (event.target.classList[0] === "identifier") {
-      let body = event.currentTarget.parentNode?.parentNode?.parentNode
-        ?.nextSibling as HTMLElement;
-      let elements: NodeListOf<HTMLElement> = body.querySelectorAll(
+      const body = event.currentTarget.parentNode?.parentNode?.parentNode?.nextSibling as HTMLElement
+      const elements: NodeListOf<HTMLElement> = body.querySelectorAll(
         `.identifier[data-identifier=${event.target.dataset.identifier}]`
-      );
-      elements.forEach((e: HTMLElement) => {
-        e.classList.add("identifierHover");
-      });
-      //
+      )
+
+      elements.forEach((element) => {
+        element.classList.add("identifierHover")
+      })
+
       if (
         event.currentTarget.dataset.identifier &&
         !(CodeBlock.fninfo.element() === null)
       ) {
-        let BubbleBack: LocalBlock = CodeBlock.fninfo.element();
+        let BubbleBack = CodeBlock.fninfo.element()
 
         do {
-          BubbleBack = BubbleBack?.parentNode as HTMLElement;
-        } while (!(BubbleBack?.classList[0] === "CodeBlock"));
+          BubbleBack = BubbleBack?.parentNode as HTMLElement
+        } while (!(BubbleBack?.classList[0] === "CodeBlock"))
 
-        let elements: NodeListOf<HTMLElement> = BubbleBack.querySelectorAll(
+        const elements: NodeListOf<HTMLElement> = BubbleBack.querySelectorAll(
           `.identifier[data-identifier=${event.currentTarget.dataset.identifier}]`
-        );
-        elements.forEach((e: HTMLElement) => {
-          e.classList.add("identifierHover");
-        });
+        )
+
+        elements.forEach((element) => {
+          element.classList.add("identifierHover")
+        })
       }
     }
   }
 
-  function checkParams(index: number): string | void {
-    let txt: HTMLElement & FnInfoType = activeBubble.current as any;
+  const checkParams = (index: number) => {
+    const txt: HTMLElement & FnInfoType = activeBubble.current as any
+
     if (txt?.fninfo.params[index] === undefined) {
-      return;
+      return
     }
-    let identifier: string = txt?.fninfo.params[index].text;
+
+    const identifier = txt?.fninfo.params[index].text
+
     // eslint-disable-next-line
-    let check: Boolean = /^[^\"\s\d][^\s\"\(\)]*[^\"\(\)\s]$/gm.test(
-      identifier
-    );
+    const check: Boolean = /^[^\"\s\d][^\s\"\(\)]*[^\"\(\)\s]$/gm.test(identifier)
+
     if (check) {
-      return identifier;
+      return identifier
     } else {
-      return;
+      return
     }
   }
 
@@ -280,17 +267,19 @@ const dispatch = useDispatch()
       <div
         className="CodeBlock__header"
         data-testid="BubbleOrder"
-        onMouseOver={fnHover}
-        onMouseLeave={fnHoverLeave}
+        onMouseOver={handleMouseOver}
+        onMouseLeave={handleMouseLeave}
       >
         <div className="CodeBlock__title">
           <div onClick={BubbleCollapse} className="CodeBlock__collapse">
             <IcoCollapse />
           </div>
           {title}
+
           <span className="CodeBlock__arguments">
             {" "}
-            {params.map((e: TreesitterData, index: number) => {
+
+            {params.map((e, index) => {
               return (
                 <span
                   key={index}
@@ -300,10 +289,11 @@ const dispatch = useDispatch()
                 >
                   <ChooseType info={e} />
                 </span>
-              );
+              )
             })}{" "}
           </span>
         </div>
+
         <button
           className="CodeBlock__menu"
           data-test-id="closeBubble"
@@ -313,6 +303,7 @@ const dispatch = useDispatch()
           <IcoClose size={20} />{" "}
         </button>
       </div>
+
       <div
         className="CodeBlock__body"
         onMouseMove={identifierHover as () => void}
@@ -320,13 +311,11 @@ const dispatch = useDispatch()
         onClick={props.openBubble as () => void}
       >
         <pre>
-          <code ref={CodeTxt}>
+          <code ref={codeAsText}>
             <ChooseType info={code} />
           </code>
         </pre>
       </div>
     </div>
-  );
+  )
 }
-
-export default CodeBlockTS;

@@ -1,6 +1,6 @@
 import "./Bubble.css"
 import { useState,useRef } from "react"
-import CodeBlockTS from "../CodeBlock/CodeBlock"
+import { CodeBlock } from "../CodeBlock/CodeBlock"
 import { useDispatch, useSelector } from "react-redux"
 import { add } from "../Root-file/slice/callTreeSlice"
 import {
@@ -135,7 +135,7 @@ export const Bubble = (props: BubbleProps) => {
     id: string
   ) => {
     return (
-      <CodeBlockTS
+      <CodeBlock
         code={listFn[fnindex]}
         id={id}
         data={children}
