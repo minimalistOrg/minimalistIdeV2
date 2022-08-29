@@ -1,4 +1,4 @@
-import { numberOfCharacters, SimplifiedSyntaxNode } from "./columnCount"
+import { numberOfCharacters, SimplifiedSyntaxNode } from "./characterCount"
 
 const method = (methodArguments: {
   type: string,
