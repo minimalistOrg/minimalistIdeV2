@@ -82,12 +82,12 @@ export const CodeBlock = (props: CodeBlockType) => {
         const newRef = (findFncall as HTMLElement & FnInfoType).fninfo
         newRef.element = () => findFncall as HTMLElement
         newRef.Bubble = () => activeBubble.current
-        newRef.event= false
+        newRef.event = false
 
         props.data.element = () => findFncall as HTMLElement
         props.data.Bubble = () => activeBubble.current
 
-        props.data.event= newRef.event
+        props.data.event = newRef.event
         props.data.params = newRef.params
         props.data.order = newRef.order
 
@@ -277,20 +277,20 @@ export const CodeBlock = (props: CodeBlockType) => {
           {title}
 
           <span className="CodeBlock__arguments">
-            {" "}
-
-            {params.map((e, index) => {
-              return (
-                <span
-                  key={index}
-                  onMouseLeave={paramsHoverOut}
-                  onMouseMove={paramsHover as () => void}
-                  data-identifier={checkParams(index)}
-                >
-                  <ChooseType info={e} />
-                </span>
-              )
-            })}{" "}
+            {
+              params.map((e, index) => {
+                return (
+                  <span
+                    key={index}
+                    onMouseLeave={paramsHoverOut}
+                    onMouseMove={paramsHover as () => void}
+                    data-identifier={checkParams(index)}
+                  >
+                    <ChooseType info={e} />
+                  </span>
+                )
+              })
+            }
           </span>
         </div>
 
@@ -300,7 +300,7 @@ export const CodeBlock = (props: CodeBlockType) => {
           title="Close"
           onClick={props.closeBubble}
         >
-          <IcoClose size={20} />{" "}
+          <IcoClose size={20} />
         </button>
       </div>
 
