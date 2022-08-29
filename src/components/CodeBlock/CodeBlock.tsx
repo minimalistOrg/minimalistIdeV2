@@ -11,7 +11,7 @@ import "./CodeBlock.css"
 import { BubbleCollapse } from "./Functions/BubbleCollapse"
 import IcoClose from "../../icons/IcoClose"
 import IcoCollapse from "../../icons/IcoCollapse"
-import Resize from "./CodeBlock__Resize"
+import { resizeCodeBlock } from "./resizeCodeBlock"
 import {
   CodeBlockType,
   FnInfoType,
@@ -42,7 +42,7 @@ export const CodeBlock = (props: CodeBlockType) => {
   )
 
   useEffect(() => {
-    Resize(
+    resizeCodeBlock(
       activeBubble.current as HTMLElement,
       codeAsText?.current as HTMLElement
     )
