@@ -28,13 +28,15 @@
   --constant-color-number: var(--magenta);
   --constant-color-string: var(--cyan);
   --same-line-spacing: 0.25em;
-  --nested-spacing: 1em;
+  --nested-spacing: 2ch;
+
   /**/
   --bg-highligth-function: rgba(240, 232, 24, 0.28);
   --bs-bubble: 5px 5px 6px -4px #e5cb77;
   --bst-bubble: box-shadow 300ms ease-in-out;
   --bg-bubble-header: #e5cb77;
   --bgt-bubble-header: background-color 300ms ease-in-out;
+
   /**/
   --color-1: rgba(71, 159, 248, 0.3);
   --color-2: rgba(110, 221, 202, 0.3);
@@ -48,8 +50,7 @@
 body {
   background-color: var(--editor-background);
   color: var(--editor-color);
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 body,
@@ -75,7 +76,6 @@ button {
 }
 
 .code-area {
-  /* padding-left: 42px; */
     position:absolute;
 }
 
@@ -86,16 +86,14 @@ button {
 .MenuHeader-container{
     position: fixed;
     left: 0px;
-    /* padding-left: 45px; */
     width: 100%;
     height: 30px;
-    /* border-bottom: solid 1px grey; */
     background: var(--header);
 }
+
 .BubbleArea{
     padding-top: 35px;
 }
-
 
 .ReactModal__Overlay {
   display: flex;

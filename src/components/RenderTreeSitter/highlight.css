@@ -12,6 +12,7 @@
   --ShorthandPropertyidentifierPattern: #8080e1;
   --identifier: #444343;
   --property_identifier: #d2691e;
+
   /**/
   --color-1: rgba(71, 159, 248, 0.3);
   --color-2: rgba(110, 221, 202, 0.3);
@@ -85,12 +86,10 @@
 
 .LexicalDeclaration__variableName > .VariableDeclarator .identifier {
   color: var(--variableName);
-  font-weight: 700;
 }
 
 .CallExpression > .identifier, .TagExpression > .identifier {
   color: var(--fnDefinition) !important;
-  font-weight: 700;
   cursor: pointer;
 }
 
@@ -98,17 +97,16 @@
   text-decoration: underline;
 }
 
-.Arguments .identifier {
+.arguments .identifier {
   color: var(--FnParams) !important;
   font-style: italic;
-  font-weight: normal !important;
 }
 
 .NumberType {
   color: var(--numberType);
 }
 
-.StringType {
+.string {
   color: var(--stringType);
 }
 
@@ -122,12 +120,10 @@
 
 .ReturnStatement__text {
   color: var(--purple);
-  font-weight: bold;
 }
 
 .ReservedWords {
   color: var(--ReservedWords);
-  font-weight: bold;
 }
 
 .TemplateString {
@@ -136,11 +132,10 @@
 
 .TypeBoolean {
   color: var(--boolean);
-  font-weight: bold;
 }
 
-.Propertyidentifier{
-    color: var(--property_identifier);
+.property_identifier{
+  color: var(--property_identifier);
 }
 
 .TypeShorthandPropertyidentifierPattern {
@@ -148,80 +143,77 @@
 }
 
 .IfStatement > .StatementBlock .StatementBlock__line:first-child {
-  /* background-color: red; */
   display: none;
 }
 
 .IfStatement > .StatementBlock .StatementBlock__line:last-child {
-  /* background-color: red; */
   display: none;
 }
 
 .ElseClause > .StatementBlock .StatementBlock__line:first-child {
-  /* background-color: red; */
   display: none;
 }
 
 .ElseClause > .StatementBlock .StatementBlock__line:last-child {
-  /* background-color: red; */
   display: none;
 }
 
 code > .StatementBlock .StatementBlock__line:first-child {
-  /* background-color: red; */
   display: none;
 }
 
 code > .StatementBlock .StatementBlock__line:last-child {
-  /* background-color: red; */
   display: none;
 }
 
 .ArrowFunction > span > .StatementBlock .StatementBlock__line:first-child {
-  /* background-color: red; */
   display: none;
 }
 
 .ArrowFunction > span > .StatementBlock .StatementBlock__line:last-child {
-  /* background-color: red; */
   display: none;
 }
 
 .WhileStatement .StatementBlock .StatementBlock__line:first-child{
-    display: flex;
+  display: flex;
 }
+
 .WhileStatement .StatementBlock .StatementBlock__line:last-child{
-    display: flex;
+  display: flex;
 }
 
 .DoStatement .StatementBlock .StatementBlock__line:first-child{
-    display: flex;
+  display: flex;
 }
+
 .DoStatement .StatementBlock .StatementBlock__line:last-child{
-    display: flex;
+  display: flex;
 }
 
 .ForInStatement .StatementBlock .StatementBlock__line:first-child{
-    display: flex;
-}
-.ForInStatement .StatementBlock .StatementBlock__line:last-child{
-    display: flex;
+  display: flex;
 }
 
+.ForInStatement .StatementBlock .StatementBlock__line:last-child{
+  display: flex;
+}
 
 .TryStatement .StatementBlock .StatementBlock__line:first-child{
-    display: flex;
+  display: flex;
 }
+
 .TryStatement .StatementBlock .StatementBlock__line:last-child{
-    display: flex;
+  display: flex;
 }
 
 .function_declaration .StatementBlock .StatementBlock__line:first-child{
-    display: flex;
+  display: flex;
 }
+
 .function_declaration .StatementBlock .StatementBlock__line:last-child{
-    display: flex;
+  display: flex;
 }
+
 .type_identifier{
- color: #177a9b;
+  color: #177a9b;
 }

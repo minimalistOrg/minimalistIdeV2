@@ -9,6 +9,8 @@ import {
   TypeComponentProps,
 } from "../../../types/interface"
 
+import ResponsiveStyles from './ResponsiveStyles.module.css'
+
 export const CallExpression = ({ data }: TypeComponentProps) => {
   const [functionIndex, setFunctionIndex] = useState<number>(-1)
   const [name, setName] = useState("")
@@ -16,21 +18,25 @@ export const CallExpression = ({ data }: TypeComponentProps) => {
   const [id, setId] = useState("")
   const [ied, setIed] = useState("")
   const fnOrder = globalCounter()
-  const expression = useRef<HTMLElement | null>(null)
+  const expression = useRef<HTMLDivElement | null>(null)
   const listOfFunctions = useSelector(
     (state: { addbubble: { value: CodeBlockCodeType[] } }) =>
       state.addbubble.value
   )
 
-  function validifFnCall() {
-    const expressionType = data.children[0].type
+  const [memberExpression, argumentsData] = data.children
+  const [openParenthesis, ...functionArguments] = argumentsData.children
+  const closeParenthesis = functionArguments.pop()
+
+  const validifFnCall = () => {
+    const expressionType = memberExpression.type
 
     if (expressionType === "identifier") {
-      setName(data.children[0].text)
+      setName(memberExpression.text)
       setId(uuidv4())
-      setParams(data.children[1].children as [])
+      setParams(argumentsData.children as [])
 
-      const position = listOfFunctions.find((element) => element.name === data.children[0].text)
+      const position = listOfFunctions.find((element) => element.name === memberExpression.text)
 
       if (position) {
         setFunctionIndex(position.id)
@@ -43,7 +49,7 @@ export const CallExpression = ({ data }: TypeComponentProps) => {
       setIed(uuidv4())
     }
 
-    const getName = functionIndex > -1 ? listOfFunctions[functionIndex as number].name : ""
+    const getName = functionIndex > -1 ? listOfFunctions[functionIndex].name : ""
     const functionData = {
       id: id,
       ied: expression.current?.id,
@@ -66,17 +72,18 @@ export const CallExpression = ({ data }: TypeComponentProps) => {
     validifFnCall()
 
     if (functionIndex > -1) {
-      Object.defineProperty(functionData.element(), "fninfo", {
-        value: functionData,
-        writable: true,
-      })
+      Object.defineProperty(
+        functionData.element(),
+        "fninfo",
+        { value: functionData, writable: true }
+      )
     }
     //eslint-disable-next-line
   }, [functionIndex])
 
   const handleMouseOver = (data: { currentTarget: (HTMLElement & FnInfoType) | null }) => {
-    if (data.currentTarget?.fninfo?.Bubble() !== undefined) {
-      data.currentTarget?.fninfo?.Bubble()?.classList.add("CodeBlockHover")
+    if (data.currentTarget?.fninfo.Bubble() !== undefined) {
+      data.currentTarget?.fninfo.Bubble()?.classList.add("CodeBlockHover")
       data.currentTarget?.fninfo.Bubble()?.children[0].classList.add("CodeBlock__header--hover")
     }
   }
@@ -103,8 +110,8 @@ export const CallExpression = ({ data }: TypeComponentProps) => {
   }
 
   return (
-    <span
-      className={typeCall()}
+    <div
+      className={`${typeCall()} ${ResponsiveStyles.callExpression}`}
       onMouseOver={handleMouseOver as () => void}
       onMouseLeave={handleMouseLeave as () => void}
       ref={expression}
@@ -112,11 +119,28 @@ export const CallExpression = ({ data }: TypeComponentProps) => {
       data-name={name}
       data-test-id="fncall"
     >
-      <ChooseType info={data.children[0]} />
+      <div className={ResponsiveStyles.blockStart}>
+        <ChooseType info={memberExpression} />
 
-      <span>
-        <ChooseType info={data.children[1]} />
-      </span>
-    </span>
+        <div>{openParenthesis.text}</div>
+      </div>
+
+      <div className={ResponsiveStyles.blockBody}>
+        {
+          functionArguments.map((functionArgument, index) => {
+            return (
+              <ChooseType info={functionArgument} key={index} />
+            )
+          })
+        }
+      </div>
+
+      {
+        closeParenthesis &&
+          <div className={ResponsiveStyles.blockEnd}>
+            <div>{closeParenthesis.text}</div>
+          </div>
+      }
+    </div>
   )
 }

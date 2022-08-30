@@ -1,0 +1,15 @@
+.blockStart {
+  display: flex;
+}
+
+.blockBody.nested {
+  margin-left: var(--nested-spacing);
+}
+
+.callExpression {
+  display: flex;
+}
+
+.callExpression.nested {
+  display: block;
+}

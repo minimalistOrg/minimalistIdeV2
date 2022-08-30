@@ -7,9 +7,7 @@ export const MemberExpression = ({ data }: TypeComponentProps) => {
       {
         data.children.map((child, index) => {
           return (
-            <span key={index}>
-              <ChooseType info={child} />
-            </span>
+            <ChooseType info={child} key={index} />
           )
         })
       }
