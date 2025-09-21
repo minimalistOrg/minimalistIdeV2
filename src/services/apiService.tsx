@@ -39,7 +39,8 @@ export const apiService = {
     }
   },
   getProject: async (validToken: string, url: string): Promise<ProjectResponse> => {
-    const response = await fetch(`${backendUrl}/api/v1/project?url=${url}`, token(validToken))
+    // const response = await fetch(`${backendUrl}/api/v1/project?url=${url}`, token(validToken))
+    const response = await fetch(`${backendUrl}/${url}`, token(validToken))
 
     if (response.status !== 200) {
       return { success: false, code: response.status }

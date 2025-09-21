@@ -158,14 +158,6 @@
   display: none;
 }
 
-code > .StatementBlock .StatementBlock__line:first-child {
-  display: none;
-}
-
-code > .StatementBlock .StatementBlock__line:last-child {
-  display: none;
-}
-
 .ArrowFunction > span > .StatementBlock .StatementBlock__line:first-child {
   display: none;
 }

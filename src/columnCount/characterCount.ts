@@ -1,4 +1,4 @@
-// import { SyntaxNode } from "web-tree-sitter";
+import { TreesitterData } from "../types/interface"
 
 const SYNTAX_NODE_TYPES = [
   'arguments',
@@ -21,7 +21,7 @@ export interface SimplifiedSyntaxNode {
   children: SimplifiedSyntaxNode[]
 }
 
-export type ResponsiveSyntaxNode = SimplifiedSyntaxNode
+export type ResponsiveSyntaxNode = SimplifiedSyntaxNode | TreesitterData
 
 const callExpressionNumberOfCharacters = (node: ResponsiveSyntaxNode) => {
   const [memberExpression, nodeArguments] = node.children
@@ -71,9 +71,9 @@ const characterCountMap: Record<SyntaxNodeType, ((node: ResponsiveSyntaxNode) =>
 }
 
 export const numberOfCharacters = (node: ResponsiveSyntaxNode) => {
-  const counter = characterCountMap[node.type]
+  if (SYNTAX_NODE_TYPES.some((type) => type === node.type)) {
+    const counter = characterCountMap[node.type as SyntaxNodeType]
 
-  if (counter) {
     return counter(node)
   }
 

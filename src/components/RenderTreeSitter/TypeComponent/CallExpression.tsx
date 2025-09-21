@@ -10,6 +10,7 @@ import {
 } from "../../../types/interface"
 
 import ResponsiveStyles from './ResponsiveStyles.module.css'
+import { numberOfCharacters } from "../../../columnCount/characterCount"
 
 export const CallExpression = ({ data }: TypeComponentProps) => {
   const [functionIndex, setFunctionIndex] = useState<number>(-1)
@@ -27,6 +28,7 @@ export const CallExpression = ({ data }: TypeComponentProps) => {
   const [memberExpression, argumentsData] = data.children
   const [openParenthesis, ...functionArguments] = argumentsData.children
   const closeParenthesis = functionArguments.pop()
+  const totalCharacters = numberOfCharacters(data)
 
   const validifFnCall = () => {
     const expressionType = memberExpression.type

@@ -2,7 +2,6 @@ import {
   useState,
   useEffect,
   useRef,
-  MutableRefObject,
   RefObject,
 } from "react"
 import { useSelector, useDispatch } from "react-redux"
@@ -33,8 +32,6 @@ export const CodeBlock = (props: CodeBlockType) => {
   >(checkFunctionType(props.code).code)
   const [params, setParams] = useState<TreesitterData[]>([])
   const activeBubble: RefObject<HTMLDivElement> = useRef(null)
-  const codeAsText: MutableRefObject<null | HTMLElement> = useRef(null)
-  const [paramok, setParamok] = useState(false)
 
   const listOfFunctions = useSelector(
     (state: { addbubble: { value: CodeBlockCodeType[] } }) =>
@@ -42,10 +39,9 @@ export const CodeBlock = (props: CodeBlockType) => {
   )
 
   useEffect(() => {
-    resizeCodeBlock(
-      activeBubble.current as HTMLElement,
-      codeAsText?.current as HTMLElement
-    )
+    // if (activeBubble.current) {
+    //   resizeCodeBlock(activeBubble.current as HTMLElement)
+    // }
 
     if (!(props.code === undefined)) {
       if (props.code.node.children[3] === undefined) {
@@ -103,12 +99,11 @@ export const CodeBlock = (props: CodeBlockType) => {
             row.style.order= props.data.order.toString()
             dispatch(add(!dataBubbleTree))
         }
-        setParamok(true)
       }
     }
     resetGlobal(1)
     //eslint-disable-next-line
-  }, [props.data, title, paramok, code])
+  }, [props.data, title, code])
 
   const handleMouseOver = (event: { currentTarget: HTMLElement }) => {
     const data = (event.currentTarget.parentNode as HTMLElement & FnInfoType).fninfo
@@ -310,11 +305,7 @@ export const CodeBlock = (props: CodeBlockType) => {
         onMouseLeave={identifierHoverOut}
         onClick={props.openBubble as () => void}
       >
-        <pre>
-          <code ref={codeAsText}>
-            <ChooseType info={code} />
-          </code>
-        </pre>
+        <ChooseType info={code} />
       </div>
     </div>
   )

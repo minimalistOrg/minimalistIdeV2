@@ -52,7 +52,7 @@ export const LoadCode = (props: LoadCodeType) => {
 
   useEffect(() => {
     const section = async () => {
-      await apiService.login(dispatch)()
+      // await apiService.login(dispatch)()
       let repository = new EasyUrlParams("repository").get()?.value
 
       if (repository && repository !== "") {

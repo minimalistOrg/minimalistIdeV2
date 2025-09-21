@@ -41,7 +41,7 @@ export interface TreesitterData {
   id: number;
   parent: TreesitterData;
   startPosition: {row:number, colum: number};
- endPosition: {row:number, colum:number}
+  endPosition: {row:number, colum:number}
 }
 
 export interface TypeComponentProps {

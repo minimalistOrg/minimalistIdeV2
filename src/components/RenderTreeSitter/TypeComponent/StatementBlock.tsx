@@ -1,21 +1,19 @@
-import {TreesitterData, TypeComponentProps} from "../../../types/interface";
-import { ChooseType } from "../ChooseType";
+import { TypeComponentProps } from "../../../types/interface"
+import { ChooseType } from "../ChooseType"
 
-function StatementBlock(props: TypeComponentProps) {
-  const data = props.data;
-  // console.log(data);
+export const StatementBlock = ({ data }: TypeComponentProps) => {
+  // Remove first and last children that are '{' & '}'
+  const statementBlockChildren = data.children.slice(1, -1)
 
   return (
     <div className="StatementBlock">
-      {data.children.map((e: TreesitterData, index: number) => {
-        return (
-          <div key={index} className="StatementBlock__line">
-            <ChooseType info={e} />
-          </div>
-        );
-      })}
+      {
+        statementBlockChildren.map((child, index) => {
+          return (
+            <ChooseType info={child} key={index} />
+          )
+        })
+      }
     </div>
-  );
+  )
 }
-
-export default StatementBlock;

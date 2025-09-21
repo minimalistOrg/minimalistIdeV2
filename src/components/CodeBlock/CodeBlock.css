@@ -35,14 +35,10 @@
   border: none;
 }
 
-code {
+/* code {
   white-space: pre-wrap;
   padding: 0px !important;
-}
-
-pre {
-  margin: 0;
-}
+} */
 
 .CodeBlock__collapse {
   padding: 2px 4px 2px 4px;
@@ -62,7 +58,7 @@ pre {
 .CodeBlock__body {
   height: 100%;
   color: var(--code-block-body);
-  padding: 0.3em;
+  padding: 0.5em;
   transition: max-height 400ms;
 }
 
